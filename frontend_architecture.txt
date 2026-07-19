@@ -1,0 +1,78 @@
+================================================================================
+FLO STUDIOS (ANOX) - FRONTEND ARCHITECTURE & STRUCTURE DOCUMENTATION
+================================================================================
+
+1. TECH STACK OVERVIEW
+--------------------------------------------------------------------------------
+- Framework: React 19 + Vite (for ultra-fast HMR and optimized production builds)
+- Styling: Plain CSS with highly structured global CSS Variables (custom properties)
+- Animation Engine: GSAP (GreenSock Animation Platform) + ScrollTrigger
+- 3D Engine: Three.js via React Three Fiber (@react-three/fiber) & Drei (@react-three/drei)
+
+2. GLOBAL STYLING & THEMING (index.css)
+--------------------------------------------------------------------------------
+The application relies heavily on CSS variables defined in `index.css` to maintain a consistent, enterprise-grade aesthetic.
+- Color Palette: 
+  - Dark/Deep backgrounds (`--bg-deep`)
+  - Accent colors (Orange `--accent-primary`, Purple, Teal)
+- Typography: 
+  - Centralized font families (`--font-family`)
+  - Fluid typography using `clamp()` for perfect responsiveness across all screen sizes.
+- Utilities:
+  - Glassmorphism effects (`backdrop-filter`) and premium shadow definitions.
+
+3. COMPONENT ARCHITECTURE & PAGE FLOW
+--------------------------------------------------------------------------------
+The application is stitched together in `App.jsx`, running sequentially through highly specialized, visually distinct sections. The flow is as follows:
+
+A. Hero Section 
+   - The initial landing view. Features high-impact typography and establishes the premium brand identity.
+
+B. Services Section (`ServicesSection.jsx` & `.css`)
+   - Layout: A sleek "Bento Grid" CSS layout.
+   - Design: Glassmorphism cards with subtle gradients separating "Creator Growth" and "AI & Web Development".
+   - Interaction: Staggered GSAP slide-in animations on scroll, magnetic hover lifts.
+
+C. Proof of Work (`ProofOfWork.jsx` & `.css`)
+   - Layout: Cinematic Video Showreel grid (1 large hero video, a 2x2 grid below).
+   - Design: Animated gradient placeholders with expanding Play buttons.
+   - Interaction: Complex hover physics where play buttons scale and glow intensifies.
+
+D. Practice Your Craft (`SkillsShowcase.jsx` & `.css`)
+   - Type: Spatial 3D Interface (React Three Fiber).
+   - Concept: "Cinematic Glass Gallery" inspired by Apple Vision Pro.
+   - Mechanics: 
+     - 12 ultra-thin frosted glass cards using `MeshTransmissionMaterial` and `<Environment preset="city">`.
+     - Pure 3D typography (`<Text>`) embedded inside the glass.
+     - Cinematic fanning animation on scroll using GSAP.
+     - Mouse-driven camera parallax for dynamic light reflection across the glass.
+
+E. Workflow Section (`WorkflowSection.jsx` & `.css`)
+   - Type: 3D Interactive Path (React Three Fiber).
+   - Mechanics: 
+     - A curving 3D CatmullRom tube path that the camera physically travels down as the user scrolls.
+     - Glowing 3D sphere milestones with floating HTML labels.
+
+F. The Journey (`JourneyCollage.jsx` & `.css`)
+   - Layout: Scroll-pinned narrative.
+   - Mechanics: 
+     - The section pins to the viewport using GSAP ScrollTrigger.
+     - As the user scrolls, the 4 journey steps fade and scale sequentially.
+     - Features blur-to-focus transitions, animated SVGs, and progress indicators.
+
+G. Footer (`Footer.jsx` & `.css`)
+   - Current: Standard minimalist footer.
+   - Upcoming: Scheduled for a structural rewrite into an interactive, movie-credit/film-strip style layout.
+
+4. 3D AND ANIMATION STRATEGY
+--------------------------------------------------------------------------------
+The site avoids basic CSS transitions in favor of high-end animation libraries to achieve an "Awwwards-winning" feel:
+
+- ScrollTrigger (GSAP): Used to pin sections (Journey), stagger element reveals (Services), and animate 3D properties (SkillsShowcase fanning).
+- React Three Fiber (R3F): Used extensively to break out of flat 2D web design. R3F is utilized for deep camera parallax, real-time light refraction (frosted glass), and scroll-driven camera flying (Workflow).
+- Separation of Concerns: 3D elements are isolated in `<Canvas>` components within their respective sections. Standard DOM elements are used as overlays where 3D is not necessary, ensuring optimal performance and accessibility.
+
+5. RESPONSIVE DESIGN STRATEGY
+--------------------------------------------------------------------------------
+- Fluid Layouts: Extensive use of CSS `clamp()` functions allows fonts, margins, and paddings to scale perfectly linearly between mobile and desktop breakpoints without needing dozens of media queries.
+- Mobile Fallbacks: Heavily intensive 3D operations or complex hovers degrade gracefully on touch devices, prioritizing battery life and smooth scrolling.
