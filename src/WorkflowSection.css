@@ -1,0 +1,276 @@
+/* ═══════════════════════════════════════════════════════
+   Workflow Section (3D Journey) — Premium
+   ═══════════════════════════════════════════════════════ */
+
+.workflow-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  overflow: hidden;
+  z-index: 1;
+}
+
+
+/* ─── 3D Canvas Container ─── */
+.workflow-canvas-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ─── HTML Overlay UI ─── */
+.workflow-ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  padding: clamp(40px, 6vh, 80px) clamp(32px, 5vw, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.workflow-header {
+  pointer-events: auto;
+}
+
+.workflow-label {
+  display: inline-block;
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: 800;
+  color: #555;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.workflow-title {
+  font-family: var(--font-family);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin: 0;
+}
+
+/* ─── Step Indicators (Side) ─── */
+.workflow-steps-indicator {
+  position: absolute;
+  right: clamp(24px, 4vw, 64px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  pointer-events: auto;
+}
+
+.workflow-step-dot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.3;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.workflow-step-dot.active {
+  opacity: 1;
+}
+
+.workflow-step-dot.completed {
+  opacity: 0.5;
+}
+
+.workflow-step-dot-num {
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: 800;
+  color: #333;
+  letter-spacing: 1px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  flex-shrink: 0;
+}
+
+.workflow-step-dot.active .workflow-step-dot-num {
+  border-color: #333;
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-step-dot.completed .workflow-step-dot-num {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.workflow-step-dot-title {
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Connecting line between dots */
+.workflow-step-dot::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 100%;
+  width: 2px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.workflow-step-dot:last-child::after {
+  display: none;
+}
+
+/* ─── Bottom Progress Bar ─── */
+.workflow-progress-bar {
+  width: 100%;
+  max-width: 500px;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.workflow-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #888, #555, #333);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+/* ─── 3D HTML Labels (Drei) ─── */
+.milestone-label {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+  color: #1a1a1a;
+  font-family: var(--font-family);
+  width: max-content;
+  max-width: 320px;
+  opacity: 0.3;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  position: relative;
+}
+
+/* Alternating positions */
+.milestone-label.align-right {
+  transform: translate(40px, -50%);
+}
+.milestone-label.align-left {
+  transform: translate(calc(-100% - 40px), -50%);
+  text-align: right;
+}
+
+/* Active states */
+.milestone-label.active {
+  opacity: 1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+.milestone-label.align-right.active {
+  transform: translate(60px, -50%);
+}
+.milestone-label.align-left.active {
+  transform: translate(calc(-100% - 60px), -50%);
+}
+
+/* Connecting Lines */
+.milestone-label::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.milestone-label.align-right::before {
+  right: 100%;
+}
+.milestone-label.align-left::before {
+  left: 100%;
+}
+.milestone-label.active::before {
+  width: 60px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Active indicator bar */
+.milestone-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 0 0 16px 16px;
+}
+
+.milestone-num {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.milestone-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
+  color: #1a1a1a;
+}
+
+.milestone-desc {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 968px) {
+  .workflow-steps-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .milestone-label {
+    max-width: 220px;
+    padding: 14px 18px;
+  }
+  .milestone-title {
+    font-size: 16px;
+  }
+}

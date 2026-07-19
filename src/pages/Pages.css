@@ -1,0 +1,273 @@
+/* ===================================
+   Shared Page Styles — Flo Studios
+   White & Grey Design Language
+   =================================== */
+
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 0;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+}
+
+/* --- Top Navigation Bar --- */
+.page-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #eee;
+}
+
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+  transition: color 0.2s ease;
+}
+
+.page-back-link:hover {
+  color: #000;
+}
+
+/* --- Hero Section --- */
+.page-hero {
+  text-align: center;
+  padding: 80px 40px 60px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-hero h1 {
+  font-size: clamp(36px, 5vw, 64px);
+  color: #1a1a1a;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+}
+
+.page-hero p {
+  color: #666;
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* --- Content Area --- */
+.page-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+
+/* --- Section --- */
+.page-section {
+  margin-bottom: 60px;
+}
+
+.page-section h2 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+}
+
+.page-section p {
+  color: #555;
+  line-height: 1.7;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* --- Cards --- */
+.page-card {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.page-card h3 {
+  font-size: 20px;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+}
+
+.page-card p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* --- CTA Button --- */
+.page-cta-button {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #1a1a1a;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+
+.page-cta-button:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+/* --- Form Styles --- */
+.page-form {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.page-form-group {
+  margin-bottom: 20px;
+}
+
+.page-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+}
+
+.page-form-group input,
+.page-form-group textarea,
+.page-form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: var(--font-family, 'Manrope', sans-serif);
+  color: #1a1a1a;
+  background: #fafafa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.page-form-group input:focus,
+.page-form-group textarea:focus,
+.page-form-group select:focus {
+  border-color: #999;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
+
+.page-form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.page-form-divider {
+  text-align: center;
+  margin: 24px 0;
+  color: #999;
+  font-size: 14px;
+}
+
+.page-form-footer {
+  text-align: center;
+  margin-top: 24px;
+  color: #666;
+  font-size: 14px;
+}
+
+.page-form-footer a {
+  color: #1a1a1a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.page-form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* --- Grid Layouts --- */
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.page-grid .page-card {
+  margin-bottom: 0;
+}
+
+/* --- Legal Text --- */
+.page-legal p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.8;
+}
+
+.page-legal ul {
+  padding-left: 24px;
+  margin: 12px 0 20px;
+}
+
+.page-legal li {
+  color: #555;
+  line-height: 1.8;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .page-nav {
+    padding: 16px 20px;
+  }
+
+  .page-hero {
+    padding: 60px 20px 40px;
+  }
+
+  .page-content {
+    padding: 0 20px 60px;
+  }
+
+  .page-card {
+    padding: 24px;
+  }
+
+  .page-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,316 @@
+/* ═══════════════════════════════════════════════════════
+   Journey Section — Premium Scroll-Driven Storytelling
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Section Container ─── */
+.journey-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #0a0a14;
+  overflow: hidden;
+}
+
+/* Subtle vertical divider between panels */
+.journey-section::before {
+  content: '';
+  position: absolute;
+  left: 42%;
+  top: 12%;
+  height: 76%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.06), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Header (persistent during pin) ─── */
+.journey-header {
+  position: absolute;
+  top: clamp(32px, 4.5vh, 64px);
+  left: clamp(40px, 5vw, 80px);
+  z-index: 5;
+}
+
+.journey-label {
+  display: block;
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-primary);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.journey-heading {
+  font-family: var(--font-family);
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  margin: 0;
+  opacity: 0.3;
+}
+
+/* ─── Steps Container ─── */
+.journey-steps {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Individual Step (stacked, GSAP controls visibility) ─── */
+.journey-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* ─── Step Text (Left 42%) ─── */
+.journey-step-text {
+  width: 42%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(110px, 14vh, 180px) clamp(40px, 5vw, 80px) clamp(80px, 10vh, 120px);
+}
+
+.journey-step-num {
+  font-family: var(--font-family);
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  letter-spacing: -3px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.journey-step-title {
+  font-family: var(--font-family);
+  font-size: clamp(22px, 2.4vw, 36px);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin: 0 0 14px 0;
+}
+
+.journey-step-desc {
+  font-family: var(--font-family);
+  font-size: clamp(13px, 1.05vw, 16px);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+  max-width: 380px;
+}
+
+/* ─── Step Visual (Right 58%) ─── */
+.journey-step-visual {
+  width: 58%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Dot grid pattern */
+.journey-step-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 100%);
+}
+
+.journey-visual-wrapper {
+  position: relative;
+  width: 78%;
+  max-width: 400px;
+  z-index: 1;
+}
+
+.journey-visual-wrapper svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── SVG Element Styles ─── */
+.vis-bar {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+/* ─── Progress Indicators ─── */
+.journey-indicators {
+  position: absolute;
+  bottom: clamp(28px, 4vh, 52px);
+  left: clamp(40px, 5vw, 80px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.journey-indicator {
+  height: 3px;
+  width: 28px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.journey-indicator-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-light));
+  border-radius: 2px;
+}
+
+.journey-step-counter {
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-muted);
+  margin-left: 14px;
+  letter-spacing: 1px;
+}
+
+.journey-counter-num {
+  color: var(--accent-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ─── Ambient Effects ─── */
+.journey-ambient {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  z-index: 0;
+}
+
+.journey-ambient--1 {
+  width: clamp(250px, 30vw, 420px);
+  height: clamp(250px, 30vw, 420px);
+  background: radial-gradient(circle, rgba(232, 101, 10, 0.05) 0%, transparent 70%);
+  top: 15%;
+  right: 8%;
+}
+
+.journey-ambient--2 {
+  width: clamp(200px, 22vw, 320px);
+  height: clamp(200px, 22vw, 320px);
+  background: radial-gradient(circle, rgba(127, 119, 221, 0.04) 0%, transparent 70%);
+  bottom: 18%;
+  right: 28%;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Responsive — Mobile
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 968px) {
+  .journey-section {
+    height: auto;
+    min-height: auto;
+    padding: clamp(56px, 8vh, 96px) 0 clamp(40px, 5vh, 60px);
+  }
+
+  .journey-section::before {
+    display: none;
+  }
+
+  .journey-header {
+    position: static;
+    padding: 0 clamp(24px, 5vw, 48px);
+    margin-bottom: clamp(36px, 5vh, 56px);
+  }
+
+  .journey-steps {
+    position: static;
+  }
+
+  .journey-step {
+    position: static;
+    flex-direction: column;
+    visibility: visible;
+    opacity: 1;
+    padding: 0 clamp(24px, 5vw, 48px);
+    margin-bottom: clamp(48px, 6vh, 72px);
+  }
+
+  .journey-step:last-child {
+    margin-bottom: 0;
+  }
+
+  .journey-step-text {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin-bottom: 28px;
+  }
+
+  .journey-step-visual {
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+  }
+
+  .journey-step-visual::before {
+    display: none;
+  }
+
+  .journey-visual-wrapper {
+    width: 65%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .journey-indicators {
+    position: static;
+    padding: 0 clamp(24px, 5vw, 48px);
+    margin-top: clamp(28px, 4vh, 44px);
+  }
+
+  .journey-ambient {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .journey-step-num {
+    font-size: 44px;
+    letter-spacing: -2px;
+  }
+
+  .journey-step-title {
+    font-size: 20px;
+  }
+
+  .journey-heading {
+    font-size: 18px;
+  }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .journey-section *,
+  .journey-section *::before,
+  .journey-section *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
