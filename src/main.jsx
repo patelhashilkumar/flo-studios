@@ -19,6 +19,8 @@ import LoginPage from './pages/LoginPage.jsx'
 import TermsPage from './pages/TermsPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
 import GDPRPage from './pages/GDPRPage.jsx'
+import BlogPage from './pages/BlogPage.jsx'
+import JobPortalPage from './pages/JobPortalPage.jsx'
 
 // Suppress known Three.js deprecation warnings from library internals
 const _warn = console.warn;
@@ -49,6 +51,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/gdpr" element={<GDPRPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/jobs" element={<JobPortalPage />} />
         </Routes>
       </ErrorBoundary>
     </BrowserRouter>
