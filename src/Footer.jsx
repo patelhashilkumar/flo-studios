@@ -21,6 +21,8 @@ const FOOTER_SECTIONS = [
       { sub: 'OUR SOUL', main: 'About', path: '/about' },
       { sub: 'JOIN OUR VENTURE', main: 'Careers', path: '/careers' },
       { sub: 'REACH OUT!', main: 'Contact', path: '/contact' },
+      { sub: 'INSIGHTS', main: 'Blog', path: '/blog' },
+      { sub: 'OPEN ROLES', main: 'Jobs', path: '/jobs' },
     ],
   },
   {
