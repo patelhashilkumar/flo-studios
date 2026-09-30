@@ -59,29 +59,29 @@ export default function Hero() {
 
   return (
     <section className="hero" ref={heroRef} id="hero">
-      {/* ── 1. Giant "FLO" Wordmark ── */}
+      {/* ── 1. Giant "FLO STUDIOS" Wordmark ── */}
       <div className="hero__logo-container" ref={logoRef}>
         <svg
-          viewBox="0 0 800 200"
+          viewBox="0 0 1824 189"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="hero__giant-logo"
-          aria-label="Flo"
+          aria-label="Flo Studios"
         >
-          {/* F */}
-          <path d="M90 15H152V185H90V15Z" fill="#000000" />
-          <path d="M152 15H255V65H152V15Z" fill="#000000" />
-          <path d="M152 88H235V135H152V88Z" fill="#000000" />
-          {/* L */}
-          <path d="M295 15H357V185H295V15Z" fill="#000000" />
-          <path d="M357 135H475V185H357V135Z" fill="#000000" />
-          {/* O */}
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M625 15C705 15 755 53 755 100C755 147 705 185 625 185C545 185 495 147 495 100C495 53 545 15 625 15ZM625 65C585 65 557 80 557 100C557 120 585 135 625 135C665 135 693 120 693 100C693 80 665 65 625 65Z"
+          <text
+            x="50%"
+            y="155"
+            textAnchor="middle"
             fill="#000000"
-          />
+            fontSize="182"
+            fontWeight="900"
+            fontFamily="'Archivo Black', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+            letterSpacing="-0.02em"
+            textLength="1784"
+            lengthAdjust="spacingAndGlyphs"
+          >
+            FLO STUDIOS
+          </text>
         </svg>
       </div>
 
