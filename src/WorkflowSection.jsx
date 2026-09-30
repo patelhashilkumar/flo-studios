@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Html, Float, Sparkles } from '@react-three/drei';
@@ -89,8 +89,7 @@ function PaperPlane({ meshRef }) {
     geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geo.setIndex(indices);
     
-    // Convert to non-indexed geometry. This completely fixes lighting bugs, 
-    // weird smoothing artifacts, and gaps by separating all triangles.
+    // Convert to non-indexed geometry.
     const nonIndexedGeo = geo.toNonIndexed();
     nonIndexedGeo.computeVertexNormals();
     
@@ -141,6 +140,7 @@ function PaperPlane({ meshRef }) {
 /* ─── Glowing Ring around milestone ─── */
 function GlowRing({ color, active }) {
   const ringRef = useRef();
+  const targetVec = useRef(new THREE.Vector3());
   
   useFrame((state) => {
     if (!ringRef.current) return;
@@ -148,7 +148,8 @@ function GlowRing({ color, active }) {
     ringRef.current.rotation.z = state.clock.elapsedTime * 0.2;
     
     const targetScale = active ? 1.2 : 0.8;
-    ringRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.05);
+    targetVec.current.set(targetScale, targetScale, targetScale);
+    ringRef.current.scale.lerp(targetVec.current, 0.05);
   });
   
   return (
@@ -163,6 +164,11 @@ function GlowRing({ color, active }) {
   );
 }
 
+function getDeterministicNoise(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 /* ─── Floating Particles along the path ─── */
 function PathParticles({ curve }) {
   const pointsRef = useRef();
@@ -170,12 +176,12 @@ function PathParticles({ curve }) {
   const particles = useMemo(() => {
     const pts = [];
     for (let i = 0; i < 150; i++) {
-      const t = Math.random();
+      const t = getDeterministicNoise(i * 1.17 + 0.1);
       const point = curve.getPointAt(t);
       pts.push(
-        point.x + (Math.random() - 0.5) * 6,
-        point.y + (Math.random() - 0.5) * 6,
-        point.z + (Math.random() - 0.5) * 6
+        point.x + (getDeterministicNoise(i * 2.31 + 0.2) - 0.5) * 6,
+        point.y + (getDeterministicNoise(i * 3.47 + 0.3) - 0.5) * 6,
+        point.z + (getDeterministicNoise(i * 4.93 + 0.4) - 0.5) * 6
       );
     }
     return new Float32Array(pts);
@@ -240,7 +246,7 @@ function DashedPath({ geometry }) {
 }
 
 // The 3D Scene Component
-function Scene({ progressObj, activeIndex, setActiveIndex }) {
+function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const { camera } = useThree();
   const planeRef = useRef();
   
@@ -279,7 +285,7 @@ function Scene({ progressObj, activeIndex, setActiveIndex }) {
 
   // Update loop for camera and plane
   useFrame((state) => {
-    const p = progressObj.value; // 0 to 1 from GSAP
+    const p = progressRef.current?.value ?? 0; // 0 to 1 from GSAP
     
     // Update active index based on progress
     let newIndex = 0;
@@ -365,12 +371,16 @@ function Scene({ progressObj, activeIndex, setActiveIndex }) {
               style={{ pointerEvents: 'none' }}
             >
               <div className={`milestone-label ${isActive ? 'active' : ''} ${i % 2 === 0 ? 'align-right' : 'align-left'}`}>
-                <div className="milestone-num">{step.num}</div>
+                <span className="milestone-ghost" aria-hidden="true">{step.num}</span>
+                <div className="milestone-meta">
+                  <span className="milestone-num">Step {step.num}</span>
+                  <span className="milestone-pulse" aria-hidden="true" />
+                </div>
                 <h4 className="milestone-title">{step.title}</h4>
                 <p className="milestone-desc">{step.desc}</p>
-                {isActive && (
-                  <div className="milestone-indicator" style={{ background: '#888' }} />
-                )}
+                <div className="milestone-marks" aria-hidden="true">
+                  <span /><span /><span /><span />
+                </div>
               </div>
             </Html>
           </group>
@@ -398,7 +408,7 @@ export default function WorkflowSection() {
       return;
     }
 
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       // Pin the section and scrub the progress value from 0 to 1
       gsap.to(progressObj.current, {
         value: 1,
@@ -444,7 +454,7 @@ export default function WorkflowSection() {
         <Canvas camera={{ position: [0, 5, 5], fov: 55 }}>
           <fog attach="fog" args={['#ffffff', 15, 55]} />
           <Scene 
-            progressObj={progressObj.current} 
+            progressRef={progressObj} 
             activeIndex={activeIndex} 
             setActiveIndex={setActiveIndex} 
           />

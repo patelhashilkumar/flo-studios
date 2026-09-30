@@ -1,113 +1,111 @@
-import { Link } from 'react-router-dom';
-import './Pages.css';
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { useRef, useEffect } from 'react'
+import gsap from 'gsap'
 
-function ServicesPage() {
-  return (
-    <div className="page-container">
-      <nav className="page-nav">
-        <Link to="/" className="page-back-link">← Back to Home</Link>
-      </nav>
-
-      <section className="page-hero">
-        <h1>Our Services</h1>
-        <p>
-          Everything we offer is built around one idea: give people a better way
-          to practice the conversations that matter most.
-        </p>
-      </section>
-
-      <div className="page-content">
-        <div className="page-section">
-          <div className="page-grid">
-            <div className="page-card">
-              <h3>AI Role-Play Training</h3>
-              <p>
-                Practice difficult conversations with an AI that adapts to your
-                responses in real time. From performance reviews to client
-                negotiations, our scenarios cover the full spectrum of
-                professional communication.
-              </p>
-              <p>
-                Each session provides instant feedback on tone, clarity, and
-                strategy—helping you refine your approach before the real
-                conversation happens. No scheduling, no awkwardness, unlimited
-                attempts.
-              </p>
-            </div>
-
-            <div className="page-card">
-              <h3>Scenario Design</h3>
-              <p>
-                Need training tailored to your industry or company culture? Our
-                scenario design service creates custom role-play situations that
-                mirror the exact challenges your team faces.
-              </p>
-              <p>
-                We work with your leadership, HR, and L&D teams to identify the
-                conversations that matter most, then build scenarios with
-                realistic characters, stakes, and branching outcomes.
-              </p>
-            </div>
-
-            <div className="page-card">
-              <h3>Analytics & Insights</h3>
-              <p>
-                Track individual and team progress with detailed analytics
-                dashboards. See patterns in communication style, identify areas
-                for growth, and measure improvement over time with data-driven
-                insights.
-              </p>
-              <p>
-                Our reporting tools give managers and L&D professionals the
-                visibility they need to understand how training translates into
-                real-world performance—without compromising individual privacy.
-              </p>
-            </div>
-
-            <div className="page-card">
-              <h3>Team Workshops</h3>
-              <p>
-                Bring your team together for facilitated workshop sessions that
-                combine AI role-play with group discussion and peer feedback.
-                Perfect for leadership offsites, onboarding cohorts, or
-                quarterly skill-building days.
-              </p>
-              <p>
-                Workshops are led by experienced facilitators who guide
-                participants through increasingly challenging scenarios, building
-                confidence and team cohesion simultaneously.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="page-section">
-          <h2>How It Works</h2>
-          <p>
-            Getting started is straightforward. Choose a scenario—or build your
-            own—and step into a realistic conversation with our AI. The AI
-            responds dynamically based on your words, tone, and strategy, giving
-            you an authentic practice environment.
-          </p>
-          <p>
-            After each session, you receive a detailed breakdown of what worked,
-            what didn't, and specific suggestions for improvement. Over time,
-            you'll see your communication patterns evolve and your confidence
-            grow.
-          </p>
-          <p>
-            Whether you're an individual professional looking to sharpen your
-            skills or an organization building a culture of continuous
-            development, our services scale to meet your needs.
-          </p>
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <Link to="/try-now" className="page-cta-button">Try It Free</Link>
-        </div>
-      </div>
-    </div>
-  );
+const pageV = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.5 } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
 }
 
-export default ServicesPage;
+const SERVICES = [
+  {
+    title: 'Brand',
+    desc: 'We design brand systems that scale and flex across entire ecosystems.',
+    cases: [
+      { name: 'Procore', desc: 'Honoring the Past, Building the Future.', image: 'https://a-us.storyblok.com/f/1004432/1920x1080/6f0f8cbfe8/thumbnail-mobile-1920x1080.png/m/' },
+      { name: 'ServiceNow', desc: 'Reimagining ServiceNow with a bold system.', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
+    ],
+  },
+  {
+    title: 'Marketing',
+    desc: 'We create content, campaigns, and websites that drive connection and growth.',
+    cases: [
+      { name: 'Google Shopping', desc: 'The Holiday 100—Google\'s trend-inspired gift guide.', image: 'https://a-us.storyblok.com/f/1004432/2048x1365/81580be7a6/google_ho100_thumbnail.png/m/' },
+      { name: 'Notion', desc: 'Introducing Notion to billions of new users.', image: 'https://a-us.storyblok.com/f/1004432/2560x1588/4d38378620/notion_thumbnail.png/m/' },
+    ],
+  },
+  {
+    title: 'Product',
+    desc: 'We design digital products that define categories and transform businesses.',
+    cases: [
+      { name: 'Eventbrite', desc: 'Reimagining Eventbrite: A New Vision for Discovery.', image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/' },
+      { name: 'Oura', desc: 'Transforming the way people discover the Oura Smart Ring.', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/485d9ae1f2/oura_homepage_slideshow.jpg/m/' },
+    ],
+  },
+]
+
+const CLIENTS = ['Nike', 'Google', 'Oura', 'ServiceNow', 'EA', 'Netflix', 'Spotify', 'Pinterest', 'Microsoft', 'Patagonia', 'Uber', 'Marriott', 'Instagram', 'Sephora', 'Sonos', 'PayPal', "Levi's", 'NBA', 'Nordstrom', 'Stripe', 'Salesforce', 'Samsung']
+
+export default function ServicesPage() {
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.services-page__hero-word', { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.7, ease: 'power3.out', delay: 0.2 })
+    }, heroRef)
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <motion.main className="services-page" variants={pageV} initial="initial" animate="animate" exit="exit">
+      <section className="services-page__hero" ref={heroRef}>
+        <div className="container">
+          <div className="page-breadcrumb">
+            <Link to="/">Home</Link> <span>/</span> <span>Services</span>
+          </div>
+          <h1 className="services-page__title">
+            {'From rebrands to digital products to campaigns, we design how your brand shows up in the world.'.split(' ').map((w, i) => (
+              <span key={i} className="services-page__hero-word">{w} </span>
+            ))}
+          </h1>
+          <Link to="/contact" className="page-cta-btn">Get in touch →</Link>
+        </div>
+      </section>
+
+      {/* Offerings */}
+      <section className="services-page__offerings">
+        <div className="container">
+          <h2 className="services-page__section-title">Our Offerings</h2>
+          {SERVICES.map((service) => (
+            <div className="services-page__offering" key={service.title}>
+              <div className="services-page__offering-header">
+                <h3 className="services-page__offering-title">{service.title}</h3>
+                <p className="services-page__offering-desc">{service.desc}</p>
+              </div>
+              <div className="services-page__offering-cases">
+                {service.cases.map((c) => (
+                  <div className="services-page__case" key={c.name}>
+                    <div className="services-page__case-img">
+                      <img src={c.image} alt={c.name} loading="lazy" />
+                    </div>
+                    <h4 className="services-page__case-name">{c.name}</h4>
+                    <p className="services-page__case-desc">{c.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Clients */}
+      <section className="services-page__clients">
+        <div className="container">
+          <h3 className="services-page__clients-label">Select clients include:</h3>
+          <p className="services-page__clients-list">{CLIENTS.join(', ')}</p>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="services-page__cta-section">
+        <div className="container">
+          <h2 className="services-page__cta-title">We'd love to work with you and your team.</h2>
+          <Link to="/contact" className="page-cta-btn">Get in touch →</Link>
+        </div>
+      </section>
+    </motion.main>
+  )
+}

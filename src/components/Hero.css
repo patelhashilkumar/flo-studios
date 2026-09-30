@@ -1,0 +1,303 @@
+/* ═══════════════════════════════════════
+   AUTHENTIC INSTRUMENT.COM HERO
+   ═══════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+  overflow: hidden;
+}
+
+/* ── 1. Giant "INSTRUMENT" Wordmark ── */
+.hero__logo-container {
+  width: 100%;
+  padding: 10px 20px 24px 20px;
+  line-height: 0;
+}
+
+.hero__giant-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+  shape-rendering: geometricPrecision;
+}
+
+/* ── 2. Rounded Video Container ── */
+.hero__video-wrapper {
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+.hero__video-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100vh - 180px);
+  min-height: 380px;
+  background: #000000;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Background looping iframe */
+.hero__video-iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%) scale(1.02);
+  border: none;
+  pointer-events: none;
+}
+
+/* Central Play Button */
+.hero__play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #000000;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, background 0.2s ease;
+}
+
+.hero__play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.6);
+  background: #111111;
+}
+
+.hero__play-btn:active {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.hero__play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 4px; /* optical center */
+}
+
+.hero__play-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Bottom Badge */
+.hero__video-badge {
+  position: absolute;
+  bottom: 24px;
+  right: 28px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 9999px;
+  color: #ffffff;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+.hero__video-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ── 3. Intro Statement & CTA ── */
+.hero__statement-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.hero__statement {
+  font-family: var(--font-primary);
+  font-size: clamp(2.25rem, 5.2vw, 5.25rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #000000;
+  margin-bottom: 2.5rem;
+  max-width: 22ch;
+}
+
+.hero__word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.28em;
+  vertical-align: top;
+}
+
+.hero__word {
+  display: inline-block;
+  transform-origin: bottom center;
+}
+
+.hero__action {
+  display: flex;
+}
+
+.hero__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 28px;
+  background: #000000;
+  color: #ffffff;
+  border-radius: 9999px;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__cta-link:hover {
+  background: #222222;
+  transform: translateY(-2px);
+  gap: 16px;
+}
+
+.hero__cta-link svg {
+  transition: transform 0.26s ease;
+}
+
+.hero__cta-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* ── 4. Full Reel Theater Modal ── */
+.hero-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero-modal__content {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+  background: #000000;
+}
+
+.hero-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.hero-modal__close:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: scale(1.08);
+}
+
+.hero-modal__video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.hero-modal__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero__logo-container {
+    padding: 8px 14px 16px 14px;
+  }
+
+  .hero__video-wrapper {
+    padding: 0 12px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero__video-card {
+    border-radius: 18px;
+    min-height: 240px;
+  }
+
+  .hero__play-btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .hero__play-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hero__statement {
+    font-size: 2rem;
+    max-width: 100%;
+  }
+}
