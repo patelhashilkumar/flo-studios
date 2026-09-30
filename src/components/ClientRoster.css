@@ -1,0 +1,47 @@
+.client-roster {
+  padding: var(--space-section) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.client-roster__label {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.client-roster__sub {
+  font-size: var(--fs-small);
+  color: var(--color-text-tertiary);
+  margin-bottom: 2rem;
+}
+
+.client-roster__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.client-roster__item {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  padding: 0.5rem 0;
+  transition: color 0.25s;
+}
+
+.client-roster__item::after {
+  content: ',\00a0';
+  color: var(--color-text-tertiary);
+}
+
+.client-roster__item:last-child::after {
+  content: '';
+}
+
+.client-roster__item:hover {
+  color: var(--color-text);
+}
