@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
+import MotionContactForm from '../components/MotionContactForm'
 
 const pageV = {
   initial: { opacity: 0 },
@@ -10,6 +11,7 @@ const pageV = {
 }
 
 export default function ContactPage() {
+  const [activeSubject, setActiveSubject] = useState('Start a Project')
   const heroRef = useRef(null)
 
   useEffect(() => {
@@ -31,23 +33,60 @@ export default function ContactPage() {
           <div className="page-breadcrumb">
             <Link to="/">Home</Link> <span>/</span> <span>Contact</span>
           </div>
-          <h1 className="contact-page__title">
-            <span>Contact</span> <span>Us</span>
-          </h1>
 
-          <div className="contact-page__actions">
-            <a href="#" className="contact-page__action">
-              <span className="contact-page__action-label">START A PROJECT</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
-            <a href="#" className="contact-page__action">
-              <span className="contact-page__action-label">PRESS & MEDIA</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
-            <a href="#" className="contact-page__action">
-              <span className="contact-page__action-label">WRITE US A NOTE</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </a>
+          <div className="contact-page__split">
+            {/* Left Column: Title & Actions */}
+            <div className="contact-page__left">
+              <h1 className="contact-page__title">
+                <span>Contact</span> <span>Us</span>
+              </h1>
+              <p className="contact-page__subtitle">
+                Have a new project, creative partnership, or inquiry? Choose an option below or message our team directly.
+              </p>
+
+              <div className="contact-page__actions">
+                <button
+                  type="button"
+                  className={`contact-page__action ${activeSubject === 'Start a Project' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => setActiveSubject('Start a Project')}
+                >
+                  <span className="contact-page__action-label">START A PROJECT</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  type="button"
+                  className={`contact-page__action ${activeSubject === 'Press & Media' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => setActiveSubject('Press & Media')}
+                >
+                  <span className="contact-page__action-label">PRESS & MEDIA</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  type="button"
+                  className={`contact-page__action ${activeSubject === 'General Note' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => setActiveSubject('General Note')}
+                >
+                  <span className="contact-page__action-label">WRITE US A NOTE</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+              </div>
+
+              <div className="contact-page__direct-info">
+                <div className="contact-page__direct-item">
+                  <span className="contact-page__direct-label">Direct Communication</span>
+                  <a href="mailto:hello@flostudios.com" className="contact-page__direct-link">hello@flostudios.com</a>
+                </div>
+                <div className="contact-page__direct-item">
+                  <span className="contact-page__direct-label">Studio Availability</span>
+                  <span className="contact-page__direct-status">● Open for Q2 / Q3 2026 Commissions</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Motion Submit Form Card */}
+            <div className="contact-page__right">
+              <MotionContactForm activeSubject={activeSubject} />
+            </div>
           </div>
         </div>
       </section>
