@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion'
 import './MotionContactForm.css'
+import { saveSubmission } from '../services/adminStorage'
 
 /* ═══════════════════════════════════════════════════
    MATHEMATICAL EASING & 3D PROJECTION HELPERS
@@ -1017,10 +1018,24 @@ export default function MotionContactForm({ activeSubject }) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // If submitted with empty fields (quick demo trigger), supply stylish defaults
-    if (!name.trim()) setName('Maya Lin')
-    if (!email.trim()) setEmail('maya@linstudio.design')
-    if (!message.trim()) setMessage('Looking forward to creating something iconic with Flo Studios.')
+    const finalName = name.trim() || 'Maya Lin'
+    const finalEmail = email.trim() || 'maya@linstudio.design'
+    const finalPhone = phone.trim() || ''
+    const finalMessage = message.trim() || 'Looking forward to creating something iconic with Flo Studios.'
+
+    if (!name.trim()) setName(finalName)
+    if (!email.trim()) setEmail(finalEmail)
+    if (!message.trim()) setMessage(finalMessage)
+
+    // Save to persistent admin storage
+    saveSubmission({
+      type: 'message',
+      name: finalName,
+      email: finalEmail,
+      phone: finalPhone,
+      service: selectedService,
+      message: finalMessage
+    })
 
     runDeliverySequence()
   }
