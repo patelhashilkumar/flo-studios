@@ -2,7 +2,6 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import CustomCursor from './components/CustomCursor'
 import SmoothScroll from './components/SmoothScroll'
 import ScrollToTop from './components/ScrollToTop'
 import HomePage from './pages/HomePage'
@@ -18,7 +17,6 @@ export default function App() {
 
   return (
     <SmoothScroll>
-      <CustomCursor />
       <ScrollToTop />
       <Header />
       <AnimatePresence mode="wait">

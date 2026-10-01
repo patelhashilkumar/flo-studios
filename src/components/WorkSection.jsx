@@ -117,7 +117,6 @@ function WorkCard({ item }) {
     <Link
       to="/work"
       className="work-card"
-      data-cursor="EXPLORE"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
