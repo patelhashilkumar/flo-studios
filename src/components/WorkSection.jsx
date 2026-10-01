@@ -8,6 +8,30 @@ gsap.registerPlugin(ScrollTrigger)
 
 const WORK_ITEMS = [
   {
+    title: 'Apple Product Motion',
+    slug: 'apple-motion',
+    tags: ['motion', 'product'],
+    image: '/videos/apple-thumb.png',
+    video: '/videos/apple.mov',
+    metric: 'CGI & 3D Motion',
+  },
+  {
+    title: 'Blitzit 2.0 Interface',
+    slug: 'blitzit-motion',
+    tags: ['motion', 'product'],
+    image: '/videos/blitzit-thumb.png',
+    video: '/videos/blitzit2.mov',
+    metric: 'App & Micro-Interactions',
+  },
+  {
+    title: 'SV Studio Showreel',
+    slug: 'sv-showreel',
+    tags: ['motion', 'brand'],
+    image: '/videos/sv-thumb.png',
+    video: '/videos/sv-final.mov',
+    metric: 'Direction & Animation',
+  },
+  {
     title: 'Deadstock Coffee',
     slug: 'deadstock-coffee',
     tags: ['product'],
@@ -72,7 +96,72 @@ const WORK_ITEMS = [
   },
 ]
 
-const FILTERS = ['all', 'brand', 'marketing', 'product']
+const FILTERS = ['all', 'motion', 'brand', 'marketing', 'product']
+
+function WorkCard({ item }) {
+  const [isHovered, setIsHovered] = useState(false)
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    if (item.video && videoRef.current) {
+      if (isHovered) {
+        videoRef.current.currentTime = 0
+        videoRef.current.play().catch(() => {})
+      } else {
+        videoRef.current.pause()
+      }
+    }
+  }, [isHovered, item.video])
+
+  return (
+    <Link
+      to="/work"
+      className="work-card"
+      data-cursor="EXPLORE"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="work-card__media">
+        <img
+          src={item.image}
+          alt={item.title}
+          loading="lazy"
+          className={`work-card__img ${isHovered && item.video ? 'work-card__img--hidden' : ''}`}
+        />
+        {item.video && (
+          <video
+            ref={videoRef}
+            src={item.video}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className={`work-card__video ${isHovered ? 'work-card__video--active' : ''}`}
+          />
+        )}
+        {item.metric && (
+          <span className="work-card__badge-metric">{item.metric}</span>
+        )}
+        {item.video && (
+          <span className="work-card__video-badge">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            MOTION
+          </span>
+        )}
+      </div>
+      <div className="work-card__info">
+        <h3 className="work-card__title">{item.title}</h3>
+        <div className="work-card__tags">
+          {item.tags.map((t) => (
+            <span key={t} className="work-card__tag">#{t}</span>
+          ))}
+        </div>
+      </div>
+    </Link>
+  )
+}
 
 export default function WorkSection() {
   const [activeFilter, setActiveFilter] = useState('all')
@@ -184,30 +273,7 @@ export default function WorkSection() {
         {/* Project Grid */}
         <div className="work-section__grid" ref={gridRef}>
           {filtered.map((item) => (
-            <Link
-              to="/work"
-              className="work-card"
-              key={item.slug}
-            >
-              <div className="work-card__media">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  loading="lazy"
-                />
-                {item.metric && (
-                  <span className="work-card__badge-metric">{item.metric}</span>
-                )}
-              </div>
-              <div className="work-card__info">
-                <h3 className="work-card__title">{item.title}</h3>
-                <div className="work-card__tags">
-                  {item.tags.map((t) => (
-                    <span key={t} className="work-card__tag">#{t}</span>
-                  ))}
-                </div>
-              </div>
-            </Link>
+            <WorkCard key={item.slug} item={item} />
           ))}
         </div>
 

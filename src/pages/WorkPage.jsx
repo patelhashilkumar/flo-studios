@@ -9,6 +9,27 @@ gsap.registerPlugin(ScrollTrigger)
 
 const FEATURED_PROJECTS = [
   {
+    title: 'Apple Product Motion',
+    desc: 'Hyper-detailed 3D motion graphics, product visualization, and dynamic CGI simulation.',
+    tags: ['motion', 'product'],
+    image: '/videos/apple-thumb.png',
+    slug: 'apple-motion',
+  },
+  {
+    title: 'Blitzit 2.0 Interface Motion',
+    desc: 'Fluid micro-interactions and interface motion design crafted for modern productivity.',
+    tags: ['motion', 'product'],
+    image: '/videos/blitzit-thumb.png',
+    slug: 'blitzit-motion',
+  },
+  {
+    title: 'SV Studio Showreel',
+    desc: 'A dynamic studio showcase demonstrating creative direction, typography, and animation.',
+    tags: ['motion', 'brand'],
+    image: '/videos/sv-thumb.png',
+    slug: 'sv-showreel',
+  },
+  {
     title: 'Electronic Arts',
     desc: 'The evolution of EA: from gaming legacy to entertainment leader.',
     tags: ['brand'],
@@ -22,23 +43,12 @@ const FEATURED_PROJECTS = [
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
     slug: 'oura-smart-ring',
   },
-  {
-    title: 'ServiceNow',
-    desc: 'Reimagining ServiceNow with a bold system that turned ambiguity into action.',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/',
-    slug: 'servicenow-rebrand',
-  },
-  {
-    title: 'Nike Digital Design System',
-    desc: 'Building a flexible, scalable digital design system for Nike.',
-    tags: ['brand', 'product'],
-    image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/',
-    slug: 'nike-digital-design-system',
-  },
 ]
 
 const ALL_PROJECTS = [
+  { title: 'Apple Product Motion', tags: ['motion', 'product'], image: '/videos/apple-thumb.png' },
+  { title: 'Blitzit 2.0 Interface', tags: ['motion', 'product'], image: '/videos/blitzit-thumb.png' },
+  { title: 'SV Studio Showreel', tags: ['motion', 'brand'], image: '/videos/sv-thumb.png' },
   { title: 'Deadstock Coffee', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
   { title: 'Instrument Playspace', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
   { title: 'Feeld', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },
@@ -50,14 +60,9 @@ const ALL_PROJECTS = [
   { title: 'Shutterfly', tags: ['brand', 'marketing'], image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/' },
   { title: 'Build Week', tags: ['brand', 'marketing', 'product'], image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
   { title: 'Mercury', tags: ['marketing'], image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/' },
-  { title: 'Procore', tags: ['brand', 'marketing'], image: 'https://a-us.storyblok.com/f/1004432/1920x1080/6f0f8cbfe8/thumbnail-mobile-1920x1080.png/m/' },
-  { title: 'PagerDuty', tags: ['brand', 'marketing'], image: 'https://a-us.storyblok.com/f/1004432/2000x1333/f3b2384a72/medium-feature-pagerduty.jpg/m/' },
-  { title: 'Splice', tags: ['brand', 'marketing'], image: 'https://a-us.storyblok.com/f/1004432/1920x1080/d8fc5e0225/large-feature.png/m/' },
-  { title: 'Qatar Airways', tags: ['brand', 'product'], image: 'https://a-us.storyblok.com/f/1004432/1536x1536/f6bfa8c802/qa-small-feature.png/m/' },
-  { title: 'Google Design', tags: ['brand', 'marketing', 'product'], image: 'https://a-us.storyblok.com/f/1004432/3072x3072/3570bb3ac9/google-design-hero-cover-2.png/m/' },
 ]
 
-const FILTERS = ['all', 'brand', 'marketing', 'product']
+const FILTERS = ['all', 'motion', 'brand', 'marketing', 'product']
 
 const pageV = {
   initial: { opacity: 0 },
