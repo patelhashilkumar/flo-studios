@@ -44,72 +44,61 @@ const WORKFLOW_STEPS = [
 ];
 
 /* ═══════════════════════════════════════════════════
-   PREMIUM RED SUPERSONIC JET
-   Precision aerodynamic delta-wing craft with high-gloss
-   studio red finish, smoked obsidian canopy, twin canted
-   stabilizers, winglets, and glowing afterburners.
+   FIFTH-GEN STEALTH FIGHTER JET (F-22 / F-35 Silhouette)
+   Aggressive faceted radar-deflecting fuselage, twin
+   angular stealth air intakes, trapezoidal wings with
+   tip rails, canted twin V-tails, all-moving tailerons,
+   and glowing thrust-vectoring afterburners.
    ═══════════════════════════════════════════════════ */
 
-function LuxurySupersonicCraft({ meshRef, bankRef }) {
-  // 1. Sleek Delta Wings with Airfoil Profile & Canted Winglets
+function FighterJetCraft({ meshRef, bankRef }) {
+  // 1. Trapezoidal Stealth Main Wings with Airfoil & Trailing Flaperons
   const wingsGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
     const positions = [
-      // Right Wing (Upper & Lower)
-      0.38, 0.05, 0.85,    // 0: Root leading top
-      2.35, 0.02, -1.05,   // 1: Tip leading top
-      2.30, 0.02, -1.45,   // 2: Tip trailing top
-      0.38, 0.05, -1.55,   // 3: Root trailing top
-      0.38, -0.05, 0.85,   // 4: Root leading bottom
-      2.35, -0.02, -1.05,  // 5: Tip leading bottom
-      2.30, -0.02, -1.45,  // 6: Tip trailing bottom
-      0.38, -0.05, -1.55,  // 7: Root trailing bottom
+      // Right Wing (Upper & Lower surfaces)
+      0.42, 0.05, 0.90,     // 0: Root leading top
+      2.45, 0.02, -0.95,    // 1: Tip leading top
+      2.40, 0.02, -1.35,    // 2: Tip trailing top
+      0.48, 0.05, -1.65,    // 3: Root trailing top
+      0.42, -0.05, 0.90,    // 4: Root leading bottom
+      2.45, -0.02, -0.95,   // 5: Tip leading bottom
+      2.40, -0.02, -1.35,   // 6: Tip trailing bottom
+      0.48, -0.05, -1.65,   // 7: Root trailing bottom
 
-      // Left Wing (Upper & Lower)
-      -0.38, 0.05, 0.85,   // 8: Root leading top
-      -2.35, 0.02, -1.05,  // 9: Tip leading top
-      -2.30, 0.02, -1.45,  // 10: Tip trailing top
-      -0.38, 0.05, -1.55,  // 11: Root trailing top
-      -0.38, -0.05, 0.85,  // 12: Root leading bottom
-      -2.35, -0.02, -1.05, // 13: Tip leading bottom
-      -2.30, -0.02, -1.45, // 14: Tip trailing bottom
-      -0.38, -0.05, -1.55, // 15: Root trailing bottom
-
-      // Right Winglet (Canted Upward Tip)
-      2.35, 0.02, -1.05,   // 16
-      2.42, 0.38, -1.25,   // 17: Winglet peak leading
-      2.38, 0.35, -1.45,   // 18: Winglet peak trailing
-      2.30, 0.02, -1.45,   // 19
-
-      // Left Winglet (Canted Upward Tip)
-      -2.35, 0.02, -1.05,  // 20
-      -2.42, 0.38, -1.25,  // 21: Winglet peak leading
-      -2.38, 0.35, -1.45,  // 22: Winglet peak trailing
-      -2.30, 0.02, -1.45,  // 23
+      // Left Wing (Upper & Lower surfaces)
+      -0.42, 0.05, 0.90,    // 8: Root leading top
+      -2.45, 0.02, -0.95,   // 9: Tip leading top
+      -2.40, 0.02, -1.35,   // 10: Tip trailing top
+      -0.48, 0.05, -1.65,   // 11: Root trailing top
+      -0.42, -0.05, 0.90,   // 12: Root leading bottom
+      -2.45, -0.02, -0.95,  // 13: Tip leading bottom
+      -2.40, -0.02, -1.35,  // 14: Tip trailing bottom
+      -0.48, -0.05, -1.65,  // 15: Root trailing bottom
     ];
 
     const indices = [
-      // Right Wing
+      // Right Wing Top
       0, 1, 2,  0, 2, 3,
+      // Right Wing Bottom
       4, 6, 5,  4, 7, 6,
+      // Right Wing Leading Edge
       0, 5, 1,  0, 4, 5,
+      // Right Wing Trailing Edge
       3, 2, 6,  3, 6, 7,
+      // Right Wing Tip
       1, 5, 6,  1, 6, 2,
 
-      // Left Wing
+      // Left Wing Top
       8, 10, 9,   8, 11, 10,
+      // Left Wing Bottom
       12, 13, 14, 12, 14, 15,
+      // Left Wing Leading Edge
       8, 9, 13,   8, 13, 12,
+      // Left Wing Trailing Edge
       11, 14, 10, 11, 15, 14,
+      // Left Wing Tip
       9, 10, 14,  9, 14, 13,
-
-      // Right Winglet (double-sided)
-      16, 17, 18, 16, 18, 19,
-      16, 18, 17, 16, 19, 18,
-
-      // Left Winglet (double-sided)
-      20, 22, 21, 20, 23, 22,
-      20, 21, 22, 20, 22, 23,
     ];
 
     geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
@@ -118,20 +107,21 @@ function LuxurySupersonicCraft({ meshRef, bankRef }) {
     return geo;
   }, []);
 
-  // 2. Twin Canted Vertical Stabilizers (F-22 Style Stealth Fins)
-  const finGeo = useMemo(() => {
+  // 2. Twin All-Moving Horizontal Stabilizers (Tailerons)
+  const taileronsGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
     const positions = [
-      // Right Fin (canted outward)
-      0.38, 0.06, -0.65,  // 0: Root leading
-      0.54, 0.78, -1.35,  // 1: Tip leading
-      0.50, 0.74, -1.65,  // 2: Tip trailing
-      0.36, 0.06, -1.55,  // 3: Root trailing
-      // Left Fin (canted outward)
-      -0.38, 0.06, -0.65, // 4: Root leading
-      -0.54, 0.78, -1.35, // 5: Tip leading
-      -0.50, 0.74, -1.65, // 6: Tip trailing
-      -0.36, 0.06, -1.55, // 7: Root trailing
+      // Right Taileron
+      0.45, 0.02, -1.60,   // 0: Root leading
+      1.35, 0.01, -2.15,   // 1: Tip leading
+      1.25, 0.01, -2.45,   // 2: Tip trailing
+      0.40, 0.02, -2.40,   // 3: Root trailing
+
+      // Left Taileron
+      -0.45, 0.02, -1.60,  // 4: Root leading
+      -1.35, 0.01, -2.15,  // 5: Tip leading
+      -1.25, 0.01, -2.45,  // 6: Tip trailing
+      -0.40, 0.02, -2.40,  // 7: Root trailing
     ];
     const indices = [
       0, 1, 2,  0, 2, 3,
@@ -145,15 +135,43 @@ function LuxurySupersonicCraft({ meshRef, bankRef }) {
     return geo;
   }, []);
 
-  // 3. Nose Blended Strakes (SR-71 Style Lifting Chines)
-  const strakesGeo = useMemo(() => {
+  // 3. Twin Canted Vertical Stabilizers (F-22 Style Stealth V-Tails)
+  const verticalTailsGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
     const positions = [
-      0, 0.02, 2.7,        // 0: Needle nose blend
-      0.38, 0.04, 0.85,    // 1: Right strake meets wing
-      0.16, 0.02, 0.85,    // 2
-      -0.16, 0.02, 0.85,   // 3
-      -0.38, 0.04, 0.85,   // 4: Left strake meets wing
+      // Right Fin (Canted Outward at ~28 deg)
+      0.42, 0.08, -0.80,   // 0: Root leading
+      0.68, 0.95, -1.65,   // 1: Tip leading
+      0.60, 0.90, -1.95,   // 2: Tip trailing
+      0.38, 0.08, -1.85,   // 3: Root trailing
+
+      // Left Fin (Canted Outward at ~28 deg)
+      -0.42, 0.08, -0.80,  // 4: Root leading
+      -0.68, 0.95, -1.65,  // 5: Tip leading
+      -0.60, 0.90, -1.95,  // 6: Tip trailing
+      -0.38, 0.08, -1.85,  // 7: Root trailing
+    ];
+    const indices = [
+      0, 1, 2,  0, 2, 3,
+      0, 2, 1,  0, 3, 2,
+      4, 6, 5,  4, 7, 6,
+      4, 5, 6,  4, 6, 7,
+    ];
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    return geo;
+  }, []);
+
+  // 4. Forebody LERX Chines (Leading Edge Root Extensions)
+  const chinesGeo = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    const positions = [
+      0, 0.02, 2.75,       // 0: Needle nose junction
+      0.42, 0.04, 0.90,    // 1: Right wing intersection
+      0.20, 0.02, 0.90,    // 2
+      -0.20, 0.02, 0.90,   // 3
+      -0.42, 0.04, 0.90,   // 4: Left wing intersection
     ];
     const indices = [
       0, 1, 2,  0, 2, 1,
@@ -167,130 +185,181 @@ function LuxurySupersonicCraft({ meshRef, bankRef }) {
   }, []);
 
   return (
-    <group ref={meshRef} scale={[1.15, 1.15, 1.15]}>
+    <group ref={meshRef} scale={[1.2, 1.2, 1.2]}>
       <group ref={bankRef}>
-        {/* High-Gloss Vibrant Studio Red Finish */}
+        {/* ─── High-Gloss Studio Red Primary Airframe ─── */}
         <mesh geometry={wingsGeo}>
           <meshStandardMaterial
             color="#dc2626"
-            roughness={0.2}
-            metalness={0.15}
+            roughness={0.18}
+            metalness={0.16}
             side={THREE.DoubleSide}
           />
         </mesh>
 
-        {/* Twin Canted Vertical Fins */}
-        <mesh geometry={finGeo}>
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.2}
-            metalness={0.15}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-
-        {/* Aerodynamic Forward Chines */}
-        <mesh geometry={strakesGeo}>
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.2}
-            metalness={0.15}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-
-        {/* Sculpted Radome Nose Cone */}
-        <mesh position={[0, 0.02, 1.65]} rotation={[Math.PI / 2, 0, 0]} scale={[1.15, 0.65, 1.0]}>
-          <coneGeometry args={[0.34, 2.1, 32]} />
+        <mesh geometry={taileronsGeo}>
           <meshStandardMaterial
             color="#dc2626"
             roughness={0.18}
-            metalness={0.15}
+            metalness={0.16}
+            side={THREE.DoubleSide}
           />
         </mesh>
 
-        {/* Supersonic Titanium Pitot Needle */}
+        <mesh geometry={verticalTailsGeo}>
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.18}
+            metalness={0.16}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        <mesh geometry={chinesGeo}>
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.18}
+            metalness={0.16}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        {/* ─── Stealth Faceted Radome Nose ─── */}
+        <mesh position={[0, 0.02, 1.7]} rotation={[Math.PI / 2, 0, 0]} scale={[1.12, 0.62, 1.0]}>
+          <cylinderGeometry args={[0.02, 0.38, 2.1, 8]} />
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.18}
+            metalness={0.16}
+          />
+        </mesh>
+
+        {/* Mach 2.5 Titanium Pitot Probe Needle */}
         <mesh position={[0, 0.02, 2.95]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.012, 0.022, 0.55, 16]} />
           <meshStandardMaterial
-            color="#1e293b"
-            roughness={0.15}
-            metalness={0.9}
+            color="#0f172a"
+            roughness={0.12}
+            metalness={0.92}
           />
         </mesh>
 
-        {/* Blended Center Fuselage Spine */}
-        <mesh position={[0, 0.04, -0.35]} rotation={[Math.PI / 2, 0, 0]} scale={[1.28, 0.62, 1.0]}>
-          <cylinderGeometry args={[0.35, 0.42, 2.0, 32]} />
+        {/* ─── Main Lifting Fuselage Spine ─── */}
+        <mesh position={[0, 0.04, -0.3]} rotation={[Math.PI / 2, 0, 0]} scale={[1.32, 0.58, 1.0]}>
+          <cylinderGeometry args={[0.38, 0.46, 2.0, 8]} />
           <meshStandardMaterial
             color="#dc2626"
             roughness={0.18}
-            metalness={0.15}
+            metalness={0.16}
           />
         </mesh>
 
-        {/* Rear Engine Cowling Section */}
-        <mesh position={[0, 0.04, -1.55]} rotation={[Math.PI / 2, 0, 0]} scale={[1.38, 0.52, 1.0]}>
-          <cylinderGeometry args={[0.42, 0.38, 0.8, 32]} />
+        {/* ─── Twin Engine Hump Cowling ─── */}
+        <mesh position={[0, 0.05, -1.55]} rotation={[Math.PI / 2, 0, 0]} scale={[1.42, 0.48, 1.0]}>
+          <cylinderGeometry args={[0.46, 0.38, 0.85, 8]} />
           <meshStandardMaterial
             color="#dc2626"
             roughness={0.18}
-            metalness={0.15}
+            metalness={0.16}
           />
         </mesh>
 
-        {/* Smoked Obsidian Teardrop Bubble Canopy */}
-        <mesh position={[0, 0.22, 0.55]} scale={[0.22, 0.20, 1.25]}>
+        {/* ─── Twin Stealth Air Intakes (Left & Right) ─── */}
+        {/* Right Careened Intake */}
+        <group position={[0.48, -0.04, 0.15]} rotation={[0, 0, -0.12]}>
+          <mesh scale={[0.22, 0.22, 1.1]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="#b91c1c" roughness={0.25} metalness={0.18} />
+          </mesh>
+          <mesh position={[0, 0, 0.56]} scale={[0.18, 0.18, 0.02]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="#0f172a" />
+          </mesh>
+        </group>
+
+        {/* Left Careened Intake */}
+        <group position={[-0.48, -0.04, 0.15]} rotation={[0, 0, 0.12]}>
+          <mesh scale={[0.22, 0.22, 1.1]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="#b91c1c" roughness={0.25} metalness={0.18} />
+          </mesh>
+          <mesh position={[0, 0, 0.56]} scale={[0.18, 0.18, 0.02]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color="#0f172a" />
+          </mesh>
+        </group>
+
+        {/* ─── Smoked Obsidian Fighter Jet Bubble Canopy ─── */}
+        <mesh position={[0, 0.22, 0.52]} scale={[0.21, 0.20, 1.25]}>
           <sphereGeometry args={[1, 32, 16]} />
           <meshStandardMaterial
-            color="#09090e"
-            roughness={0.04}
-            metalness={0.95}
+            color="#08080c"
+            roughness={0.03}
+            metalness={0.96}
           />
         </mesh>
 
-        {/* Subtle Titanium Canopy Base Ridge */}
-        <mesh position={[0, 0.14, 0.55]} scale={[0.24, 0.08, 1.28]}>
+        {/* Titanium Windshield Frame Bow Arch */}
+        <mesh position={[0, 0.22, 0.8]} rotation={[0.2, 0, 0]} scale={[0.23, 0.22, 0.06]}>
           <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial
-            color="#18181b"
-            roughness={0.3}
-            metalness={0.8}
-          />
+          <meshStandardMaterial color="#1e293b" roughness={0.3} metalness={0.85} />
         </mesh>
 
-        {/* Twin Jet Exhausts with Glowing Afterburner Cores */}
+        {/* Cockpit HUD (Heads-Up Display Glass) */}
+        <mesh position={[0, 0.20, 1.05]} rotation={[-0.35, 0, 0]}>
+          <planeGeometry args={[0.08, 0.08]} />
+          <meshBasicMaterial color="#06b6d4" transparent opacity={0.65} side={THREE.DoubleSide} />
+        </mesh>
+
+        {/* ─── Wingtip Missile Launch Rails (AIM-9X Style) ─── */}
+        {/* Right Wingtip Rail */}
+        <group position={[2.42, 0.02, -1.15]}>
+          <mesh scale={[0.04, 0.06, 0.7]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="#1e293b" roughness={0.3} metalness={0.8} />
+          </mesh>
+        </group>
+
+        {/* Left Wingtip Rail */}
+        <group position={[-2.42, 0.02, -1.15]}>
+          <mesh scale={[0.04, 0.06, 0.7]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="#1e293b" roughness={0.3} metalness={0.8} />
+          </mesh>
+        </group>
+
+        {/* ─── Twin Thrust-Vectoring Serrated Afterburners ─── */}
         {/* Right Exhaust */}
-        <group position={[0.26, 0.02, -1.98]}>
+        <group position={[0.26, 0.03, -1.98]}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.13, 0.15, 0.32, 24, 1, true]} />
+            <cylinderGeometry args={[0.13, 0.16, 0.36, 12, 1, true]} />
             <meshStandardMaterial
-              color="#27272a"
+              color="#1e293b"
               roughness={0.25}
-              metalness={0.88}
+              metalness={0.9}
               side={THREE.DoubleSide}
             />
           </mesh>
-          <mesh position={[0, 0, 0.04]} rotation={[0, Math.PI, 0]}>
-            <circleGeometry args={[0.11, 24]} />
-            <meshBasicMaterial color="#ff3828" />
+          <mesh position={[0, 0, 0.05]} rotation={[0, Math.PI, 0]}>
+            <circleGeometry args={[0.115, 24]} />
+            <meshBasicMaterial color="#ff2a18" />
           </mesh>
         </group>
 
         {/* Left Exhaust */}
-        <group position={[-0.26, 0.02, -1.98]}>
+        <group position={[-0.26, 0.03, -1.98]}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.13, 0.15, 0.32, 24, 1, true]} />
+            <cylinderGeometry args={[0.13, 0.16, 0.36, 12, 1, true]} />
             <meshStandardMaterial
-              color="#27272a"
+              color="#1e293b"
               roughness={0.25}
-              metalness={0.88}
+              metalness={0.9}
               side={THREE.DoubleSide}
             />
           </mesh>
-          <mesh position={[0, 0, 0.04]} rotation={[0, Math.PI, 0]}>
-            <circleGeometry args={[0.11, 24]} />
-            <meshBasicMaterial color="#ff3828" />
+          <mesh position={[0, 0, 0.05]} rotation={[0, Math.PI, 0]}>
+            <circleGeometry args={[0.115, 24]} />
+            <meshBasicMaterial color="#ff2a18" />
           </mesh>
         </group>
       </group>
@@ -596,8 +665,8 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         );
       })}
 
-      {/* The Sculpted Red Supersonic Delta Craft */}
-      <LuxurySupersonicCraft meshRef={planeRef} bankRef={bankRef} />
+      {/* Authentic Fifth-Gen Stealth Fighter Jet */}
+      <FighterJetCraft meshRef={planeRef} bankRef={bankRef} />
     </>
   );
 }
