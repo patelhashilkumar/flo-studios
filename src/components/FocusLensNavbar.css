@@ -1,0 +1,303 @@
+/* ═══════════════════════════════════════════════════
+   FOCUS LENS NAVBAR (Framer-inspired Camera Viewfinder)
+   Designed for Flo Studios
+   ═══════════════════════════════════════════════════ */
+
+/* Floating Fixed Top Header Wrapper */
+.focus-nav-header {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none;
+  padding: 0 16px;
+}
+
+/* Floating Capsule Container */
+.focus-nav-capsule {
+  pointer-events: auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(14, 14, 16, 0.92);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9999px;
+  box-shadow: 
+    0px 20px 40px -14px rgba(0, 0, 0, 0.5),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 4px 8px;
+  min-height: 52px;
+  user-select: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.focus-nav-capsule:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0px 24px 48px -14px rgba(0, 0, 0, 0.65),
+    0px 2px 6px 0px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Nav Track holding all items */
+.focus-nav-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Navigation Links */
+.focus-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  text-decoration: none;
+  border-radius: 8px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.focus-nav-link__text {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f4f4f2;
+  white-space: nowrap;
+  display: inline-block;
+  will-change: transform, filter, opacity;
+  transition: color 0.2s ease;
+}
+
+/* Active indicator dot under active route */
+.focus-nav-link--active .focus-nav-link__text {
+  color: #ffffff;
+}
+
+.focus-nav-link__dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  opacity: 0.9;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+/* Center Brand FLO Logo Link */
+.focus-nav-brand {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  margin: 0 4px;
+  text-decoration: none;
+  color: #ffffff;
+  border-radius: 8px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.focus-nav-brand__content {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  will-change: transform, filter, opacity;
+}
+
+.focus-nav-brand__mark {
+  color: #ffffff;
+  width: auto;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.focus-nav-brand__text {
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  color: #ffffff;
+}
+
+/* Subtle separator pill dots */
+.focus-nav-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin: 0 2px;
+}
+
+/* ═══════════════════════════════════════
+   MOBILE CAPSULE & DRAWER
+   ═══════════════════════════════════════ */
+.focus-nav-mobile-wrap {
+  display: none;
+  pointer-events: auto;
+  position: relative;
+  width: min(360px, calc(100vw - 32px));
+  background-color: rgba(14, 14, 16, 0.96);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 
+    0px 20px 48px -10px rgba(0, 0, 0, 0.7),
+    0px 2px 6px 0px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  transition: border-radius 0.3s ease;
+}
+
+.focus-nav-mobile-wrap--open {
+  border-radius: 20px;
+}
+
+.focus-nav-mobile-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.focus-nav-mobile-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.focus-nav-mobile-brand__text {
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+/* Mobile Hamburger Toggle */
+.focus-nav-mobile-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #f4f4f2;
+  cursor: pointer;
+  padding: 6px 8px;
+}
+
+.focus-nav-mobile-toggle__label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.focus-nav-mobile-icon {
+  position: relative;
+  width: 20px;
+  height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.focus-nav-mobile-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  transform-origin: center;
+}
+
+.focus-nav-mobile-wrap--open .focus-nav-mobile-icon span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.focus-nav-mobile-wrap--open .focus-nav-mobile-icon span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Mobile Expanded List */
+.focus-nav-mobile-drawer {
+  padding: 6px 10px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.focus-nav-mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: #f4f4f2;
+  border-radius: 12px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.focus-nav-mobile-link:hover,
+.focus-nav-mobile-link--active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.focus-nav-mobile-link__label {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.focus-nav-mobile-link__arrow {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.focus-nav-mobile-link:hover .focus-nav-mobile-link__arrow {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE DISPLAY SWITCH
+   ═══════════════════════════════════════ */
+@media (max-width: 860px) {
+  .focus-nav-capsule {
+    display: none;
+  }
+  .focus-nav-mobile-wrap {
+    display: block;
+  }
+}
