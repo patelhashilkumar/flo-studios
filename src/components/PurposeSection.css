@@ -4,12 +4,14 @@
 }
 
 .purpose__label {
-  font-size: var(--fs-label);
+  display: inline-block;
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-text-tertiary);
   margin-bottom: 3rem;
-  font-weight: 500;
 }
 
 .purpose__giant {
