@@ -14,7 +14,8 @@ const NAV_ITEMS = [
   // Right items
   { id: 'latest', label: 'LATEST', to: '/latest' },
   { id: 'careers', label: 'CAREERS', to: '/about' },
-  { id: 'contact', label: 'CONTACT', to: '/contact' },
+  // Signature Glass CTA
+  { id: 'contact', label: 'CONTACT', to: '/contact', isCta: true },
 ]
 
 const LENS_SPRING = {
@@ -28,9 +29,9 @@ const LENS_SPRING = {
  * Viewfinder Corner Lens Brackets
  * Glides smoothly across the active focus target with spring motion
  */
-function ViewfinderLens({ target, color = '#ffffff' }) {
-  const padX = 9
-  const padY = 6
+function ViewfinderLens({ target, color = '#0e0e12' }) {
+  const padX = 8
+  const padY = 5
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const w = useMotionValue(0)
@@ -79,6 +80,7 @@ function ViewfinderLens({ target, color = '#ffffff' }) {
     borderColor: color,
     borderStyle: 'solid',
     borderWidth: 0,
+    transition: 'border-color 0.2s ease',
     ...pos,
     ...borders,
   })
@@ -161,7 +163,7 @@ export default function FocusLensNavbar() {
     setHotId(null)
   }
 
-  // Update target coordinates relative to capsule
+  // Update target coordinates relative to container
   useEffect(() => {
     if (!hotId || !containerRef.current) {
       setLensTarget(null)
@@ -185,137 +187,163 @@ export default function FocusLensNavbar() {
     })
   }, [hotId])
 
+  // Viewfinder bracket color: white over dark CTA, dark obsidian over liquid glass links
+  const lensColor = hotId === 'contact' ? '#ffffff' : '#0e0e12'
+
   return (
     <header className="focus-nav-header" id="site-header">
-      {/* ── Desktop Focus Lens Capsule ── */}
-      <nav
-        ref={containerRef}
-        className="focus-nav-capsule"
-        aria-label="Primary Navigation"
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-      >
-        <div className="focus-nav-track">
-          {NAV_ITEMS.map((item) => {
-            const isHot = hotId === item.id
-            const isAnyHot = hotId !== null
-            const isActive = location.pathname === item.to && !item.isBrand
-
-            // Focus & Depth of Field blur states
-            const textAnimate = isHot
-              ? { opacity: 1, filter: 'blur(0px)', scale: 1 }
-              : isAnyHot
-              ? { opacity: 0.22, filter: 'blur(2.2px)', scale: 0.97 }
-              : isActive
-              ? { opacity: 1, filter: 'blur(0px)', scale: 1 }
-              : { opacity: 0.72, filter: 'blur(0px)', scale: 1 }
-
-            if (item.isBrand) {
-              return (
-                <Link
-                  key={item.id}
-                  to="/"
-                  className="focus-nav-brand"
-                  aria-label="Flo Studios Home"
-                >
-                  <motion.div
-                    ref={(el) => registerItem(item.id, el)}
-                    className="focus-nav-brand__content"
-                    animate={textAnimate}
-                    transition={LENS_SPRING}
-                  >
-                    <FloLogo className="focus-nav-brand__mark" height="17px" />
-                    <span className="focus-nav-brand__text">FLO</span>
-                  </motion.div>
-                </Link>
-              )
-            }
-
-            return (
-              <Link
-                key={item.id}
-                to={item.to}
-                className={`focus-nav-link ${isActive ? 'focus-nav-link--active' : ''}`}
-              >
-                <motion.span
-                  ref={(el) => registerItem(item.id, el)}
-                  className="focus-nav-link__text"
-                  animate={textAnimate}
-                  transition={LENS_SPRING}
-                >
-                  {item.label}
-                </motion.span>
-                {isActive && <span className="focus-nav-link__dot" />}
-              </Link>
-            )
-          })}
-        </div>
-
-        {/* Viewfinder brackets glide over whichever element is in focus */}
-        <ViewfinderLens target={lensTarget} color="#ffffff" />
-      </nav>
-
-      {/* ── Mobile Compact Focus Capsule + Drawer ── */}
-      <div className={`focus-nav-mobile-wrap ${mobileOpen ? 'focus-nav-mobile-wrap--open' : ''}`}>
-        <div
-          className="focus-nav-mobile-bar"
-          onClick={() => setMobileOpen(!mobileOpen)}
+      {/* ── 1. Desktop Liquid Glass Navbar ── */}
+      <div className="liquid-glass-rim">
+        <nav
+          ref={containerRef}
+          className="liquid-glass-body"
+          aria-label="Primary Navigation"
+          onPointerMove={handlePointerMove}
+          onPointerLeave={handlePointerLeave}
         >
-          <Link
-            to="/"
-            className="focus-nav-mobile-brand"
-            onClick={(e) => {
-              e.stopPropagation()
-              setMobileOpen(false)
-            }}
-            aria-label="Flo Studios Home"
-          >
-            <FloLogo height="17px" />
-            <span className="focus-nav-mobile-brand__text">FLO STUDIOS</span>
-          </Link>
+          <div className="focus-nav-track">
+            {NAV_ITEMS.map((item) => {
+              const isHot = hotId === item.id
+              const isAnyHot = hotId !== null
+              const isActive = location.pathname === item.to && !item.isBrand
 
-          <button
-            className="focus-nav-mobile-toggle"
-            aria-label="Toggle navigation"
-            aria-expanded={mobileOpen}
-          >
-            <span className="focus-nav-mobile-toggle__label">
-              {mobileOpen ? 'CLOSE' : 'MENU'}
-            </span>
-            <div className="focus-nav-mobile-icon">
-              <span />
-              <span />
-            </div>
-          </button>
-        </div>
+              // Focus & Depth of Field blur states
+              const textAnimate = isHot
+                ? { opacity: 1, filter: 'blur(0px)', scale: 1 }
+                : isAnyHot
+                ? { opacity: 0.28, filter: 'blur(2px)', scale: 0.97 }
+                : isActive
+                ? { opacity: 1, filter: 'blur(0px)', scale: 1 }
+                : { opacity: 0.72, filter: 'blur(0px)', scale: 1 }
 
-        {/* Expandable Drawer */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              className="focus-nav-mobile-drawer"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {NAV_ITEMS.filter((i) => !i.isBrand).map((item) => {
-                const isActive = location.pathname === item.to
+              if (item.isBrand) {
+                return (
+                  <Link
+                    key={item.id}
+                    to="/"
+                    className="focus-nav-brand"
+                    aria-label="Flo Studios Home"
+                  >
+                    <motion.div
+                      ref={(el) => registerItem(item.id, el)}
+                      className="focus-nav-brand__content"
+                      animate={textAnimate}
+                      transition={LENS_SPRING}
+                    >
+                      <FloLogo className="focus-nav-brand__mark" height="17px" color="#0e0e12" />
+                      <span className="focus-nav-brand__text">FLO</span>
+                    </motion.div>
+                  </Link>
+                )
+              }
+
+              if (item.isCta) {
                 return (
                   <Link
                     key={item.id}
                     to={item.to}
-                    className={`focus-nav-mobile-link ${isActive ? 'focus-nav-mobile-link--active' : ''}`}
-                    onClick={() => setMobileOpen(false)}
+                    className="focus-nav-cta"
                   >
-                    <span className="focus-nav-mobile-link__label">{item.label}</span>
-                    <span className="focus-nav-mobile-link__arrow">→</span>
+                    <motion.span
+                      ref={(el) => registerItem(item.id, el)}
+                      className="focus-nav-cta__text"
+                      animate={isHot ? { scale: 1.02 } : isAnyHot ? { opacity: 0.65 } : { opacity: 1 }}
+                      transition={LENS_SPRING}
+                    >
+                      {item.label}
+                    </motion.span>
                   </Link>
                 )
-              })}
-            </motion.div>
-          )}
-        </AnimatePresence>
+              }
+
+              return (
+                <Link
+                  key={item.id}
+                  to={item.to}
+                  className={`focus-nav-link ${isActive ? 'focus-nav-link--active' : ''}`}
+                >
+                  <motion.span
+                    ref={(el) => registerItem(item.id, el)}
+                    className="focus-nav-link__text"
+                    animate={textAnimate}
+                    transition={LENS_SPRING}
+                  >
+                    {item.label}
+                  </motion.span>
+                  {isActive && <span className="focus-nav-link__dot" />}
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Viewfinder brackets glide over whichever element is in focus */}
+          <ViewfinderLens target={lensTarget} color={lensColor} />
+        </nav>
+      </div>
+
+      {/* ── 2. Mobile Liquid Glass Capsule + Drawer ── */}
+      <div className={`liquid-glass-mobile-wrap ${mobileOpen ? 'liquid-glass-mobile-wrap--open' : ''}`}>
+        <div className="liquid-glass-mobile-inner">
+          <div
+            className="liquid-glass-mobile-bar"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <Link
+              to="/"
+              className="liquid-glass-mobile-brand"
+              onClick={(e) => {
+                e.stopPropagation()
+                setMobileOpen(false)
+              }}
+              aria-label="Flo Studios Home"
+            >
+              <FloLogo height="17px" color="#0e0e12" />
+              <span className="liquid-glass-mobile-brand__text">FLO STUDIOS</span>
+            </Link>
+
+            <button
+              className="liquid-glass-mobile-toggle"
+              aria-label="Toggle navigation"
+              aria-expanded={mobileOpen}
+            >
+              <span className="liquid-glass-mobile-toggle__label">
+                {mobileOpen ? 'CLOSE' : 'MENU'}
+              </span>
+              <div className="liquid-glass-mobile-icon">
+                <span />
+                <span />
+              </div>
+            </button>
+          </div>
+
+          {/* Expandable Drawer */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                className="liquid-glass-mobile-drawer"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {NAV_ITEMS.filter((i) => !i.isBrand).map((item) => {
+                  const isActive = location.pathname === item.to
+                  return (
+                    <Link
+                      key={item.id}
+                      to={item.to}
+                      className={`liquid-glass-mobile-link ${isActive ? 'liquid-glass-mobile-link--active' : ''}`}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <span className="liquid-glass-mobile-link__label">{item.label}</span>
+                      <span className="liquid-glass-mobile-link__arrow">→</span>
+                    </Link>
+                  )
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </header>
   )
