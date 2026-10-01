@@ -69,6 +69,7 @@ export default function Footer() {
                 <Link to="/services" className="lg-footer__link">Services</Link>
                 <Link to="/about" className="lg-footer__link">About</Link>
                 <Link to="/latest" className="lg-footer__link">Latest</Link>
+                <Link to="/careers" className="lg-footer__link">Careers</Link>
                 <Link to="/contact" className="lg-footer__link">Contact</Link>
               </div>
             </div>
@@ -111,6 +112,7 @@ export default function Footer() {
               <div className="lg-footer__legal">
                 <Link to="/" className="lg-footer__legal-link">Privacy Policy</Link>
                 <Link to="/" className="lg-footer__legal-link">Terms of Use</Link>
+                <Link to="/admin" className="lg-footer__legal-link" title="Studio Intake & Applications Admin">Admin</Link>
               </div>
             </div>
 

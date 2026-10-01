@@ -119,7 +119,7 @@ export default function AboutPage() {
             <p>Our teams are built to remove handoffs and keep the work connected so ideas don't get watered down from concept to execution.</p>
             <p>We hold a high bar, stay curious, and follow through.</p>
           </div>
-          <Link to="/contact" className="about-page__cta-pill">View open roles →</Link>
+          <Link to="/careers" className="about-page__cta-pill">View open roles →</Link>
         </div>
       </section>
 
@@ -131,7 +131,7 @@ export default function AboutPage() {
               <span key={i} className="about-page__careers-word">{w} </span>
             ))}
           </h2>
-          <Link to="/contact" className="about-page__cta-pill">Careers →</Link>
+          <Link to="/careers" className="about-page__cta-pill">Careers →</Link>
         </div>
       </section>
     </motion.main>

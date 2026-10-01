@@ -12,7 +12,7 @@ const LEFT_ITEMS = [
 
 const RIGHT_ITEMS = [
   { id: 'latest', label: 'LATEST', to: '/latest' },
-  { id: 'careers', label: 'CAREERS', to: '/about' },
+  { id: 'careers', label: 'CAREERS', to: '/careers' },
   { id: 'contact', label: 'CONTACT', to: '/contact', isCta: true },
 ]
 
