@@ -112,7 +112,16 @@ export default function Hero() {
 
       {/* ── 2. Rounded Video Player Card ── */}
       <div className="hero__video-wrapper" ref={videoCardRef}>
-        <div className="hero__video-card">
+        <div
+          className="hero__video-card"
+          onClick={() => setModalOpen(true)}
+          role="button"
+          tabIndex={0}
+          aria-label={`Open ${currentReel.name} video in theater mode`}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') setModalOpen(true)
+          }}
+        >
           {/* Looping HTML5 Background Video for Active Reel */}
           <video
             ref={cardVideoRef}
@@ -127,19 +136,6 @@ export default function Hero() {
             <source src={currentReel.videoSrc} type="video/mp4" />
             <source src={currentReel.videoSrc} type="video/quicktime" />
           </video>
-
-          {/* Central Play Button Overlay */}
-          <button
-            className="hero__play-btn"
-            onClick={() => setModalOpen(true)}
-            aria-label={`Play full ${currentReel.name} motion reel`}
-          >
-            <span className="hero__play-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-          </button>
 
           {/* Bottom Left Glassmorphic Project Switcher */}
           <div className="hero__reel-switcher" role="tablist" aria-label="Motion Graphics Reels">

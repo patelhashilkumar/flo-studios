@@ -53,6 +53,7 @@
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
 }
 
 /* Video Media (HTML5 Player) */
@@ -66,51 +67,6 @@
   pointer-events: none;
   background: #000000;
   transition: opacity 0.4s ease;
-}
-
-/* Central Play Button */
-.hero__play-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: #000000;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, background 0.2s ease;
-}
-
-.hero__play-btn:hover {
-  transform: translate(-50%, -50%) scale(1.12);
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.6);
-  background: #111111;
-}
-
-.hero__play-btn:active {
-  transform: translate(-50%, -50%) scale(0.96);
-}
-
-.hero__play-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  margin-left: 4px; /* optical center */
-}
-
-.hero__play-icon svg {
-  width: 100%;
-  height: 100%;
 }
 
 /* Bottom Left Glassmorphic Project Switcher */
@@ -391,16 +347,6 @@
   .hero__video-card {
     border-radius: 18px;
     min-height: 240px;
-  }
-
-  .hero__play-btn {
-    width: 60px;
-    height: 60px;
-  }
-
-  .hero__play-icon {
-    width: 22px;
-    height: 22px;
   }
 
   .hero__reel-switcher {
