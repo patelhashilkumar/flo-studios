@@ -1,18 +1,18 @@
 /* ═══════════════════════════════════════════════════════
-   FLO STUDIOS — 3D WORKFLOW JOURNEY SECTION
-   Apple Chromatic Titanium & Liquid Glass Theme
+   FLO STUDIOS — THE JOURNEY (3D Creative Pipeline)
+   Studio Cyclorama + Liquid Glass UI
    ═══════════════════════════════════════════════════════ */
 
 .workflow-section {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: #ffffff;
+  background: radial-gradient(circle at 50% 35%, #ffffff 0%, #f5f6f9 55%, #e9ecf2 100%);
   overflow: hidden;
   z-index: 1;
 }
 
-/* ─── 3D WebGL Canvas ─── */
+/* ─── 3D Three.js Canvas Container ─── */
 .workflow-canvas-container {
   position: absolute;
   inset: 0;
@@ -27,15 +27,16 @@
   inset: 0;
   pointer-events: none;
   z-index: 4;
-  padding: clamp(36px, 5vh, 70px) clamp(28px, 4.5vw, 70px);
+  padding: clamp(32px, 5vh, 64px) clamp(28px, 4vw, 72px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+/* Header */
 .workflow-header {
   pointer-events: auto;
-  max-width: 650px;
+  max-width: 580px;
 }
 
 .workflow-label {
@@ -45,398 +46,306 @@
   font-family: var(--font-primary);
   font-size: 11px;
   font-weight: 700;
-  color: rgba(24, 28, 36, 0.7);
-  letter-spacing: 0.12em;
+  color: #0e0e12;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 12px;
-  padding: 5px 14px;
+  padding: 6px 14px;
   border-radius: 9999px;
-  background: rgba(40, 44, 52, 0.04);
-  border: 1px solid rgba(40, 44, 52, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-/* Apple Chromatic Gradient Dot (Emerald → Indigo → Magenta) */
-.workflow-label-dot {
-  width: 7px;
-  height: 7px;
+.workflow-label-pulse {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #10b981 0%, #6366f1 50%, #f43f5e 100%);
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  background: #ff3b30;
+  box-shadow: 0 0 8px rgba(255, 59, 48, 0.7);
+  animation: pulseWorkflow 1.8s infinite;
+}
+
+@keyframes pulseWorkflow {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .workflow-title {
   font-family: var(--font-panchang), 'Panchang', sans-serif;
   font-size: clamp(34px, 4.8vw, 64px);
   font-weight: 800;
-  color: #181a1f;
+  color: #0e0e12;
   line-height: 1.05;
   letter-spacing: -0.025em;
-  text-transform: uppercase;
-  margin: 0;
+  margin: 0 0 10px;
 }
 
-.workflow-subtitle {
+.workflow-desc {
   font-family: var(--font-primary);
-  font-size: 14.5px;
-  color: rgba(24, 28, 36, 0.58);
+  font-size: clamp(13px, 1.1vw, 15px);
+  color: rgba(14, 14, 18, 0.62);
   line-height: 1.55;
-  margin: 10px 0 0;
-  max-width: 460px;
+  margin: 0;
+  max-width: 440px;
 }
 
-/* ─── Step Indicators (Side Glass Capsules) ─── */
+/* ─── Interactive Phase Navigation (Right Sidebar) ─── */
 .workflow-steps-indicator {
   position: absolute;
-  right: clamp(24px, 3.5vw, 60px);
+  right: clamp(20px, 3.5vw, 60px);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   pointer-events: auto;
+  z-index: 10;
 }
 
 .workflow-step-dot {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 5px 16px 5px 6px;
+  gap: 12px;
+  padding: 6px 12px 6px 6px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(40, 44, 52, 0.08);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  opacity: 0.45;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
-  user-select: none;
+  outline: none;
+  opacity: 0.55;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
 }
 
 .workflow-step-dot:hover {
   opacity: 0.85;
-  transform: translateX(-3px);
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateX(-4px);
 }
 
 .workflow-step-dot.active {
   opacity: 1;
-  background: #1e2229;
-  border-color: var(--step-accent, #6366f1);
-  box-shadow: 
-    0 8px 24px -4px rgba(var(--step-accent-rgb, 99, 102, 241), 0.32),
-    0 2px 6px rgba(0, 0, 0, 0.15);
-  transform: translateX(-4px);
-}
-
-.workflow-step-dot.completed {
-  opacity: 0.65;
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.12);
+  transform: translateX(-6px);
 }
 
 .workflow-step-dot-num {
   font-family: var(--font-panchang), 'Panchang', sans-serif;
   font-size: 10px;
   font-weight: 800;
-  color: #1e2229;
-  letter-spacing: 0.02em;
+  color: #0e0e12;
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: rgba(40, 44, 52, 0.06);
+  background: rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.35s ease;
+  transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
 .workflow-step-dot.active .workflow-step-dot-num {
-  background: var(--step-accent, #ffffff);
+  background: #0e0e12;
   color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.workflow-step-dot-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.workflow-step-dot-tag {
+  font-family: var(--font-primary);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ff3b30;
+  text-transform: uppercase;
 }
 
 .workflow-step-dot-title {
   font-family: var(--font-primary);
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: rgba(24, 28, 36, 0.75);
+  color: #0e0e12;
   letter-spacing: -0.01em;
   white-space: nowrap;
-  transition: color 0.35s ease;
 }
 
-.workflow-step-dot.active .workflow-step-dot-title {
-  color: #ffffff;
-}
-
-/* ─── 3D Liquid Glass Milestone Cards (Drei Html) ─── */
-.milestone-label {
-  position: relative;
-  width: max-content;
-  max-width: 320px;
-  padding: 24px 28px 22px;
-  overflow: hidden;
-  pointer-events: none;
-  color: #181a1f;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(40, 44, 52, 0.1);
-  border-radius: 22px;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 4px 12px -2px rgba(0, 0, 0, 0.04),
-    0 24px 48px -12px rgba(40, 44, 52, 0.1);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  opacity: 0.22;
-  transition:
-    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.5s ease,
-    box-shadow 0.5s ease,
-    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Chromatic Glass Rim Highlight */
-.milestone-label::after {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3.5px;
-  background: rgba(40, 44, 52, 0.15);
-  transition: background 0.4s ease, width 0.4s ease;
-}
-
-.milestone-label.align-left::after {
-  inset: 0 0 0 auto;
-}
-
-/* Alternating positioning from milestone sphere */
-.milestone-label.align-right {
-  transform: translate(44px, -50%);
-}
-
-.milestone-label.align-left {
-  transform: translate(calc(-100% - 44px), -50%);
-  text-align: right;
-}
-
-/* Active State with Chromatic Aura */
-.milestone-label.active {
-  opacity: 1;
-  border-color: rgba(var(--step-accent-rgb, 99, 102, 241), 0.45);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 1) inset,
-    0 8px 18px -4px rgba(0, 0, 0, 0.06),
-    0 28px 60px -12px rgba(var(--step-accent-rgb, 99, 102, 241), 0.24);
-}
-
-.milestone-label.align-right.active {
-  transform: translate(58px, -50%);
-}
-
-.milestone-label.align-left.active {
-  transform: translate(calc(-100% - 58px), -50%);
-}
-
-.milestone-label.active::after {
-  width: 4px;
-  background: var(--step-accent, #181a1f);
-}
-
-/* Connecting Line to Milestone Sphere */
-.milestone-label::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 40px;
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(40, 44, 52, 0.25) 0 4px,
-    transparent 4px 8px
-  );
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
-}
-
-.milestone-label.align-right::before {
-  right: 100%;
-}
-
-.milestone-label.align-left::before {
-  left: 100%;
-}
-
-.milestone-label.active::before {
-  width: 58px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--step-accent, #6366f1) 0 5px,
-    transparent 5px 9px
-  );
-}
-
-/* Ghost Background Step Index */
-.milestone-ghost {
-  position: absolute;
-  top: -4px;
-  right: 12px;
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: 64px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.038);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-.milestone-label.align-left .milestone-ghost {
-  right: auto;
-  left: 12px;
-}
-
-/* Milestone Metadata Row */
-.milestone-meta {
-  position: relative;
-  z-index: 1;
+/* ─── Bottom Footer Bar & Progress Scrubber ─── */
+.workflow-footer-bar {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 480px;
   display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 8px;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.milestone-label.align-left .milestone-meta {
-  justify-content: flex-end;
-}
-
-.milestone-num {
-  font-family: var(--font-primary);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(24, 28, 36, 0.5);
-  transition: color 0.35s ease;
-}
-
-.milestone-label.active .milestone-num {
-  color: var(--step-accent, #181a1f);
-}
-
-.milestone-pulse {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(40, 44, 52, 0.2);
-  flex-shrink: 0;
-}
-
-.milestone-label.active .milestone-pulse {
-  background: var(--step-accent, #10b981);
-  box-shadow: 0 0 0 0 rgba(var(--step-accent-rgb, 16, 185, 129), 0.55);
-  animation: milestone-pulse 1.8s ease-out infinite;
-}
-
-@keyframes milestone-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(var(--step-accent-rgb, 16, 185, 129), 0.55); }
-  70% { box-shadow: 0 0 0 9px rgba(var(--step-accent-rgb, 16, 185, 129), 0); }
-  100% { box-shadow: 0 0 0 0 rgba(var(--step-accent-rgb, 16, 185, 129), 0); }
-}
-
-.milestone-tag {
-  font-family: var(--font-primary);
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(24, 28, 36, 0.45);
-  padding: 2px 7px;
-  border-radius: 9999px;
-  background: rgba(40, 44, 52, 0.035);
-  transition: all 0.35s ease;
-}
-
-.milestone-label.active .milestone-tag {
-  color: var(--step-accent, #181a1f);
-  background: rgba(var(--step-accent-rgb, 99, 102, 241), 0.08);
-}
-
-/* Card Heading & Copy */
-.milestone-title {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 800;
-  margin: 0 0 8px;
-  letter-spacing: -0.015em;
-  line-height: 1.15;
-  color: #181a1f;
-}
-
-.milestone-desc {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-primary);
-  font-size: 12.5px;
-  color: rgba(24, 28, 36, 0.65);
-  line-height: 1.55;
-  margin: 0;
-  font-weight: 400;
-  max-width: 260px;
-}
-
-.milestone-label.align-left .milestone-desc {
-  margin-left: auto;
-}
-
-/* Card Footer Stepper */
-.milestone-footer {
-  position: relative;
-  z-index: 1;
+.workflow-progress-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 14px;
-  padding-top: 11px;
-  border-top: 1px solid rgba(40, 44, 52, 0.06);
-}
-
-.milestone-label.align-left .milestone-footer {
-  flex-direction: row-reverse;
-}
-
-.milestone-discipline {
   font-family: var(--font-primary);
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(24, 28, 36, 0.4);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(14, 14, 18, 0.55);
 }
 
-.milestone-stepper {
+.workflow-progress-step {
+  color: #0e0e12;
+  font-weight: 700;
+}
+
+.workflow-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.workflow-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #111116 0%, #ff3b30 100%);
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════════════════
+   3D FLOATING MILESTONE CARDS (Glassmorphism)
+   ═══════════════════════════════════════════════════ */
+
+.milestone-card {
+  width: clamp(280px, 22vw, 340px);
+  pointer-events: auto;
+  user-select: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.milestone-card__glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(24, 22, 20, 0.1);
+  border-radius: 20px;
+  padding: 20px 22px 18px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.02),
+    0 20px 36px -12px rgba(24, 22, 20, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.milestone-card--active .milestone-card__glass {
+  border-color: rgba(24, 22, 20, 0.3);
+  box-shadow: 
+    0 6px 12px -2px rgba(0, 0, 0, 0.04),
+    0 28px 56px -14px rgba(24, 22, 20, 0.2),
+    0 1px 0 rgba(255, 255, 255, 1) inset;
+  transform: scale(1.025);
+}
+
+.milestone-card__header {
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.milestone-stepper-dot {
-  width: 14px;
-  height: 3px;
-  border-radius: 9999px;
-  background: rgba(40, 44, 52, 0.1);
-  transition: all 0.3s ease;
+.milestone-card__tag {
+  font-family: var(--font-primary);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff3b30;
 }
 
-.milestone-stepper-dot.filled {
-  background: var(--step-accent, #181a1f);
+.milestone-card__indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(14, 14, 18, 0.5);
 }
 
-/* ─── Responsive ─── */
-@media (max-width: 968px) {
+.milestone-card__indicator-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff3b30;
+  box-shadow: 0 0 6px rgba(255, 59, 48, 0.7);
+  animation: pulseDot 1.8s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.milestone-card__title {
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0e0e12;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.milestone-card__desc {
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  color: rgba(14, 14, 18, 0.68);
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.milestone-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.milestone-card__deliverable-label {
+  font-family: var(--font-primary);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(14, 14, 18, 0.4);
+}
+
+.milestone-card__deliverable {
+  font-family: var(--font-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #0e0e12;
+}
+
+/* ─── Responsive Media Queries ─── */
+@media (max-width: 1024px) {
   .workflow-steps-indicator {
     display: none;
   }
@@ -444,23 +353,18 @@
 
 @media (max-width: 768px) {
   .workflow-ui {
-    padding: 30px 20px;
+    padding: 24px 20px;
   }
-  .workflow-title {
-    font-size: 28px;
+  .workflow-header {
+    max-width: 100%;
   }
-  .workflow-subtitle {
-    font-size: 13px;
-    max-width: 320px;
+  .milestone-card {
+    width: clamp(250px, 75vw, 300px);
   }
-  .milestone-label {
-    max-width: 240px;
-    padding: 16px 20px;
+  .milestone-card__glass {
+    padding: 16px 18px 14px;
   }
-  .milestone-title {
+  .milestone-card__title {
     font-size: 15px;
-  }
-  .milestone-desc {
-    font-size: 11.5px;
   }
 }

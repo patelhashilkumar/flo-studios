@@ -9,222 +9,183 @@ import './WorkflowSection.css';
 gsap.registerPlugin(ScrollTrigger);
 
 /* ═══════════════════════════════════════════════════
-   WORKFLOW STEPS — CHROMATIC APPLE PALETTE
-   Emerald Green (#10b981), Indigo/Violet (#6366f1),
-   Rose/Magenta (#f43f5e), Prismatic Purple (#a855f7)
+   AUTHENTIC FLO STUDIOS METHODOLOGY COPY
    ═══════════════════════════════════════════════════ */
 
-const workflowSteps = [
+const WORKFLOW_STEPS = [
   {
     num: "01",
-    tag: "DISCOVERY & STRATEGY",
-    title: "Brand Architecture",
-    desc: "Immersive briefing, narrative exploration, and strategic alignment to establish the core creative vision.",
-    accent: "#10b981", // Chromatic Emerald
-    accentRgb: "16, 185, 129",
-    color: "#282c34"
+    tag: "DISCOVERY",
+    title: "Vision & Direction",
+    desc: "Unearthing brand narrative, kinetic principles, and technical requirements through intensive creative exploration.",
+    deliverable: "Motion Brand Bible • Visual Trajectory",
+    color: "#ff3b30"
   },
   {
     num: "02",
-    tag: "DIRECTION & LOOKDEV",
-    title: "Visual Language",
-    desc: "Developing bespoke styleframes, motion principles, cinematic lighting, and 3D material palettes.",
-    accent: "#6366f1", // Chromatic Violet / Indigo
-    accentRgb: "99, 102, 241",
-    color: "#282c34"
+    tag: "PROTOTYPING",
+    title: "Motion & 3D R&D",
+    desc: "Kinetic storyboarding, procedural geometry sculpture, and lighting studies to establish a signature visual universe.",
+    deliverable: "Procedural Shaders • 3D Pre-Vis",
+    color: "#ff3b30"
   },
   {
     num: "03",
-    tag: "KINETIC PRODUCTION",
-    title: "Motion Craft",
-    desc: "Rigorous 3D animation, physics simulation, fluid dynamics, and dynamic type choreography.",
-    accent: "#f43f5e", // Chromatic Rose / Magenta
-    accentRgb: "244, 63, 94",
-    color: "#282c34"
+    tag: "PRODUCTION",
+    title: "Cinema & Craft",
+    desc: "High-fidelity physics simulations, raytraced GPU rendering, typographic micro-interactions, and bespoke sound design.",
+    deliverable: "Raytraced CGI • Sonic Architecture",
+    color: "#ff3b30"
   },
   {
     num: "04",
-    tag: "FINISHING & RELEASE",
+    tag: "DEPLOYMENT",
     title: "Master Delivery",
-    desc: "Precision color mastering, spatial sound design, multi-platform specs, and high-impact launch assets.",
-    accent: "#a855f7", // Chromatic Prismatic Purple
-    accentRgb: "168, 85, 247",
-    color: "#282c34"
+    desc: "Multi-platform 4K/8K rendering, spatial audio mastering, and interactive asset packaging engineered for iconic global reveals.",
+    deliverable: "Master 8K Renders • Interactive Code",
+    color: "#ff3b30"
   }
 ];
 
-/* ─── Apple Titanium Iridescent Jet Model ─── */
-function PaperPlane({ meshRef }) {
+/* ═══════════════════════════════════════════════════
+   STEALTH OBSIDIAN SUPERSONIC CRAFT
+   Replaces crude red cartoon jet with luxury craft
+   ═══════════════════════════════════════════════════ */
+
+function StealthJet({ meshRef }) {
   const planeGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
 
     const vertices = new Float32Array([
-      // === NOSE TIP ===
-      0,    0,    -2.0,    // 0  nose
-
-      // === FUSELAGE SPINE (top ridge) ===
-      0,    0.18, -1.2,    // 1  spine front
-      0,    0.22, -0.3,    // 2  spine mid
-      0,    0.28,  0.6,    // 3  spine rear
-      0,    0.35,  1.2,    // 4  tail tip top
-
-      // === FUSELAGE BELLY (bottom keel) ===
-      0,   -0.06, -1.2,    // 5  belly front
-      0,   -0.08, -0.3,    // 6  belly mid
-      0,   -0.06,  0.6,    // 7  belly rear
-      0,    0.0,   1.2,    // 8  tail tip bottom
-
-      // === LEFT WING ===
-      -0.35, 0.06, -0.8,   // 9   left wing root front
-      -1.8,  0.12,  0.1,   // 10  left wing tip front
-      -1.6,  0.10,  0.6,   // 11  left wing tip rear
-      -0.30, 0.08,  0.5,   // 12  left wing root rear
-
-      // === RIGHT WING ===
-      0.35,  0.06, -0.8,   // 13  right wing root front
-      1.8,   0.12,  0.1,   // 14  right wing tip front
-      1.6,   0.10,  0.6,   // 15  right wing tip rear
-      0.30,  0.08,  0.5,   // 16  right wing root rear
-
-      // === TAIL FIN (vertical stabilizer) ===
-      0,     0.28,  0.6,   // 17  fin base front  (=3)
-      0,     0.75,  0.9,   // 18  fin top
-      0,     0.35,  1.2,   // 19  fin base rear   (=4)
-
-      // === LEFT HORIZONTAL TAIL ===
-      -0.15, 0.20,  0.7,   // 20  left htail root
-      -0.7,  0.22,  1.0,   // 21  left htail tip
-      -0.15, 0.22,  1.1,   // 22  left htail rear
-
-      // === RIGHT HORIZONTAL TAIL ===
-      0.15,  0.20,  0.7,   // 23  right htail root
-      0.7,   0.22,  1.0,   // 24  right htail tip
-      0.15,  0.22,  1.1,   // 25  right htail rear
+      // Nose tip
+      0, 0, -2.3,
+      // Fuselage spine
+      0, 0.22, -1.3,
+      0, 0.26, -0.3,
+      0, 0.32,  0.7,
+      0, 0.40,  1.3,
+      // Fuselage belly
+      0, -0.08, -1.3,
+      0, -0.10, -0.3,
+      0, -0.08,  0.7,
+      0,  0.0,   1.3,
+      // Left wing
+      -0.38, 0.08, -0.8,
+      -2.0,  0.12,  0.2,
+      -1.7,  0.10,  0.7,
+      -0.32, 0.08,  0.6,
+      // Right wing
+      0.38,  0.08, -0.8,
+      2.0,   0.12,  0.2,
+      1.7,   0.10,  0.7,
+      0.32,  0.08,  0.6,
+      // Vertical stabilizer
+      0,     0.32,  0.7,
+      0,     0.85,  1.0,
+      0,     0.40,  1.3,
+      // Left h-tail
+      -0.18, 0.22,  0.8,
+      -0.78, 0.24,  1.1,
+      -0.18, 0.24,  1.2,
+      // Right h-tail
+      0.18,  0.22,  0.8,
+      0.78,  0.24,  1.1,
+      0.18,  0.24,  1.2,
     ]);
 
     const indices = [
       // Fuselage
-      0, 1, 9,    1, 2, 12,   1, 12, 9,   2, 3, 12, // top-left
-      0, 13, 1,   1, 13, 16,  1, 16, 2,   2, 16, 3, // top-right
-      0, 9, 5,    5, 9, 12,   5, 12, 6,   6, 12, 7, // bottom-left
-      0, 5, 13,   5, 16, 13,  5, 6, 16,   6, 7, 16, // bottom-right
-      
+      0, 1, 9,    1, 2, 12,   1, 12, 9,   2, 3, 12,
+      0, 13, 1,   1, 13, 16,  1, 16, 2,   2, 16, 3,
+      0, 9, 5,    5, 9, 12,   5, 12, 6,   6, 12, 7,
+      0, 5, 13,   5, 16, 13,  5, 6, 16,   6, 7, 16,
       // Wings
-      9, 10, 11,  9, 11, 12, // left top
-      9, 11, 10,  9, 12, 11, // left bottom
-      13, 15, 14, 13, 16, 15, // right top
-      13, 14, 15, 13, 15, 16, // right bottom
-      
-      // Tail sections
-      17, 18, 19, 19, 18, 17, // fin
-      3, 4, 7,    4, 8, 7,    // rear fuselage
-      20, 21, 22, 22, 21, 20, // left h-tail
-      23, 24, 25, 25, 24, 23, // right h-tail
+      9, 10, 11,  9, 11, 12,
+      9, 11, 10,  9, 12, 11,
+      13, 15, 14, 13, 16, 15,
+      13, 14, 15, 13, 15, 16,
+      // Tail
+      17, 18, 19, 19, 18, 17,
+      3, 4, 7,    4, 8, 7,
+      20, 21, 22, 22, 21, 20,
+      23, 24, 25, 25, 24, 23,
     ];
 
     geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geo.setIndex(indices);
-    
-    const nonIndexedGeo = geo.toNonIndexed();
-    nonIndexedGeo.computeVertexNormals();
-    
-    return nonIndexedGeo;
+    const nonIndexed = geo.toNonIndexed();
+    nonIndexed.computeVertexNormals();
+    return nonIndexed;
   }, []);
 
   return (
     <group ref={meshRef} scale={[0.92, 0.92, 0.92]}>
-      {/* Nose faces forward along trajectory */}
       <group rotation={[0, Math.PI, 0]}>
-        
-        {/* Apple Space Grey Brushed Titanium Body */}
+        {/* Stealth Obsidian Main Fuselage */}
         <mesh geometry={planeGeo}>
           <meshStandardMaterial
-            color="#282c34"
-            roughness={0.24}
-            metalness={0.88}
+            color="#141418"
+            roughness={0.2}
+            metalness={0.85}
             side={THREE.DoubleSide}
-            flatShading={true}
           />
         </mesh>
 
-        {/* Polished Platinum Chrome Spine Stripe */}
-        <mesh position={[0, 0.23, -0.3]} rotation={[0, 0, 0]}>
-          <boxGeometry args={[0.06, 0.015, 1.8]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.06} metalness={0.96} />
+        {/* Titanium Center Spine Ridge */}
+        <mesh position={[0, 0.26, -0.2]}>
+          <boxGeometry args={[0.04, 0.015, 2.1]} />
+          <meshStandardMaterial color="#f0f0f5" roughness={0.12} metalness={0.92} />
         </mesh>
 
-        {/* ── Chromatic Edge Refraction Lights (Apple Prismatic Look) ── */}
-        
-        {/* Emerald Green Left Wing Accent & Point Light */}
-        <pointLight position={[-1.4, 0.15, 0.2]} intensity={2.4} distance={5} color="#34d399" />
-        <mesh position={[-1.7, 0.11, 0.35]}>
-          <boxGeometry args={[0.08, 0.02, 0.5]} />
-          <meshBasicMaterial color="#34d399" />
-        </mesh>
-
-        {/* Indigo / Violet Right Wing Accent & Point Light */}
-        <pointLight position={[1.4, 0.15, 0.2]} intensity={2.4} distance={5} color="#818cf8" />
-        <mesh position={[1.7, 0.11, 0.35]}>
-          <boxGeometry args={[0.08, 0.02, 0.5]} />
-          <meshBasicMaterial color="#818cf8" />
-        </mesh>
-
-        {/* Magenta / Rose Keel Underside Accent & Point Light */}
-        <pointLight position={[0, -0.3, 0]} intensity={2.0} distance={5} color="#f43f5e" />
-        <mesh position={[0, -0.07, 0]}>
-          <boxGeometry args={[0.03, 0.01, 1.4]} />
-          <meshBasicMaterial color="#f43f5e" />
-        </mesh>
-
-        {/* Luminous Engine Core (Violet to Rose Glow) */}
-        <pointLight position={[0, 0, 1.25]} intensity={2.8} distance={7} color="#a855f7" />
-        
-        {/* Dual Exhaust Ring */}
-        <mesh position={[0, 0.05, 1.23]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.09, 0.02, 16, 32]} />
-          <meshBasicMaterial color="#c084fc" />
-        </mesh>
-
-        {/* Tinted Aero Cockpit Canopy with Prismatic Violet Reflection */}
-        <mesh position={[0, 0.165, -1.3]} rotation={[0.3, 0, 0]}>
-          <planeGeometry args={[0.12, 0.08]} />
-          <meshStandardMaterial 
-            color="#111827" 
-            emissive="#818cf8"
-            emissiveIntensity={0.4}
-            roughness={0.08} 
+        {/* Cockpit Canopy with Cyan Specular Glaze */}
+        <mesh position={[0, 0.20, -1.35]} rotation={[0.26, 0, 0]}>
+          <boxGeometry args={[0.13, 0.07, 0.44]} />
+          <meshStandardMaterial
+            color="#081016"
+            emissive="#00b4d8"
+            emissiveIntensity={0.35}
+            roughness={0.06}
             metalness={0.96}
           />
         </mesh>
+
+        {/* Twin Jet Afterburner Exhausts */}
+        <mesh position={[-0.14, 0.08, 1.3]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.065, 0.075, 0.12, 16]} />
+          <meshStandardMaterial color="#ff3b30" emissive="#ff3b30" emissiveIntensity={2.0} />
+        </mesh>
+        <mesh position={[0.14, 0.08, 1.3]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.065, 0.075, 0.12, 16]} />
+          <meshStandardMaterial color="#ff3b30" emissive="#ff3b30" emissiveIntensity={2.0} />
+        </mesh>
+
+        {/* Thruster Dynamic Glow */}
+        <pointLight position={[0, 0.08, 1.5]} intensity={2.5} distance={5} color="#ff3b30" />
       </group>
     </group>
   );
 }
 
-/* ─── Glowing Chromatic Halo Ring ─── */
-function GlowRing({ active, color = "#6366f1" }) {
+/* ═══════════════════════════════════════════════════
+   RADAR GLOW RING AT WAYPOINTS
+   ═══════════════════════════════════════════════════ */
+
+function GlowRing({ color, active }) {
   const ringRef = useRef();
-  const targetVec = useRef(new THREE.Vector3());
   
   useFrame((state) => {
     if (!ringRef.current) return;
-    ringRef.current.rotation.x = state.clock.elapsedTime * 0.35;
+    ringRef.current.rotation.x = state.clock.elapsedTime * 0.4;
     ringRef.current.rotation.z = state.clock.elapsedTime * 0.25;
-    
-    const targetScale = active ? 1.25 : 0.85;
-    targetVec.current.set(targetScale, targetScale, targetScale);
-    ringRef.current.scale.lerp(targetVec.current, 0.06);
+    const s = active ? 1.3 + Math.sin(state.clock.elapsedTime * 3) * 0.08 : 0.85;
+    ringRef.current.scale.set(s, s, s);
   });
   
   return (
     <mesh ref={ringRef}>
-      <torusGeometry args={[1.2, 0.032, 16, 64]} />
-      <meshStandardMaterial 
+      <torusGeometry args={[1.3, 0.035, 16, 64]} />
+      <meshBasicMaterial 
         color={color} 
-        emissive={color}
-        emissiveIntensity={active ? 0.75 : 0.15}
-        metalness={0.88}
-        roughness={0.2}
         transparent 
         opacity={active ? 0.65 : 0.18} 
       />
@@ -232,57 +193,10 @@ function GlowRing({ active, color = "#6366f1" }) {
   );
 }
 
-function getDeterministicNoise(seed) {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
-}
+/* ═══════════════════════════════════════════════════
+   ANIMATED RUNWAY DASHED PATH
+   ═══════════════════════════════════════════════════ */
 
-/* ─── Ambient Cosmic Dust Particles along Path ─── */
-function PathParticles({ curve }) {
-  const pointsRef = useRef();
-  
-  const particles = useMemo(() => {
-    const pts = [];
-    for (let i = 0; i < 150; i++) {
-      const t = getDeterministicNoise(i * 1.17 + 0.1);
-      const point = curve.getPointAt(t);
-      pts.push(
-        point.x + (getDeterministicNoise(i * 2.31 + 0.2) - 0.5) * 6,
-        point.y + (getDeterministicNoise(i * 3.47 + 0.3) - 0.5) * 6,
-        point.z + (getDeterministicNoise(i * 4.93 + 0.4) - 0.5) * 6
-      );
-    }
-    return new Float32Array(pts);
-  }, [curve]);
-  
-  useFrame((state) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.02;
-    }
-  });
-  
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particles.length / 3}
-          array={particles}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial 
-        size={0.07} 
-        color="#94a3b8" 
-        transparent 
-        opacity={0.35} 
-        sizeAttenuation 
-      />
-    </points>
-  );
-}
-
-/* ─── Dashed Trajectory Flight Line ─── */
 function DashedPath({ geometry }) {
   const lineRef = useRef();
   const matRef = useRef();
@@ -295,7 +209,7 @@ function DashedPath({ geometry }) {
 
   useFrame((state) => {
     if (matRef.current) {
-      matRef.current.dashOffset = -state.clock.elapsedTime * 1.5;
+      matRef.current.dashOffset = -state.clock.elapsedTime * 2.0;
     }
   });
 
@@ -303,43 +217,51 @@ function DashedPath({ geometry }) {
     <line ref={lineRef} geometry={geometry}>
       <lineDashedMaterial
         ref={matRef}
-        color="#2c3038"
-        opacity={0.32}
-        transparent
-        dashSize={0.8}
-        gapSize={0.45}
-        linewidth={1.2}
+        color="#2b2b36"
+        dashSize={1.1}
+        gapSize={0.55}
+        linewidth={1.5}
       />
     </line>
   );
 }
 
-// The 3D Scene Component
+/* ═══════════════════════════════════════════════════
+   3D SCENE COMPONENT
+   ═══════════════════════════════════════════════════ */
+
 function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const { camera } = useThree();
   const planeRef = useRef();
   
+  // Catmull-Rom flight corridor
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, 3, 0),
-      new THREE.Vector3(-6, 1, -12),
-      new THREE.Vector3(6, -2, -24),
-      new THREE.Vector3(-4, -5, -36),
-      new THREE.Vector3(0, -8, -50),
-      new THREE.Vector3(4, -12, -75),
+      new THREE.Vector3(-6, 1, -14),
+      new THREE.Vector3(6, -2, -28),
+      new THREE.Vector3(-5, -5, -42),
+      new THREE.Vector3(0, -8, -56),
+      new THREE.Vector3(4, -12, -78),
     ], false, 'catmullrom', 0.5);
   }, []);
 
+  // Milestones with smart side offsets to eliminate card collisions
   const milestones = useMemo(() => {
-    const points = [];
-    const fractions = [0.12, 0.37, 0.62, 0.87];
-    fractions.forEach(f => {
-      points.push({
-        position: curve.getPointAt(f),
+    const fractions = [0.10, 0.36, 0.63, 0.88];
+    return fractions.map((f, i) => {
+      const pos = curve.getPointAt(f);
+      const tan = curve.getTangentAt(f);
+      const normal = new THREE.Vector3(-tan.z, 0, tan.x).normalize();
+      const side = i % 2 === 0 ? 1 : -1;
+      const cardOffset = normal.clone().multiplyScalar(side * 3.8).add(new THREE.Vector3(0, 1.6, 0));
+      return {
+        beaconPosition: pos,
+        cardPosition: pos.clone().add(cardOffset),
+        side,
         fraction: f
-      });
+      };
     });
-    return points;
   }, [curve]);
 
   const dashedLineGeo = useMemo(() => {
@@ -352,6 +274,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
   useFrame((state) => {
     const p = progressRef.current?.value ?? 0;
     
+    // Determine active milestone index
     let newIndex = 0;
     if (p > 0.75) newIndex = 3;
     else if (p > 0.50) newIndex = 2;
@@ -362,109 +285,129 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
     const point = curve.getPointAt(t);
     const tangent = curve.getTangentAt(t);
     
+    // Position and orient stealth craft
     if (planeRef.current) {
       planeRef.current.position.copy(point);
       const lookTarget = point.clone().add(tangent);
       planeRef.current.lookAt(lookTarget);
       
-      const bankAngle = Math.sin(state.clock.elapsedTime * 1.5) * 0.15;
+      // Dynamic aerodynamic bank into turns
+      const bankAngle = -tangent.x * 0.45;
       planeRef.current.rotation.z += bankAngle;
     }
 
+    // 45-degree cinematic isometric chase perspective
     const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
     const cameraOffset = new THREE.Vector3()
-      .copy(normal).multiplyScalar(2)
-      .add(new THREE.Vector3(0, 12, 4));
+      .copy(normal).multiplyScalar(1.2)
+      .add(new THREE.Vector3(0, 6.5, 7.5));
 
     const targetCamPos = point.clone().add(cameraOffset);
-    camera.position.lerp(targetCamPos, 0.06);
+    camera.position.lerp(targetCamPos, 0.07);
 
-    const lookAheadPoint = curve.getPointAt(Math.min(p + 0.08, 0.99));
+    // Look ahead smoothly along flight path
+    const lookAheadPoint = curve.getPointAt(Math.min(p + 0.07, 0.99));
     camera.lookAt(lookAheadPoint);
   });
 
   return (
     <>
-      <ambientLight intensity={1.3} />
-      <directionalLight position={[10, 16, 10]} intensity={1.1} color="#ffffff" />
-      {/* Chromatic ambient rim lights mirroring Apple titanium reflections */}
-      <directionalLight position={[-8, 10, -5]} intensity={0.6} color="#34d399" />
-      <directionalLight position={[8, 10, -5]} intensity={0.6} color="#818cf8" />
-      <directionalLight position={[0, -8, 5]} intensity={0.4} color="#f43f5e" />
+      {/* Studio Cyclorama Lighting */}
+      <ambientLight intensity={1.4} />
+      <directionalLight position={[12, 18, 10]} intensity={1.2} color="#ffffff" />
+      <directionalLight position={[-8, 6, -10]} intensity={0.5} color="#e0e8f5" />
+      <pointLight position={[0, 10, 0]} intensity={0.6} color="#ffffff" />
 
-      <Sparkles count={80} scale={60} size={1} speed={0.2} opacity={0.08} color="#64748b" />
-      <PathParticles curve={curve} />
+      {/* Kinetic Ambient Dust Sparks */}
+      <Sparkles count={100} scale={70} size={1.4} speed={0.3} opacity={0.12} color="#181824" />
 
+      {/* The Animated Dashed Flight Corridor */}
       <DashedPath geometry={dashedLineGeo} />
 
+      {/* The 4 Journey Milestones */}
       {milestones.map((m, i) => {
         const isActive = activeIndex === i;
-        const step = workflowSteps[i];
+        const step = WORKFLOW_STEPS[i];
         
         return (
-          <group key={i} position={m.position}>
-            {/* Space Grey Titanium Milestone Pearl */}
-            <Float speed={2} floatIntensity={0.3}>
-              <mesh>
-                <sphereGeometry args={[isActive ? 0.38 : 0.24, 32, 32]} />
-                <meshStandardMaterial 
-                  color={isActive ? "#1f2329" : "#2d323b"}
-                  emissive={isActive ? step.accent : "#000000"}
-                  emissiveIntensity={isActive ? 0.55 : 0}
-                  roughness={0.12}
-                  metalness={0.92}
+          <group key={i}>
+            {/* Ground Waypoint Beacon */}
+            <group position={m.beaconPosition}>
+              {/* Radar Wave Ring */}
+              <GlowRing color={isActive ? '#ff3b30' : '#888899'} active={isActive} />
+
+              {/* Waypoint Core Orb */}
+              <Float speed={2.5} floatIntensity={0.25}>
+                <mesh position={[0, 0.35, 0]}>
+                  <sphereGeometry args={[isActive ? 0.38 : 0.24, 32, 32]} />
+                  <meshStandardMaterial 
+                    color={isActive ? "#141418" : "#2a2a35"}
+                    emissive={isActive ? "#ff3b30" : "#111116"}
+                    emissiveIntensity={isActive ? 0.75 : 0.15}
+                    roughness={0.15}
+                    metalness={0.92}
+                  />
+                </mesh>
+              </Float>
+
+              {/* Waypoint Coordinate Halo */}
+              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.15, 0]}>
+                <ringGeometry args={[0.75, 1.35, 32]} />
+                <meshBasicMaterial 
+                  color={isActive ? "#ff3b30" : "#555566"} 
+                  transparent 
+                  opacity={isActive ? 0.45 : 0.14} 
+                  side={THREE.DoubleSide} 
                 />
               </mesh>
-            </Float>
+            </group>
 
-            {/* Orbiting Chromatic Glass Halo */}
-            <GlowRing active={isActive} color={step.accent} />
-
-            {/* 3D Liquid Glass Milestone Card with Apple Chromatic Accent */}
-            <Html 
-              distanceFactor={12}
-              style={{ pointerEvents: 'none' }}
-            >
-              <div 
-                className={`milestone-label ${isActive ? 'active' : ''} ${i % 2 === 0 ? 'align-right' : 'align-left'}`}
-                style={{
-                  '--step-accent': step.accent,
-                  '--step-accent-rgb': step.accentRgb
-                }}
+            {/* Floating Glassmorphic Milestone Card */}
+            <group position={m.cardPosition}>
+              <Html 
+                distanceFactor={13.5}
+                style={{ pointerEvents: 'auto' }}
               >
-                <span className="milestone-ghost" aria-hidden="true">{step.num}</span>
-                <div className="milestone-meta">
-                  <span className="milestone-num">PHASE {step.num}</span>
-                  <span className="milestone-pulse" aria-hidden="true" />
-                  <span className="milestone-tag">{step.tag}</span>
-                </div>
-                <h4 className="milestone-title">{step.title}</h4>
-                <p className="milestone-desc">{step.desc}</p>
-                <div className="milestone-footer" aria-hidden="true">
-                  <span className="milestone-discipline">FLO PROCESS</span>
-                  <div className="milestone-stepper">
-                    {workflowSteps.map((s, sIdx) => (
-                      <span 
-                        key={sIdx} 
-                        className={`milestone-stepper-dot ${sIdx <= i ? 'filled' : ''}`}
-                        style={{
-                          backgroundColor: sIdx <= i ? step.accent : undefined
-                        }}
-                      />
-                    ))}
+                <div 
+                  className={`milestone-card ${isActive ? 'milestone-card--active' : ''} ${
+                    m.side > 0 ? 'milestone-card--right' : 'milestone-card--left'
+                  }`}
+                >
+                  <div className="milestone-card__glass">
+                    <div className="milestone-card__header">
+                      <span className="milestone-card__tag">
+                        PHASE {step.num} // {step.tag}
+                      </span>
+                      <span className="milestone-card__indicator">
+                        <span className="milestone-card__indicator-dot" />
+                        {isActive ? 'ACTIVE STAGE' : 'WAYPOINT'}
+                      </span>
+                    </div>
+
+                    <h3 className="milestone-card__title">{step.title}</h3>
+                    <p className="milestone-card__desc">{step.desc}</p>
+
+                    <div className="milestone-card__footer">
+                      <span className="milestone-card__deliverable-label">CORE DELIVERABLE</span>
+                      <span className="milestone-card__deliverable">{step.deliverable}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Html>
+              </Html>
+            </group>
           </group>
         );
       })}
 
-      {/* The Apple Titanium Iridescent Stealth Jet */}
-      <PaperPlane meshRef={planeRef} />
+      {/* The Stealth Aircraft */}
+      <StealthJet meshRef={planeRef} />
     </>
   );
 }
+
+/* ═══════════════════════════════════════════════════
+   MAIN WORKFLOW SECTION EXPORT
+   ═══════════════════════════════════════════════════ */
 
 export default function WorkflowSection() {
   const sectionRef = useRef(null);
@@ -486,9 +429,9 @@ export default function WorkflowSection() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=300%",
+          end: "+=320%",
           pin: true,
-          scrub: 1.5
+          scrub: 1.2
         }
       });
     }, section);
@@ -496,43 +439,72 @@ export default function WorkflowSection() {
     return () => ctx.revert();
   }, []);
 
+  // Jump to specific milestone when clicked on right indicator
+  const handleStepClick = (index) => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const scrollTrigger = ScrollTrigger.getById('workflow-trigger') || ScrollTrigger.getAll().find(st => st.trigger === section);
+    if (scrollTrigger) {
+      const targetFractions = [0.10, 0.36, 0.63, 0.88];
+      const target = scrollTrigger.start + targetFractions[index] * (scrollTrigger.end - scrollTrigger.start);
+      window.scrollTo({ top: target, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="workflow-section" id="workflow" ref={sectionRef}>
       {/* 2D UI Overlay */}
       <div className="workflow-ui">
+        {/* Header with Panchang ExtraBold */}
         <div className="workflow-header">
           <span className="workflow-label">
-            <span className="workflow-label-dot" />
-            PROCESS
+            <span className="workflow-label-pulse" />
+            CREATIVE METHODOLOGY
           </span>
           <h2 className="workflow-title">The Journey</h2>
-          <p className="workflow-subtitle">
-            How we translate creative vision into iconic motion systems and 3D worlds.
+          <p className="workflow-desc">
+            How Flo Studios architects cinematic motion and procedural 3D from concept to global launch.
           </p>
         </div>
 
-        {/* Step indicators */}
-        <div className="workflow-steps-indicator">
-          {workflowSteps.map((step, i) => (
-            <div 
+        {/* Step indicators (Clickable Timeline Navigation) */}
+        <div className="workflow-steps-indicator" role="navigation" aria-label="Workflow Phases">
+          {WORKFLOW_STEPS.map((step, i) => (
+            <button 
               key={i} 
+              type="button"
+              onClick={() => handleStepClick(i)}
               className={`workflow-step-dot ${activeIndex === i ? 'active' : ''} ${activeIndex > i ? 'completed' : ''}`}
-              style={{
-                '--step-accent': step.accent,
-                '--step-accent-rgb': step.accentRgb
-              }}
             >
               <span className="workflow-step-dot-num">{step.num}</span>
-              <span className="workflow-step-dot-title">{step.title}</span>
-            </div>
+              <div className="workflow-step-dot-text">
+                <span className="workflow-step-dot-tag">{step.tag}</span>
+                <span className="workflow-step-dot-title">{step.title}</span>
+              </div>
+            </button>
           ))}
+        </div>
+
+        {/* Bottom Progress Bar */}
+        <div className="workflow-footer-bar">
+          <div className="workflow-progress-info">
+            <span className="workflow-progress-step">PHASE {WORKFLOW_STEPS[activeIndex].num} OF 04</span>
+            <span className="workflow-progress-hint">SCROLL TO FLY THROUGH PIPELINE ↓</span>
+          </div>
+          <div className="workflow-progress-bar">
+            <div 
+              className="workflow-progress-fill" 
+              style={{ width: `${((activeIndex + 1) / WORKFLOW_STEPS.length) * 100}%` }} 
+            />
+          </div>
         </div>
       </div>
 
       {/* 3D Canvas */}
       <div className="workflow-canvas-container">
-        <Canvas camera={{ position: [0, 5, 5], fov: 55 }}>
-          <fog attach="fog" args={['#ffffff', 15, 55]} />
+        <Canvas camera={{ position: [0, 6, 8], fov: 52 }}>
+          <fog attach="fog" args={['#eef0f5', 18, 65]} />
           <Scene 
             progressRef={progressObj} 
             activeIndex={activeIndex} 
