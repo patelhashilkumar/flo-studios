@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   background: #ffffff;
-  padding-top: 86px;
+  padding-top: 68px;
   padding-bottom: clamp(4rem, 8vw, 8rem);
   overflow: hidden;
 }
