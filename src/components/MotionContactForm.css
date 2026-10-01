@@ -1,0 +1,256 @@
+/* ═══════════════════════════════════════════════════
+   MOTION CONTACT FORM & SUBMIT BUTTON
+   Inspired by Framer Motion Submit Button Component
+   ═══════════════════════════════════════════════════ */
+
+.motion-form-card {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border: 1px solid rgba(24, 22, 20, 0.09);
+  border-radius: 28px;
+  box-shadow: 
+    0px 2px 4px -2px rgba(24, 22, 20, 0.04),
+    0px 16px 36px -14px rgba(24, 22, 20, 0.09),
+    0px 1px 0px 0px rgba(255, 255, 255, 0.8) inset;
+  padding: clamp(24px, 3.5vw, 36px);
+  box-sizing: border-box;
+  margin-left: auto;
+}
+
+/* Card Header */
+.motion-form-card__header {
+  margin-bottom: 1.5rem;
+}
+
+.motion-form-card__title {
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
+  color: #0e0e12;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.motion-form-card__desc {
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  color: rgba(14, 14, 18, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Form Layout */
+.motion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.motion-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.motion-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.motion-form__label {
+  font-family: var(--font-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(14, 14, 18, 0.55);
+}
+
+.motion-form__input,
+.motion-form__textarea {
+  width: 100%;
+  padding: 11px 15px;
+  border-radius: 12px;
+  background-color: rgba(24, 22, 20, 0.025);
+  border: 1px solid rgba(24, 22, 20, 0.12);
+  font-family: var(--font-primary);
+  font-size: 13px;
+  color: #0e0e12;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.motion-form__input::placeholder,
+.motion-form__textarea::placeholder {
+  color: rgba(14, 14, 18, 0.38);
+}
+
+.motion-form__input:hover,
+.motion-form__textarea:hover {
+  background-color: rgba(24, 22, 20, 0.04);
+  border-color: rgba(24, 22, 20, 0.2);
+}
+
+.motion-form__input:focus,
+.motion-form__textarea:focus {
+  background-color: #ffffff;
+  border-color: #0e0e12;
+  box-shadow: 0 0 0 3px rgba(14, 14, 18, 0.08);
+}
+
+.motion-form__textarea {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.5;
+}
+
+/* Service / Project Type Chips */
+.motion-form__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.motion-form__chip {
+  padding: 5px 11px;
+  border-radius: 9999px;
+  background: rgba(24, 22, 20, 0.03);
+  border: 1px solid rgba(24, 22, 20, 0.1);
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(14, 14, 18, 0.7);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.motion-form__chip:hover {
+  background: rgba(24, 22, 20, 0.06);
+  color: #0e0e12;
+}
+
+.motion-form__chip--active {
+  background: #0e0e12;
+  color: #ffffff;
+  border-color: #0e0e12;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Motion Submit Button ── */
+.motion-submit-btn-wrap {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.motion-submit-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 26px;
+  border-radius: 9999px;
+  border: none;
+  background: linear-gradient(180deg, rgb(38, 38, 42) 0%, rgb(10, 10, 14) 100%);
+  color: #ffffff;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.28),
+    inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+    0px 8px 20px -6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, background 0.3s ease;
+  overflow: hidden;
+}
+
+.motion-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1.5px);
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+    inset 0px -1px 1px 0px rgba(0, 0, 0, 0.6),
+    0px 12px 26px -6px rgba(0, 0, 0, 0.45);
+}
+
+.motion-submit-btn:active:not(:disabled) {
+  transform: translateY(0.5px);
+}
+
+.motion-submit-btn:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+/* Success State */
+.motion-submit-btn--success {
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.35),
+    0px 8px 22px -4px rgba(16, 185, 129, 0.4);
+}
+
+/* Spinner Icon */
+.motion-submit-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: motionSpin 0.6s linear infinite;
+}
+
+@keyframes motionSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Arrow Icon animation */
+.motion-submit-arrow {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.motion-submit-btn:hover:not(:disabled) .motion-submit-arrow {
+  transform: translateX(4px);
+}
+
+/* Feedback Note */
+.motion-form__feedback {
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  margin-top: 0.5rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #047857;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .motion-form__row {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+  .motion-form-card {
+    padding: 24px 18px;
+  }
+  .motion-submit-btn {
+    width: 100%;
+  }
+}
