@@ -8,38 +8,52 @@ import './WorkflowSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ═══════════════════════════════════════════════════
+   WORKFLOW STEPS — CHROMATIC APPLE PALETTE
+   Emerald Green (#10b981), Indigo/Violet (#6366f1),
+   Rose/Magenta (#f43f5e), Prismatic Purple (#a855f7)
+   ═══════════════════════════════════════════════════ */
+
 const workflowSteps = [
   {
     num: "01",
-    tag: "DISCOVERY & CONCEPT",
+    tag: "DISCOVERY & STRATEGY",
     title: "Brand Architecture",
     desc: "Immersive briefing, narrative exploration, and strategic alignment to establish the core creative vision.",
-    color: "#0e0e12"
+    accent: "#10b981", // Chromatic Emerald
+    accentRgb: "16, 185, 129",
+    color: "#282c34"
   },
   {
     num: "02",
     tag: "DIRECTION & LOOKDEV",
     title: "Visual Language",
     desc: "Developing bespoke styleframes, motion principles, cinematic lighting, and 3D material palettes.",
-    color: "#0e0e12"
+    accent: "#6366f1", // Chromatic Violet / Indigo
+    accentRgb: "99, 102, 241",
+    color: "#282c34"
   },
   {
     num: "03",
     tag: "KINETIC PRODUCTION",
     title: "Motion Craft",
     desc: "Rigorous 3D animation, physics simulation, fluid dynamics, and dynamic type choreography.",
-    color: "#0e0e12"
+    accent: "#f43f5e", // Chromatic Rose / Magenta
+    accentRgb: "244, 63, 94",
+    color: "#282c34"
   },
   {
     num: "04",
     tag: "FINISHING & RELEASE",
     title: "Master Delivery",
     desc: "Precision color mastering, spatial sound design, multi-platform specs, and high-impact launch assets.",
-    color: "#0e0e12"
+    accent: "#a855f7", // Chromatic Prismatic Purple
+    accentRgb: "168, 85, 247",
+    color: "#282c34"
   }
 ];
 
-/* ─── Stealth Luxury Aircraft Model (Obsidian & Platinum) ─── */
+/* ─── Apple Titanium Iridescent Jet Model ─── */
 function PaperPlane({ meshRef }) {
   const planeGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
@@ -122,11 +136,11 @@ function PaperPlane({ meshRef }) {
       {/* Nose faces forward along trajectory */}
       <group rotation={[0, Math.PI, 0]}>
         
-        {/* Obsidian Stealth Body with Specular Bevels */}
+        {/* Apple Space Grey Brushed Titanium Body */}
         <mesh geometry={planeGeo}>
           <meshStandardMaterial
-            color="#141418"
-            roughness={0.22}
+            color="#282c34"
+            roughness={0.24}
             metalness={0.88}
             side={THREE.DoubleSide}
             flatShading={true}
@@ -136,27 +150,50 @@ function PaperPlane({ meshRef }) {
         {/* Polished Platinum Chrome Spine Stripe */}
         <mesh position={[0, 0.23, -0.3]} rotation={[0, 0, 0]}>
           <boxGeometry args={[0.06, 0.015, 1.8]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.08} metalness={0.96} />
+          <meshStandardMaterial color="#f8fafc" roughness={0.06} metalness={0.96} />
         </mesh>
 
-        {/* Luminous Ice Flare Engine Light */}
-        <pointLight position={[0, 0, 1.25]} intensity={2.5} distance={8} color="#e0f2fe" />
+        {/* ── Chromatic Edge Refraction Lights (Apple Prismatic Look) ── */}
         
-        {/* Precision Exhaust Nozzle Ring */}
-        <mesh position={[0, 0.05, 1.23]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.09, 0.018, 16, 32]} />
-          <meshBasicMaterial color="#38bdf8" />
+        {/* Emerald Green Left Wing Accent & Point Light */}
+        <pointLight position={[-1.4, 0.15, 0.2]} intensity={2.4} distance={5} color="#34d399" />
+        <mesh position={[-1.7, 0.11, 0.35]}>
+          <boxGeometry args={[0.08, 0.02, 0.5]} />
+          <meshBasicMaterial color="#34d399" />
         </mesh>
 
-        {/* Tinted Aero Cockpit Canopy */}
+        {/* Indigo / Violet Right Wing Accent & Point Light */}
+        <pointLight position={[1.4, 0.15, 0.2]} intensity={2.4} distance={5} color="#818cf8" />
+        <mesh position={[1.7, 0.11, 0.35]}>
+          <boxGeometry args={[0.08, 0.02, 0.5]} />
+          <meshBasicMaterial color="#818cf8" />
+        </mesh>
+
+        {/* Magenta / Rose Keel Underside Accent & Point Light */}
+        <pointLight position={[0, -0.3, 0]} intensity={2.0} distance={5} color="#f43f5e" />
+        <mesh position={[0, -0.07, 0]}>
+          <boxGeometry args={[0.03, 0.01, 1.4]} />
+          <meshBasicMaterial color="#f43f5e" />
+        </mesh>
+
+        {/* Luminous Engine Core (Violet to Rose Glow) */}
+        <pointLight position={[0, 0, 1.25]} intensity={2.8} distance={7} color="#a855f7" />
+        
+        {/* Dual Exhaust Ring */}
+        <mesh position={[0, 0.05, 1.23]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.09, 0.02, 16, 32]} />
+          <meshBasicMaterial color="#c084fc" />
+        </mesh>
+
+        {/* Tinted Aero Cockpit Canopy with Prismatic Violet Reflection */}
         <mesh position={[0, 0.165, -1.3]} rotation={[0.3, 0, 0]}>
           <planeGeometry args={[0.12, 0.08]} />
           <meshStandardMaterial 
-            color="#090d16" 
-            emissive="#38bdf8"
-            emissiveIntensity={0.35}
-            roughness={0.1} 
-            metalness={0.95}
+            color="#111827" 
+            emissive="#818cf8"
+            emissiveIntensity={0.4}
+            roughness={0.08} 
+            metalness={0.96}
           />
         </mesh>
       </group>
@@ -164,8 +201,8 @@ function PaperPlane({ meshRef }) {
   );
 }
 
-/* ─── Glowing Milestone Ring ─── */
-function GlowRing({ active }) {
+/* ─── Glowing Chromatic Halo Ring ─── */
+function GlowRing({ active, color = "#6366f1" }) {
   const ringRef = useRef();
   const targetVec = useRef(new THREE.Vector3());
   
@@ -183,11 +220,13 @@ function GlowRing({ active }) {
     <mesh ref={ringRef}>
       <torusGeometry args={[1.2, 0.032, 16, 64]} />
       <meshStandardMaterial 
-        color="#18181c" 
-        metalness={0.9}
+        color={color} 
+        emissive={color}
+        emissiveIntensity={active ? 0.75 : 0.15}
+        metalness={0.88}
         roughness={0.2}
         transparent 
-        opacity={active ? 0.45 : 0.12} 
+        opacity={active ? 0.65 : 0.18} 
       />
     </mesh>
   );
@@ -264,8 +303,8 @@ function DashedPath({ geometry }) {
     <line ref={lineRef} geometry={geometry}>
       <lineDashedMaterial
         ref={matRef}
-        color="#18181b"
-        opacity={0.28}
+        color="#2c3038"
+        opacity={0.32}
         transparent
         dashSize={0.8}
         gapSize={0.45}
@@ -348,7 +387,10 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
     <>
       <ambientLight intensity={1.3} />
       <directionalLight position={[10, 16, 10]} intensity={1.1} color="#ffffff" />
-      <directionalLight position={[-6, 6, -10]} intensity={0.4} color="#e2e8f0" />
+      {/* Chromatic ambient rim lights mirroring Apple titanium reflections */}
+      <directionalLight position={[-8, 10, -5]} intensity={0.6} color="#34d399" />
+      <directionalLight position={[8, 10, -5]} intensity={0.6} color="#818cf8" />
+      <directionalLight position={[0, -8, 5]} intensity={0.4} color="#f43f5e" />
 
       <Sparkles count={80} scale={60} size={1} speed={0.2} opacity={0.08} color="#64748b" />
       <PathParticles curve={curve} />
@@ -361,29 +403,35 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         
         return (
           <group key={i} position={m.position}>
-            {/* Obsidian Metallic Milestone Pearl */}
+            {/* Space Grey Titanium Milestone Pearl */}
             <Float speed={2} floatIntensity={0.3}>
               <mesh>
                 <sphereGeometry args={[isActive ? 0.38 : 0.24, 32, 32]} />
                 <meshStandardMaterial 
-                  color={isActive ? "#0e0e12" : "#27272a"}
-                  emissive={isActive ? "#1e293b" : "#000000"}
-                  emissiveIntensity={isActive ? 0.5 : 0}
+                  color={isActive ? "#1f2329" : "#2d323b"}
+                  emissive={isActive ? step.accent : "#000000"}
+                  emissiveIntensity={isActive ? 0.55 : 0}
                   roughness={0.12}
                   metalness={0.92}
                 />
               </mesh>
             </Float>
 
-            {/* Orbiting Glass Halo */}
-            <GlowRing active={isActive} />
+            {/* Orbiting Chromatic Glass Halo */}
+            <GlowRing active={isActive} color={step.accent} />
 
-            {/* 3D Liquid Glass Milestone Card */}
+            {/* 3D Liquid Glass Milestone Card with Apple Chromatic Accent */}
             <Html 
               distanceFactor={12}
               style={{ pointerEvents: 'none' }}
             >
-              <div className={`milestone-label ${isActive ? 'active' : ''} ${i % 2 === 0 ? 'align-right' : 'align-left'}`}>
+              <div 
+                className={`milestone-label ${isActive ? 'active' : ''} ${i % 2 === 0 ? 'align-right' : 'align-left'}`}
+                style={{
+                  '--step-accent': step.accent,
+                  '--step-accent-rgb': step.accentRgb
+                }}
+              >
                 <span className="milestone-ghost" aria-hidden="true">{step.num}</span>
                 <div className="milestone-meta">
                   <span className="milestone-num">PHASE {step.num}</span>
@@ -393,10 +441,16 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
                 <h4 className="milestone-title">{step.title}</h4>
                 <p className="milestone-desc">{step.desc}</p>
                 <div className="milestone-footer" aria-hidden="true">
-                  <span className="milestone-discipline">FLO MOTION PROCESS</span>
+                  <span className="milestone-discipline">FLO PROCESS</span>
                   <div className="milestone-stepper">
-                    {workflowSteps.map((_, sIdx) => (
-                      <span key={sIdx} className={`milestone-stepper-dot ${sIdx <= i ? 'filled' : ''}`} />
+                    {workflowSteps.map((s, sIdx) => (
+                      <span 
+                        key={sIdx} 
+                        className={`milestone-stepper-dot ${sIdx <= i ? 'filled' : ''}`}
+                        style={{
+                          backgroundColor: sIdx <= i ? step.accent : undefined
+                        }}
+                      />
                     ))}
                   </div>
                 </div>
@@ -406,7 +460,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         );
       })}
 
-      {/* The Obsidian Stealth Jet */}
+      {/* The Apple Titanium Iridescent Stealth Jet */}
       <PaperPlane meshRef={planeRef} />
     </>
   );
@@ -463,6 +517,10 @@ export default function WorkflowSection() {
             <div 
               key={i} 
               className={`workflow-step-dot ${activeIndex === i ? 'active' : ''} ${activeIndex > i ? 'completed' : ''}`}
+              style={{
+                '--step-accent': step.accent,
+                '--step-accent-rgb': step.accentRgb
+              }}
             >
               <span className="workflow-step-dot-num">{step.num}</span>
               <span className="workflow-step-dot-title">{step.title}</span>
