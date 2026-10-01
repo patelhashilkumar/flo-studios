@@ -9,7 +9,7 @@ import './WorkflowSection.css';
 gsap.registerPlugin(ScrollTrigger);
 
 /* ═══════════════════════════════════════════════════
-   AUTHENTIC FLO STUDIOS METHODOLOGY (Simplified)
+   AUTHENTIC FLO STUDIOS METHODOLOGY (Minimal)
    ═══════════════════════════════════════════════════ */
 
 const WORKFLOW_STEPS = [
@@ -17,35 +17,35 @@ const WORKFLOW_STEPS = [
     num: "01",
     tag: "DISCOVERY",
     title: "Vision & Direction",
-    desc: "Unearthing brand narrative, kinetic principles, and technical requirements through intensive creative exploration.",
+    desc: "Unearthing brand narrative, kinetic principles, and technical requirements through intensive exploration.",
     deliverable: "Motion Brand Bible"
   },
   {
     num: "02",
     tag: "PROTOTYPING",
     title: "Motion & 3D R&D",
-    desc: "Kinetic storyboarding, procedural geometry sculpture, and lighting studies to establish the signature visual universe.",
+    desc: "Kinetic storyboarding, procedural geometry sculpture, and lighting studies to establish the visual universe.",
     deliverable: "3D Pre-Vis & Shaders"
   },
   {
     num: "03",
     tag: "PRODUCTION",
     title: "Cinema & Craft",
-    desc: "High-fidelity physics simulations, raytraced GPU rendering, typographic micro-interactions, and bespoke sound design.",
+    desc: "High-fidelity physics simulations, raytraced GPU rendering, typographic micro-interactions, and sound design.",
     deliverable: "Raytraced CGI & Sound"
   },
   {
     num: "04",
     tag: "DEPLOYMENT",
     title: "Master Delivery",
-    desc: "Multi-platform 4K/8K rendering and interactive asset packaging engineered for iconic global reveals.",
+    desc: "Multi-platform 4K/8K rendering and interactive asset packaging engineered for global reveals.",
     deliverable: "Master 8K Interactive"
   }
 ];
 
 /* ═══════════════════════════════════════════════════
-   SCULPTED RED SUPERSONIC CRAFT
-   Aerodynamic delta-wing jet in glossy Flo Red
+   MINIMAL RED SUPERSONIC PLANE
+   Sculpted aerodynamic delta-wing craft in pure red
    ═══════════════════════════════════════════════════ */
 
 function RedDeltaCraft({ meshRef, bankRef }) {
@@ -66,69 +66,41 @@ function RedDeltaCraft({ meshRef, bankRef }) {
       0, -0.10,  0.6,  // 7
       0, -0.06,  1.4,  // 8: Tail tip bottom
       // Left Delta Wing
-      -0.35, 0.06, -0.9, // 9: Left root leading
-      -2.2,  0.08,  0.4, // 10: Left wing tip leading
-      -1.85, 0.07,  0.9, // 11: Left wing tip trailing
-      -0.32, 0.06,  0.8, // 12: Left root trailing
+      -0.35, 0.06, -0.9, // 9
+      -2.1,  0.08,  0.4, // 10
+      -1.8,  0.07,  0.9, // 11
+      -0.32, 0.06,  0.8, // 12
       // Right Delta Wing
-      0.35,  0.06, -0.9, // 13: Right root leading
-      2.2,   0.08,  0.4, // 14: Right wing tip leading
-      1.85,  0.07,  0.9, // 15: Right wing tip trailing
-      0.32,  0.06,  0.8, // 16: Right root trailing
+      0.35,  0.06, -0.9, // 13
+      2.1,   0.08,  0.4, // 14
+      1.8,   0.07,  0.9, // 15
+      0.32,  0.06,  0.8, // 16
       // Canted Left Fin
       -0.36, 0.24,  0.75, // 17
-      -0.52, 0.78,  1.15, // 18
+      -0.52, 0.75,  1.15, // 18
       -0.34, 0.22,  1.35, // 19
       // Canted Right Fin
       0.36,  0.24,  0.75, // 20
-      0.52,  0.78,  1.15, // 21
+      0.52,  0.75,  1.15, // 21
       0.34,  0.22,  1.35, // 22
     ]);
 
     const indices = [
-      // Top fuselage left
-      0, 1, 9,
-      1, 2, 9,
-      2, 12, 9,
-      2, 3, 12,
-      3, 4, 12,
-      // Top fuselage right
-      0, 13, 1,
-      1, 13, 2,
-      2, 13, 16,
-      2, 16, 3,
-      3, 16, 4,
-      // Bottom fuselage left
-      0, 9, 5,
-      5, 9, 6,
-      6, 9, 12,
-      6, 12, 7,
-      7, 12, 8,
-      // Bottom fuselage right
-      0, 5, 13,
-      5, 6, 13,
-      6, 16, 13,
-      6, 7, 16,
-      7, 8, 16,
+      // Top fuselage
+      0, 1, 9,   1, 2, 9,   2, 12, 9,  2, 3, 12,  3, 4, 12,
+      0, 13, 1,  1, 13, 2,  2, 13, 16, 2, 16, 3,  3, 16, 4,
+      // Bottom fuselage
+      0, 9, 5,   5, 9, 6,   6, 9, 12,  6, 12, 7,  7, 12, 8,
+      0, 5, 13,  5, 6, 13,  6, 16, 13, 6, 7, 16,  7, 8, 16,
       // Left Wing
-      9, 10, 11,
-      9, 11, 12,
-      9, 11, 10,
-      9, 12, 11,
+      9, 10, 11, 9, 11, 12, 9, 11, 10, 9, 12, 11,
       // Right Wing
-      13, 15, 14,
-      13, 16, 15,
-      13, 14, 15,
-      13, 15, 16,
-      // Canted Left Fin (double-sided)
-      17, 18, 19,
-      19, 18, 17,
-      // Canted Right Fin (double-sided)
-      20, 21, 22,
-      22, 21, 20,
-      // Tail rear closure
-      4, 12, 8,
-      4, 8, 16,
+      13, 15, 14, 13, 16, 15, 13, 14, 15, 13, 15, 16,
+      // Canted Fins
+      17, 18, 19, 19, 18, 17,
+      20, 21, 22, 22, 21, 20,
+      // Tail rear
+      4, 12, 8,  4, 8, 16,
     ];
 
     geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
@@ -139,18 +111,16 @@ function RedDeltaCraft({ meshRef, bankRef }) {
   }, []);
 
   return (
-    <group ref={meshRef} scale={[0.95, 0.95, 0.95]}>
-      {/* 180 deg Y rotation ensures the aerodynamic needle nose points forward along flight heading */}
+    <group ref={meshRef} scale={[1.0, 1.0, 1.0]}>
+      {/* 180 deg Y rotation ensures needle nose points forward along flight heading */}
       <group rotation={[0, Math.PI, 0]}>
         <group ref={bankRef}>
           {/* High-Gloss Vibrant Red Fuselage */}
           <mesh geometry={planeGeo}>
-            <meshPhysicalMaterial
+            <meshStandardMaterial
               color="#e62020"
-              roughness={0.2}
-              metalness={0.15}
-              clearcoat={0.65}
-              clearcoatRoughness={0.12}
+              roughness={0.25}
+              metalness={0.12}
               side={THREE.DoubleSide}
             />
           </mesh>
@@ -159,20 +129,10 @@ function RedDeltaCraft({ meshRef, bankRef }) {
           <mesh position={[0, 0.22, -0.65]} rotation={[-0.12, 0, 0]}>
             <boxGeometry args={[0.15, 0.09, 0.72]} />
             <meshStandardMaterial
-              color="#0b0f14"
-              roughness={0.06}
-              metalness={0.92}
+              color="#111116"
+              roughness={0.08}
+              metalness={0.9}
             />
-          </mesh>
-
-          {/* Flush Titanium Exhaust Ports */}
-          <mesh position={[-0.15, 0.08, 1.38]} rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.06, 0.07, 0.08, 16]} />
-            <meshStandardMaterial color="#222228" roughness={0.3} metalness={0.8} />
-          </mesh>
-          <mesh position={[0.15, 0.08, 1.38]} rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.06, 0.07, 0.08, 16]} />
-            <meshStandardMaterial color="#222228" roughness={0.3} metalness={0.8} />
           </mesh>
         </group>
       </group>
@@ -181,8 +141,7 @@ function RedDeltaCraft({ meshRef, bankRef }) {
 }
 
 /* ═══════════════════════════════════════════════════
-   DYNAMIC SOFT AMBIENT CONTACT SHADOW
-   Projects beneath the plane on the cyclorama floor
+   DYNAMIC SOFT CONTACT SHADOW (Floor Anchor)
    ═══════════════════════════════════════════════════ */
 
 function PlaneContactShadow({ shadowRef }) {
@@ -192,21 +151,80 @@ function PlaneContactShadow({ shadowRef }) {
     canvas.height = 128;
     const ctx = canvas.getContext('2d');
     const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 60);
-    grad.addColorStop(0, 'rgba(15, 23, 42, 0.38)');
-    grad.addColorStop(0.35, 'rgba(15, 23, 42, 0.18)');
-    grad.addColorStop(0.7, 'rgba(15, 23, 42, 0.05)');
+    grad.addColorStop(0, 'rgba(15, 23, 42, 0.32)');
+    grad.addColorStop(0.35, 'rgba(15, 23, 42, 0.14)');
+    grad.addColorStop(0.7, 'rgba(15, 23, 42, 0.04)');
     grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 128, 128);
-    const texture = new THREE.CanvasTexture(canvas);
-    return texture;
+    return new THREE.CanvasTexture(canvas);
   }, []);
 
   return (
     <mesh ref={shadowRef} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[3.2, 4.0]} />
-      <meshBasicMaterial map={shadowTex} transparent opacity={0.7} depthWrite={false} />
+      <planeGeometry args={[2.8, 3.6]} />
+      <meshBasicMaterial map={shadowTex} transparent opacity={0.65} depthWrite={false} />
     </mesh>
+  );
+}
+
+/* ═══════════════════════════════════════════════════
+   MINIMALIST ARCHITECTURAL WAYPOINT (Pure & Clean)
+   Hairline coordinate ring with subtle sonar ripple
+   ═══════════════════════════════════════════════════ */
+
+function MinimalWaypoint({ position, isActive }) {
+  const pulseRef = useRef();
+
+  useFrame((state) => {
+    if (pulseRef.current && isActive) {
+      const t = (state.clock.elapsedTime * 1.1) % 1.6;
+      const s = 1 + t * 0.7;
+      pulseRef.current.scale.set(s, s, 1);
+      pulseRef.current.material.opacity = Math.max(0, 0.35 * (1 - t / 1.6));
+    }
+  });
+
+  return (
+    <group position={position}>
+      {/* Flat Floor Marker Right on the Flight Path */}
+      <group position={[0, -0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        {/* Subtle Outer Hairline Ring */}
+        <mesh>
+          <ringGeometry args={[0.45, 0.50, 48]} />
+          <meshBasicMaterial
+            color={isActive ? "#18181b" : "#cbd5e1"}
+            transparent
+            opacity={isActive ? 0.85 : 0.35}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        {/* Center Node Ring */}
+        <mesh>
+          <ringGeometry args={[0.1, 0.18, 32]} />
+          <meshBasicMaterial
+            color={isActive ? "#18181b" : "#94a3b8"}
+            transparent
+            opacity={isActive ? 0.9 : 0.45}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        {/* Faint Concentric Pulse when Active */}
+        {isActive && (
+          <mesh ref={pulseRef}>
+            <ringGeometry args={[0.5, 0.54, 48]} />
+            <meshBasicMaterial
+              color="#71717a"
+              transparent
+              opacity={0.3}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        )}
+      </group>
+    </group>
   );
 }
 
@@ -234,15 +252,15 @@ function DashedPath({ geometry }) {
     <group>
       {/* Subtle Continuous Guide Ribbon in Pure Grey */}
       <line geometry={geometry}>
-        <lineBasicMaterial color="#d4d7dd" transparent opacity={0.6} />
+        <lineBasicMaterial color="#e2e8f0" transparent opacity={0.6} />
       </line>
 
       {/* Animated Precision Dashed Line in Pure Grey */}
       <line ref={lineRef} geometry={geometry}>
         <lineDashedMaterial
           ref={matRef}
-          color="#788290"
-          dashSize={1.2}
+          color="#94a3b8"
+          dashSize={1.1}
           gapSize={0.65}
           linewidth={1.5}
         />
@@ -252,116 +270,15 @@ function DashedPath({ geometry }) {
 }
 
 /* ═══════════════════════════════════════════════════
-   ARCHITECTURAL FLIGHT GATEWAY (Replaces clunky black ball)
-   Perpendicular supersonic halo with precision HUD reticle
+   3D SCENE COMPONENT
    ═══════════════════════════════════════════════════ */
-
-function WaypointGate({ position, tangent, isActive }) {
-  const pulseRef = useRef();
-
-  // Compute orientation so the ring stands perpendicular to the flight trajectory
-  const gateQuaternion = useMemo(() => {
-    const dummy = new THREE.Object3D();
-    dummy.position.copy(position);
-    dummy.lookAt(position.clone().add(tangent));
-    return dummy.quaternion;
-  }, [position, tangent]);
-
-  useFrame((state) => {
-    if (pulseRef.current && isActive) {
-      const t = (state.clock.elapsedTime * 0.9) % 2;
-      const s = 1 + t * 0.35;
-      pulseRef.current.scale.set(s, s, 1);
-      pulseRef.current.material.opacity = Math.max(0, 0.35 * (1 - t / 2));
-    }
-  });
-
-  return (
-    <group position={position}>
-      {/* 3D Vertical Flight Ring — Plane glides right through it */}
-      <group quaternion={gateQuaternion}>
-        {/* Primary Slender Halo Ring */}
-        <mesh>
-          <torusGeometry args={[2.25, 0.022, 16, 80]} />
-          <meshStandardMaterial
-            color={isActive ? "#1e242b" : "#8b949e"}
-            roughness={0.25}
-            metalness={0.75}
-            transparent
-            opacity={isActive ? 0.95 : 0.32}
-          />
-        </mesh>
-
-        {/* Secondary Hairline Concentric Ring */}
-        <mesh>
-          <torusGeometry args={[2.42, 0.012, 16, 80]} />
-          <meshBasicMaterial
-            color={isActive ? "#475569" : "#cbd5e1"}
-            transparent
-            opacity={isActive ? 0.65 : 0.18}
-          />
-        </mesh>
-
-        {/* 4 Precision Aviation Reticle Ticks */}
-        {[-Math.PI / 2, 0, Math.PI / 2, Math.PI].map((ang, idx) => (
-          <mesh
-            key={idx}
-            position={[Math.cos(ang) * 2.25, Math.sin(ang) * 2.25, 0]}
-            rotation={[0, 0, ang]}
-          >
-            <boxGeometry args={[0.12, 0.022, 0.022]} />
-            <meshBasicMaterial
-              color={isActive ? "#0f172a" : "#94a3b8"}
-              transparent
-              opacity={isActive ? 0.95 : 0.35}
-            />
-          </mesh>
-        ))}
-
-        {/* Animated Sonar Pulse Ring When Active */}
-        {isActive && (
-          <mesh ref={pulseRef}>
-            <ringGeometry args={[2.18, 2.32, 64]} />
-            <meshBasicMaterial
-              color="#64748b"
-              transparent
-              opacity={0.3}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-        )}
-      </group>
-
-      {/* Ground Navigation Floor Reticle */}
-      <group position={[0, -1.35, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh>
-          <ringGeometry args={[0.75, 0.82, 48]} />
-          <meshBasicMaterial
-            color={isActive ? "#475569" : "#d4d7dd"}
-            transparent
-            opacity={isActive ? 0.6 : 0.25}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-        <mesh>
-          <ringGeometry args={[0.2, 0.24, 32]} />
-          <meshBasicMaterial
-            color={isActive ? "#64748b" : "#e2e5e9"}
-            transparent
-            opacity={isActive ? 0.5 : 0.2}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      </group>
-    </group>
-  );
-}
 
 function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const { camera } = useThree();
   const planeRef = useRef();
   const bankRef = useRef();
   const shadowRef = useRef();
+  const currentLookAt = useRef(new THREE.Vector3());
   
   // Smooth Catmull-Rom flight corridor
   const curve = useMemo(() => {
@@ -383,7 +300,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       const tan = curve.getTangentAt(f);
       const normal = new THREE.Vector3(-tan.z, 0, tan.x).normalize();
       const side = i % 2 === 0 ? 1 : -1;
-      const cardOffset = normal.clone().multiplyScalar(side * 3.6).add(new THREE.Vector3(0, 1.2, 0));
+      const cardOffset = normal.clone().multiplyScalar(side * 4.2).add(new THREE.Vector3(0, 1.6, 0));
       return {
         beaconPosition: pos,
         tangent: tan,
@@ -422,7 +339,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       planeRef.current.lookAt(lookTarget);
       
       // Dynamic aerodynamic roll into curves
-      const bankAngle = -tangent.x * 0.45;
+      const bankAngle = THREE.MathUtils.clamp(tangent.x * 0.6, -0.45, 0.45);
       if (bankRef.current) {
         bankRef.current.rotation.z = bankAngle;
       }
@@ -431,23 +348,36 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       if (shadowRef.current) {
         shadowRef.current.position.set(point.x, point.y - 1.35, point.z);
         const bankScale = Math.max(0.65, Math.cos(bankAngle));
-        shadowRef.current.scale.set(1.1 * bankScale, 1.4, 1);
+        shadowRef.current.scale.set(1.2 * bankScale, 1.5, 1);
         shadowRef.current.rotation.z = -Math.atan2(tangent.x, -tangent.z);
       }
     }
 
-    // 3/4 Isometric cinematic chase camera
+    // Dynamic 3/4 Isometric camera placed at a comfortable, clear viewing distance
     const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+    const distBehind = 9.2;
+    const distAbove = 6.0;
+    const distSide = 3.8;
+
     const cameraOffset = new THREE.Vector3()
-      .copy(normal).multiplyScalar(2.0)
-      .add(new THREE.Vector3(0, 4.8, 6.2));
+      .copy(tangent).multiplyScalar(-distBehind)
+      .add(new THREE.Vector3(0, distAbove, 0))
+      .add(normal.clone().multiplyScalar(distSide));
 
     const targetCamPos = point.clone().add(cameraOffset);
-    camera.position.lerp(targetCamPos, 0.08);
+    camera.position.lerp(targetCamPos, 0.07);
 
-    // Look ahead smoothly along flight path
-    const lookAheadPoint = curve.getPointAt(Math.min(p + 0.08, 0.99));
-    camera.lookAt(lookAheadPoint);
+    // Frame the plane comfortably in view with path ahead
+    const targetLookAt = point.clone()
+      .add(tangent.clone().multiplyScalar(1.8))
+      .add(new THREE.Vector3(0, 0.4, 0));
+
+    if (currentLookAt.current.lengthSq() === 0) {
+      currentLookAt.current.copy(targetLookAt);
+    } else {
+      currentLookAt.current.lerp(targetLookAt, 0.08);
+    }
+    camera.lookAt(currentLookAt.current);
   });
 
   return (
@@ -463,21 +393,20 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       {/* Ground Contact Shadow Beneath The Red Craft */}
       <PlaneContactShadow shadowRef={shadowRef} />
 
-      {/* The 4 Milestones (Only the current milestone card is rendered to eliminate background clutter) */}
+      {/* The 4 Milestones */}
       {milestones.map((m, i) => {
         const isActive = activeIndex === i;
         const step = WORKFLOW_STEPS[i];
         
         return (
           <group key={i}>
-            {/* Architectural Supersonic Halo Gateway — The plane flies right through */}
-            <WaypointGate
+            {/* Minimalist Architectural Hairline Waypoint */}
+            <MinimalWaypoint
               position={m.beaconPosition}
-              tangent={m.tangent}
               isActive={isActive}
             />
 
-            {/* Current Active Milestone Liquid Glass Card (No background overlapping!) */}
+            {/* Current Active Milestone Card (Only active card shown to eliminate clutter) */}
             {isActive && (
               <group position={m.cardPosition}>
                 <Html 
@@ -487,9 +416,8 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
                 >
                   <div className="milestone-card milestone-card--active">
                     <div className="milestone-card__glass">
-                      <div className="milestone-card__top">
-                        <span className="milestone-card__phase">PHASE {step.num} // {step.tag}</span>
-                        <span className="milestone-card__badge">ACTIVE STAGE</span>
+                      <div className="milestone-card__phase">
+                        PHASE {step.num} — {step.tag}
                       </div>
 
                       <h3 className="milestone-card__title">{step.title}</h3>
@@ -497,8 +425,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
 
                       <div className="milestone-card__deliverable">
                         <span className="milestone-card__deliverable-dot" />
-                        <span className="milestone-card__deliverable-label">DELIVERABLE:</span>
-                        <span className="milestone-card__deliverable-text">{step.deliverable}</span>
+                        <span>Deliverable: {step.deliverable}</span>
                       </div>
                     </div>
                   </div>
@@ -571,7 +498,7 @@ export default function WorkflowSection() {
           <span className="workflow-label">CREATIVE PROCESS</span>
           <h2 className="workflow-title">The Journey</h2>
           <p className="workflow-desc">
-            How Flo Studios brings cinematic motion and procedural 3D from concept to global launch.
+            How Flo Studios brings cinematic motion and 3D from concept to global launch.
           </p>
         </div>
 
@@ -585,10 +512,7 @@ export default function WorkflowSection() {
               className={`workflow-step-dot ${activeIndex === i ? 'active' : ''}`}
             >
               <span className="workflow-step-dot-num">{step.num}</span>
-              <div className="workflow-step-dot-text">
-                <span className="workflow-step-dot-tag">{step.tag}</span>
-                <span className="workflow-step-dot-title">{step.title}</span>
-              </div>
+              <span className="workflow-step-dot-title">{step.title}</span>
             </button>
           ))}
         </div>
@@ -596,8 +520,8 @@ export default function WorkflowSection() {
         {/* Minimal Progress Footer Bar */}
         <div className="workflow-footer-bar">
           <div className="workflow-progress-info">
-            <span className="workflow-progress-step">PHASE {WORKFLOW_STEPS[activeIndex].num} OF 04</span>
-            <span className="workflow-progress-hint">SCROLL TO FLY ↓</span>
+            <span className="workflow-progress-step">Phase {WORKFLOW_STEPS[activeIndex].num} of 04</span>
+            <span className="workflow-progress-hint">Scroll to explore ↓</span>
           </div>
           <div className="workflow-progress-bar">
             <div 
@@ -610,7 +534,7 @@ export default function WorkflowSection() {
 
       {/* 3D Canvas */}
       <div className="workflow-canvas-container">
-        <Canvas camera={{ position: [0, 6, 8], fov: 50 }}>
+        <Canvas camera={{ position: [7.2, 9.6, 7.5], fov: 46 }}>
           <fog attach="fog" args={['#edf0f5', 20, 75]} />
           <Scene 
             progressRef={progressObj} 
