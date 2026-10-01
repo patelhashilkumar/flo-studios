@@ -7,13 +7,41 @@ const STATEMENT_WORDS = [
   "A", "creative", "&", "tech", "studio", "built", "at", "the", "intersection", "of", "content", "and", "technical", "infrastructure."
 ]
 
+const HERO_REELS = [
+  {
+    id: 'apple',
+    name: 'Apple',
+    badge: 'APPLE MOTION',
+    videoSrc: '/videos/apple.mov',
+    posterSrc: '/videos/apple-thumb.png',
+  },
+  {
+    id: 'blitzit',
+    name: 'Blitzit',
+    badge: 'BLITZIT 2.0',
+    videoSrc: '/videos/blitzit2.mov',
+    posterSrc: '/videos/blitzit-thumb.png',
+  },
+  {
+    id: 'sv',
+    name: 'SV',
+    badge: 'SV SHOWCASE',
+    videoSrc: '/videos/sv-final.mov',
+    posterSrc: '/videos/sv-thumb.png',
+  },
+]
+
 export default function Hero() {
-  const [isPlaying, setIsPlaying] = useState(true)
+  const [activeReelIdx, setActiveReelIdx] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
   const heroRef = useRef(null)
   const logoRef = useRef(null)
   const videoCardRef = useRef(null)
+  const cardVideoRef = useRef(null)
+  const modalVideoRef = useRef(null)
   const wordsRef = useRef([])
+
+  const currentReel = HERO_REELS[activeReelIdx]
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,6 +76,22 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
+  // Coordinate video playback between card loop and full modal
+  useEffect(() => {
+    if (modalOpen) {
+      cardVideoRef.current?.pause()
+      if (modalVideoRef.current) {
+        modalVideoRef.current.currentTime = 0
+        modalVideoRef.current.play().catch(() => {})
+      }
+    } else {
+      if (modalVideoRef.current) {
+        modalVideoRef.current.pause()
+      }
+      cardVideoRef.current?.play().catch(() => {})
+    }
+  }, [modalOpen])
+
   // Close modal on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -69,20 +113,26 @@ export default function Hero() {
       {/* ── 2. Rounded Video Player Card ── */}
       <div className="hero__video-wrapper" ref={videoCardRef}>
         <div className="hero__video-card">
-          {/* Vimeo Background Loop Video */}
-          <iframe
-            src="https://player.vimeo.com/video/1008984369?app_id=122963&autoplay=1&muted=1&controls=0&loop=1&autopause=0&title=0&byline=0&playsinline=1&background=1"
-            className="hero__video-iframe"
-            title="Instrument 2026 Showreel"
-            allow="autoplay; fullscreen; picture-in-picture"
-            tabIndex="-1"
-          />
+          {/* Looping HTML5 Background Video for Active Reel */}
+          <video
+            ref={cardVideoRef}
+            key={currentReel.id}
+            className="hero__video-media"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={currentReel.posterSrc}
+          >
+            <source src={currentReel.videoSrc} type="video/mp4" />
+            <source src={currentReel.videoSrc} type="video/quicktime" />
+          </video>
 
           {/* Central Play Button Overlay */}
           <button
             className="hero__play-btn"
             onClick={() => setModalOpen(true)}
-            aria-label="Play full 2026 Instrument reel"
+            aria-label={`Play full ${currentReel.name} motion reel`}
           >
             <span className="hero__play-icon">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -91,10 +141,28 @@ export default function Hero() {
             </span>
           </button>
 
+          {/* Bottom Left Glassmorphic Project Switcher */}
+          <div className="hero__reel-switcher" role="tablist" aria-label="Motion Graphics Reels">
+            {HERO_REELS.map((reel, idx) => (
+              <button
+                key={reel.id}
+                role="tab"
+                aria-selected={activeReelIdx === idx}
+                className={`hero__reel-tab ${activeReelIdx === idx ? 'hero__reel-tab--active' : ''}`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setActiveReelIdx(idx)
+                }}
+              >
+                {reel.name}
+              </button>
+            ))}
+          </div>
+
           {/* Bottom Right Reel Info Label */}
           <div className="hero__video-badge">
             <span className="hero__video-dot" />
-            <span>2026 REEL</span>
+            <span>{currentReel.badge}</span>
           </div>
         </div>
       </div>
@@ -129,24 +197,35 @@ export default function Hero() {
       {modalOpen && (
         <div className="hero-modal" onClick={() => setModalOpen(false)}>
           <div className="hero-modal__content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="hero-modal__close"
-              onClick={() => setModalOpen(false)}
-              aria-label="Close video player"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+            <div className="hero-modal__header">
+              <div className="hero-modal__title-wrap">
+                <span className="hero-modal__badge">NOW PLAYING</span>
+                <span className="hero-modal__title">{currentReel.name} Motion Reel</span>
+              </div>
+              <button
+                className="hero-modal__close"
+                onClick={() => setModalOpen(false)}
+                aria-label="Close video player"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
             <div className="hero-modal__video-container">
-              <iframe
-                src="https://player.vimeo.com/video/1008984909?autoplay=1&title=0&byline=0&portrait=0"
-                className="hero-modal__iframe"
-                title="Instrument Full Reel"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              />
+              <video
+                ref={modalVideoRef}
+                key={currentReel.id + '-modal'}
+                className="hero-modal__video-player"
+                controls
+                autoPlay
+                playsInline
+                poster={currentReel.posterSrc}
+              >
+                <source src={currentReel.videoSrc} type="video/mp4" />
+                <source src={currentReel.videoSrc} type="video/quicktime" />
+              </video>
             </div>
           </div>
         </div>
