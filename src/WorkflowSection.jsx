@@ -48,7 +48,7 @@ const WORKFLOW_STEPS = [
    Aerodynamic delta-wing jet in glossy Flo Red
    ═══════════════════════════════════════════════════ */
 
-function RedDeltaCraft({ meshRef }) {
+function RedDeltaCraft({ meshRef, bankRef }) {
   const planeGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
 
@@ -140,37 +140,42 @@ function RedDeltaCraft({ meshRef }) {
 
   return (
     <group ref={meshRef} scale={[0.95, 0.95, 0.95]}>
-      {/* High-Gloss Vibrant Red Fuselage */}
-      <mesh geometry={planeGeo}>
-        <meshPhysicalMaterial
-          color="#e62020"
-          roughness={0.2}
-          metalness={0.15}
-          clearcoat={0.65}
-          clearcoatRoughness={0.12}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
+      {/* 180 deg Y rotation ensures the aerodynamic needle nose points forward along flight heading */}
+      <group rotation={[0, Math.PI, 0]}>
+        <group ref={bankRef}>
+          {/* High-Gloss Vibrant Red Fuselage */}
+          <mesh geometry={planeGeo}>
+            <meshPhysicalMaterial
+              color="#e62020"
+              roughness={0.2}
+              metalness={0.15}
+              clearcoat={0.65}
+              clearcoatRoughness={0.12}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
 
-      {/* Aerodynamic Smoked Obsidian Canopy */}
-      <mesh position={[0, 0.22, -0.65]} rotation={[-0.12, 0, 0]}>
-        <boxGeometry args={[0.15, 0.09, 0.72]} />
-        <meshStandardMaterial
-          color="#0b0f14"
-          roughness={0.06}
-          metalness={0.92}
-        />
-      </mesh>
+          {/* Aerodynamic Smoked Obsidian Canopy */}
+          <mesh position={[0, 0.22, -0.65]} rotation={[-0.12, 0, 0]}>
+            <boxGeometry args={[0.15, 0.09, 0.72]} />
+            <meshStandardMaterial
+              color="#0b0f14"
+              roughness={0.06}
+              metalness={0.92}
+            />
+          </mesh>
 
-      {/* Flush Titanium Exhaust Ports */}
-      <mesh position={[-0.15, 0.08, 1.38]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.06, 0.07, 0.08, 16]} />
-        <meshStandardMaterial color="#222228" roughness={0.3} metalness={0.8} />
-      </mesh>
-      <mesh position={[0.15, 0.08, 1.38]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.06, 0.07, 0.08, 16]} />
-        <meshStandardMaterial color="#222228" roughness={0.3} metalness={0.8} />
-      </mesh>
+          {/* Flush Titanium Exhaust Ports */}
+          <mesh position={[-0.15, 0.08, 1.38]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.06, 0.07, 0.08, 16]} />
+            <meshStandardMaterial color="#222228" roughness={0.3} metalness={0.8} />
+          </mesh>
+          <mesh position={[0.15, 0.08, 1.38]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.06, 0.07, 0.08, 16]} />
+            <meshStandardMaterial color="#222228" roughness={0.3} metalness={0.8} />
+          </mesh>
+        </group>
+      </group>
     </group>
   );
 }
@@ -253,6 +258,7 @@ function DashedPath({ geometry }) {
 function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const { camera } = useThree();
   const planeRef = useRef();
+  const bankRef = useRef();
   const shadowRef = useRef();
   
   // Smooth Catmull-Rom flight corridor
@@ -313,14 +319,17 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       planeRef.current.lookAt(lookTarget);
       
       // Dynamic aerodynamic roll into curves
-      const bankAngle = -tangent.x * 0.42;
-      planeRef.current.rotation.z += bankAngle;
+      const bankAngle = -tangent.x * 0.45;
+      if (bankRef.current) {
+        bankRef.current.rotation.z = bankAngle;
+      }
 
       // Update soft contact shadow directly below the craft
       if (shadowRef.current) {
         shadowRef.current.position.set(point.x, point.y - 1.35, point.z);
         const bankScale = Math.max(0.65, Math.cos(bankAngle));
         shadowRef.current.scale.set(1.1 * bankScale, 1.4, 1);
+        shadowRef.current.rotation.z = -Math.atan2(tangent.x, -tangent.z);
       }
     }
 
@@ -415,7 +424,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       })}
 
       {/* The Sculpted Red Supersonic Delta Craft */}
-      <RedDeltaCraft meshRef={planeRef} />
+      <RedDeltaCraft meshRef={planeRef} bankRef={bankRef} />
     </>
   );
 }
