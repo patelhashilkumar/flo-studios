@@ -44,95 +44,253 @@ const WORKFLOW_STEPS = [
 ];
 
 /* ═══════════════════════════════════════════════════
-   MINIMAL RED SUPERSONIC PLANE
-   Sculpted aerodynamic delta-wing craft in pure red
+   PREMIUM RED SUPERSONIC JET
+   Precision aerodynamic delta-wing craft with high-gloss
+   studio red finish, smoked obsidian canopy, twin canted
+   stabilizers, winglets, and glowing afterburners.
    ═══════════════════════════════════════════════════ */
 
-function RedDeltaCraft({ meshRef, bankRef }) {
-  const planeGeo = useMemo(() => {
+function LuxurySupersonicCraft({ meshRef, bankRef }) {
+  // 1. Sleek Delta Wings with Airfoil Profile & Canted Winglets
+  const wingsGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
+    const positions = [
+      // Right Wing (Upper & Lower)
+      0.38, 0.05, 0.85,    // 0: Root leading top
+      2.35, 0.02, -1.05,   // 1: Tip leading top
+      2.30, 0.02, -1.45,   // 2: Tip trailing top
+      0.38, 0.05, -1.55,   // 3: Root trailing top
+      0.38, -0.05, 0.85,   // 4: Root leading bottom
+      2.35, -0.02, -1.05,  // 5: Tip leading bottom
+      2.30, -0.02, -1.45,  // 6: Tip trailing bottom
+      0.38, -0.05, -1.55,  // 7: Root trailing bottom
 
-    const vertices = new Float32Array([
-      // 0: Needle nose tip
-      0, 0, -2.6,
-      // Fuselage top spine
-      0, 0.22, -1.4,   // 1
-      0, 0.26, -0.4,   // 2
-      0, 0.28,  0.6,   // 3
-      0, 0.22,  1.4,   // 4: Tail tip top
-      // Fuselage bottom belly
-      0, -0.10, -1.4,  // 5
-      0, -0.12, -0.4,  // 6
-      0, -0.10,  0.6,  // 7
-      0, -0.06,  1.4,  // 8: Tail tip bottom
-      // Left Delta Wing
-      -0.35, 0.06, -0.9, // 9
-      -2.1,  0.08,  0.4, // 10
-      -1.8,  0.07,  0.9, // 11
-      -0.32, 0.06,  0.8, // 12
-      // Right Delta Wing
-      0.35,  0.06, -0.9, // 13
-      2.1,   0.08,  0.4, // 14
-      1.8,   0.07,  0.9, // 15
-      0.32,  0.06,  0.8, // 16
-      // Canted Left Fin
-      -0.36, 0.24,  0.75, // 17
-      -0.52, 0.75,  1.15, // 18
-      -0.34, 0.22,  1.35, // 19
-      // Canted Right Fin
-      0.36,  0.24,  0.75, // 20
-      0.52,  0.75,  1.15, // 21
-      0.34,  0.22,  1.35, // 22
-    ]);
+      // Left Wing (Upper & Lower)
+      -0.38, 0.05, 0.85,   // 8: Root leading top
+      -2.35, 0.02, -1.05,  // 9: Tip leading top
+      -2.30, 0.02, -1.45,  // 10: Tip trailing top
+      -0.38, 0.05, -1.55,  // 11: Root trailing top
+      -0.38, -0.05, 0.85,  // 12: Root leading bottom
+      -2.35, -0.02, -1.05, // 13: Tip leading bottom
+      -2.30, -0.02, -1.45, // 14: Tip trailing bottom
+      -0.38, -0.05, -1.55, // 15: Root trailing bottom
 
-    const indices = [
-      // Top fuselage
-      0, 1, 9,   1, 2, 9,   2, 12, 9,  2, 3, 12,  3, 4, 12,
-      0, 13, 1,  1, 13, 2,  2, 13, 16, 2, 16, 3,  3, 16, 4,
-      // Bottom fuselage
-      0, 9, 5,   5, 9, 6,   6, 9, 12,  6, 12, 7,  7, 12, 8,
-      0, 5, 13,  5, 6, 13,  6, 16, 13, 6, 7, 16,  7, 8, 16,
-      // Left Wing
-      9, 10, 11, 9, 11, 12, 9, 11, 10, 9, 12, 11,
-      // Right Wing
-      13, 15, 14, 13, 16, 15, 13, 14, 15, 13, 15, 16,
-      // Canted Fins
-      17, 18, 19, 19, 18, 17,
-      20, 21, 22, 22, 21, 20,
-      // Tail rear
-      4, 12, 8,  4, 8, 16,
+      // Right Winglet (Canted Upward Tip)
+      2.35, 0.02, -1.05,   // 16
+      2.42, 0.38, -1.25,   // 17: Winglet peak leading
+      2.38, 0.35, -1.45,   // 18: Winglet peak trailing
+      2.30, 0.02, -1.45,   // 19
+
+      // Left Winglet (Canted Upward Tip)
+      -2.35, 0.02, -1.05,  // 20
+      -2.42, 0.38, -1.25,  // 21: Winglet peak leading
+      -2.38, 0.35, -1.45,  // 22: Winglet peak trailing
+      -2.30, 0.02, -1.45,  // 23
     ];
 
-    geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    const indices = [
+      // Right Wing
+      0, 1, 2,  0, 2, 3,
+      4, 6, 5,  4, 7, 6,
+      0, 5, 1,  0, 4, 5,
+      3, 2, 6,  3, 6, 7,
+      1, 5, 6,  1, 6, 2,
+
+      // Left Wing
+      8, 10, 9,   8, 11, 10,
+      12, 13, 14, 12, 14, 15,
+      8, 9, 13,   8, 13, 12,
+      11, 14, 10, 11, 15, 14,
+      9, 10, 14,  9, 14, 13,
+
+      // Right Winglet (double-sided)
+      16, 17, 18, 16, 18, 19,
+      16, 18, 17, 16, 19, 18,
+
+      // Left Winglet (double-sided)
+      20, 22, 21, 20, 23, 22,
+      20, 21, 22, 20, 22, 23,
+    ];
+
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     geo.setIndex(indices);
-    const nonIndexed = geo.toNonIndexed();
-    nonIndexed.computeVertexNormals();
-    return nonIndexed;
+    geo.computeVertexNormals();
+    return geo;
+  }, []);
+
+  // 2. Twin Canted Vertical Stabilizers (F-22 Style Stealth Fins)
+  const finGeo = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    const positions = [
+      // Right Fin (canted outward)
+      0.38, 0.06, -0.65,  // 0: Root leading
+      0.54, 0.78, -1.35,  // 1: Tip leading
+      0.50, 0.74, -1.65,  // 2: Tip trailing
+      0.36, 0.06, -1.55,  // 3: Root trailing
+      // Left Fin (canted outward)
+      -0.38, 0.06, -0.65, // 4: Root leading
+      -0.54, 0.78, -1.35, // 5: Tip leading
+      -0.50, 0.74, -1.65, // 6: Tip trailing
+      -0.36, 0.06, -1.55, // 7: Root trailing
+    ];
+    const indices = [
+      0, 1, 2,  0, 2, 3,
+      0, 2, 1,  0, 3, 2,
+      4, 6, 5,  4, 7, 6,
+      4, 5, 6,  4, 6, 7,
+    ];
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    return geo;
+  }, []);
+
+  // 3. Nose Blended Strakes (SR-71 Style Lifting Chines)
+  const strakesGeo = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    const positions = [
+      0, 0.02, 2.7,        // 0: Needle nose blend
+      0.38, 0.04, 0.85,    // 1: Right strake meets wing
+      0.16, 0.02, 0.85,    // 2
+      -0.16, 0.02, 0.85,   // 3
+      -0.38, 0.04, 0.85,   // 4: Left strake meets wing
+    ];
+    const indices = [
+      0, 1, 2,  0, 2, 1,
+      0, 3, 4,  0, 4, 3,
+      0, 2, 3,  0, 3, 2,
+    ];
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    return geo;
   }, []);
 
   return (
-    <group ref={meshRef} scale={[1.0, 1.0, 1.0]}>
-      {/* 180 deg Y rotation ensures needle nose points forward along flight heading */}
-      <group rotation={[0, Math.PI, 0]}>
-        <group ref={bankRef}>
-          {/* High-Gloss Vibrant Red Fuselage */}
-          <mesh geometry={planeGeo}>
+    <group ref={meshRef} scale={[1.15, 1.15, 1.15]}>
+      <group ref={bankRef}>
+        {/* High-Gloss Vibrant Studio Red Finish */}
+        <mesh geometry={wingsGeo}>
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.2}
+            metalness={0.15}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        {/* Twin Canted Vertical Fins */}
+        <mesh geometry={finGeo}>
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.2}
+            metalness={0.15}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        {/* Aerodynamic Forward Chines */}
+        <mesh geometry={strakesGeo}>
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.2}
+            metalness={0.15}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+
+        {/* Sculpted Radome Nose Cone */}
+        <mesh position={[0, 0.02, 1.65]} rotation={[Math.PI / 2, 0, 0]} scale={[1.15, 0.65, 1.0]}>
+          <coneGeometry args={[0.34, 2.1, 32]} />
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.18}
+            metalness={0.15}
+          />
+        </mesh>
+
+        {/* Supersonic Titanium Pitot Needle */}
+        <mesh position={[0, 0.02, 2.95]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.012, 0.022, 0.55, 16]} />
+          <meshStandardMaterial
+            color="#1e293b"
+            roughness={0.15}
+            metalness={0.9}
+          />
+        </mesh>
+
+        {/* Blended Center Fuselage Spine */}
+        <mesh position={[0, 0.04, -0.35]} rotation={[Math.PI / 2, 0, 0]} scale={[1.28, 0.62, 1.0]}>
+          <cylinderGeometry args={[0.35, 0.42, 2.0, 32]} />
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.18}
+            metalness={0.15}
+          />
+        </mesh>
+
+        {/* Rear Engine Cowling Section */}
+        <mesh position={[0, 0.04, -1.55]} rotation={[Math.PI / 2, 0, 0]} scale={[1.38, 0.52, 1.0]}>
+          <cylinderGeometry args={[0.42, 0.38, 0.8, 32]} />
+          <meshStandardMaterial
+            color="#dc2626"
+            roughness={0.18}
+            metalness={0.15}
+          />
+        </mesh>
+
+        {/* Smoked Obsidian Teardrop Bubble Canopy */}
+        <mesh position={[0, 0.22, 0.55]} scale={[0.22, 0.20, 1.25]}>
+          <sphereGeometry args={[1, 32, 16]} />
+          <meshStandardMaterial
+            color="#09090e"
+            roughness={0.04}
+            metalness={0.95}
+          />
+        </mesh>
+
+        {/* Subtle Titanium Canopy Base Ridge */}
+        <mesh position={[0, 0.14, 0.55]} scale={[0.24, 0.08, 1.28]}>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial
+            color="#18181b"
+            roughness={0.3}
+            metalness={0.8}
+          />
+        </mesh>
+
+        {/* Twin Jet Exhausts with Glowing Afterburner Cores */}
+        {/* Right Exhaust */}
+        <group position={[0.26, 0.02, -1.98]}>
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.13, 0.15, 0.32, 24, 1, true]} />
             <meshStandardMaterial
-              color="#e62020"
+              color="#27272a"
               roughness={0.25}
-              metalness={0.12}
+              metalness={0.88}
               side={THREE.DoubleSide}
             />
           </mesh>
+          <mesh position={[0, 0, 0.04]} rotation={[0, Math.PI, 0]}>
+            <circleGeometry args={[0.11, 24]} />
+            <meshBasicMaterial color="#ff3828" />
+          </mesh>
+        </group>
 
-          {/* Aerodynamic Smoked Obsidian Canopy */}
-          <mesh position={[0, 0.22, -0.65]} rotation={[-0.12, 0, 0]}>
-            <boxGeometry args={[0.15, 0.09, 0.72]} />
+        {/* Left Exhaust */}
+        <group position={[-0.26, 0.02, -1.98]}>
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.13, 0.15, 0.32, 24, 1, true]} />
             <meshStandardMaterial
-              color="#111116"
-              roughness={0.08}
-              metalness={0.9}
+              color="#27272a"
+              roughness={0.25}
+              metalness={0.88}
+              side={THREE.DoubleSide}
             />
+          </mesh>
+          <mesh position={[0, 0, 0.04]} rotation={[0, Math.PI, 0]}>
+            <circleGeometry args={[0.11, 24]} />
+            <meshBasicMaterial color="#ff3828" />
           </mesh>
         </group>
       </group>
@@ -338,17 +496,19 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       const lookTarget = point.clone().add(tangent);
       planeRef.current.lookAt(lookTarget);
       
-      // Dynamic aerodynamic roll into curves
-      const bankAngle = THREE.MathUtils.clamp(tangent.x * 0.6, -0.45, 0.45);
+      // Dynamic aerodynamic roll into curves and authentic pitch
+      const bankAngle = THREE.MathUtils.clamp(-tangent.x * 0.55, -0.45, 0.45);
+      const pitchAngle = THREE.MathUtils.clamp(-tangent.y * 0.35, -0.25, 0.25);
       if (bankRef.current) {
         bankRef.current.rotation.z = bankAngle;
+        bankRef.current.rotation.x = pitchAngle;
       }
 
       // Update soft contact shadow directly below the craft
       if (shadowRef.current) {
-        shadowRef.current.position.set(point.x, point.y - 1.35, point.z);
+        shadowRef.current.position.set(point.x, point.y - 1.4, point.z);
         const bankScale = Math.max(0.65, Math.cos(bankAngle));
-        shadowRef.current.scale.set(1.2 * bankScale, 1.5, 1);
+        shadowRef.current.scale.set(1.25 * bankScale, 1.55, 1);
         shadowRef.current.rotation.z = -Math.atan2(tangent.x, -tangent.z);
       }
     }
@@ -437,7 +597,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       })}
 
       {/* The Sculpted Red Supersonic Delta Craft */}
-      <RedDeltaCraft meshRef={planeRef} bankRef={bankRef} />
+      <LuxurySupersonicCraft meshRef={planeRef} bankRef={bankRef} />
     </>
   );
 }
@@ -515,20 +675,6 @@ export default function WorkflowSection() {
               <span className="workflow-step-dot-title">{step.title}</span>
             </button>
           ))}
-        </div>
-
-        {/* Minimal Progress Footer Bar */}
-        <div className="workflow-footer-bar">
-          <div className="workflow-progress-info">
-            <span className="workflow-progress-step">Phase {WORKFLOW_STEPS[activeIndex].num} of 04</span>
-            <span className="workflow-progress-hint">Scroll to explore ↓</span>
-          </div>
-          <div className="workflow-progress-bar">
-            <div 
-              className="workflow-progress-fill" 
-              style={{ width: `${((activeIndex + 1) / WORKFLOW_STEPS.length) * 100}%` }} 
-            />
-          </div>
         </div>
       </div>
 
