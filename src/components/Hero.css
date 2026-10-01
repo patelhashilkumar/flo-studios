@@ -10,18 +10,30 @@
   overflow: hidden;
 }
 
-/* ── 1. Giant "INSTRUMENT" Wordmark ── */
+/* ── 1. Giant "FLO STUDIOS" Wordmark ── */
 .hero__logo-container {
   width: 100%;
-  padding: 10px 20px 24px 20px;
-  line-height: 0;
+  padding: clamp(8px, 1.2vw, 16px) clamp(14px, 2.5vw, 36px) clamp(18px, 3vw, 36px) clamp(14px, 2.5vw, 36px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.hero__giant-logo {
+.hero__wordmark {
+  font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.4rem, 9.6vw, 12rem);
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  color: #000000;
   width: 100%;
-  height: auto;
-  display: block;
-  shape-rendering: geometricPrecision;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* ── 2. Rounded Video Container ── */
@@ -273,7 +285,12 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .hero__logo-container {
-    padding: 8px 14px 16px 14px;
+    padding: 8px 12px 16px 12px;
+  }
+
+  .hero__wordmark {
+    font-size: clamp(1.65rem, 8.8vw, 4rem);
+    letter-spacing: -0.02em;
   }
 
   .hero__video-wrapper {
