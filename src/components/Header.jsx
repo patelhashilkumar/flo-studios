@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import FloLogo from './FloLogo'
 import './Header.css'
 
 const ANNOUNCEMENTS = [
@@ -83,9 +84,10 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Center Brand Logo in Panchang ExtraBold */}
+          {/* Center Brand Logo with Official Flo Wave Mark & Wordmark */}
           <Link to="/" className="site-header__center-logo" aria-label="Flo Studios Home">
-            FLO
+            <FloLogo className="site-header__center-logo-mark" height="19px" />
+            <span className="site-header__center-logo-text">FLO</span>
           </Link>
 
           {/* Right pill navigation */}
@@ -126,6 +128,10 @@ export default function Header() {
       {/* Mobile Drawer Menu */}
       <div className={`site-mobile-menu ${menuOpen ? 'site-mobile-menu--open' : ''}`}>
         <div className="site-mobile-menu__inner">
+          <div className="site-mobile-menu__brand-header">
+            <FloLogo height="22px" />
+            <span className="site-mobile-menu__brand-text">FLO STUDIOS</span>
+          </div>
           <nav className="site-mobile-menu__nav">
             <Link to="/work" className="site-mobile-menu__link" onClick={() => setMenuOpen(false)}>WORK</Link>
             <Link to="/services" className="site-mobile-menu__link" onClick={() => setMenuOpen(false)}>SERVICES</Link>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import FloLogo from './FloLogo'
 import './Footer.css'
 
 export default function Footer() {
@@ -19,6 +20,7 @@ export default function Footer() {
         <div className="footer__top">
           <div className="footer__brand">
             <Link to="/" className="footer__logo" aria-label="Flo Studios Home">
+              <FloLogo className="footer__logo-icon" height="26px" />
               <span className="footer__logo-mark">FLO STUDIOS</span>
             </Link>
           </div>
