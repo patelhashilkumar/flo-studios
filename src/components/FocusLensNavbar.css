@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════
-   FOCUS LENS NAVBAR (Framer-inspired Camera Viewfinder)
-   Designed for Flo Studios
+   LIQUID GLASS FOCUS NAVBAR
+   Framer Liquid Glass Aesthetic + Camera Focus Lens Engine
    ═══════════════════════════════════════════════════ */
 
 /* Floating Fixed Top Header Wrapper */
@@ -17,34 +17,66 @@
   padding: 0 16px;
 }
 
-/* Floating Capsule Container */
-.focus-nav-capsule {
+/* ── 1. Outer Liquid Glass Bevel Rim ── */
+/* Features the signature 3px specular reflection gradient & multi-layer drop shadows */
+.liquid-glass-rim {
   pointer-events: auto;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(14, 14, 16, 0.92);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 3px;
   border-radius: 9999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(215, 218, 224, 0.88) 9%,
+    rgba(175, 180, 190, 0.75) 32%,
+    rgba(125, 130, 142, 0.72) 73%,
+    rgba(255, 255, 255, 0.98) 100%
+  );
   box-shadow: 
-    0px 20px 40px -14px rgba(0, 0, 0, 0.5),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  padding: 4px 8px;
-  min-height: 52px;
+    0.29px 4.36px 2.18px 0px rgba(0, 0, 0, 0.015),
+    0.48px 7.24px 3.63px 0px rgba(0, 0, 0, 0.02),
+    0.78px 11.7px 5.86px 0px rgba(0, 0, 0, 0.025),
+    1.28px 19.15px 9.6px 0px rgba(0, 0, 0, 0.035),
+    2.2px 32.97px 16.52px 0px rgba(0, 0, 0, 0.04),
+    4px 60px 30.07px 0px rgba(0, 0, 0, 0.08);
   user-select: none;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease;
 }
 
-.focus-nav-capsule:hover {
-  border-color: rgba(255, 255, 255, 0.16);
+.liquid-glass-rim:hover {
   box-shadow: 
-    0px 24px 48px -14px rgba(0, 0, 0, 0.65),
-    0px 2px 6px 0px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0.29px 4.36px 2.18px 0px rgba(0, 0, 0, 0.02),
+    0.48px 7.24px 3.63px 0px rgba(0, 0, 0, 0.025),
+    0.78px 11.7px 5.86px 0px rgba(0, 0, 0, 0.035),
+    1.28px 19.15px 9.6px 0px rgba(0, 0, 0, 0.045),
+    2.2px 32.97px 16.52px 0px rgba(0, 0, 0, 0.06),
+    4px 60px 30.07px 0px rgba(0, 0, 0, 0.12);
+}
+
+/* ── 2. Inner Liquid Glass Capsule Body ── */
+.liquid-glass-body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 6px 4px 10px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    150deg,
+    rgba(235, 238, 243, 0.82) 0%,
+    rgba(252, 253, 255, 0.90) 50.17%,
+    rgba(228, 232, 238, 0.80) 100%
+  );
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  box-shadow: 
+    inset 0px 1px 1.5px 0px rgba(255, 255, 255, 0.95),
+    inset 0px -1px 1.5px 0px rgba(0, 0, 0, 0.07),
+    inset 0px 0px 12px 0px rgba(255, 255, 255, 0.35);
+  min-height: 48px;
 }
 
 /* Nav Track holding all items */
@@ -55,26 +87,36 @@
   gap: 2px;
 }
 
-/* Navigation Links */
+/* ── 3. Navigation Links on Liquid Glass ── */
 .focus-nav-link {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 14px;
+  padding: 8px 13px;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 9999px;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover reflection pill highlight */
+.focus-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.9),
+    0px 6px 16px -6px rgba(148, 160, 181, 0.35),
+    -2px -2px 8px 0px rgba(255, 255, 255, 0.45);
 }
 
 .focus-nav-link__text {
   font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #f4f4f2;
+  color: #0e0e12;
   white-space: nowrap;
   display: inline-block;
   will-change: transform, filter, opacity;
@@ -83,35 +125,44 @@
 
 /* Active indicator dot under active route */
 .focus-nav-link--active .focus-nav-link__text {
-  color: #ffffff;
+  color: #000000;
 }
 
 .focus-nav-link__dot {
   position: absolute;
-  bottom: 4px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
   width: 3.5px;
   height: 3.5px;
   border-radius: 50%;
-  background-color: #ffffff;
-  opacity: 0.9;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  background-color: #0e0e12;
+  opacity: 0.85;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Center Brand FLO Logo Link */
+/* ── 4. Center Brand FLO Logo Link ── */
 .focus-nav-brand {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
+  gap: 7px;
+  padding: 8px 16px;
   margin: 0 4px;
   text-decoration: none;
-  color: #ffffff;
-  border-radius: 8px;
+  color: #0e0e12;
+  border-radius: 9999px;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.focus-nav-brand:hover {
+  background-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.95),
+    0px 6px 16px -6px rgba(148, 160, 181, 0.4),
+    -2px -2px 8px 0px rgba(255, 255, 255, 0.5);
 }
 
 .focus-nav-brand__content {
@@ -122,7 +173,7 @@
 }
 
 .focus-nav-brand__mark {
-  color: #ffffff;
+  color: #0e0e12;
   width: auto;
   flex-shrink: 0;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -134,90 +185,144 @@
   font-size: 1.15rem;
   letter-spacing: -0.015em;
   line-height: 1;
-  color: #ffffff;
+  color: #0e0e12;
 }
 
-/* Subtle separator pill dots */
-.focus-nav-sep {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.15);
-  margin: 0 2px;
+/* ── 5. Signature Glass CTA Button (Contact) ── */
+.focus-nav-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  text-decoration: none;
+  background: linear-gradient(180deg, rgb(38, 38, 42) 0%, rgb(10, 10, 14) 100%);
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.28),
+    inset 0px -1px 1px 0px rgba(0, 0, 0, 0.5),
+    0px 7px 16px -6px rgba(0, 0, 0, 0.35);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.focus-nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+    inset 0px -1px 1px 0px rgba(0, 0, 0, 0.6),
+    0px 9px 20px -6px rgba(0, 0, 0, 0.45);
+}
+
+.focus-nav-cta__text {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffff;
+  white-space: nowrap;
+  display: inline-block;
+  will-change: transform, filter, opacity;
 }
 
 /* ═══════════════════════════════════════
-   MOBILE CAPSULE & DRAWER
+   MOBILE LIQUID GLASS CAPSULE & DRAWER
    ═══════════════════════════════════════ */
-.focus-nav-mobile-wrap {
+.liquid-glass-mobile-wrap {
   display: none;
   pointer-events: auto;
   position: relative;
   width: min(360px, calc(100vw - 32px));
-  background-color: rgba(14, 14, 16, 0.96);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
+  padding: 3px;
+  border-radius: 26px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(215, 218, 224, 0.88) 9%,
+    rgba(175, 180, 190, 0.75) 32%,
+    rgba(125, 130, 142, 0.72) 73%,
+    rgba(255, 255, 255, 0.98) 100%
+  );
   box-shadow: 
-    0px 20px 48px -10px rgba(0, 0, 0, 0.7),
-    0px 2px 6px 0px rgba(0, 0, 0, 0.35);
+    0.48px 7.24px 3.63px 0px rgba(0, 0, 0, 0.02),
+    1.28px 19.15px 9.6px 0px rgba(0, 0, 0, 0.035),
+    4px 60px 30.07px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: border-radius 0.3s ease;
 }
 
-.focus-nav-mobile-wrap--open {
-  border-radius: 20px;
+.liquid-glass-mobile-wrap--open {
+  border-radius: 22px;
 }
 
-.focus-nav-mobile-bar {
+.liquid-glass-mobile-inner {
+  position: relative;
+  background: linear-gradient(
+    150deg,
+    rgba(238, 240, 245, 0.92) 0%,
+    rgba(255, 255, 255, 0.96) 50%,
+    rgba(232, 235, 242, 0.92) 100%
+  );
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border-radius: 23px;
+  box-shadow: 
+    inset 0px 1px 1.5px 0px rgba(255, 255, 255, 0.95),
+    inset 0px -1px 1.5px 0px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.liquid-glass-mobile-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 52px;
+  height: 50px;
   padding: 0 16px;
   cursor: pointer;
   user-select: none;
 }
 
-.focus-nav-mobile-brand {
+.liquid-glass-mobile-brand {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: #ffffff;
+  color: #0e0e12;
 }
 
-.focus-nav-mobile-brand__text {
+.liquid-glass-mobile-brand__text {
   font-family: var(--font-panchang), 'Panchang', sans-serif;
   font-weight: 800;
   font-size: 1.05rem;
   letter-spacing: -0.015em;
-  color: #ffffff;
+  color: #0e0e12;
 }
 
 /* Mobile Hamburger Toggle */
-.focus-nav-mobile-toggle {
+.liquid-glass-mobile-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
   background: none;
   border: none;
-  color: #f4f4f2;
+  color: #0e0e12;
   cursor: pointer;
   padding: 6px 8px;
 }
 
-.focus-nav-mobile-toggle__label {
+.liquid-glass-mobile-toggle__label {
   font-family: var(--font-primary);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(14, 14, 18, 0.65);
 }
 
-.focus-nav-mobile-icon {
+.liquid-glass-mobile-icon {
   position: relative;
   width: 20px;
   height: 14px;
@@ -226,67 +331,67 @@
   justify-content: space-between;
 }
 
-.focus-nav-mobile-icon span {
+.liquid-glass-mobile-icon span {
   display: block;
   width: 100%;
   height: 2px;
-  background-color: #ffffff;
+  background-color: #0e0e12;
   border-radius: 2px;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
   transform-origin: center;
 }
 
-.focus-nav-mobile-wrap--open .focus-nav-mobile-icon span:first-child {
+.liquid-glass-mobile-wrap--open .liquid-glass-mobile-icon span:first-child {
   transform: translateY(6px) rotate(45deg);
 }
 
-.focus-nav-mobile-wrap--open .focus-nav-mobile-icon span:last-child {
+.liquid-glass-mobile-wrap--open .liquid-glass-mobile-icon span:last-child {
   transform: translateY(-6px) rotate(-45deg);
 }
 
 /* Mobile Expanded List */
-.focus-nav-mobile-drawer {
-  padding: 6px 10px 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+.liquid-glass-mobile-drawer {
+  padding: 8px 10px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.focus-nav-mobile-link {
+.liquid-glass-mobile-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
   text-decoration: none;
-  color: #f4f4f2;
+  color: #0e0e12;
   border-radius: 12px;
   background: transparent;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
-.focus-nav-mobile-link:hover,
-.focus-nav-mobile-link--active {
-  background: rgba(255, 255, 255, 0.05);
+.liquid-glass-mobile-link:hover,
+.liquid-glass-mobile-link--active {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.focus-nav-mobile-link__label {
+.liquid-glass-mobile-link__label {
   font-family: var(--font-primary);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: #0e0e12;
 }
 
-.focus-nav-mobile-link__arrow {
+.liquid-glass-mobile-link__arrow {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(14, 14, 18, 0.4);
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.focus-nav-mobile-link:hover .focus-nav-mobile-link__arrow {
-  color: #ffffff;
+.liquid-glass-mobile-link:hover .liquid-glass-mobile-link__arrow {
+  color: #0e0e12;
   transform: translateX(3px);
 }
 
@@ -294,10 +399,10 @@
    RESPONSIVE DISPLAY SWITCH
    ═══════════════════════════════════════ */
 @media (max-width: 860px) {
-  .focus-nav-capsule {
+  .liquid-glass-rim {
     display: none;
   }
-  .focus-nav-mobile-wrap {
+  .liquid-glass-mobile-wrap {
     display: block;
   }
 }
