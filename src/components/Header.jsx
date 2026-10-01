@@ -47,12 +47,22 @@ export default function Header() {
   return (
     <>
       <header className="site-header" id="site-header">
+        {/* Top Announcement Ticker */}
+        <div className="site-header__ticker">
+          <Link to={currentAnnouncement.url} className="site-header__ticker-inner">
+            <span className="site-header__ticker-text">
+              {currentAnnouncement.text}
+            </span>
+            <span className="site-header__ticker-link">
+              {currentAnnouncement.linkText}
+            </span>
+          </Link>
+        </div>
+
+        {/* Main Navigation Bar */}
         <div className="site-header__inner">
-          {/* Left brand logo & pill navigation */}
+          {/* Left pill navigation */}
           <nav className="site-header__nav site-header__nav--left" aria-label="Primary Left">
-            <Link to="/" className="site-header__logo" aria-label="Flo Studios Home">
-              FLO
-            </Link>
             <Link
               to="/work"
               className={`site-header__pill ${location.pathname === '/work' ? 'site-header__pill--active' : ''}`}
@@ -73,31 +83,24 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Center announcement */}
-          <div className="site-header__announcement">
-            <Link to={currentAnnouncement.url} className="site-header__announcement-inner">
-              <span className="site-header__announcement-text">
-                {currentAnnouncement.text}
-              </span>
-              <span className="site-header__announcement-link">
-                {currentAnnouncement.linkText}
-              </span>
-            </Link>
-          </div>
+          {/* Center Brand Logo in Panchang ExtraBold */}
+          <Link to="/" className="site-header__center-logo" aria-label="Flo Studios Home">
+            FLO
+          </Link>
 
           {/* Right pill navigation */}
           <nav className="site-header__nav site-header__nav--right" aria-label="Primary Right">
-            <Link
-              to="/about"
-              className="site-header__pill"
-            >
-              CAREERS
-            </Link>
             <Link
               to="/latest"
               className={`site-header__pill ${location.pathname === '/latest' ? 'site-header__pill--active' : ''}`}
             >
               LATEST
+            </Link>
+            <Link
+              to="/about"
+              className="site-header__pill"
+            >
+              CAREERS
             </Link>
             <Link
               to="/contact"
