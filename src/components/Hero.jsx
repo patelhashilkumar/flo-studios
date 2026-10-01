@@ -114,6 +114,7 @@ export default function Hero() {
       <div className="hero__video-wrapper" ref={videoCardRef}>
         <div
           className="hero__video-card"
+          data-cursor="WATCH"
           onClick={() => setModalOpen(true)}
           role="button"
           tabIndex={0}
