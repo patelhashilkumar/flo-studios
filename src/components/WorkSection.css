@@ -19,9 +19,10 @@
 
 .work-section__label {
   display: inline-block;
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-tertiary);
   margin-bottom: 0.75rem;
@@ -37,8 +38,10 @@
 }
 
 .work-section__highlight {
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
 }
 
 .work-section__filters {
