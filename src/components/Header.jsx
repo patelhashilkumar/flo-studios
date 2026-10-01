@@ -4,19 +4,19 @@ import './Header.css'
 
 const ANNOUNCEMENTS = [
   {
-    text: 'CAMPAIGN US WINNERS: DESIGN STUDIO AGENCY OF THE YEAR 2026!',
-    linkText: 'SEE MORE →',
-    url: '/latest',
-  },
-  {
-    text: "MEET PLAYSPACE: INSTRUMENT'S ARCHIVE OF CREATIVE EXPERIMENTS.",
-    linkText: 'PLAY NOW →',
+    text: 'FLO STUDIOS: MOTION GRAPHICS & CREATIVE TECH STUDIO 2026',
+    linkText: 'SEE WORK →',
     url: '/work',
   },
   {
-    text: 'JACK DE CALUWÉ RETURNS AS CHIEF CREATIVE OFFICER.',
-    linkText: 'READ MORE →',
-    url: '/latest',
+    text: 'NEW REELS: APPLE, BLITZIT 2.0 & SV SHOWCASE RELEASED.',
+    linkText: 'WATCH NOW →',
+    url: '/#hero',
+  },
+  {
+    text: 'AT THE INTERSECTION OF CONTENT AND TECHNICAL INFRASTRUCTURE.',
+    linkText: 'EXPLORE SERVICES →',
+    url: '/services',
   },
 ]
 
@@ -48,8 +48,11 @@ export default function Header() {
     <>
       <header className="site-header" id="site-header">
         <div className="site-header__inner">
-          {/* Left pill navigation */}
+          {/* Left brand logo & pill navigation */}
           <nav className="site-header__nav site-header__nav--left" aria-label="Primary Left">
+            <Link to="/" className="site-header__logo" aria-label="Flo Studios Home">
+              FLO
+            </Link>
             <Link
               to="/work"
               className={`site-header__pill ${location.pathname === '/work' ? 'site-header__pill--active' : ''}`}
