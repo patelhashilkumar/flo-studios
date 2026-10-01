@@ -252,8 +252,110 @@ function DashedPath({ geometry }) {
 }
 
 /* ═══════════════════════════════════════════════════
-   3D SCENE COMPONENT
+   ARCHITECTURAL FLIGHT GATEWAY (Replaces clunky black ball)
+   Perpendicular supersonic halo with precision HUD reticle
    ═══════════════════════════════════════════════════ */
+
+function WaypointGate({ position, tangent, isActive }) {
+  const pulseRef = useRef();
+
+  // Compute orientation so the ring stands perpendicular to the flight trajectory
+  const gateQuaternion = useMemo(() => {
+    const dummy = new THREE.Object3D();
+    dummy.position.copy(position);
+    dummy.lookAt(position.clone().add(tangent));
+    return dummy.quaternion;
+  }, [position, tangent]);
+
+  useFrame((state) => {
+    if (pulseRef.current && isActive) {
+      const t = (state.clock.elapsedTime * 0.9) % 2;
+      const s = 1 + t * 0.35;
+      pulseRef.current.scale.set(s, s, 1);
+      pulseRef.current.material.opacity = Math.max(0, 0.35 * (1 - t / 2));
+    }
+  });
+
+  return (
+    <group position={position}>
+      {/* 3D Vertical Flight Ring — Plane glides right through it */}
+      <group quaternion={gateQuaternion}>
+        {/* Primary Slender Halo Ring */}
+        <mesh>
+          <torusGeometry args={[2.25, 0.022, 16, 80]} />
+          <meshStandardMaterial
+            color={isActive ? "#1e242b" : "#8b949e"}
+            roughness={0.25}
+            metalness={0.75}
+            transparent
+            opacity={isActive ? 0.95 : 0.32}
+          />
+        </mesh>
+
+        {/* Secondary Hairline Concentric Ring */}
+        <mesh>
+          <torusGeometry args={[2.42, 0.012, 16, 80]} />
+          <meshBasicMaterial
+            color={isActive ? "#475569" : "#cbd5e1"}
+            transparent
+            opacity={isActive ? 0.65 : 0.18}
+          />
+        </mesh>
+
+        {/* 4 Precision Aviation Reticle Ticks */}
+        {[-Math.PI / 2, 0, Math.PI / 2, Math.PI].map((ang, idx) => (
+          <mesh
+            key={idx}
+            position={[Math.cos(ang) * 2.25, Math.sin(ang) * 2.25, 0]}
+            rotation={[0, 0, ang]}
+          >
+            <boxGeometry args={[0.12, 0.022, 0.022]} />
+            <meshBasicMaterial
+              color={isActive ? "#0f172a" : "#94a3b8"}
+              transparent
+              opacity={isActive ? 0.95 : 0.35}
+            />
+          </mesh>
+        ))}
+
+        {/* Animated Sonar Pulse Ring When Active */}
+        {isActive && (
+          <mesh ref={pulseRef}>
+            <ringGeometry args={[2.18, 2.32, 64]} />
+            <meshBasicMaterial
+              color="#64748b"
+              transparent
+              opacity={0.3}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        )}
+      </group>
+
+      {/* Ground Navigation Floor Reticle */}
+      <group position={[0, -1.35, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh>
+          <ringGeometry args={[0.75, 0.82, 48]} />
+          <meshBasicMaterial
+            color={isActive ? "#475569" : "#d4d7dd"}
+            transparent
+            opacity={isActive ? 0.6 : 0.25}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+        <mesh>
+          <ringGeometry args={[0.2, 0.24, 32]} />
+          <meshBasicMaterial
+            color={isActive ? "#64748b" : "#e2e5e9"}
+            transparent
+            opacity={isActive ? 0.5 : 0.2}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      </group>
+    </group>
+  );
+}
 
 function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const { camera } = useThree();
@@ -284,6 +386,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       const cardOffset = normal.clone().multiplyScalar(side * 3.6).add(new THREE.Vector3(0, 1.2, 0));
       return {
         beaconPosition: pos,
+        tangent: tan,
         cardPosition: pos.clone().add(cardOffset),
         side,
         fraction: f
@@ -367,29 +470,12 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         
         return (
           <group key={i}>
-            {/* Minimal Grey Waypoint Node On The Path */}
-            <group position={m.beaconPosition}>
-              {/* Outer Flat Grey Waypoint Ring */}
-              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
-                <ringGeometry args={[0.75, 0.92, 36]} />
-                <meshBasicMaterial 
-                  color={isActive ? "#4b5563" : "#cbd5e1"} 
-                  transparent 
-                  opacity={isActive ? 0.85 : 0.28} 
-                  side={THREE.DoubleSide} 
-                />
-              </mesh>
-
-              {/* Waypoint Center Node Dot in Grey */}
-              <mesh position={[0, 0.07, 0]}>
-                <sphereGeometry args={[isActive ? 0.18 : 0.11, 24, 24]} />
-                <meshStandardMaterial 
-                  color={isActive ? "#374151" : "#9ca3af"} 
-                  roughness={0.35} 
-                  metalness={0.25} 
-                />
-              </mesh>
-            </group>
+            {/* Architectural Supersonic Halo Gateway — The plane flies right through */}
+            <WaypointGate
+              position={m.beaconPosition}
+              tangent={m.tangent}
+              isActive={isActive}
+            />
 
             {/* Current Active Milestone Liquid Glass Card (No background overlapping!) */}
             {isActive && (
