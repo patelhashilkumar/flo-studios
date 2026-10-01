@@ -71,16 +71,7 @@ export default function ContactPage() {
                 </button>
               </div>
 
-              <div className="contact-page__direct-info">
-                <div className="contact-page__direct-item">
-                  <span className="contact-page__direct-label">Direct Communication</span>
-                  <a href="mailto:hello@flostudios.com" className="contact-page__direct-link">hello@flostudios.com</a>
-                </div>
-                <div className="contact-page__direct-item">
-                  <span className="contact-page__direct-label">Studio Availability</span>
-                  <span className="contact-page__direct-status">● Open for Q2 / Q3 2026 Commissions</span>
-                </div>
-              </div>
+
             </div>
 
             {/* Right Column: Motion Submit Form Card */}
