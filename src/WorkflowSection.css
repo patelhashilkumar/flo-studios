@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════
-   Workflow Section (3D Journey) — Premium
+   FLO STUDIOS — 3D WORKFLOW JOURNEY SECTION
+   Liquid Glass, Panchang ExtraBold, Obsidian Stealth Theme
    ═══════════════════════════════════════════════════════ */
 
 .workflow-section {
@@ -11,8 +12,7 @@
   z-index: 1;
 }
 
-
-/* ─── 3D Canvas Container ─── */
+/* ─── 3D WebGL Canvas ─── */
 .workflow-canvas-container {
   position: absolute;
   inset: 0;
@@ -27,7 +27,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 4;
-  padding: clamp(40px, 6vh, 80px) clamp(32px, 5vw, 80px);
+  padding: clamp(36px, 5vh, 70px) clamp(28px, 4.5vw, 70px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -35,42 +35,65 @@
 
 .workflow-header {
   pointer-events: auto;
+  max-width: 650px;
 }
 
 .workflow-label {
-  display: inline-block;
-  font-family: var(--font-family);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-primary);
   font-size: 11px;
-  font-weight: 800;
-  color: #555;
-  letter-spacing: 4px;
+  font-weight: 700;
+  color: rgba(14, 14, 18, 0.65);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 12px;
-  padding: 5px 12px;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 5px 13px;
+  border-radius: 9999px;
+  background: rgba(24, 22, 20, 0.04);
+  border: 1px solid rgba(24, 22, 20, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.workflow-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
 }
 
 .workflow-title {
-  font-family: var(--font-family);
-  font-size: clamp(36px, 5vw, 64px);
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: clamp(34px, 4.8vw, 64px);
   font-weight: 800;
-  color: #1a1a1a;
-  line-height: 1.1;
-  letter-spacing: -2px;
+  color: #0e0e12;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
   margin: 0;
 }
 
-/* ─── Step Indicators (Side) ─── */
+.workflow-subtitle {
+  font-family: var(--font-primary);
+  font-size: 14.5px;
+  color: rgba(14, 14, 18, 0.58);
+  line-height: 1.55;
+  margin: 10px 0 0;
+  max-width: 460px;
+}
+
+/* ─── Step Indicators (Side Glass Capsules) ─── */
 .workflow-steps-indicator {
   position: absolute;
-  right: clamp(24px, 4vw, 64px);
+  right: clamp(24px, 3.5vw, 60px);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 14px;
   pointer-events: auto;
 }
 
@@ -78,149 +101,133 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  opacity: 0.3;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: default;
+  gap: 10px;
+  padding: 5px 16px 5px 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(24, 22, 20, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0.45;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.workflow-step-dot:hover {
+  opacity: 0.8;
+  transform: translateX(-3px);
 }
 
 .workflow-step-dot.active {
   opacity: 1;
+  background: #0e0e12;
+  border-color: #0e0e12;
+  box-shadow: 
+    0 8px 24px -4px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: translateX(-4px);
 }
 
 .workflow-step-dot.completed {
-  opacity: 0.5;
+  opacity: 0.65;
 }
 
 .workflow-step-dot-num {
-  font-family: var(--font-family);
-  font-size: 11px;
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: 10px;
   font-weight: 800;
-  color: #333;
-  letter-spacing: 1px;
-  width: 32px;
-  height: 32px;
+  color: #0e0e12;
+  letter-spacing: 0.02em;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.15);
+  background: rgba(24, 22, 20, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.5s ease;
+  transition: all 0.35s ease;
   flex-shrink: 0;
 }
 
 .workflow-step-dot.active .workflow-step-dot-num {
-  border-color: #333;
-  background: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.workflow-step-dot.completed .workflow-step-dot-num {
-  border-color: rgba(0, 0, 0, 0.2);
-  background: rgba(0, 0, 0, 0.03);
+  background: #ffffff;
+  color: #0e0e12;
 }
 
 .workflow-step-dot-title {
-  font-family: var(--font-family);
-  font-size: 13px;
+  font-family: var(--font-primary);
+  font-size: 12.5px;
   font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: 0.5px;
+  color: rgba(14, 14, 18, 0.75);
+  letter-spacing: -0.01em;
   white-space: nowrap;
+  transition: color 0.35s ease;
 }
 
-/* Connecting line between dots */
-.workflow-step-dot::after {
-  content: '';
-  position: absolute;
-  left: 15px;
-  top: 100%;
-  width: 2px;
-  height: 28px;
-  background: rgba(0, 0, 0, 0.08);
+.workflow-step-dot.active .workflow-step-dot-title {
+  color: #ffffff;
 }
 
-.workflow-step-dot:last-child::after {
-  display: none;
-}
-
-/* ─── Bottom Progress Bar ─── */
-.workflow-progress-bar {
-  width: 100%;
-  max-width: 500px;
-  height: 3px;
-  background: rgba(0, 0, 0, 0.06);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: auto;
-}
-
-.workflow-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #888, #555, #333);
-  border-radius: 2px;
-  transition: width 0.1s linear;
-}
-
-/* ─── 3D HTML Labels (Drei) ─── */
+/* ─── 3D Liquid Glass Milestone Cards (Drei Html) ─── */
 .milestone-label {
-  --milestone-accent: #d84339;
   position: relative;
   width: max-content;
-  max-width: 300px;
-  padding: 22px 26px 20px;
+  max-width: 320px;
+  padding: 24px 28px 22px;
   overflow: hidden;
   pointer-events: none;
-  color: #1a1a1a;
-  font-family: var(--font-display, 'Space Grotesk', sans-serif);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 250, 250, 0.9));
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0;
+  color: #0e0e12;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(24, 22, 20, 0.1);
+  border-radius: 22px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 18px 40px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(10px);
-  opacity: 0.28;
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 4px 12px -2px rgba(24, 22, 20, 0.04),
+    0 24px 48px -12px rgba(24, 22, 20, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  opacity: 0.22;
   transition:
-    opacity 0.55s var(--ease-sharp, cubic-bezier(0.16, 1, 0.3, 1)),
-    border-color 0.55s ease,
-    box-shadow 0.55s ease,
-    transform 0.55s var(--ease-sharp, cubic-bezier(0.16, 1, 0.3, 1));
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s ease,
+    box-shadow 0.5s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Liquid Glass Rim Highlight */
 .milestone-label::after {
   content: '';
   position: absolute;
   inset: 0 auto 0 0;
-  width: 3px;
-  background: rgba(0, 0, 0, 0.12);
-  transition: background 0.45s ease, width 0.45s ease;
+  width: 3.5px;
+  background: rgba(14, 14, 18, 0.15);
+  transition: background 0.4s ease, width 0.4s ease;
 }
 
 .milestone-label.align-left::after {
   inset: 0 0 0 auto;
 }
 
-/* Alternating positions */
+/* Alternating positioning from milestone sphere */
 .milestone-label.align-right {
-  transform: translate(40px, -50%);
+  transform: translate(44px, -50%);
 }
 
 .milestone-label.align-left {
-  transform: translate(calc(-100% - 40px), -50%);
+  transform: translate(calc(-100% - 44px), -50%);
   text-align: right;
 }
 
-/* Active states */
+/* Active State */
 .milestone-label.active {
   opacity: 1;
-  border-color: rgba(216, 67, 57, 0.35);
+  border-color: rgba(14, 14, 18, 0.32);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 22px 50px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(216, 67, 57, 0.08);
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 8px 16px -4px rgba(0, 0, 0, 0.06),
+    0 32px 64px -16px rgba(24, 22, 20, 0.18);
 }
 
 .milestone-label.align-right.active {
@@ -233,22 +240,22 @@
 
 .milestone-label.active::after {
   width: 4px;
-  background: var(--milestone-accent);
+  background: #0e0e12;
 }
 
-/* Connecting Lines */
+/* Connecting Line to Milestone Sphere */
 .milestone-label::before {
   content: '';
   position: absolute;
   top: 50%;
-  width: 36px;
+  width: 40px;
   height: 1px;
   background: repeating-linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.28) 0 4px,
+    rgba(24, 22, 20, 0.25) 0 4px,
     transparent 4px 8px
   );
-  transition: width 0.55s var(--ease-sharp, cubic-bezier(0.16, 1, 0.3, 1)), background 0.45s ease;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
 }
 
 .milestone-label.align-right::before {
@@ -260,23 +267,25 @@
 }
 
 .milestone-label.active::before {
-  width: 56px;
+  width: 58px;
   background: repeating-linear-gradient(
     90deg,
-    var(--milestone-accent) 0 5px,
+    #0e0e12 0 5px,
     transparent 5px 9px
   );
 }
 
+/* Ghost Background Step Index */
 .milestone-ghost {
   position: absolute;
-  top: -8px;
-  right: 8px;
-  font-size: 72px;
-  font-weight: 700;
-  letter-spacing: -0.06em;
+  top: -4px;
+  right: 12px;
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
   line-height: 1;
-  color: rgba(0, 0, 0, 0.045);
+  color: rgba(0, 0, 0, 0.038);
   pointer-events: none;
   user-select: none;
   z-index: 0;
@@ -284,16 +293,17 @@
 
 .milestone-label.align-left .milestone-ghost {
   right: auto;
-  left: 8px;
+  left: 12px;
 }
 
+/* Milestone Metadata Row */
 .milestone-meta {
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 7px;
+  margin-bottom: 8px;
 }
 
 .milestone-label.align-left .milestone-meta {
@@ -301,103 +311,125 @@
 }
 
 .milestone-num {
-  font: var(--text-label-caps, 700 11px/14px var(--font-display, 'Space Grotesk', sans-serif));
-  letter-spacing: 0.14em;
+  font-family: var(--font-primary);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #8a8a8a;
+  color: rgba(14, 14, 18, 0.5);
 }
 
 .milestone-label.active .milestone-num {
-  color: var(--milestone-accent);
+  color: #0e0e12;
 }
 
 .milestone-pulse {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(24, 22, 20, 0.2);
   flex-shrink: 0;
 }
 
 .milestone-label.active .milestone-pulse {
-  background: var(--milestone-accent);
-  box-shadow: 0 0 0 0 rgba(216, 67, 57, 0.45);
-  animation: milestone-pulse 1.6s ease-out infinite;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+  animation: milestone-pulse 1.8s ease-out infinite;
 }
 
 @keyframes milestone-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(216, 67, 57, 0.45); }
-  70% { box-shadow: 0 0 0 8px rgba(216, 67, 57, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(216, 67, 57, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
+.milestone-tag {
+  font-family: var(--font-primary);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(14, 14, 18, 0.45);
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(24, 22, 20, 0.035);
+}
+
+.milestone-label.active .milestone-tag {
+  color: #0e0e12;
+  background: rgba(24, 22, 20, 0.07);
+}
+
+/* Card Heading & Copy */
 .milestone-title {
   position: relative;
   z-index: 1;
-  font-size: 22px;
-  font-weight: 700;
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
   margin: 0 0 8px;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
   line-height: 1.15;
-  color: #111;
+  color: #0e0e12;
 }
 
 .milestone-desc {
   position: relative;
   z-index: 1;
-  font-family: var(--font-body, 'Hanken Grotesk', sans-serif);
-  font-size: 13px;
-  color: #666;
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  color: rgba(14, 14, 18, 0.65);
   line-height: 1.55;
   margin: 0;
   font-weight: 400;
-  max-width: 240px;
+  max-width: 260px;
 }
 
 .milestone-label.align-left .milestone-desc {
   margin-left: auto;
 }
 
-.milestone-marks {
+/* Card Footer Stepper */
+.milestone-footer {
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  height: 18px;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 14px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(24, 22, 20, 0.06);
 }
 
-.milestone-label.align-left .milestone-marks {
-  justify-content: flex-end;
+.milestone-label.align-left .milestone-footer {
+  flex-direction: row-reverse;
 }
 
-.milestone-marks span {
-  display: block;
-  width: 5px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 1px 1px 0 0;
-  transition: background 0.4s ease, height 0.5s var(--ease-sharp, cubic-bezier(0.16, 1, 0.3, 1));
+.milestone-discipline {
+  font-family: var(--font-primary);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(14, 14, 18, 0.4);
 }
 
-.milestone-marks span:nth-child(1) { height: 40%; }
-.milestone-marks span:nth-child(2) { height: 65%; }
-.milestone-marks span:nth-child(3) { height: 50%; }
-.milestone-marks span:nth-child(4) { height: 85%; }
-
-.milestone-label.active .milestone-marks span {
-  background: var(--milestone-accent);
+.milestone-stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.milestone-label.active .milestone-marks span:nth-child(1) { height: 48%; }
-.milestone-label.active .milestone-marks span:nth-child(2) { height: 78%; }
-.milestone-label.active .milestone-marks span:nth-child(3) { height: 62%; }
-.milestone-label.active .milestone-marks span:nth-child(4) { height: 100%; }
+.milestone-stepper-dot {
+  width: 14px;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(24, 22, 20, 0.1);
+  transition: all 0.3s ease;
+}
 
-@media (prefers-reduced-motion: reduce) {
-  .milestone-label.active .milestone-pulse {
-    animation: none;
-  }
+.milestone-stepper-dot.filled {
+  background: #0e0e12;
 }
 
 /* ─── Responsive ─── */
@@ -408,11 +440,24 @@
 }
 
 @media (max-width: 768px) {
+  .workflow-ui {
+    padding: 30px 20px;
+  }
+  .workflow-title {
+    font-size: 28px;
+  }
+  .workflow-subtitle {
+    font-size: 13px;
+    max-width: 320px;
+  }
   .milestone-label {
-    max-width: 220px;
-    padding: 14px 18px;
+    max-width: 240px;
+    padding: 16px 20px;
   }
   .milestone-title {
-    font-size: 16px;
+    font-size: 15px;
+  }
+  .milestone-desc {
+    font-size: 11.5px;
   }
 }

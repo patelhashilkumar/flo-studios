@@ -9,19 +9,41 @@ import './WorkflowSection.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const workflowSteps = [
-  { num: "01", title: "Personalized", desc: "Deep discovery to tailor custom role-plays for your team.", color: "#111111" },
-  { num: "02", title: "Scenario Design", desc: "Crafting realistic, immersive scenarios mirroring real dynamics.", color: "#111111" },
-  { num: "03", title: "Practice & Iterate", desc: "Real-time AI feedback helps refine approach and build confidence.", color: "#111111" },
-  { num: "04", title: "Measure & Scale", desc: "Detailed analytics to track progress and scale what works.", color: "#111111" }
+  {
+    num: "01",
+    tag: "DISCOVERY & CONCEPT",
+    title: "Brand Architecture",
+    desc: "Immersive briefing, narrative exploration, and strategic alignment to establish the core creative vision.",
+    color: "#0e0e12"
+  },
+  {
+    num: "02",
+    tag: "DIRECTION & LOOKDEV",
+    title: "Visual Language",
+    desc: "Developing bespoke styleframes, motion principles, cinematic lighting, and 3D material palettes.",
+    color: "#0e0e12"
+  },
+  {
+    num: "03",
+    tag: "KINETIC PRODUCTION",
+    title: "Motion Craft",
+    desc: "Rigorous 3D animation, physics simulation, fluid dynamics, and dynamic type choreography.",
+    color: "#0e0e12"
+  },
+  {
+    num: "04",
+    tag: "FINISHING & RELEASE",
+    title: "Master Delivery",
+    desc: "Precision color mastering, spatial sound design, multi-platform specs, and high-impact launch assets.",
+    color: "#0e0e12"
+  }
 ];
 
-/* ─── Detailed Fighter Jet Model ─── */
+/* ─── Stealth Luxury Aircraft Model (Obsidian & Platinum) ─── */
 function PaperPlane({ meshRef }) {
-  // Build a detailed jet from vertices
   const planeGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
 
-    // Detailed jet with wings, tail fins, and fuselage
     const vertices = new Float32Array([
       // === NOSE TIP ===
       0,    0,    -2.0,    // 0  nose
@@ -89,7 +111,6 @@ function PaperPlane({ meshRef }) {
     geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geo.setIndex(indices);
     
-    // Convert to non-indexed geometry.
     const nonIndexedGeo = geo.toNonIndexed();
     nonIndexedGeo.computeVertexNormals();
     
@@ -97,39 +118,45 @@ function PaperPlane({ meshRef }) {
   }, []);
 
   return (
-    <group ref={meshRef} scale={[0.9, 0.9, 0.9]}>
-      {/* Inner group flipped so nose faces forward along path */}
+    <group ref={meshRef} scale={[0.92, 0.92, 0.92]}>
+      {/* Nose faces forward along trajectory */}
       <group rotation={[0, Math.PI, 0]}>
         
-        {/* Main body */}
+        {/* Obsidian Stealth Body with Specular Bevels */}
         <mesh geometry={planeGeo}>
           <meshStandardMaterial
-            color="#dd1111"
-            roughness={0.25}
-            metalness={0.15}
+            color="#141418"
+            roughness={0.22}
+            metalness={0.88}
             side={THREE.DoubleSide}
             flatShading={true}
           />
         </mesh>
 
-        {/* White accent stripe on top */}
+        {/* Polished Platinum Chrome Spine Stripe */}
         <mesh position={[0, 0.23, -0.3]} rotation={[0, 0, 0]}>
-          <boxGeometry args={[0.06, 0.01, 1.8]} />
-          <meshStandardMaterial color="#ffffff" roughness={0.3} />
+          <boxGeometry args={[0.06, 0.015, 1.8]} />
+          <meshStandardMaterial color="#f8fafc" roughness={0.08} metalness={0.96} />
         </mesh>
 
-        {/* Engine glow */}
-        <pointLight position={[0, 0, 1.2]} intensity={1.5} distance={6} color="#ff3333" />
+        {/* Luminous Ice Flare Engine Light */}
+        <pointLight position={[0, 0, 1.25]} intensity={2.5} distance={8} color="#e0f2fe" />
         
-        {/* Cockpit window */}
-        <mesh position={[0, 0.16, -1.3]} rotation={[0.3, 0, 0]}>
+        {/* Precision Exhaust Nozzle Ring */}
+        <mesh position={[0, 0.05, 1.23]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.09, 0.018, 16, 32]} />
+          <meshBasicMaterial color="#38bdf8" />
+        </mesh>
+
+        {/* Tinted Aero Cockpit Canopy */}
+        <mesh position={[0, 0.165, -1.3]} rotation={[0.3, 0, 0]}>
           <planeGeometry args={[0.12, 0.08]} />
           <meshStandardMaterial 
-            color="#88ccff" 
-            emissive="#88ccff"
-            emissiveIntensity={0.5}
+            color="#090d16" 
+            emissive="#38bdf8"
+            emissiveIntensity={0.35}
             roughness={0.1} 
-            metalness={0.8}
+            metalness={0.95}
           />
         </mesh>
       </group>
@@ -137,28 +164,30 @@ function PaperPlane({ meshRef }) {
   );
 }
 
-/* ─── Glowing Ring around milestone ─── */
-function GlowRing({ color, active }) {
+/* ─── Glowing Milestone Ring ─── */
+function GlowRing({ active }) {
   const ringRef = useRef();
   const targetVec = useRef(new THREE.Vector3());
   
   useFrame((state) => {
     if (!ringRef.current) return;
-    ringRef.current.rotation.x = state.clock.elapsedTime * 0.3;
-    ringRef.current.rotation.z = state.clock.elapsedTime * 0.2;
+    ringRef.current.rotation.x = state.clock.elapsedTime * 0.35;
+    ringRef.current.rotation.z = state.clock.elapsedTime * 0.25;
     
-    const targetScale = active ? 1.2 : 0.8;
+    const targetScale = active ? 1.25 : 0.85;
     targetVec.current.set(targetScale, targetScale, targetScale);
-    ringRef.current.scale.lerp(targetVec.current, 0.05);
+    ringRef.current.scale.lerp(targetVec.current, 0.06);
   });
   
   return (
     <mesh ref={ringRef}>
-      <torusGeometry args={[1.2, 0.04, 16, 64]} />
-      <meshBasicMaterial 
-        color={color} 
+      <torusGeometry args={[1.2, 0.032, 16, 64]} />
+      <meshStandardMaterial 
+        color="#18181c" 
+        metalness={0.9}
+        roughness={0.2}
         transparent 
-        opacity={active ? 0.4 : 0.1} 
+        opacity={active ? 0.45 : 0.12} 
       />
     </mesh>
   );
@@ -169,7 +198,7 @@ function getDeterministicNoise(seed) {
   return x - Math.floor(x);
 }
 
-/* ─── Floating Particles along the path ─── */
+/* ─── Ambient Cosmic Dust Particles along Path ─── */
 function PathParticles({ curve }) {
   const pointsRef = useRef();
   
@@ -204,17 +233,17 @@ function PathParticles({ curve }) {
         />
       </bufferGeometry>
       <pointsMaterial 
-        size={0.08} 
-        color="#aaaaaa" 
+        size={0.07} 
+        color="#94a3b8" 
         transparent 
-        opacity={0.3} 
+        opacity={0.35} 
         sizeAttenuation 
       />
     </points>
   );
 }
 
-/* ─── Dashed Line Path ─── */
+/* ─── Dashed Trajectory Flight Line ─── */
 function DashedPath({ geometry }) {
   const lineRef = useRef();
   const matRef = useRef();
@@ -227,7 +256,6 @@ function DashedPath({ geometry }) {
 
   useFrame((state) => {
     if (matRef.current) {
-      // Animate the dash offset backwards so the line appears to flow forward
       matRef.current.dashOffset = -state.clock.elapsedTime * 1.5;
     }
   });
@@ -236,10 +264,12 @@ function DashedPath({ geometry }) {
     <line ref={lineRef} geometry={geometry}>
       <lineDashedMaterial
         ref={matRef}
-        color="#aaaaaa"
+        color="#18181b"
+        opacity={0.28}
+        transparent
         dashSize={0.8}
-        gapSize={0.5}
-        linewidth={1}
+        gapSize={0.45}
+        linewidth={1.2}
       />
     </line>
   );
@@ -250,7 +280,6 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const { camera } = useThree();
   const planeRef = useRef();
   
-  // Create a wider, more dramatic curved path
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, 3, 0),
@@ -262,7 +291,6 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
     ], false, 'catmullrom', 0.5);
   }, []);
 
-  // Calculate positions for milestones along the curve
   const milestones = useMemo(() => {
     const points = [];
     const fractions = [0.12, 0.37, 0.62, 0.87];
@@ -275,7 +303,6 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
     return points;
   }, [curve]);
 
-  // Create dashed line geometry from curve points
   const dashedLineGeo = useMemo(() => {
     const points = curve.getPoints(300);
     const geo = new THREE.BufferGeometry().setFromPoints(points);
@@ -283,89 +310,75 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
     return geo;
   }, [curve]);
 
-  // Update loop for camera and plane
   useFrame((state) => {
-    const p = progressRef.current?.value ?? 0; // 0 to 1 from GSAP
+    const p = progressRef.current?.value ?? 0;
     
-    // Update active index based on progress
     let newIndex = 0;
     if (p > 0.75) newIndex = 3;
     else if (p > 0.50) newIndex = 2;
     else if (p > 0.25) newIndex = 1;
     if (newIndex !== activeIndex) setActiveIndex(newIndex);
 
-    // Get position on curve
     const t = Math.min(p, 0.99);
     const point = curve.getPointAt(t);
     const tangent = curve.getTangentAt(t);
     
-    // Move and orient the paper plane
     if (planeRef.current) {
       planeRef.current.position.copy(point);
-      
-      // Orient the plane to follow the path direction
       const lookTarget = point.clone().add(tangent);
       planeRef.current.lookAt(lookTarget);
       
-      // Add a slight banking effect
       const bankAngle = Math.sin(state.clock.elapsedTime * 1.5) * 0.15;
       planeRef.current.rotation.z += bankAngle;
     }
 
-    // Camera: elevated top-down view to see the full path
     const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
-    
     const cameraOffset = new THREE.Vector3()
-      .copy(normal).multiplyScalar(2)    // Slight side offset
-      .add(new THREE.Vector3(0, 12, 4)); // High above, slightly back
+      .copy(normal).multiplyScalar(2)
+      .add(new THREE.Vector3(0, 12, 4));
 
     const targetCamPos = point.clone().add(cameraOffset);
     camera.position.lerp(targetCamPos, 0.06);
 
-    // Look slightly ahead on the curve
     const lookAheadPoint = curve.getPointAt(Math.min(p + 0.08, 0.99));
     camera.lookAt(lookAheadPoint);
   });
 
   return (
     <>
-      {/* Lighting — brighter for white background */}
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[10, 15, 10]} intensity={1.0} color="#ffffff" />
-      <directionalLight position={[-5, 5, -10]} intensity={0.4} color="#ffffff" />
+      <ambientLight intensity={1.3} />
+      <directionalLight position={[10, 16, 10]} intensity={1.1} color="#ffffff" />
+      <directionalLight position={[-6, 6, -10]} intensity={0.4} color="#e2e8f0" />
 
-      {/* Subtle particles */}
-      <Sparkles count={80} scale={60} size={1} speed={0.2} opacity={0.08} color="#999999" />
+      <Sparkles count={80} scale={60} size={1} speed={0.2} opacity={0.08} color="#64748b" />
       <PathParticles curve={curve} />
 
-      {/* Dashed Stroke Line */}
       <DashedPath geometry={dashedLineGeo} />
 
-      {/* The Milestones */}
       {milestones.map((m, i) => {
         const isActive = activeIndex === i;
         const step = workflowSteps[i];
         
         return (
           <group key={i} position={m.position}>
-            {/* Core sphere */}
+            {/* Obsidian Metallic Milestone Pearl */}
             <Float speed={2} floatIntensity={0.3}>
               <mesh>
-                <sphereGeometry args={[isActive ? 0.4 : 0.25, 32, 32]} />
+                <sphereGeometry args={[isActive ? 0.38 : 0.24, 32, 32]} />
                 <meshStandardMaterial 
-                  color={step.color}
-                  emissive={isActive ? "#333333" : "#000000"}
-                  emissiveIntensity={isActive ? 0.8 : 0}
-                  roughness={0.15}
-                  metalness={0.85}
+                  color={isActive ? "#0e0e12" : "#27272a"}
+                  emissive={isActive ? "#1e293b" : "#000000"}
+                  emissiveIntensity={isActive ? 0.5 : 0}
+                  roughness={0.12}
+                  metalness={0.92}
                 />
               </mesh>
             </Float>
 
-            {/* Rotating ring */}
-            <GlowRing color={step.color} active={isActive} />
+            {/* Orbiting Glass Halo */}
+            <GlowRing active={isActive} />
 
-            {/* HTML Label */}
+            {/* 3D Liquid Glass Milestone Card */}
             <Html 
               distanceFactor={12}
               style={{ pointerEvents: 'none' }}
@@ -373,13 +386,19 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
               <div className={`milestone-label ${isActive ? 'active' : ''} ${i % 2 === 0 ? 'align-right' : 'align-left'}`}>
                 <span className="milestone-ghost" aria-hidden="true">{step.num}</span>
                 <div className="milestone-meta">
-                  <span className="milestone-num">Step {step.num}</span>
+                  <span className="milestone-num">PHASE {step.num}</span>
                   <span className="milestone-pulse" aria-hidden="true" />
+                  <span className="milestone-tag">{step.tag}</span>
                 </div>
                 <h4 className="milestone-title">{step.title}</h4>
                 <p className="milestone-desc">{step.desc}</p>
-                <div className="milestone-marks" aria-hidden="true">
-                  <span /><span /><span /><span />
+                <div className="milestone-footer" aria-hidden="true">
+                  <span className="milestone-discipline">FLO MOTION PROCESS</span>
+                  <div className="milestone-stepper">
+                    {workflowSteps.map((_, sIdx) => (
+                      <span key={sIdx} className={`milestone-stepper-dot ${sIdx <= i ? 'filled' : ''}`} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </Html>
@@ -387,7 +406,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         );
       })}
 
-      {/* The Paper Plane */}
+      {/* The Obsidian Stealth Jet */}
       <PaperPlane meshRef={planeRef} />
     </>
   );
@@ -395,8 +414,6 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
 
 export default function WorkflowSection() {
   const sectionRef = useRef(null);
-  
-  // Object to hold progress value that GSAP will animate
   const progressObj = useRef({ value: 0 });
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -409,7 +426,6 @@ export default function WorkflowSection() {
     }
 
     const ctx = gsap.context(() => {
-      // Pin the section and scrub the progress value from 0 to 1
       gsap.to(progressObj.current, {
         value: 1,
         ease: "none",
@@ -431,8 +447,14 @@ export default function WorkflowSection() {
       {/* 2D UI Overlay */}
       <div className="workflow-ui">
         <div className="workflow-header">
-          <span className="workflow-label">PROCESS</span>
+          <span className="workflow-label">
+            <span className="workflow-label-dot" />
+            PROCESS
+          </span>
           <h2 className="workflow-title">The Journey</h2>
+          <p className="workflow-subtitle">
+            How we translate creative vision into iconic motion systems and 3D worlds.
+          </p>
         </div>
 
         {/* Step indicators */}
