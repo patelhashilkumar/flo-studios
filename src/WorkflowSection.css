@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════
    FLO STUDIOS — THE JOURNEY (Minimal 3D Creative Pipeline)
-   Studio Cyclorama + Red Supersonic Plane + Grey Path
+   Clean Inter Typography (No Panchang) + Red Plane + Grey Path
    ═══════════════════════════════════════════════════════ */
 
 .workflow-section {
@@ -33,10 +33,10 @@
   justify-content: space-between;
 }
 
-/* Header */
+/* Header (Swiss Inter Display Typography) */
 .workflow-header {
   pointer-events: auto;
-  max-width: 540px;
+  max-width: 520px;
 }
 
 .workflow-label {
@@ -51,26 +51,26 @@
   padding: 5px 14px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(0, 0, 0, 0.07);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .workflow-title {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: clamp(32px, 4.4vw, 56px);
-  font-weight: 800;
+  font-family: var(--font-primary);
+  font-size: clamp(34px, 4.4vw, 58px);
+  font-weight: 700;
   color: #0e0e12;
   line-height: 1.05;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.035em;
   margin: 0 0 10px;
 }
 
 .workflow-desc {
   font-family: var(--font-primary);
-  font-size: clamp(13px, 1.05vw, 15px);
-  color: rgba(14, 14, 18, 0.6);
+  font-size: clamp(13.5px, 1.05vw, 15px);
+  color: rgba(14, 14, 18, 0.62);
   line-height: 1.55;
   margin: 0;
   max-width: 440px;
@@ -84,7 +84,7 @@
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   pointer-events: auto;
   z-index: 10;
 }
@@ -95,9 +95,9 @@
   align-items: center;
   gap: 12px;
   padding: 6px 14px 6px 6px;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 9999px;
   cursor: pointer;
@@ -116,15 +116,15 @@
 .workflow-step-dot.active {
   opacity: 1;
   background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.16);
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
   transform: translateX(-5px);
 }
 
 .workflow-step-dot-num {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: 10px;
-  font-weight: 800;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
   color: #0e0e12;
   width: 26px;
   height: 26px;
@@ -170,7 +170,7 @@
 .workflow-footer-bar {
   pointer-events: auto;
   width: 100%;
-  max-width: 460px;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -209,44 +209,48 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   3D FLOATING MILESTONE CARDS (Simple & Clean)
+   LIQUID GLASS MILESTONE CARDS (Active-Only Focus)
    ═══════════════════════════════════════════════════ */
 
 .milestone-card {
-  width: clamp(260px, 20vw, 320px);
+  width: clamp(280px, 22vw, 340px);
   pointer-events: auto;
   user-select: none;
-  transform: translate(-50%, -50%) scale(0.96);
-  opacity: 0.38;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.milestone-card--active {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.02);
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .milestone-card__glass {
   position: relative;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(24, 22, 20, 0.08);
-  border-radius: 18px;
-  padding: 18px 20px 16px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 22px 24px 20px;
   box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
     0 4px 6px -1px rgba(0, 0, 0, 0.02),
-    0 16px 32px -10px rgba(24, 22, 20, 0.09),
-    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    0 24px 48px -12px rgba(24, 22, 20, 0.14),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.milestone-card--active .milestone-card__glass {
-  border-color: rgba(24, 22, 20, 0.22);
-  box-shadow: 
-    0 6px 14px -2px rgba(0, 0, 0, 0.04),
-    0 24px 48px -12px rgba(24, 22, 20, 0.15),
-    0 1px 0 rgba(255, 255, 255, 1) inset;
+.milestone-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
 .milestone-card__phase {
@@ -256,45 +260,67 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #6b7280;
-  margin-bottom: 6px;
+}
+
+.milestone-card__badge {
+  font-family: var(--font-primary);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111827;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .milestone-card__title {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 700;
   color: #0e0e12;
   letter-spacing: -0.02em;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   line-height: 1.25;
 }
 
 .milestone-card__desc {
   font-family: var(--font-primary);
-  font-size: 12px;
+  font-size: 12.5px;
   color: rgba(14, 14, 18, 0.65);
-  line-height: 1.5;
-  margin: 0 0 12px;
+  line-height: 1.55;
+  margin: 0 0 14px;
 }
 
 .milestone-card__deliverable {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 5px 12px;
   background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   border-radius: 9999px;
   font-family: var(--font-primary);
   font-size: 11px;
-  font-weight: 600;
-  color: #374151;
 }
 
 .milestone-card__deliverable-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #9ca3af;
+  background: #6b7280;
+}
+
+.milestone-card__deliverable-label {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
+  font-size: 9.5px;
+}
+
+.milestone-card__deliverable-text {
+  font-weight: 600;
+  color: #111827;
 }
 
 /* ─── Responsive Media Queries ─── */
@@ -312,12 +338,12 @@
     max-width: 100%;
   }
   .milestone-card {
-    width: clamp(240px, 75vw, 290px);
+    width: clamp(260px, 78vw, 310px);
   }
   .milestone-card__glass {
-    padding: 16px 16px 14px;
+    padding: 18px 18px 16px;
   }
   .milestone-card__title {
-    font-size: 15px;
+    font-size: 16px;
   }
 }
