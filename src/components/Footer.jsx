@@ -37,7 +37,7 @@ export default function Footer() {
             {/* Brand & Newsletter Column */}
             <div className="lg-footer__brand-col">
               <Link to="/" className="lg-footer__brand" aria-label="Flo Studios Home">
-                <FloLogo className="lg-footer__brand-icon" height="24px" color="#0e0e12" />
+                <FloLogo className="lg-footer__brand-icon" height="28px" color="#0e0e12" />
                 <span className="lg-footer__brand-text">FLO STUDIOS</span>
               </Link>
 
