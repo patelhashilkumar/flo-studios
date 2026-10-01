@@ -3,10 +3,10 @@
    Slim, low-profile (44px) & Full Site Width
    ═══════════════════════════════════════════════════ */
 
-/* Floating Fixed Top Header Wrapper spanning full width */
+/* Floating Fixed Top Header Wrapper */
 .focus-nav-header {
   position: fixed;
-  top: 10px;
+  top: 14px;
   left: 0;
   width: 100%;
   display: flex;
@@ -14,15 +14,16 @@
   align-items: center;
   z-index: 1000;
   pointer-events: none;
-  padding: 0 14px;
+  padding: 0 16px;
   box-sizing: border-box;
 }
 
-/* ── 1. Full-Width Outer Liquid Glass Bevel Rim ── */
+/* ── 1. Medium-Width Outer Liquid Glass Bevel Rim ── */
 .liquid-glass-rim {
   pointer-events: auto;
   position: relative;
   width: 100%;
+  max-width: 940px;
   display: flex;
   align-items: center;
   padding: 2.5px;
