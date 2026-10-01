@@ -44,324 +44,84 @@ const WORKFLOW_STEPS = [
 ];
 
 /* ═══════════════════════════════════════════════════
-   FIFTH-GEN STEALTH FIGHTER JET (F-22 / F-35 Silhouette)
-   Aggressive faceted radar-deflecting fuselage, twin
-   angular stealth air intakes, trapezoidal wings with
-   tip rails, canted twin V-tails, all-moving tailerons,
-   and glowing thrust-vectoring afterburners.
+   MINIMALIST RED AERODYNAMIC DART
+   Small, pure, understated geometric craft gliding
+   elegantly along the grey flight corridor.
    ═══════════════════════════════════════════════════ */
 
-function FighterJetCraft({ meshRef, bankRef }) {
-  // 1. Trapezoidal Stealth Main Wings with Airfoil & Trailing Flaperons
-  const wingsGeo = useMemo(() => {
+function MinimalistRedDart({ meshRef, bankRef }) {
+  // Pure sculpted low-profile geometric fuselage & delta wings
+  const dartGeo = useMemo(() => {
     const geo = new THREE.BufferGeometry();
-    const positions = [
-      // Right Wing (Upper & Lower surfaces)
-      0.42, 0.05, 0.90,     // 0: Root leading top
-      2.45, 0.02, -0.95,    // 1: Tip leading top
-      2.40, 0.02, -1.35,    // 2: Tip trailing top
-      0.48, 0.05, -1.65,    // 3: Root trailing top
-      0.42, -0.05, 0.90,    // 4: Root leading bottom
-      2.45, -0.02, -0.95,   // 5: Tip leading bottom
-      2.40, -0.02, -1.35,   // 6: Tip trailing bottom
-      0.48, -0.05, -1.65,   // 7: Root trailing bottom
-
-      // Left Wing (Upper & Lower surfaces)
-      -0.42, 0.05, 0.90,    // 8: Root leading top
-      -2.45, 0.02, -0.95,   // 9: Tip leading top
-      -2.40, 0.02, -1.35,   // 10: Tip trailing top
-      -0.48, 0.05, -1.65,   // 11: Root trailing top
-      -0.42, -0.05, 0.90,   // 12: Root leading bottom
-      -2.45, -0.02, -0.95,  // 13: Tip leading bottom
-      -2.40, -0.02, -1.35,  // 14: Tip trailing bottom
-      -0.48, -0.05, -1.65,  // 15: Root trailing bottom
-    ];
+    const vertices = new Float32Array([
+      // 0: Needle nose tip
+      0, 0, 1.6,
+      // 1: Top spine ridge
+      0, 0.16, 0.2,
+      // 2: Tail spine
+      0, 0.12, -1.0,
+      // 3: Tail bottom
+      0, -0.06, -0.9,
+      // 4: Belly keel
+      0, -0.08, 0.3,
+      // 5: Right wingtip
+      1.25, 0.02, -0.75,
+      // 6: Right wing trailing inner
+      0.18, 0.04, -0.95,
+      // 7: Left wingtip
+      -1.25, 0.02, -0.75,
+      // 8: Left wing trailing inner
+      -0.18, 0.04, -0.95,
+      // 9: Vertical tailfin peak
+      0, 0.42, -0.92,
+      // 10: Vertical tailfin leading base
+      0, 0.14, -0.4,
+    ]);
 
     const indices = [
-      // Right Wing Top
-      0, 1, 2,  0, 2, 3,
-      // Right Wing Bottom
-      4, 6, 5,  4, 7, 6,
-      // Right Wing Leading Edge
-      0, 5, 1,  0, 4, 5,
-      // Right Wing Trailing Edge
-      3, 2, 6,  3, 6, 7,
-      // Right Wing Tip
-      1, 5, 6,  1, 6, 2,
-
-      // Left Wing Top
-      8, 10, 9,   8, 11, 10,
-      // Left Wing Bottom
-      12, 13, 14, 12, 14, 15,
-      // Left Wing Leading Edge
-      8, 9, 13,   8, 13, 12,
-      // Left Wing Trailing Edge
-      11, 14, 10, 11, 15, 14,
-      // Left Wing Tip
-      9, 10, 14,  9, 14, 13,
+      // Top Right Wing / Fuselage
+      0, 1, 5,   1, 6, 5,   1, 2, 6,
+      // Top Left Wing / Fuselage
+      0, 7, 1,   1, 7, 8,   1, 8, 2,
+      // Bottom Right Wing / Belly
+      0, 5, 4,   4, 5, 6,   4, 6, 3,
+      // Bottom Left Wing / Belly
+      0, 4, 7,   4, 8, 7,   4, 3, 8,
+      // Tail rear face
+      2, 3, 6,   2, 8, 3,
+      // Single sleek vertical fin (double-sided)
+      10, 9, 2,  10, 2, 9,
     ];
 
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geo.setIndex(indices);
-    geo.computeVertexNormals();
-    return geo;
-  }, []);
-
-  // 2. Twin All-Moving Horizontal Stabilizers (Tailerons)
-  const taileronsGeo = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    const positions = [
-      // Right Taileron
-      0.45, 0.02, -1.60,   // 0: Root leading
-      1.35, 0.01, -2.15,   // 1: Tip leading
-      1.25, 0.01, -2.45,   // 2: Tip trailing
-      0.40, 0.02, -2.40,   // 3: Root trailing
-
-      // Left Taileron
-      -0.45, 0.02, -1.60,  // 4: Root leading
-      -1.35, 0.01, -2.15,  // 5: Tip leading
-      -1.25, 0.01, -2.45,  // 6: Tip trailing
-      -0.40, 0.02, -2.40,  // 7: Root trailing
-    ];
-    const indices = [
-      0, 1, 2,  0, 2, 3,
-      0, 2, 1,  0, 3, 2,
-      4, 6, 5,  4, 7, 6,
-      4, 5, 6,  4, 6, 7,
-    ];
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geo.setIndex(indices);
-    geo.computeVertexNormals();
-    return geo;
-  }, []);
-
-  // 3. Twin Canted Vertical Stabilizers (F-22 Style Stealth V-Tails)
-  const verticalTailsGeo = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    const positions = [
-      // Right Fin (Canted Outward at ~28 deg)
-      0.42, 0.08, -0.80,   // 0: Root leading
-      0.68, 0.95, -1.65,   // 1: Tip leading
-      0.60, 0.90, -1.95,   // 2: Tip trailing
-      0.38, 0.08, -1.85,   // 3: Root trailing
-
-      // Left Fin (Canted Outward at ~28 deg)
-      -0.42, 0.08, -0.80,  // 4: Root leading
-      -0.68, 0.95, -1.65,  // 5: Tip leading
-      -0.60, 0.90, -1.95,  // 6: Tip trailing
-      -0.38, 0.08, -1.85,  // 7: Root trailing
-    ];
-    const indices = [
-      0, 1, 2,  0, 2, 3,
-      0, 2, 1,  0, 3, 2,
-      4, 6, 5,  4, 7, 6,
-      4, 5, 6,  4, 6, 7,
-    ];
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geo.setIndex(indices);
-    geo.computeVertexNormals();
-    return geo;
-  }, []);
-
-  // 4. Forebody LERX Chines (Leading Edge Root Extensions)
-  const chinesGeo = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    const positions = [
-      0, 0.02, 2.75,       // 0: Needle nose junction
-      0.42, 0.04, 0.90,    // 1: Right wing intersection
-      0.20, 0.02, 0.90,    // 2
-      -0.20, 0.02, 0.90,   // 3
-      -0.42, 0.04, 0.90,   // 4: Left wing intersection
-    ];
-    const indices = [
-      0, 1, 2,  0, 2, 1,
-      0, 3, 4,  0, 4, 3,
-      0, 2, 3,  0, 3, 2,
-    ];
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geo.setIndex(indices);
-    geo.computeVertexNormals();
-    return geo;
+    const nonIndexed = geo.toNonIndexed();
+    nonIndexed.computeVertexNormals();
+    return nonIndexed;
   }, []);
 
   return (
-    <group ref={meshRef} scale={[1.2, 1.2, 1.2]}>
+    <group ref={meshRef} scale={[0.42, 0.42, 0.42]}>
       <group ref={bankRef}>
-        {/* ─── High-Gloss Studio Red Primary Airframe ─── */}
-        <mesh geometry={wingsGeo}>
+        {/* Pure Satin Studio Red Dart */}
+        <mesh geometry={dartGeo}>
           <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
+            color="#e11d48"
+            roughness={0.22}
+            metalness={0.12}
             side={THREE.DoubleSide}
           />
         </mesh>
 
-        <mesh geometry={taileronsGeo}>
+        {/* Minimalist Smoked Obsidian Cockpit Slit */}
+        <mesh position={[0, 0.12, 0.38]} rotation={[0.22, 0, 0]}>
+          <boxGeometry args={[0.07, 0.035, 0.48]} />
           <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-
-        <mesh geometry={verticalTailsGeo}>
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-
-        <mesh geometry={chinesGeo}>
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-
-        {/* ─── Stealth Faceted Radome Nose ─── */}
-        <mesh position={[0, 0.02, 1.7]} rotation={[Math.PI / 2, 0, 0]} scale={[1.12, 0.62, 1.0]}>
-          <cylinderGeometry args={[0.02, 0.38, 2.1, 8]} />
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
-          />
-        </mesh>
-
-        {/* Mach 2.5 Titanium Pitot Probe Needle */}
-        <mesh position={[0, 0.02, 2.95]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.012, 0.022, 0.55, 16]} />
-          <meshStandardMaterial
-            color="#0f172a"
-            roughness={0.12}
+            color="#09090e"
+            roughness={0.06}
             metalness={0.92}
           />
         </mesh>
-
-        {/* ─── Main Lifting Fuselage Spine ─── */}
-        <mesh position={[0, 0.04, -0.3]} rotation={[Math.PI / 2, 0, 0]} scale={[1.32, 0.58, 1.0]}>
-          <cylinderGeometry args={[0.38, 0.46, 2.0, 8]} />
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
-          />
-        </mesh>
-
-        {/* ─── Twin Engine Hump Cowling ─── */}
-        <mesh position={[0, 0.05, -1.55]} rotation={[Math.PI / 2, 0, 0]} scale={[1.42, 0.48, 1.0]}>
-          <cylinderGeometry args={[0.46, 0.38, 0.85, 8]} />
-          <meshStandardMaterial
-            color="#dc2626"
-            roughness={0.18}
-            metalness={0.16}
-          />
-        </mesh>
-
-        {/* ─── Twin Stealth Air Intakes (Left & Right) ─── */}
-        {/* Right Careened Intake */}
-        <group position={[0.48, -0.04, 0.15]} rotation={[0, 0, -0.12]}>
-          <mesh scale={[0.22, 0.22, 1.1]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#b91c1c" roughness={0.25} metalness={0.18} />
-          </mesh>
-          <mesh position={[0, 0, 0.56]} scale={[0.18, 0.18, 0.02]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial color="#0f172a" />
-          </mesh>
-        </group>
-
-        {/* Left Careened Intake */}
-        <group position={[-0.48, -0.04, 0.15]} rotation={[0, 0, 0.12]}>
-          <mesh scale={[0.22, 0.22, 1.1]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#b91c1c" roughness={0.25} metalness={0.18} />
-          </mesh>
-          <mesh position={[0, 0, 0.56]} scale={[0.18, 0.18, 0.02]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial color="#0f172a" />
-          </mesh>
-        </group>
-
-        {/* ─── Smoked Obsidian Fighter Jet Bubble Canopy ─── */}
-        <mesh position={[0, 0.22, 0.52]} scale={[0.21, 0.20, 1.25]}>
-          <sphereGeometry args={[1, 32, 16]} />
-          <meshStandardMaterial
-            color="#08080c"
-            roughness={0.03}
-            metalness={0.96}
-          />
-        </mesh>
-
-        {/* Titanium Windshield Frame Bow Arch */}
-        <mesh position={[0, 0.22, 0.8]} rotation={[0.2, 0, 0]} scale={[0.23, 0.22, 0.06]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="#1e293b" roughness={0.3} metalness={0.85} />
-        </mesh>
-
-        {/* Cockpit HUD (Heads-Up Display Glass) */}
-        <mesh position={[0, 0.20, 1.05]} rotation={[-0.35, 0, 0]}>
-          <planeGeometry args={[0.08, 0.08]} />
-          <meshBasicMaterial color="#06b6d4" transparent opacity={0.65} side={THREE.DoubleSide} />
-        </mesh>
-
-        {/* ─── Wingtip Missile Launch Rails (AIM-9X Style) ─── */}
-        {/* Right Wingtip Rail */}
-        <group position={[2.42, 0.02, -1.15]}>
-          <mesh scale={[0.04, 0.06, 0.7]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#1e293b" roughness={0.3} metalness={0.8} />
-          </mesh>
-        </group>
-
-        {/* Left Wingtip Rail */}
-        <group position={[-2.42, 0.02, -1.15]}>
-          <mesh scale={[0.04, 0.06, 0.7]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#1e293b" roughness={0.3} metalness={0.8} />
-          </mesh>
-        </group>
-
-        {/* ─── Twin Thrust-Vectoring Serrated Afterburners ─── */}
-        {/* Right Exhaust */}
-        <group position={[0.26, 0.03, -1.98]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.13, 0.16, 0.36, 12, 1, true]} />
-            <meshStandardMaterial
-              color="#1e293b"
-              roughness={0.25}
-              metalness={0.9}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-          <mesh position={[0, 0, 0.05]} rotation={[0, Math.PI, 0]}>
-            <circleGeometry args={[0.115, 24]} />
-            <meshBasicMaterial color="#ff2a18" />
-          </mesh>
-        </group>
-
-        {/* Left Exhaust */}
-        <group position={[-0.26, 0.03, -1.98]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.13, 0.16, 0.36, 12, 1, true]} />
-            <meshStandardMaterial
-              color="#1e293b"
-              roughness={0.25}
-              metalness={0.9}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-          <mesh position={[0, 0, 0.05]} rotation={[0, Math.PI, 0]}>
-            <circleGeometry args={[0.115, 24]} />
-            <meshBasicMaterial color="#ff2a18" />
-          </mesh>
-        </group>
       </group>
     </group>
   );
@@ -389,8 +149,8 @@ function PlaneContactShadow({ shadowRef }) {
 
   return (
     <mesh ref={shadowRef} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[2.8, 3.6]} />
-      <meshBasicMaterial map={shadowTex} transparent opacity={0.65} depthWrite={false} />
+      <planeGeometry args={[1.6, 2.2]} />
+      <meshBasicMaterial map={shadowTex} transparent opacity={0.55} depthWrite={false} />
     </mesh>
   );
 }
@@ -575,9 +335,9 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
 
       // Update soft contact shadow directly below the craft
       if (shadowRef.current) {
-        shadowRef.current.position.set(point.x, point.y - 1.4, point.z);
+        shadowRef.current.position.set(point.x, point.y - 0.65, point.z);
         const bankScale = Math.max(0.65, Math.cos(bankAngle));
-        shadowRef.current.scale.set(1.25 * bankScale, 1.55, 1);
+        shadowRef.current.scale.set(0.75 * bankScale, 0.95, 1);
         shadowRef.current.rotation.z = -Math.atan2(tangent.x, -tangent.z);
       }
     }
@@ -665,8 +425,8 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         );
       })}
 
-      {/* Authentic Fifth-Gen Stealth Fighter Jet */}
-      <FighterJetCraft meshRef={planeRef} bankRef={bankRef} />
+      {/* Sleek Minimalist Red Aerodynamic Dart */}
+      <MinimalistRedDart meshRef={planeRef} bankRef={bankRef} />
     </>
   );
 }
