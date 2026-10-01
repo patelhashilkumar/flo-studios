@@ -10,6 +10,8 @@ import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import LatestPage from './pages/LatestPage'
 import ContactPage from './pages/ContactPage'
+import CareersPage from './pages/CareersPage'
+import AdminPage from './pages/AdminPage'
 import './pages/Pages.css'
 
 export default function App() {
@@ -26,7 +28,9 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/latest" element={<LatestPage />} />
+          <Route path="/careers" element={<CareersPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </AnimatePresence>
       <Footer />
