@@ -27,6 +27,25 @@
   flex-shrink: 0;
 }
 
+.site-header__logo {
+  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: #000000;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  line-height: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.site-header__logo:hover {
+  opacity: 0.65;
+  transform: scale(1.03);
+}
+
 .site-header__pill {
   display: inline-flex;
   align-items: center;
