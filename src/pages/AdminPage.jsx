@@ -86,7 +86,7 @@ export default function AdminPage() {
   }
 
   const handleResetData = () => {
-    if (window.confirm('Reset submissions back to default Flo Studios sample inquiries?')) {
+    if (window.confirm('Are you sure you want to clear all submissions from storage?')) {
       seedSampleData()
       setSubmissions(getSubmissions())
     }
@@ -198,7 +198,7 @@ export default function AdminPage() {
               📦 Export JSON
             </button>
             <button type="button" onClick={handleResetData} className="admin-action-pill admin-action-pill--subtle">
-              🔄 Reset Demo Data
+              🗑️ Clear Submissions
             </button>
             <button type="button" onClick={handleLock} className="admin-action-pill admin-action-pill--danger">
               🔒 Lock
@@ -296,7 +296,7 @@ export default function AdminPage() {
               <p className="admin-empty__desc">
                 {searchQuery
                   ? `No inquiries match "${searchQuery}". Try clearing search filters.`
-                  : 'No submissions in this category yet. Submit an inquiry on /contact or an application on /careers.'}
+                  : 'No submissions in this category yet. Inquiries from /contact and applications from /careers will appear here.'}
               </p>
               {searchQuery && (
                 <button type="button" onClick={() => setSearchQuery('')} className="admin-empty__btn">
@@ -412,6 +412,15 @@ export default function AdminPage() {
                       >
                         📄 View / Download Resume ({item.resumeName || 'Resume.pdf'})
                       </a>
+                    )}
+
+                    {!item.resumeData && item.resumeName && (
+                      <span
+                        className="admin-badge admin-badge--warning"
+                        title={item.resumeNote || 'Resume file exceeded local browser storage limit'}
+                      >
+                        ⚠️ {item.resumeName} (File quota exceeded)
+                      </span>
                     )}
 
                     <a
