@@ -154,7 +154,7 @@ function WorkCard({ item }) {
         <h3 className="work-card__title">{item.title}</h3>
         <div className="work-card__tags">
           {item.tags.map((t) => (
-            <span key={t} className="work-card__tag">#{t}</span>
+            <span key={t} className="work-card__tag">{t}</span>
           ))}
         </div>
       </div>
@@ -212,7 +212,7 @@ export default function WorkSection() {
           <div className="work-section__title-wrap">
             <span className="work-section__label">Proof Of Work</span>
             <h2 className="work-section__headline">
-              We&apos;re A Creative &amp; Tech Studio Built At The Intersection Of Content And Technical <span className="work-section__highlight">INFRASTRUCTURE.</span>
+              Selected Work Across Motion, Systems, And Digital <span className="work-section__highlight">CRAFT.</span>
             </h2>
           </div>
 
@@ -240,9 +240,9 @@ export default function WorkSection() {
               <span className="work-bento-card__logo-text">Lovable</span>
             </div>
             <div className="work-bento-card__content">
-              <h3 className="work-bento-card__title">We invest in the future of commerce &amp; creators</h3>
+              <h3 className="work-bento-card__title">Commerce built for creators</h3>
               <p className="work-bento-card__desc">
-                Bridging audience trust with high-converting infrastructure and direct-to-community platforms.
+                Direct platforms and digital infrastructure designed to turn audience attention into sustained community.
               </p>
             </div>
           </div>
@@ -261,9 +261,9 @@ export default function WorkSection() {
               </svg>
             </div>
             <div className="work-bento-card__content">
-              <h3 className="work-bento-card__title">We design digital experiences</h3>
+              <h3 className="work-bento-card__title">Interactive web systems</h3>
               <p className="work-bento-card__desc">
-                Immersive, high-performance web applications and fluid interactive narratives built to hold attention.
+                High-performance 3D environments, spatial graphics, and fluid digital products built for scale.
               </p>
             </div>
           </div>

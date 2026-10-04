@@ -41,31 +41,31 @@ export default function AboutPage() {
       <section className="about-page__hero" ref={heroRef}>
         <div className="container">
           <h1 className="about-page__title">
-            {'We make the complex simple.'.split(' ').map((w, i) => (
-              <span key={i} className="about-page__hero-word">{w} </span>
+            {'Built at the intersection of taste, motion, and technology.'.split(' ').map((w, i) => (
+              <span key={i} className="about-page__hero-word">{w}</span>
             ))}
           </h1>
-          <Link to="/work" className="about-page__cta">See our work →</Link>
+          <Link to="/work" className="about-page__cta">Explore work →</Link>
 
           <p className="about-page__intro">
-            We bring taste and technology together to build brands, products, and experiences that last. We've been doing it for more than 20 years with partners like Google, Spotify, Electronic Arts, ServiceNow, Uber, and ŌURA.
+            We pair creative direction with technical rigor to build brands, digital products, and motion systems that endure. Collaborating globally with industry pioneers including Google, Spotify, Electronic Arts, and ŌURA.
           </p>
 
           <div className="about-page__stats">
             <div className="about-page__stat">
               <span className="about-page__stat-num">20</span>
               <span className="about-page__stat-label">Years</span>
-              <p className="about-page__stat-desc">Designing and building experiences that last.</p>
+              <p className="about-page__stat-desc">Building digital products and brands.</p>
             </div>
             <div className="about-page__stat">
               <span className="about-page__stat-num">350+</span>
-              <span className="about-page__stat-label">Employees</span>
-              <p className="about-page__stat-desc">Makers, thinkers, and storytellers.</p>
+              <span className="about-page__stat-label">Craftspeople</span>
+              <p className="about-page__stat-desc">Designers, directors, and technologists.</p>
             </div>
             <div className="about-page__stat">
               <span className="about-page__stat-num">02</span>
-              <span className="about-page__stat-label">Offices</span>
-              <p className="about-page__stat-desc">Portland. New York. Remote.</p>
+              <span className="about-page__stat-label">Studios</span>
+              <p className="about-page__stat-desc">Portland · New York · Remote</p>
             </div>
           </div>
         </div>
@@ -95,15 +95,14 @@ export default function AboutPage() {
         <div className="container">
           <h3 className="about-page__who-title">Who we are</h3>
           <p className="about-page__who-text">
-            We're nerds with taste. Strategy geeks. Design freaks. Deep thinkers. Fast makers.
-            Curious, detail-obsessed, and opinionated—all working to make work people remember.
+            Strategists, 3D artists, and creative technologists. Opinionated about detail, disciplined in execution, and committed to work that commands attention.
           </p>
-          <Link to="/services" className="about-page__cta-pill">See our services →</Link>
+          <Link to="/services" className="about-page__cta-pill">Explore services →</Link>
 
           <div className="about-page__images">
             {IMAGES.map((src, i) => (
               <div key={i} className="about-page__image-wrap">
-                <img src={src} alt={`Instrument culture ${i + 1}`} loading="lazy" />
+                <img src={src} alt={`Studio culture ${i + 1}`} loading="lazy" />
               </div>
             ))}
           </div>
@@ -115,9 +114,8 @@ export default function AboutPage() {
         <div className="container">
           <h3 className="about-page__how-title">How we work</h3>
           <div className="about-page__how-content">
-            <p>Designers who code. Developers who design. Strategy and craft in the same room.</p>
-            <p>Our teams are built to remove handoffs and keep the work connected so ideas don't get watered down from concept to execution.</p>
-            <p>We hold a high bar, stay curious, and follow through.</p>
+            <p>Designers who code and engineers with taste—collaborating in the same room from day one.</p>
+            <p>We eliminate handoff friction to preserve conceptual integrity from initial direction through production deployment.</p>
           </div>
           <Link to="/careers" className="about-page__cta-pill">View open roles →</Link>
         </div>

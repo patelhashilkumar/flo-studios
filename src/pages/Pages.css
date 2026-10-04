@@ -83,7 +83,11 @@
 
 .work-page__hero-word {
   display: inline-block;
+  margin-right: 0.28em;
   will-change: transform, opacity;
+}
+.work-page__hero-word:last-child {
+  margin-right: 0;
 }
 
 /* Featured Cards */
@@ -213,7 +217,11 @@
 
 .about-page__hero-word {
   display: inline-block;
+  margin-right: 0.28em;
   will-change: transform, opacity;
+}
+.about-page__hero-word:last-child {
+  margin-right: 0;
 }
 
 .about-page__cta {
@@ -406,6 +414,10 @@
 
 .about-page__careers-word {
   display: inline-block;
+  margin-right: 0.28em;
+}
+.about-page__careers-word:last-child {
+  margin-right: 0;
 }
 
 /* ═══ SERVICES PAGE ═══ */
@@ -424,7 +436,16 @@
   margin-bottom: 1.5rem;
 }
 
-.services-page__hero-word { display: inline-block; will-change: transform, opacity; }
+.services-page__hero-word,
+.careers-page__hero-word {
+  display: inline-block;
+  margin-right: 0.28em;
+  will-change: transform, opacity;
+}
+.services-page__hero-word:last-child,
+.careers-page__hero-word:last-child {
+  margin-right: 0;
+}
 
 .services-page__offerings {
   padding-bottom: var(--space-section);
@@ -534,7 +555,14 @@
   line-height: 1.1;
 }
 
-.latest-page__hero-word { display: inline-block; will-change: transform, opacity; }
+.latest-page__hero-word {
+  display: inline-block;
+  margin-right: 0.28em;
+  will-change: transform, opacity;
+}
+.latest-page__hero-word:last-child {
+  margin-right: 0;
+}
 
 .latest-page__grid-section { padding-bottom: var(--space-section); }
 
@@ -623,7 +651,14 @@
   margin-bottom: 1.25rem;
 }
 
-.contact-page__title span { display: inline-block; will-change: transform, opacity; }
+.contact-page__title span {
+  display: inline-block;
+  margin-right: 0.28em;
+  will-change: transform, opacity;
+}
+.contact-page__title span:last-child {
+  margin-right: 0;
+}
 
 .contact-page__subtitle {
   font-family: var(--font-primary);

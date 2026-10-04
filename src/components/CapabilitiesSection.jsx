@@ -10,25 +10,29 @@ const CAPABILITY_ITEMS = [
     id: 'narrative-instinct',
     num: '01',
     title: 'NARRATIVE INSTINCT',
-    desc: "Every piece of content, every product, every user interaction lives or dies by whether it holds attention and earns trust. Our team doesn't start with execution — we start with instinct for what actually resonates, then build backward from there. It's the same instinct whether we're scripting a video or designing a product flow.",
+    desc: 'We start with what earns trust and commands attention, then engineer the visual and technical medium around it.',
+    tags: ['Attention Architecture', 'Content Direction', 'UX Strategy'],
   },
   {
     id: 'stage-aware-thinking',
     num: '02',
     title: 'STAGE-AWARE THINKING',
-    desc: "A 5K-subscriber creator and a 500K-subscriber creator need different strategies. A pre-funded founder and a funded one need different priorities. Nothing we do is templated — every decision starts with understanding exactly where you are right now, not where a generic playbook assumes you are.",
+    desc: 'No off-the-shelf formulas. Every strategic decision is calibrated to where you stand today and where you scale tomorrow.',
+    tags: ['Custom Roadmaps', 'Scale Calibration', 'Growth Architecture'],
   },
   {
     id: 'cross-disciplinary-execution',
     num: '03',
     title: 'CROSS-DISCIPLINARY EXECUTION',
-    desc: 'Strategists, writers, designers, developers, editors, and technical architects — working from the same brief, not handed off between silos. When the same team understands both the creative and technical sides of a problem, nothing gets lost in translation.',
+    desc: 'Directors who code and engineers with taste. One unified team across design and infrastructure, eliminating handoff friction.',
+    tags: ['Unified Team', 'Zero-Silo Workflow', 'Rapid Deployment'],
   },
   {
     id: 'ownership-through-completion',
     num: '04',
     title: 'OWNERSHIP THROUGH COMPLETION',
-    desc: "We don't disappear after the deliverable ships. Whether it's a piece of content going live or a product hitting the market, our team stays close enough to see how it actually performs — and adjusts from there.",
+    desc: 'We stay through deployment and live release, continuously testing, refining, and tuning real-world performance.',
+    tags: ['Production Rigor', 'Live Optimization', 'End-to-End Delivery'],
   },
 ]
 
@@ -86,7 +90,7 @@ export default function CapabilitiesSection() {
         <div className="capabilities-header" ref={headerRef}>
           <span className="capabilities-label">OUR EDGE</span>
           <h2 className="capabilities-title">
-            WE CREATE POWERFUL BRANDS, SEAMLESS DIGITAL EXPERIENCES, AND RESPONSIVE, DEVICE-READY WEBSITES.
+            BUILT ON CRAFT, TECHNICAL RIGOR, AND END-TO-END OWNERSHIP.
           </h2>
         </div>
 
@@ -131,6 +135,13 @@ export default function CapabilitiesSection() {
                 >
                   <div className="capabilities-item__content">
                     <p className="capabilities-item__text">{item.desc}</p>
+                    {item.tags && (
+                      <div className="capabilities-item__tags">
+                        {item.tags.map((tag) => (
+                          <span key={tag} className="capabilities-item__tag">{tag}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

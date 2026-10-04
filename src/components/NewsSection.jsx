@@ -9,27 +9,27 @@ gsap.registerPlugin(ScrollTrigger)
 const NEWS_ITEMS = [
   {
     type: 'press',
-    title: 'Instrument Playspace named a Fast Company Innovation by Design finalist: Recognized for Experimental and Conceptual Design.',
+    title: 'Fast Company Innovation by Design Finalist',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/0ab7345c9d/fastco_ibd_2026_experimental_design.png/m/',
     link: '#',
   },
   {
     type: 'press',
-    title: 'Welcome back, Jack: Jack De Caluwé returns to Instrument as Chief Creative Officer.',
+    title: 'Jack De Caluwé Appointed Chief Creative Officer',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/',
     link: '#',
   },
   {
     type: 'article',
-    readTime: '5 minutes',
-    title: 'Building Without a Brief: What do you make when curiosity is the only assignment?',
+    readTime: '5 min',
+    title: 'Building Without a Brief: Making with Pure Curiosity',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/4951b14198/thumb_instrument_beyondthebrief.jpg/m/',
     link: '/latest',
   },
   {
     type: 'article',
-    readTime: '3 minutes',
-    title: 'Taste Is the New Competitive Advantage: In a world where anyone can make anything, discernment becomes the greatest differentiator.',
+    readTime: '3 min',
+    title: 'Taste as a Competitive Advantage in Digital Design',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/dbe87799c5/taste_thumb_instrument.png/m/',
     link: '/latest',
   },
@@ -61,11 +61,11 @@ export default function NewsSection() {
       <div className="container">
         <div className="news-section__header">
           <div>
-            <span className="news-section__label">BLOG PREVIEW</span>
-            <h2 className="news-section__title">Our Latest &amp; Greatest</h2>
+            <span className="news-section__label">EDITORIAL &amp; PERSPECTIVES</span>
+            <h2 className="news-section__title">Latest Dispatches</h2>
           </div>
           <Link to="/latest" className="news-section__cta">
-            See what's new
+            All dispatches
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

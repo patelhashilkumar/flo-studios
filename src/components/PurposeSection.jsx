@@ -49,13 +49,10 @@ export default function PurposeSection() {
 
         <div className="purpose__body">
           <p>
-            Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We&apos;re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World — And Keeps Refining Once It&apos;s Out There.
-          </p>
-          <p>
-            That Means Owning Every Stage With The Same Team: The Instinct For What Holds Attention, The Clarity For Where You Actually Stand, The Craft To Execute Across Disciplines, And The Ownership To Stay Until It Performs. We Measure Success By What Ships And What Grows, Not By What Gets Delivered And Left Behind.
+            Great ideas fail in the space between vision and execution. We built Flo to close that gap—keeping one dedicated team aligned from first concept to living product, refining long after launch.
           </p>
           <Link to="/about" className="purpose__cta">
-            Learn more about us
+            Learn more about our studio
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

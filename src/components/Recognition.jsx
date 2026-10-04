@@ -44,7 +44,7 @@ export default function Recognition() {
   return (
     <section className="recognition" ref={sectionRef}>
       <div className="container">
-        <h2 className="recognition__title">Recent Recognition</h2>
+        <h2 className="recognition__title">Industry Recognition</h2>
         <div className="recognition__grid">
           {AWARDS.map((award) => (
             <div key={award} className="recognition__badge">

@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="footer__marquee">
           {[...Array(4)].map((_, i) => (
             <span key={i} className="footer__marquee-item">
-              To create motion and brand experiences of the highest caliber, we integrate art direction, 3D motion design, and technical infrastructure, staying in close partnership with visionary clients.&nbsp;&nbsp;✦&nbsp;&nbsp;
+              ART DIRECTION&nbsp;&nbsp;✦&nbsp;&nbsp;3D MOTION DESIGN&nbsp;&nbsp;✦&nbsp;&nbsp;DIGITAL INFRASTRUCTURE&nbsp;&nbsp;✦&nbsp;&nbsp;CREATIVE TECHNOLOGY&nbsp;&nbsp;✦&nbsp;&nbsp;
             </span>
           ))}
         </div>
@@ -42,7 +42,7 @@ export default function Footer() {
               </Link>
 
               <p className="lg-footer__tagline">
-                Motion graphics, 3D CGI direction, and creative technology studio built at the intersection of content and technical infrastructure.
+                A creative and technology studio engineering motion, digital products, and brand systems.
               </p>
 
               {/* Glass Newsletter Subscribe */}
@@ -50,7 +50,7 @@ export default function Footer() {
                 <input
                   type="email"
                   className="lg-footer__input"
-                  placeholder="Enter email for reel releases..."
+                  placeholder="Enter your email..."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required

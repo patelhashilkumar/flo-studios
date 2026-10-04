@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import gsap from 'gsap'
 import { saveSubmission } from '../services/adminStorage'
 import './CareersPage.css'
 
@@ -45,23 +46,23 @@ const OPEN_ROLES = [
 
 const PERKS = [
   {
-    icon: '🌍',
+    num: '01',
     title: 'Distributed Collective',
     desc: 'Portland studio base with seamless remote setups across the US, Europe, and Asia.'
   },
   {
-    icon: '⚡',
+    num: '02',
     title: 'Visionary Tier Clients',
     desc: 'Work directly with industry pioneers across tech, automotive, sound, and culture.'
   },
   {
-    icon: '🔬',
+    num: '03',
     title: 'Studio R&D Hours',
     desc: 'Dedicated 20% innovation sprints for proprietary shaders, generative tools, and experiments.'
   },
   {
-    icon: '💎',
-    title: 'Comprehensive Package',
+    num: '04',
+    title: 'End-to-End Ownership',
     desc: 'Competitive compensation, equipment stipend, health & wellness, and studio profit sharing.'
   }
 ]
@@ -81,6 +82,18 @@ export default function CareersPage() {
   const [experience, setExperience] = useState('5+ years')
   const [coverNote, setCoverNote] = useState('')
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success'
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.careers-page__hero-word',
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.7, ease: 'power3.out', delay: 0.2 }
+      )
+    }, heroRef)
+    return () => ctx.revert()
+  }, [])
 
   const handleRoleSelect = (roleTitle) => {
     setSelectedRole(roleTitle)
@@ -100,7 +113,6 @@ export default function CareersPage() {
 
     setStatus('submitting')
 
-    // Persist to admin storage
     saveSubmission({
       type: 'job',
       name: finalName,
@@ -127,7 +139,7 @@ export default function CareersPage() {
   }
 
   return (
-    <motion.main className="careers-page" variants={pageV} initial="initial" animate="animate" exit="exit">
+    <motion.main className="careers-page" variants={pageV} initial="initial" animate="animate" exit="exit" ref={heroRef}>
       {/* ── 1. Hero Section ── */}
       <section className="careers-hero">
         <div className="container">
@@ -135,21 +147,23 @@ export default function CareersPage() {
             <Link to="/">Home</Link> <span>/</span> <span>Careers</span>
           </div>
 
-          <div className="careers-hero__content">
-            <span className="careers-hero__tag">OPEN POSITIONS & CULTURE</span>
-            <h1 className="careers-hero__title">
-              Shape the Future of <span>Motion & Form</span>
-            </h1>
-            <p className="careers-hero__desc">
-              We are a collective of directors, procedural artists, and creative technologists pushing the bleeding edge of motion design and digital craft.
-            </p>
-          </div>
+          <h1 className="careers-page__title">
+            {'Shape the future of motion, systems, and form.'.split(' ').map((w, i) => (
+              <span key={i} className="careers-page__hero-word">{w}</span>
+            ))}
+          </h1>
+
+          <p className="careers-page__intro">
+            A studio collective of directors, procedural artists, and creative technologists building high-caliber motion design and digital systems.
+          </p>
+
+          <a href="#open-roles" className="page-cta-btn">View open roles ↓</a>
 
           {/* Perks Grid */}
           <div className="careers-perks">
             {PERKS.map((perk, i) => (
               <div key={i} className="careers-perk-card">
-                <span className="careers-perk-card__icon">{perk.icon}</span>
+                <span className="careers-perk-card__num">{perk.num}</span>
                 <h3 className="careers-perk-card__title">{perk.title}</h3>
                 <p className="careers-perk-card__desc">{perk.desc}</p>
               </div>
@@ -159,15 +173,16 @@ export default function CareersPage() {
       </section>
 
       {/* ── 2. Open Roles & Application Form Split ── */}
-      <section className="careers-roles-section">
+      <section className="careers-roles-section" id="open-roles">
         <div className="container">
           <div className="careers-split">
             {/* Left: Role Directory */}
             <div className="careers-split__left">
               <div className="careers-section-header">
-                <h2 className="careers-section-title">Open Opportunities</h2>
+                <span className="careers-section-label">OPPORTUNITIES</span>
+                <h2 className="careers-section-title">Open Positions</h2>
                 <p className="careers-section-sub">
-                  Explore active roles across our 3D, Motion, and Creative Technology teams.
+                  Active roles across our 3D, Motion, and Creative Technology teams.
                 </p>
               </div>
 
@@ -184,7 +199,7 @@ export default function CareersPage() {
                         className={`careers-role-item__btn ${selectedRole === role.title ? 'careers-role-item__btn--active' : ''}`}
                         onClick={() => handleRoleSelect(role.title)}
                       >
-                        {selectedRole === role.title ? 'Selected' : 'Apply →'}
+                        {selectedRole === role.title ? 'Selected ✓' : 'Apply →'}
                       </button>
                     </div>
 
@@ -194,7 +209,7 @@ export default function CareersPage() {
                       <span className="careers-role-pill">{role.type}</span>
                       <span className="careers-role-pill">{role.experience}</span>
                       {role.skills.map((s) => (
-                        <span key={s} className="careers-role-tag">#{s}</span>
+                        <span key={s} className="careers-role-tag">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -206,8 +221,8 @@ export default function CareersPage() {
             <div className="careers-split__right" id="application-form">
               <div className="careers-form-card">
                 <div className="careers-form-card__header">
-                  <span className="careers-form-card__badge">DIRECT APPLICATION</span>
-                  <h3 className="careers-form-card__title">Submit Your Reel</h3>
+                  <span className="careers-form-card__badge">APPLICATION</span>
+                  <h3 className="careers-form-card__title">Submit Your Portfolio</h3>
                   <p className="careers-form-card__desc">
                     Applying for: <strong>{selectedRole}</strong>
                   </p>

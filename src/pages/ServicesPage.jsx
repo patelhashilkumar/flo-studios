@@ -11,27 +11,27 @@ const pageV = {
 
 const SERVICES = [
   {
-    title: 'Brand',
-    desc: 'We design brand systems that scale and flex across entire ecosystems.',
+    title: 'Brand Systems',
+    desc: 'Identity systems and guidelines engineered to scale across physical and digital surfaces.',
     cases: [
-      { name: 'Procore', desc: 'Honoring the Past, Building the Future.', image: 'https://a-us.storyblok.com/f/1004432/1920x1080/6f0f8cbfe8/thumbnail-mobile-1920x1080.png/m/' },
-      { name: 'ServiceNow', desc: 'Reimagining ServiceNow with a bold system.', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
+      { name: 'Procore', desc: 'Brand evolution and design language.', image: 'https://a-us.storyblok.com/f/1004432/1920x1080/6f0f8cbfe8/thumbnail-mobile-1920x1080.png/m/' },
+      { name: 'ServiceNow', desc: 'Enterprise design system and motion kit.', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
     ],
   },
   {
-    title: 'Marketing',
-    desc: 'We create content, campaigns, and websites that drive connection and growth.',
+    title: 'Motion & Campaigns',
+    desc: 'Cinematic 3D animation, product films, and motion graphics that command global attention.',
     cases: [
-      { name: 'Google Shopping', desc: 'The Holiday 100—Google\'s trend-inspired gift guide.', image: 'https://a-us.storyblok.com/f/1004432/2048x1365/81580be7a6/google_ho100_thumbnail.png/m/' },
-      { name: 'Notion', desc: 'Introducing Notion to billions of new users.', image: 'https://a-us.storyblok.com/f/1004432/2560x1588/4d38378620/notion_thumbnail.png/m/' },
+      { name: 'Google Shopping', desc: 'Holiday gift guide and dynamic visual direction.', image: 'https://a-us.storyblok.com/f/1004432/2048x1365/81580be7a6/google_ho100_thumbnail.png/m/' },
+      { name: 'Notion', desc: 'Global launch films and product storytelling.', image: 'https://a-us.storyblok.com/f/1004432/2560x1588/4d38378620/notion_thumbnail.png/m/' },
     ],
   },
   {
-    title: 'Product',
-    desc: 'We design digital products that define categories and transform businesses.',
+    title: 'Digital Products',
+    desc: 'High-performance web applications, 3D interfaces, and fluid digital experiences.',
     cases: [
-      { name: 'Eventbrite', desc: 'Reimagining Eventbrite: A New Vision for Discovery.', image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/' },
-      { name: 'Oura', desc: 'Transforming the way people discover the Oura Smart Ring.', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/485d9ae1f2/oura_homepage_slideshow.jpg/m/' },
+      { name: 'Eventbrite', desc: 'Discovery architecture and event experience.', image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/' },
+      { name: 'Oura', desc: 'Flagship digital experience and health data narrative.', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/485d9ae1f2/oura_homepage_slideshow.jpg/m/' },
     ],
   },
 ]
@@ -57,18 +57,18 @@ export default function ServicesPage() {
             <Link to="/">Home</Link> <span>/</span> <span>Services</span>
           </div>
           <h1 className="services-page__title">
-            {'From rebrands to digital products to campaigns, we design how your brand shows up in the world.'.split(' ').map((w, i) => (
-              <span key={i} className="services-page__hero-word">{w} </span>
+            {'We design how visionary brands move, interact, and perform.'.split(' ').map((w, i) => (
+              <span key={i} className="services-page__hero-word">{w}</span>
             ))}
           </h1>
-          <Link to="/contact" className="page-cta-btn">Get in touch →</Link>
+          <Link to="/contact" className="page-cta-btn">Start a project →</Link>
         </div>
       </section>
 
       {/* Offerings */}
       <section className="services-page__offerings">
         <div className="container">
-          <h2 className="services-page__section-title">Our Offerings</h2>
+          <h2 className="services-page__section-title">Capabilities</h2>
           {SERVICES.map((service) => (
             <div className="services-page__offering" key={service.title}>
               <div className="services-page__offering-header">
@@ -94,7 +94,7 @@ export default function ServicesPage() {
       {/* Clients */}
       <section className="services-page__clients">
         <div className="container">
-          <h3 className="services-page__clients-label">Select clients include:</h3>
+          <h3 className="services-page__clients-label">Selected Clients</h3>
           <p className="services-page__clients-list">{CLIENTS.join(', ')}</p>
         </div>
       </section>
@@ -102,7 +102,7 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="services-page__cta-section">
         <div className="container">
-          <h2 className="services-page__cta-title">We'd love to work with you and your team.</h2>
+          <h2 className="services-page__cta-title">Start a project with our studio.</h2>
           <Link to="/contact" className="page-cta-btn">Get in touch →</Link>
         </div>
       </section>
