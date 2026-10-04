@@ -25,7 +25,7 @@
 }
 
 .careers-header__title {
-  font-family: 'Space Grotesk', var(--font-display), sans-serif;
+  font-family: var(--font-display);
   font-size: var(--fs-display);
   font-weight: 600;
   letter-spacing: -0.035em;
@@ -48,7 +48,7 @@
 }
 
 .careers-meta-badge {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: var(--fs-xs);
   font-weight: 600;
   padding: 6px 14px;
@@ -63,7 +63,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: var(--fs-small);
   font-weight: 600;
   color: #ffffff;
@@ -98,7 +98,7 @@
 }
 
 .careers-editorial__title {
-  font-family: 'Space Grotesk', var(--font-display), sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -107,7 +107,7 @@
 }
 
 .careers-editorial__prose {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 1.0625rem;
   line-height: 1.72;
   color: var(--color-text-secondary);
@@ -147,7 +147,7 @@
 }
 
 .careers-responsibility-card__index {
-  font-family: 'Space Grotesk', var(--font-display), sans-serif;
+  font-family: var(--font-display);
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--color-text-tertiary);
@@ -162,7 +162,7 @@
 }
 
 .careers-responsibility-card__title {
-  font-family: 'Space Grotesk', var(--font-display), sans-serif;
+  font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 600;
   color: var(--color-text);
@@ -171,7 +171,7 @@
 }
 
 .careers-responsibility-card__desc {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
@@ -197,7 +197,7 @@
 }
 
 .careers-info-box__label {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -206,7 +206,7 @@
 }
 
 .careers-info-box__text {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.9375rem;
   line-height: 1.55;
   color: var(--color-text);
@@ -214,7 +214,7 @@
 }
 
 .careers-compensation-terms {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.875rem;
   color: var(--color-text-secondary);
   margin: 0.5rem 0 0;
@@ -256,7 +256,7 @@
 }
 
 .careers-checklist__text {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.9375rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
@@ -282,7 +282,7 @@
 }
 
 .careers-form-card__badge {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
@@ -296,7 +296,7 @@
 }
 
 .careers-form-card__title {
-  font-family: 'Space Grotesk', var(--font-display), sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.5vw, 1.85rem);
   font-weight: 600;
   color: var(--color-text);
@@ -323,7 +323,7 @@
 }
 
 .careers-form__label {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -339,7 +339,7 @@
   border-radius: var(--radius-md);
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 14px;
   color: var(--color-text);
   outline: none;
@@ -365,8 +365,17 @@
 }
 
 /* Resume Dropzone */
-.careers-file-hidden {
-  display: none;
+.careers-file-input-sr,
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .careers-dropzone {
@@ -402,7 +411,7 @@
 }
 
 .careers-dropzone__text {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 14px;
   color: var(--color-text);
 }
@@ -413,7 +422,7 @@
 }
 
 .careers-dropzone__hint {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 12px;
   color: var(--color-text-tertiary);
 }
@@ -446,7 +455,7 @@
 }
 
 .careers-file-selected__name {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 13.5px;
   font-weight: 600;
   color: var(--color-text);
@@ -454,7 +463,7 @@
 }
 
 .careers-file-selected__size {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 12px;
   color: var(--color-text-tertiary);
 }
@@ -464,7 +473,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   padding: 6px 14px;
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -497,7 +506,7 @@
 }
 
 .careers-form__checkbox-label {
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 12.5px;
   line-height: 1.6;
   color: var(--color-text-secondary);
@@ -508,7 +517,7 @@
 .careers-form__alert {
   padding: 14px 18px;
   border-radius: var(--radius-md);
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 13.5px;
   font-weight: 500;
   line-height: 1.45;
@@ -537,7 +546,7 @@
   border: 1px solid #000000;
   background: #000000;
   color: #ffffff;
-  font-family: 'Hanken Grotesk', var(--font-primary), sans-serif;
+  font-family: var(--font-primary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
