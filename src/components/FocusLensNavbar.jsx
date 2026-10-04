@@ -297,7 +297,10 @@ export default function FocusLensNavbar() {
       </div>
 
       {/* ── 2. Mobile Full-Width Liquid Glass Capsule + Drawer ── */}
-      <div className={`liquid-glass-mobile-wrap ${mobileOpen ? 'liquid-glass-mobile-wrap--open' : ''}`}>
+      <nav
+        className={`liquid-glass-mobile-wrap ${mobileOpen ? 'liquid-glass-mobile-wrap--open' : ''}`}
+        aria-label="Mobile Navigation"
+      >
         <div className="liquid-glass-mobile-inner">
           <div
             className="liquid-glass-mobile-bar"
@@ -320,6 +323,7 @@ export default function FocusLensNavbar() {
               className="liquid-glass-mobile-toggle"
               aria-label="Toggle navigation"
               aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-drawer"
             >
               <span className="liquid-glass-mobile-toggle__label">
                 {mobileOpen ? 'CLOSE' : 'MENU'}
@@ -335,6 +339,7 @@ export default function FocusLensNavbar() {
           <AnimatePresence>
             {mobileOpen && (
               <motion.div
+                id="mobile-nav-drawer"
                 className="liquid-glass-mobile-drawer"
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
@@ -359,7 +364,7 @@ export default function FocusLensNavbar() {
             )}
           </AnimatePresence>
         </div>
-      </div>
+      </nav>
     </header>
   )
 }
