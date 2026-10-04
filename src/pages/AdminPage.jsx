@@ -14,6 +14,15 @@ import {
 } from '../services/adminStorage'
 import './AdminPage.css'
 
+function getSafeExternalUrl(url) {
+  if (!url || typeof url !== 'string') return null
+  const clean = url.trim()
+  if (/^(javascript|data|vbscript|file):/i.test(clean)) return null
+  if (/^https?:\/\//i.test(clean)) return clean
+  if (/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i.test(clean)) return `https://${clean}`
+  return null
+}
+
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
   const [passcode, setPasscode] = useState('')
@@ -394,14 +403,20 @@ export default function AdminPage() {
                     {item.portfolioUrl && (
                       <div className="admin-card__portfolio">
                         <span className="admin-card__portfolio-label">Portfolio / Showreel:</span>
-                        <a
-                          href={item.portfolioUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="admin-card__portfolio-link"
-                        >
-                          {item.portfolioUrl} ↗
-                        </a>
+                        {getSafeExternalUrl(item.portfolioUrl) ? (
+                          <a
+                            href={getSafeExternalUrl(item.portfolioUrl)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="admin-card__portfolio-link"
+                          >
+                            {item.portfolioUrl} ↗
+                          </a>
+                        ) : (
+                          <span className="admin-card__portfolio-link" style={{ opacity: 0.65 }}>
+                            {item.portfolioUrl} (Unsafe link protocol blocked)
+                          </span>
+                        )}
                       </div>
                     )}
 
