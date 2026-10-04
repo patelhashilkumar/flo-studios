@@ -1,9 +1,10 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
 import ScrollToTop from './components/ScrollToTop'
+import ErrorBoundary from './components/ErrorBoundary'
 import HomePage from './pages/HomePage'
 import WorkPage from './pages/WorkPage'
 import AboutPage from './pages/AboutPage'
@@ -12,28 +13,40 @@ import LatestPage from './pages/LatestPage'
 import ContactPage from './pages/ContactPage'
 import CareersPage from './pages/CareersPage'
 import AdminPage from './pages/AdminPage'
+import NotFoundPage from './pages/NotFoundPage'
 import './pages/Pages.css'
 
 export default function App() {
   const location = useLocation()
 
   return (
-    <SmoothScroll>
-      <ScrollToTop />
-      <Header />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/latest" element={<LatestPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-        </Routes>
-      </AnimatePresence>
-      <Footer />
-    </SmoothScroll>
+    <ErrorBoundary>
+      <SmoothScroll>
+        <ScrollToTop />
+        <Header />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/latest" element={<LatestPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+
+            {/* Common Alias Redirects */}
+            <Route path="/career" element={<Navigate to="/careers" replace />} />
+            <Route path="/jobs" element={<Navigate to="/careers" replace />} />
+            <Route path="/job" element={<Navigate to="/careers" replace />} />
+            <Route path="/apply" element={<Navigate to="/careers" replace />} />
+
+            {/* 404 Catch-All Route */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </AnimatePresence>
+        <Footer />
+      </SmoothScroll>
+    </ErrorBoundary>
   )
 }
