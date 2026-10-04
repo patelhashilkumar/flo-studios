@@ -33,12 +33,11 @@ const HERO_REELS = [
 
 export default function Hero() {
   const [activeReelIdx, setActiveReelIdx] = useState(0)
-  const [modalOpen, setModalOpen] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const heroRef = useRef(null)
   const logoRef = useRef(null)
   const videoCardRef = useRef(null)
   const cardVideoRef = useRef(null)
-  const modalVideoRef = useRef(null)
   const wordsRef = useRef([])
 
   const currentReel = HERO_REELS[activeReelIdx]
@@ -76,30 +75,16 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
-  // Coordinate video playback between card loop and full modal
-  useEffect(() => {
-    if (modalOpen) {
-      cardVideoRef.current?.pause()
-      if (modalVideoRef.current) {
-        modalVideoRef.current.currentTime = 0
-        modalVideoRef.current.play().catch(() => {})
-      }
+  const toggleMute = (e) => {
+    e.stopPropagation()
+    if (cardVideoRef.current) {
+      const nextMuted = !cardVideoRef.current.muted
+      cardVideoRef.current.muted = nextMuted
+      setIsMuted(nextMuted)
     } else {
-      if (modalVideoRef.current) {
-        modalVideoRef.current.pause()
-      }
-      cardVideoRef.current?.play().catch(() => {})
+      setIsMuted((prev) => !prev)
     }
-  }, [modalOpen])
-
-  // Close modal on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setModalOpen(false)
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }
 
   return (
     <section className="hero" ref={heroRef} id="hero">
@@ -112,16 +97,7 @@ export default function Hero() {
 
       {/* ── 2. Rounded Video Player Card ── */}
       <div className="hero__video-wrapper" ref={videoCardRef}>
-        <div
-          className="hero__video-card"
-          onClick={() => setModalOpen(true)}
-          role="button"
-          tabIndex={0}
-          aria-label={`Open ${currentReel.name} video in theater mode`}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') setModalOpen(true)
-          }}
-        >
+        <div className="hero__video-card">
           {/* Looping HTML5 Background Video for Active Reel */}
           <video
             ref={cardVideoRef}
@@ -129,7 +105,7 @@ export default function Hero() {
             className="hero__video-media"
             autoPlay
             loop
-            muted
+            muted={isMuted}
             playsInline
             poster={currentReel.posterSrc}
           >
@@ -154,6 +130,29 @@ export default function Hero() {
               </button>
             ))}
           </div>
+
+          {/* Bottom Right Glassmorphic Mute/Audio Toggle */}
+          <button
+            type="button"
+            className={`hero__mute-btn ${!isMuted ? 'hero__mute-btn--active' : ''}`}
+            onClick={toggleMute}
+            aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
+            title={isMuted ? 'Unmute audio' : 'Mute audio'}
+          >
+            {isMuted ? (
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+            ) : (
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+              </svg>
+            )}
+            <span className="hero__mute-btn-text">{isMuted ? 'MUTE' : 'UNMUTE'}</span>
+          </button>
         </div>
       </div>
 
@@ -182,44 +181,6 @@ export default function Hero() {
           </Link>
         </div>
       </div>
-
-      {/* ── 4. Full Reel Theater Modal ── */}
-      {modalOpen && (
-        <div className="hero-modal" onClick={() => setModalOpen(false)}>
-          <div className="hero-modal__content" onClick={(e) => e.stopPropagation()}>
-            <div className="hero-modal__header">
-              <div className="hero-modal__title-wrap">
-                <span className="hero-modal__badge">NOW PLAYING</span>
-                <span className="hero-modal__title">{currentReel.name} Motion Reel</span>
-              </div>
-              <button
-                className="hero-modal__close"
-                onClick={() => setModalOpen(false)}
-                aria-label="Close video player"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
-            <div className="hero-modal__video-container">
-              <video
-                ref={modalVideoRef}
-                key={currentReel.id + '-modal'}
-                className="hero-modal__video-player"
-                controls
-                autoPlay
-                playsInline
-                poster={currentReel.posterSrc}
-              >
-                <source src={currentReel.videoSrc} type="video/mp4" />
-                <source src={currentReel.videoSrc} type="video/quicktime" />
-              </video>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   )
 }
