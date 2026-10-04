@@ -6,6 +6,7 @@
 .careers-page {
   background: var(--color-bg);
   min-height: 100vh;
+  padding-top: clamp(90px, 12vw, 125px);
   padding-bottom: var(--space-section);
   color: var(--color-text);
 }
