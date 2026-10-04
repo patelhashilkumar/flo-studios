@@ -254,6 +254,12 @@
   border-color: #0e0e12;
 }
 
+.admin-action-pill:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .admin-action-pill--subtle {
   background: transparent;
   color: rgba(14, 14, 18, 0.65);
@@ -690,13 +696,13 @@
   font-size: 11px;
   font-weight: 600;
   background: #fffbe6;
-  color: #d46b08;
-  border: 1px solid #ffe58f;
+  color: #92400e;
+  border: 1px solid #fde68a;
   padding: 4px 10px;
   border-radius: 100px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 /* ── Empty State ── */

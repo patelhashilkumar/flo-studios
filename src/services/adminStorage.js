@@ -210,6 +210,8 @@ export function seedSampleData() {
   }
 }
 
+export const clearAllSubmissions = seedSampleData
+
 /**
  * Export all submissions as CSV download using Blob & createObjectURL
  * Includes Region, Resume Attached, and detailed profile columns

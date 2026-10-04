@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   getSubmissions,
@@ -24,7 +23,6 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState('all') // 'all' | 'message' | 'job' | 'starred'
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
-  const [selectedRecord, setSelectedRecord] = useState(null)
 
   // Initialize auth check
   useEffect(() => {
@@ -81,7 +79,6 @@ export default function AdminPage() {
     if (window.confirm(`Are you sure you want to delete the submission from ${name}?`)) {
       deleteSubmission(id)
       setSubmissions(getSubmissions())
-      if (selectedRecord?.id === id) setSelectedRecord(null)
     }
   }
 
@@ -197,8 +194,14 @@ export default function AdminPage() {
             <button type="button" onClick={exportToJSON} className="admin-action-pill" title="Export as JSON">
               📦 Export JSON
             </button>
-            <button type="button" onClick={handleResetData} className="admin-action-pill admin-action-pill--subtle">
-              🗑️ Clear Submissions
+            <button
+              type="button"
+              onClick={handleResetData}
+              disabled={totalCount === 0}
+              className="admin-action-pill admin-action-pill--subtle"
+              title={totalCount === 0 ? 'No submissions to clear' : 'Clear all submissions'}
+            >
+              <span aria-hidden="true">🗑️</span> Clear Submissions
             </button>
             <button type="button" onClick={handleLock} className="admin-action-pill admin-action-pill--danger">
               🔒 Lock
@@ -298,9 +301,17 @@ export default function AdminPage() {
                   ? `No inquiries match "${searchQuery}". Try clearing search filters.`
                   : 'No submissions in this category yet. Inquiries from /contact and applications from /careers will appear here.'}
               </p>
-              {searchQuery && (
-                <button type="button" onClick={() => setSearchQuery('')} className="admin-empty__btn">
-                  Clear Search Filter
+              {(searchQuery || statusFilter !== 'all' || activeTab !== 'all') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('')
+                    setStatusFilter('all')
+                    setActiveTab('all')
+                  }}
+                  className="admin-empty__btn"
+                >
+                  Reset All Filters
                 </button>
               )}
             </div>
@@ -372,7 +383,7 @@ export default function AdminPage() {
                       </a>
                       {item.phone && <span className="admin-card__phone">{item.phone}</span>}
                       {item.region && (
-                        <span className="admin-card__region-badge">📍 {item.region}</span>
+                        <span className="admin-card__region-badge"><span aria-hidden="true">📍</span> {item.region}</span>
                       )}
                       {item.experience && (
                         <span className="admin-card__exp-badge">Exp: {item.experience}</span>
@@ -407,19 +418,19 @@ export default function AdminPage() {
                         href={item.resumeData}
                         download={item.resumeName || 'Resume.pdf'}
                         className="admin-btn admin-btn--resume"
-                        target="_blank"
-                        rel="noopener noreferrer"
                       >
-                        📄 View / Download Resume ({item.resumeName || 'Resume.pdf'})
+                        <span aria-hidden="true">📄</span> View / Download Resume ({item.resumeName || 'Resume.pdf'})
                       </a>
                     )}
 
                     {!item.resumeData && item.resumeName && (
                       <span
+                        tabIndex={0}
                         className="admin-badge admin-badge--warning"
                         title={item.resumeNote || 'Resume file exceeded local browser storage limit'}
+                        aria-label={`Resume attached: ${item.resumeName}. Local browser storage limit reached.`}
                       >
-                        ⚠️ {item.resumeName} (File quota exceeded)
+                        <span aria-hidden="true">⚠️</span> {item.resumeName} (File quota exceeded)
                       </span>
                     )}
 
@@ -431,7 +442,7 @@ export default function AdminPage() {
                       )}`}
                       className="admin-btn admin-btn--reply"
                     >
-                      ✉️ Reply via Email
+                      <span aria-hidden="true">✉️</span> Reply via Email
                     </a>
 
                     <button
@@ -440,7 +451,7 @@ export default function AdminPage() {
                       className="admin-btn admin-btn--delete"
                       title="Delete record"
                     >
-                      🗑️ Delete
+                      <span aria-hidden="true">🗑️</span> Delete
                     </button>
                   </div>
                 </div>
