@@ -39,22 +39,14 @@ function emitChange() {
 }
 
 /**
- * Legacy dummy seeds identifiers
+ * Legacy dummy seeds prefix identifiers
  */
 const LEGACY_SEED_PREFIXES = ['msg_172783680', 'job_172783690']
-const LEGACY_NAMES = [
-  'Maya Lin',
-  'Elena Rostova',
-  'Marcus Thorne',
-  'Alex Mercer',
-  'Sophia Zhang',
-  'David Kim'
-]
 
 /**
  * Retrieve all submissions from persistent storage.
  * - Initializes with [] if empty
- * - Automatically purges any legacy demo seeds
+ * - Automatically purges any legacy demo seeds by ID prefix
  */
 export function getSubmissions() {
   const storage = getStorage()
@@ -75,9 +67,8 @@ export function getSubmissions() {
     const cleaned = parsed.filter((item) => {
       if (!item || typeof item !== 'object') return false
       const idStr = String(item.id || '')
-      const isLegacyId = LEGACY_SEED_PREFIXES.some((prefix) => idStr.startsWith(prefix))
-      const isLegacyName = LEGACY_NAMES.includes(item.name)
-      return !isLegacyId && !isLegacyName
+      const isLegacySeed = LEGACY_SEED_PREFIXES.some((prefix) => idStr.startsWith(prefix))
+      return !isLegacySeed
     })
 
     if (cleaned.length !== parsed.length) {
@@ -93,12 +84,13 @@ export function getSubmissions() {
 
 /**
  * Save a new submission (Client Message or Job Application)
- * Preserves all resume metadata and application fields
+ * Normalizes all resume metadata and application fields
  */
 export function saveSubmission(entry = {}) {
   const current = getSubmissions()
   const isJob = entry.type === 'job'
   const newSubmission = {
+    ...entry,
     id: entry.id || `${isJob ? 'job' : 'msg'}_${Date.now()}`,
     type: entry.type || (isJob ? 'job' : 'message'),
     status: entry.status || 'new',
@@ -110,8 +102,7 @@ export function saveSubmission(entry = {}) {
     resumeSize: entry.resumeSize || null,
     resumeType: entry.resumeType || null,
     resumeData: entry.resumeData || null,
-    termsConfirmed: Boolean(entry.termsConfirmed),
-    ...entry
+    termsConfirmed: Boolean(entry.termsConfirmed)
   }
 
   const updated = [newSubmission, ...current]
@@ -203,7 +194,7 @@ export function seedSampleData() {
 }
 
 /**
- * Export all submissions as CSV download
+ * Export all submissions as CSV download using Blob & createObjectURL
  * Includes Region, Resume Attached, and detailed profile columns
  */
 export function exportToCSV() {
@@ -226,7 +217,7 @@ export function exportToCSV() {
   const rows = records.map((r) => [
     r.type || '',
     r.id || '',
-    r.createdAt ? new Date(r.createdAt).toLocaleString() : '',
+    r.createdAt ? `"${new Date(r.createdAt).toLocaleString().replace(/"/g, '""')}"` : '""',
     r.status || '',
     r.starred ? 'Yes' : 'No',
     `"${(r.name || '').replace(/"/g, '""')}"`,
@@ -236,35 +227,45 @@ export function exportToCSV() {
     `"${(r.region || '').replace(/"/g, '""')}"`,
     `"${(r.resumeName ? r.resumeName : 'No').replace(/"/g, '""')}"`,
     `"${(r.portfolioUrl || '').replace(/"/g, '""')}"`,
-    `"${(r.message || r.coverNote || '').replace(/"/g, '""').replace(/\n/g, ' ')}"`
+    `"${(r.message || r.coverNote || '').replace(/"/g, '""').replace(/[\r\n]+/g, ' ')}"`
   ])
 
-  const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n')
-  const encodedUri = encodeURI(csvContent)
-  if (typeof document === 'undefined') return csvContent
-  const link = document.createElement('a')
-  link.setAttribute('href', encodedUri)
-  link.setAttribute('download', `flo_studios_submissions_${new Date().toISOString().slice(0, 10)}.csv`)
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+  const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n')
+
+  if (typeof window !== 'undefined' && typeof document !== 'undefined' && typeof Blob !== 'undefined') {
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.setAttribute('href', url)
+    link.setAttribute('download', `flo_studios_submissions_${new Date().toISOString().slice(0, 10)}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
   return csvContent
 }
 
 /**
- * Export all submissions as formatted JSON download
+ * Export all submissions as formatted JSON download using Blob & createObjectURL
  */
 export function exportToJSON() {
   const records = getSubmissions()
   const jsonStr = JSON.stringify(records, null, 2)
-  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(jsonStr)
-  if (typeof document === 'undefined') return jsonStr
-  const link = document.createElement('a')
-  link.setAttribute('href', dataStr)
-  link.setAttribute('download', `flo_studios_submissions_${new Date().toISOString().slice(0, 10)}.json`)
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+
+  if (typeof window !== 'undefined' && typeof document !== 'undefined' && typeof Blob !== 'undefined') {
+    const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.setAttribute('href', url)
+    link.setAttribute('download', `flo_studios_submissions_${new Date().toISOString().slice(0, 10)}.json`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
   return jsonStr
 }
 
