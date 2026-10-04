@@ -1066,7 +1066,7 @@ export default function MotionContactForm({ activeSubject }) {
               <input
                 type="text"
                 className="motion-form__input"
-                placeholder="e.g. Maya Lin"
+                placeholder="Your Full Name"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value)

@@ -167,6 +167,13 @@ export default function CareersPage() {
       setStatus('idle')
     }
 
+    // Validate non-empty file
+    if (file.size === 0) {
+      setErrorMessage('Uploaded file is empty. Please select a valid document.')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      return
+    }
+
     // Validate size: 5MB max (5 * 1024 * 1024)
     const maxBytes = 5 * 1024 * 1024
     if (file.size > maxBytes) {
@@ -181,6 +188,19 @@ export default function CareersPage() {
     const isValidExtension = validExtensions.some((ext) => lowerName.endsWith(ext))
     if (!isValidExtension) {
       setErrorMessage('Invalid file format. Please upload a PDF, DOC, or DOCX document.')
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      return
+    }
+
+    // Validate MIME type if reported by browser
+    const validMimeTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/octet-stream'
+    ]
+    if (file.type && !validMimeTypes.includes(file.type)) {
+      setErrorMessage('Invalid document type. Please upload a PDF, DOC, or DOCX document.')
       if (fileInputRef.current) fileInputRef.current.value = ''
       return
     }

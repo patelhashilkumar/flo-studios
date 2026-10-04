@@ -233,20 +233,26 @@ export function exportToCSV() {
     'Portfolio / Profile',
     'Message / Pitch'
   ]
+  const sanitizeCSVCell = (val) => {
+    const str = String(val || '').replace(/"/g, '""').replace(/[\r\n]+/g, ' ')
+    const escaped = /^[=+\-@\t]/.test(str) ? `'${str}` : str
+    return `"${escaped}"`
+  }
+
   const rows = records.map((r) => [
-    r.type || '',
-    r.id || '',
-    r.createdAt ? `"${new Date(r.createdAt).toLocaleString().replace(/"/g, '""')}"` : '""',
-    r.status || '',
-    r.starred ? 'Yes' : 'No',
-    `"${(r.name || '').replace(/"/g, '""')}"`,
-    `"${(r.email || '').replace(/"/g, '""')}"`,
-    `"${(r.phone || '').replace(/"/g, '""')}"`,
-    `"${(r.service || r.role || '').replace(/"/g, '""')}"`,
-    `"${(r.region || '').replace(/"/g, '""')}"`,
-    `"${(r.resumeName ? r.resumeName : 'No').replace(/"/g, '""')}"`,
-    `"${(r.portfolioUrl || '').replace(/"/g, '""')}"`,
-    `"${(r.message || r.coverNote || '').replace(/"/g, '""').replace(/[\r\n]+/g, ' ')}"`
+    sanitizeCSVCell(r.type || ''),
+    sanitizeCSVCell(r.id || ''),
+    sanitizeCSVCell(r.createdAt ? new Date(r.createdAt).toLocaleString() : ''),
+    sanitizeCSVCell(r.status || ''),
+    sanitizeCSVCell(r.starred ? 'Yes' : 'No'),
+    sanitizeCSVCell(r.name || ''),
+    sanitizeCSVCell(r.email || ''),
+    sanitizeCSVCell(r.phone || ''),
+    sanitizeCSVCell(r.service || r.role || ''),
+    sanitizeCSVCell(r.region || ''),
+    sanitizeCSVCell(r.resumeName ? r.resumeName : 'No'),
+    sanitizeCSVCell(r.portfolioUrl || ''),
+    sanitizeCSVCell(r.message || r.coverNote || '')
   ])
 
   const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n')
