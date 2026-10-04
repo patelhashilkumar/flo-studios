@@ -663,6 +663,28 @@
   background: rgba(220, 38, 38, 0.04);
 }
 
+.admin-btn--resume {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.admin-btn--resume:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.admin-card__region-badge {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(37, 99, 235, 0.08);
+  color: #1d4ed8;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
 /* ── Empty State ── */
 .admin-empty {
   text-align: center;

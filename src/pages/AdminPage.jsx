@@ -371,6 +371,9 @@ export default function AdminPage() {
                         {item.email}
                       </a>
                       {item.phone && <span className="admin-card__phone">{item.phone}</span>}
+                      {item.region && (
+                        <span className="admin-card__region-badge">📍 {item.region}</span>
+                      )}
                       {item.experience && (
                         <span className="admin-card__exp-badge">Exp: {item.experience}</span>
                       )}
@@ -399,6 +402,18 @@ export default function AdminPage() {
 
                   {/* Actions Footer */}
                   <div className="admin-card__footer">
+                    {item.resumeData && (
+                      <a
+                        href={item.resumeData}
+                        download={item.resumeName || 'Resume.pdf'}
+                        className="admin-btn admin-btn--resume"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        📄 View / Download Resume ({item.resumeName || 'Resume.pdf'})
+                      </a>
+                    )}
+
                     <a
                       href={`mailto:${item.email}?subject=${encodeURIComponent(
                         item.type === 'job'
