@@ -129,6 +129,7 @@ export default function CareersPage() {
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success'
   const [errorMessage, setErrorMessage] = useState('')
   const [isDragging, setIsDragging] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
 
   const heroRef = useRef(null)
   const fileInputRef = useRef(null)
@@ -272,6 +273,12 @@ export default function CareersPage() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setErrorMessage('')
+
+    if (honeypot.trim()) {
+      // Silent drop for automated bots
+      setStatus('success')
+      return
+    }
 
     if (isReadingFile) {
       setErrorMessage('Please wait for the resume to finish uploading.')
@@ -575,6 +582,20 @@ export default function CareersPage() {
             </div>
 
             <form className="careers-form" onSubmit={handleSubmit} noValidate>
+              {/* Anti-Bot Honeypot */}
+              <div className="sr-only" aria-hidden="true" style={{ display: 'none' }}>
+                <label htmlFor="careers_org_url">Do not fill this field</label>
+                <input
+                  id="careers_org_url"
+                  type="text"
+                  name="careers_org_url"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               {/* Row 1: Name & Email */}
               <div className="careers-form__row">
                 <div className="careers-form__group">
