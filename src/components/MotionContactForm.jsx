@@ -1018,23 +1018,22 @@ export default function MotionContactForm({ activeSubject }) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const finalName = name.trim() || 'Maya Lin'
-    const finalEmail = email.trim() || 'maya@linstudio.design'
-    const finalPhone = phone.trim() || ''
-    const finalMessage = message.trim() || 'Looking forward to creating something iconic with Flo Studios.'
+    const trimmedName = name.trim()
+    const trimmedEmail = email.trim()
+    const trimmedMessage = message.trim()
 
-    if (!name.trim()) setName(finalName)
-    if (!email.trim()) setEmail(finalEmail)
-    if (!message.trim()) setMessage(finalMessage)
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      return
+    }
 
     // Save to persistent admin storage
     saveSubmission({
       type: 'message',
-      name: finalName,
-      email: finalEmail,
-      phone: finalPhone,
+      name: trimmedName,
+      email: trimmedEmail,
+      phone: phone.trim() || '',
       service: selectedService,
-      message: finalMessage
+      message: trimmedMessage
     })
 
     runDeliverySequence()
