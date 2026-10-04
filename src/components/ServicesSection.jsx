@@ -51,13 +51,13 @@ export default function ServicesSection() {
         <div className="services-section__content">
           <div className="services-section__text">
             <h3 className="services-section__heading">
-              We Make Brands, Products, Websites, And Establish Creators.
+              We shape brands, digital products, and cinematic motion.
             </h3>
             <p className="services-section__desc">
-              We Work Across The Full Lifecycle, Start To Finish, So Every Piece Lands As One Coherent Outcome.
+              From initial direction to final build, executed by one unified team.
             </p>
             <Link to="/services" className="services-section__cta">
-              See our offerings
+              Explore services
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>

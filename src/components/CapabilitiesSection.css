@@ -146,6 +146,26 @@
   line-height: 1.65;
   color: var(--color-text-secondary);
   font-weight: 400;
+  margin-bottom: 0.85rem;
+}
+
+.capabilities-item__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.capabilities-item__tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-label, 11px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 4px 10px;
+  border-radius: 9999px;
 }
 
 @media (max-width: 768px) {

@@ -10,35 +10,35 @@ gsap.registerPlugin(ScrollTrigger)
 const FEATURED_PROJECTS = [
   {
     title: 'Apple Product Motion',
-    desc: 'Hyper-detailed 3D motion graphics, product visualization, and dynamic CGI simulation.',
+    desc: 'Product visualization and dynamic 3D motion graphics.',
     tags: ['motion', 'product'],
     image: '/videos/apple-thumb.png',
     slug: 'apple-motion',
   },
   {
     title: 'Blitzit 2.0 Interface Motion',
-    desc: 'Fluid micro-interactions and interface motion design crafted for modern productivity.',
+    desc: 'Fluid micro-interactions and productivity interface design.',
     tags: ['motion', 'product'],
     image: '/videos/blitzit-thumb.png',
     slug: 'blitzit-motion',
   },
   {
     title: 'SV Studio Showreel',
-    desc: 'A dynamic studio showcase demonstrating creative direction, typography, and animation.',
+    desc: 'Creative direction, kinetic typography, and studio showcase.',
     tags: ['motion', 'brand'],
     image: '/videos/sv-thumb.png',
     slug: 'sv-showreel',
   },
   {
     title: 'Electronic Arts',
-    desc: 'The evolution of EA: from gaming legacy to entertainment leader.',
+    desc: 'Brand evolution across interactive entertainment.',
     tags: ['brand'],
     image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
     slug: 'electronic-arts',
   },
   {
     title: 'Oura Smart Ring',
-    desc: 'Transforming the way people discover and embrace the Oura Smart Ring.',
+    desc: 'Digital experience and product narrative.',
     tags: ['product'],
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
     slug: 'oura-smart-ring',
@@ -109,8 +109,8 @@ export default function WorkPage() {
           </div>
 
           <h1 className="work-page__tagline">
-            {'We create beautiful, functional, technology-forward work that elevates and unifies experiences across all brand surfaces.'.split(' ').map((w, i) => (
-              <span key={i} className="work-page__hero-word">{w} </span>
+            {'Work engineered for attention, clarity, and enduring impact.'.split(' ').map((w, i) => (
+              <span key={i} className="work-page__hero-word">{w}</span>
             ))}
           </h1>
         </div>
@@ -127,7 +127,7 @@ export default function WorkPage() {
               <h2 className="work-page__featured-title">{proj.title}</h2>
               <p className="work-page__featured-desc">{proj.desc}</p>
               <div className="work-page__featured-tags">
-                {proj.tags.map((t) => <span key={t}>#{t}</span>)}
+                {proj.tags.map((t) => <span key={t}>{t}</span>)}
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@ export default function WorkPage() {
               </div>
               <h3 className="work-page__project-title">{proj.title}</h3>
               <div className="work-page__project-tags">
-                {proj.tags.map((t) => <span key={t}>#{t}</span>)}
+                {proj.tags.map((t) => <span key={t}>{t}</span>)}
               </div>
             </div>
           ))}

@@ -36,8 +36,7 @@ export default function ClientRoster() {
   return (
     <section className="client-roster" ref={sectionRef}>
       <div className="container">
-        <h2 className="client-roster__label">Client Roster</h2>
-        <p className="client-roster__sub">Select clients include:</p>
+        <h2 className="client-roster__label">Selected Clients</h2>
         <div className="client-roster__list">
           {CLIENTS.map((client) => (
             <span key={client} className="client-roster__item">{client}</span>

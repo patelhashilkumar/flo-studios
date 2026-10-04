@@ -17,28 +17,28 @@ const WORKFLOW_STEPS = [
     num: "01",
     tag: "DISCOVERY",
     title: "Vision & Direction",
-    desc: "Unearthing brand narrative, kinetic principles, and technical requirements through intensive exploration.",
+    desc: "Defining narrative principles, kinetic tone, and technical architecture.",
     deliverable: "Motion Brand Bible"
   },
   {
     num: "02",
     tag: "PROTOTYPING",
     title: "Motion & 3D R&D",
-    desc: "Kinetic storyboarding, procedural geometry sculpture, and lighting studies to establish the visual universe.",
+    desc: "Kinetic storyboarding, procedural geometry, and shader exploration.",
     deliverable: "3D Pre-Vis & Shaders"
   },
   {
     num: "03",
     tag: "PRODUCTION",
     title: "Cinema & Craft",
-    desc: "High-fidelity physics simulations, raytraced GPU rendering, typographic micro-interactions, and sound design.",
+    desc: "GPU raytracing, physical simulation, and typographic motion.",
     deliverable: "Raytraced CGI & Sound"
   },
   {
     num: "04",
     tag: "DEPLOYMENT",
     title: "Master Delivery",
-    desc: "Multi-platform 4K/8K rendering and interactive asset packaging engineered for global reveals.",
+    desc: "Multi-format rendering and interactive asset deployment.",
     deliverable: "Master 8K Interactive"
   }
 ];

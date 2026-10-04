@@ -1,114 +1,100 @@
 /* ═══════════════════════════════════════════════════
    FLO STUDIOS — CAREERS & TALENT DIRECTORY
+   Unified with Pages.css Design System
    ═══════════════════════════════════════════════════ */
 
 .careers-page {
-  padding-bottom: 6rem;
-  background-color: var(--color-bg);
+  background: var(--color-bg);
   min-height: 100vh;
+  padding-bottom: var(--space-section);
 }
 
 /* ── Hero Section ── */
 .careers-hero {
-  padding-top: 1rem;
-  padding-bottom: 3.5rem;
+  padding-top: 0;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
-.careers-hero__content {
-  max-width: 780px;
-  margin-top: 1.5rem;
+.careers-page__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  max-width: 920px;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
 }
 
-.careers-hero__tag {
-  display: inline-block;
+.careers-page__intro {
   font-family: var(--font-primary);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  margin-bottom: 12px;
-}
-
-.careers-hero__title {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: clamp(2.4rem, 5.2vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.08;
-  color: #0e0e12;
-  margin: 0 0 1.25rem;
-}
-
-.careers-hero__title span {
-  color: #000000;
-  text-decoration: underline;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 6px;
-}
-
-.careers-hero__desc {
-  font-family: var(--font-primary);
-  font-size: 16px;
+  font-size: var(--fs-body-lg);
+  color: var(--color-text-secondary);
   line-height: 1.6;
-  color: rgba(14, 14, 18, 0.65);
-  margin: 0;
-  max-width: 620px;
+  max-width: 680px;
+  margin-bottom: 2rem;
 }
 
-/* ── Perks Grid ── */
+/* ── Studio Principles / Perks Grid ── */
 .careers-perks {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-  margin-top: 3.5rem;
+  gap: 1.5rem;
+  margin-top: clamp(3rem, 5vw, 5rem);
+  border-top: 1px solid var(--color-border);
+  padding-top: clamp(2rem, 4vw, 3rem);
 }
 
 .careers-perk-card {
-  background: #ffffff;
-  border: 1px solid rgba(24, 22, 20, 0.08);
-  border-radius: 20px;
-  padding: 24px 20px;
-  box-shadow: 0 2px 8px -2px rgba(24, 22, 20, 0.04);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
 }
 
 .careers-perk-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px -8px rgba(24, 22, 20, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
-.careers-perk-card__icon {
-  font-size: 24px;
+.careers-perk-card__num {
   display: inline-block;
-  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 16px;
 }
 
 .careers-perk-card__title {
   font-family: var(--font-primary);
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #0e0e12;
-  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
 }
 
 .careers-perk-card__desc {
   font-family: var(--font-primary);
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: rgba(14, 14, 18, 0.6);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
-/* ── Split Layout ── */
+/* ── Split Layout: Directory & Application Form ── */
 .careers-roles-section {
-  padding-top: 1rem;
+  padding-top: 0;
+  padding-bottom: var(--space-section);
 }
 
 .careers-split {
   display: grid;
   grid-template-columns: 1fr 1.05fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 5vw, 5rem);
   align-items: start;
 }
 
@@ -116,19 +102,30 @@
   margin-bottom: 2rem;
 }
 
-.careers-section-title {
+.careers-section-label {
+  display: inline-block;
   font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-size: var(--fs-label);
   font-weight: 800;
-  color: #0e0e12;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.careers-section-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--color-text);
   letter-spacing: -0.02em;
   margin: 0 0 8px;
 }
 
 .careers-section-sub {
   font-family: var(--font-primary);
-  font-size: 14px;
-  color: rgba(14, 14, 18, 0.6);
+  font-size: 14.5px;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
@@ -140,16 +137,15 @@
 }
 
 .careers-role-item {
-  background: #ffffff;
-  border: 1px solid rgba(24, 22, 20, 0.08);
-  border-radius: 22px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: 26px 24px;
-  transition: all 0.25s ease;
+  transition: all 0.25s var(--ease-out);
 }
 
 .careers-role-item:hover {
-  border-color: rgba(24, 22, 20, 0.2);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .careers-role-item__header {
@@ -163,92 +159,92 @@
 .careers-role-item__dept {
   display: inline-block;
   font-family: var(--font-primary);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #059669;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
   margin-bottom: 4px;
 }
 
 .careers-role-item__title {
-  font-family: var(--font-primary);
-  font-size: 17px;
-  font-weight: 700;
-  color: #0e0e12;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
   margin: 0;
   line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .careers-role-item__btn {
-  padding: 7px 16px;
-  border-radius: 100px;
-  border: 1px solid rgba(24, 22, 20, 0.15);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
   background: transparent;
-  color: #0e0e12;
+  color: var(--color-text);
   font-family: var(--font-primary);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-out);
 }
 
 .careers-role-item__btn:hover {
-  background: #0e0e12;
+  background: #000000;
   color: #ffffff;
-  border-color: #0e0e12;
+  border-color: #000000;
 }
 
 .careers-role-item__btn--active {
-  background: #0e0e12;
+  background: #000000;
   color: #ffffff;
-  border-color: #0e0e12;
+  border-color: #000000;
 }
 
 .careers-role-item__desc {
   font-family: var(--font-primary);
-  font-size: 13.5px;
-  color: rgba(14, 14, 18, 0.65);
-  line-height: 1.5;
-  margin: 0 0 14px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 0 0 16px;
 }
 
 .careers-role-item__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .careers-role-pill {
   font-family: var(--font-primary);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(24, 22, 20, 0.04);
-  color: #0e0e12;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--color-text);
 }
 
 .careers-role-tag {
   font-family: var(--font-primary);
-  font-size: 11px;
-  color: rgba(14, 14, 18, 0.5);
-  padding: 4px 6px;
+  font-size: var(--fs-label);
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 /* ── Application Form Card ── */
 .careers-form-card {
   position: sticky;
   top: 100px;
-  background: #ffffff;
-  border: 1px solid rgba(24, 22, 20, 0.09);
-  border-radius: 28px;
-  box-shadow: 
-    0px 2px 4px -2px rgba(24, 22, 20, 0.04),
-    0px 16px 36px -14px rgba(24, 22, 20, 0.09),
-    0px 1px 0px 0px rgba(255, 255, 255, 0.8) inset;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: clamp(24px, 3.5vw, 36px);
   box-sizing: border-box;
 }
@@ -256,22 +252,22 @@
 .careers-form-card__badge {
   display: inline-block;
   font-family: var(--font-primary);
-  font-size: 10.5px;
+  font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #059669;
-  background: rgba(16, 185, 129, 0.1);
-  padding: 3px 8px;
-  border-radius: 6px;
-  margin-bottom: 8px;
+  color: var(--color-text-tertiary);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
 }
 
 .careers-form-card__title {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-display);
   font-size: 1.35rem;
-  font-weight: 800;
-  color: #0e0e12;
+  font-weight: 600;
+  color: var(--color-text);
   margin: 0 0 6px;
   letter-spacing: -0.015em;
 }
@@ -279,7 +275,7 @@
 .careers-form-card__desc {
   font-family: var(--font-primary);
   font-size: 13.5px;
-  color: rgba(14, 14, 18, 0.6);
+  color: var(--color-text-secondary);
   margin: 0 0 1.5rem;
 }
 
@@ -303,27 +299,27 @@
 
 .careers-form__label {
   font-family: var(--font-primary);
-  font-size: 11.5px;
+  font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(14, 14, 18, 0.55);
+  color: var(--color-text-tertiary);
 }
 
 .careers-form__input,
 .careers-form__select,
 .careers-form__textarea {
   width: 100%;
-  padding: 11px 15px;
-  border-radius: 12px;
-  background-color: rgba(24, 22, 20, 0.025);
-  border: 1px solid rgba(24, 22, 20, 0.12);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   font-family: var(--font-primary);
-  font-size: 13px;
-  color: #0e0e12;
+  font-size: 14px;
+  color: var(--color-text);
   outline: none;
   box-sizing: border-box;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s var(--ease-out);
 }
 
 .careers-form__select {
@@ -334,8 +330,7 @@
 .careers-form__select:focus,
 .careers-form__textarea:focus {
   background-color: #ffffff;
-  border-color: #0e0e12;
-  box-shadow: 0 0 0 3px rgba(14, 14, 18, 0.08);
+  border-color: #000000;
 }
 
 .careers-form__textarea {
@@ -349,40 +344,38 @@
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  padding: 0 26px;
-  border-radius: 100px;
-  border: none;
-  background: linear-gradient(180deg, rgb(38, 38, 42) 0%, rgb(18, 18, 22) 100%);
+  padding: 0 28px;
+  border-radius: var(--radius-full);
+  border: 1px solid #000000;
+  background: #000000;
   color: #ffffff;
   font-family: var(--font-primary);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 
-    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.22),
-    0px 6px 18px -4px rgba(0, 0, 0, 0.3);
-  transition: all 0.22s ease;
+  transition: all 0.22s var(--ease-out);
   margin-top: 0.5rem;
 }
 
 .careers-submit-btn:hover:not(:disabled) {
   transform: translateY(-1.5px);
-  background: linear-gradient(180deg, rgb(46, 46, 50) 0%, rgb(24, 24, 28) 100%);
-  box-shadow: 0px 10px 24px -4px rgba(0, 0, 0, 0.4);
+  background: #222222;
+  border-color: #222222;
 }
 
 .careers-submit-btn--success {
-  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-  box-shadow: 0px 8px 22px -4px rgba(16, 185, 129, 0.4);
+  background: #000000;
+  border-color: #000000;
 }
 
 .careers-form__feedback {
   font-family: var(--font-primary);
-  font-size: 12.5px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #047857;
+  font-size: 13px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
   font-weight: 500;
   line-height: 1.4;
   margin-top: 0.5rem;
