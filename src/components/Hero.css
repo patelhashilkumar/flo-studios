@@ -119,42 +119,6 @@
   background: #ffffff;
 }
 
-/* Bottom Badge */
-.hero__video-badge {
-  position: absolute;
-  bottom: 24px;
-  right: 28px;
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 9999px;
-  color: #ffffff;
-  font-family: var(--font-primary);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  pointer-events: none;
-}
-
-.hero__video-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 10px #22c55e;
-  animation: pulse-dot 2s infinite ease-in-out;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
-}
-
 /* ── 3. Intro Statement & CTA ── */
 .hero__statement-container {
   max-width: var(--container-max);
@@ -362,13 +326,6 @@
     font-size: 11px;
   }
 
-  .hero__video-badge {
-    bottom: 14px;
-    right: 14px;
-    padding: 5px 10px;
-    font-size: 10px;
-  }
-
   .hero__statement {
     font-size: 2rem;
     max-width: 100%;
@@ -376,10 +333,6 @@
 }
 
 @media (max-width: 480px) {
-  .hero__video-badge {
-    display: none; /* Avoid overlap on narrow phones */
-  }
-
   .hero__reel-switcher {
     bottom: 10px;
     left: 10px;

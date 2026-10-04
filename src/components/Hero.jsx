@@ -154,12 +154,6 @@ export default function Hero() {
               </button>
             ))}
           </div>
-
-          {/* Bottom Right Reel Info Label */}
-          <div className="hero__video-badge">
-            <span className="hero__video-dot" />
-            <span>{currentReel.badge}</span>
-          </div>
         </div>
       </div>
 
