@@ -124,6 +124,7 @@ export default function CareersPage() {
   const [resumeSize, setResumeSize] = useState('')
   const [resumeType, setResumeType] = useState('')
   const [resumeData, setResumeData] = useState('')
+  const [isReadingFile, setIsReadingFile] = useState(false)
   const [termsConfirmed, setTermsConfirmed] = useState(false)
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success'
   const [errorMessage, setErrorMessage] = useState('')
@@ -162,6 +163,9 @@ export default function CareersPage() {
   const handleProcessFile = (file) => {
     if (!file) return
     setErrorMessage('')
+    if (status === 'success') {
+      setStatus('idle')
+    }
 
     // Validate size: 5MB max (5 * 1024 * 1024)
     const maxBytes = 5 * 1024 * 1024
@@ -181,18 +185,28 @@ export default function CareersPage() {
       return
     }
 
+    setIsReadingFile(true)
+
     const reader = new FileReader()
-    reader.onload = (loadEvent) => {
-      setResumeData(loadEvent.target?.result || '')
+    reader.onload = (e) => {
+      setResumeName(file.name)
+      setResumeSize(formatFileSize(file.size))
+      setResumeType(file.type || 'application/pdf')
+      setResumeData(e.target?.result || '')
+      setIsReadingFile(false)
     }
     reader.onerror = () => {
-      setErrorMessage('Failed to read the resume file. Please try again.')
+      setResumeName('')
+      setResumeSize('')
+      setResumeType('')
+      setResumeData('')
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+      setIsReadingFile(false)
+      setErrorMessage('Failed to read file. Please try another file.')
     }
     reader.readAsDataURL(file)
-
-    setResumeName(file.name)
-    setResumeSize(formatFileSize(file.size))
-    setResumeType(file.type || 'application/pdf')
   }
 
   const handleFileChange = (e) => {
@@ -204,10 +218,14 @@ export default function CareersPage() {
 
   const handleClearResume = (e) => {
     if (e) e.stopPropagation()
+    if (status === 'success') {
+      setStatus('idle')
+    }
     setResumeName('')
     setResumeSize('')
     setResumeType('')
     setResumeData('')
+    setIsReadingFile(false)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -235,12 +253,21 @@ export default function CareersPage() {
     e.preventDefault()
     setErrorMessage('')
 
+    if (isReadingFile) {
+      setErrorMessage('Please wait for the resume to finish uploading.')
+      return
+    }
     if (!name.trim()) {
       setErrorMessage('Full Name is required.')
       return
     }
     if (!email.trim()) {
       setErrorMessage('Email Address is required.')
+      return
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email.trim())) {
+      setErrorMessage('Please enter a valid email address.')
       return
     }
     if (!region) {
@@ -267,7 +294,7 @@ export default function CareersPage() {
     setStatus('submitting')
 
     try {
-      saveSubmission({
+      const saved = saveSubmission({
         type: 'job',
         role: 'Sales Development Representative',
         division: 'Development Division',
@@ -284,6 +311,12 @@ export default function CareersPage() {
         coverNote: notes.trim(),
         termsConfirmed: true
       })
+
+      if (!saved) {
+        setErrorMessage('Unable to save application to storage. Please try again or reach out to us directly.')
+        setStatus('idle')
+        return
+      }
 
       setStatus('success')
       setName('')
@@ -324,7 +357,7 @@ export default function CareersPage() {
             <Link to="/">Home</Link> <span>/</span> <span>Careers</span>
           </div>
 
-          <h1 className="careers-header__title">
+          <h1 className="careers-header__title" aria-label="Sales Development Representative">
             {'Sales Development Representative'.split(' ').map((word, idx) => (
               <span key={idx} className="careers-header__title-word">
                 {word}{' '}
@@ -522,7 +555,10 @@ export default function CareersPage() {
                     type="text"
                     className="careers-form__input"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      if (status === 'success') setStatus('idle')
+                      setName(e.target.value)
+                    }}
                     required
                   />
                 </div>
@@ -535,7 +571,10 @@ export default function CareersPage() {
                     type="email"
                     className="careers-form__input"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      if (status === 'success') setStatus('idle')
+                      setEmail(e.target.value)
+                    }}
                     required
                   />
                 </div>
@@ -552,7 +591,10 @@ export default function CareersPage() {
                     type="tel"
                     className="careers-form__input"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      if (status === 'success') setStatus('idle')
+                      setPhone(e.target.value)
+                    }}
                   />
                 </div>
                 <div className="careers-form__group">
@@ -564,7 +606,10 @@ export default function CareersPage() {
                     type="url"
                     className="careers-form__input"
                     value={linkedinUrl}
-                    onChange={(e) => setLinkedinUrl(e.target.value)}
+                    onChange={(e) => {
+                      if (status === 'success') setStatus('idle')
+                      setLinkedinUrl(e.target.value)
+                    }}
                   />
                 </div>
               </div>
@@ -579,7 +624,10 @@ export default function CareersPage() {
                     id="careers-region"
                     className="careers-form__select"
                     value={region}
-                    onChange={(e) => setRegion(e.target.value)}
+                    onChange={(e) => {
+                      if (status === 'success') setStatus('idle')
+                      setRegion(e.target.value)
+                    }}
                     required
                   >
                     <option value="">Select Region</option>
@@ -598,7 +646,10 @@ export default function CareersPage() {
                     id="careers-experience"
                     className="careers-form__select"
                     value={experience}
-                    onChange={(e) => setExperience(e.target.value)}
+                    onChange={(e) => {
+                      if (status === 'success') setStatus('idle')
+                      setExperience(e.target.value)
+                    }}
                     required
                   >
                     <option value="">Select Experience</option>
@@ -613,26 +664,28 @@ export default function CareersPage() {
 
               {/* Row 4: Resume Upload */}
               <div className="careers-form__group">
-                <label className="careers-form__label">
+                <label htmlFor="careers-resume" className="careers-form__label">
                   Resume (PDF, DOC, DOCX - Max 5MB) *
                 </label>
                 <input
                   type="file"
+                  id="careers-resume"
                   ref={fileInputRef}
-                  className="careers-file-hidden"
+                  className="sr-only careers-file-input-sr"
                   accept=".pdf,.doc,.docx"
                   onChange={handleFileChange}
                 />
 
                 {!resumeName ? (
                   <div
-                    className={`careers-dropzone ${isDragging ? 'careers-dropzone--dragging' : ''}`}
+                    className={`careers-dropzone careers-file-dropzone ${isDragging ? 'careers-dropzone--dragging' : ''}`}
                     onClick={() => fileInputRef.current?.click()}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
                     role="button"
                     tabIndex={0}
+                    aria-label="Upload Resume (PDF, DOC, or DOCX up to 5MB)"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault()
@@ -683,7 +736,10 @@ export default function CareersPage() {
                   className="careers-form__textarea"
                   rows={5}
                   value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
+                  onChange={(e) => {
+                    if (status === 'success') setStatus('idle')
+                    setNotes(e.target.value)
+                  }}
                   required
                 />
               </div>
@@ -695,7 +751,10 @@ export default function CareersPage() {
                   type="checkbox"
                   className="careers-form__checkbox"
                   checked={termsConfirmed}
-                  onChange={(e) => setTermsConfirmed(e.target.checked)}
+                  onChange={(e) => {
+                    if (status === 'success') setStatus('idle')
+                    setTermsConfirmed(e.target.checked)
+                  }}
                   required
                 />
                 <label htmlFor="careers-terms" className="careers-form__checkbox-label">
@@ -717,7 +776,7 @@ export default function CareersPage() {
               {/* Submit Button */}
               <motion.button
                 type="submit"
-                disabled={status === 'submitting'}
+                disabled={status === 'submitting' || status === 'success' || isReadingFile}
                 className={`careers-submit-btn ${status === 'success' ? 'careers-submit-btn--success' : ''}`}
                 whileTap={{ scale: 0.99 }}
               >
@@ -725,6 +784,8 @@ export default function CareersPage() {
                   ? 'Submitting Application…'
                   : status === 'success'
                   ? '✓ Application Received'
+                  : isReadingFile
+                  ? 'Processing Resume…'
                   : 'Submit Application →'}
               </motion.button>
 
@@ -733,6 +794,8 @@ export default function CareersPage() {
                 {status === 'success' && (
                   <motion.div
                     className="careers-form__alert careers-form__alert--success"
+                    role="status"
+                    aria-live="polite"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}

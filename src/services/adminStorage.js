@@ -102,6 +102,7 @@ export function saveSubmission(entry = {}) {
     resumeSize: entry.resumeSize || null,
     resumeType: entry.resumeType || null,
     resumeData: entry.resumeData || null,
+    resumeNote: entry.resumeNote || null,
     termsConfirmed: Boolean(entry.termsConfirmed)
   }
 
@@ -114,8 +115,24 @@ export function saveSubmission(entry = {}) {
     emitChange()
     return newSubmission
   } catch (err) {
-    console.error('Failed saving submission:', err)
-    return null
+    console.warn('Storage quota exceeded with resumeData, retrying without base64 payload...')
+    try {
+      const fallbackEntry = {
+        ...newSubmission,
+        resumeData: null,
+        resumeNote: 'File exceeds local storage quota. Metadata preserved: ' + (entry.resumeName || '')
+      }
+      const fallbackUpdated = [fallbackEntry, ...current]
+      const storage = getStorage()
+      if (storage) {
+        storage.setItem(STORAGE_KEY, JSON.stringify(fallbackUpdated))
+      }
+      emitChange()
+      return fallbackEntry
+    } catch (fallbackErr) {
+      console.error('Failed saving submission:', fallbackErr)
+      return null
+    }
   }
 }
 
