@@ -311,6 +311,17 @@ export default function CareersPage() {
       return
     }
 
+    let cleanLinkedinUrl = linkedinUrl.trim()
+    if (cleanLinkedinUrl) {
+      if (/^(javascript|data|vbscript|file):/i.test(cleanLinkedinUrl)) {
+        setErrorMessage('Please enter a valid profile or website URL.')
+        return
+      }
+      if (!/^https?:\/\//i.test(cleanLinkedinUrl)) {
+        cleanLinkedinUrl = `https://${cleanLinkedinUrl}`
+      }
+    }
+
     setStatus('submitting')
 
     try {
@@ -323,7 +334,7 @@ export default function CareersPage() {
         phone: phone.trim(),
         region,
         experience,
-        portfolioUrl: linkedinUrl.trim(),
+        portfolioUrl: cleanLinkedinUrl,
         resumeName,
         resumeSize,
         resumeType,
