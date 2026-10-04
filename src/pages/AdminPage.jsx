@@ -59,15 +59,6 @@ export default function AdminPage() {
     }
   }
 
-  const handleDemoUnlock = () => {
-    setPasscode('flo2026')
-    if (checkPasscode('flo2026')) {
-      setUnlocked(true)
-      setAuthError(false)
-      setSubmissions(getSubmissions())
-    }
-  }
-
   const handleLock = () => {
     logout()
     setUnlocked(false)
@@ -150,7 +141,7 @@ export default function AdminPage() {
             <div className="admin-lock-input-wrap">
               <input
                 type="password"
-                placeholder="Enter passcode (default: flo2026)"
+                placeholder="Enter studio passcode"
                 value={passcode}
                 onChange={(e) => {
                   setPasscode(e.target.value)
@@ -159,15 +150,12 @@ export default function AdminPage() {
                 className={`admin-lock-input ${authError ? 'admin-lock-input--error' : ''}`}
                 autoFocus
               />
-              {authError && <span className="admin-lock-err-msg">Incorrect passcode. Try flo2026.</span>}
+              {authError && <span className="admin-lock-err-msg">Incorrect passcode. Please try again.</span>}
             </div>
 
             <div className="admin-lock-buttons">
               <button type="submit" className="admin-lock-btn">
                 Unlock Dashboard →
-              </button>
-              <button type="button" onClick={handleDemoUnlock} className="admin-lock-demo-btn">
-                1-Click Demo Unlock
               </button>
             </div>
           </form>
@@ -450,7 +438,7 @@ export default function AdminPage() {
                     )}
 
                     <a
-                      href={`mailto:${item.email}?subject=${encodeURIComponent(
+                      href={`mailto:${encodeURIComponent((item.email || '').trim())}?subject=${encodeURIComponent(
                         item.type === 'job'
                           ? `Flo Studios · Regarding your application for ${item.role}`
                           : `Flo Studios · Regarding your ${item.service} inquiry`

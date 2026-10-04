@@ -893,6 +893,7 @@ export default function MotionContactForm({ activeSubject }) {
   const [phone, setPhone] = useState('')
   const [selectedService, setSelectedService] = useState('Motion Graphics')
   const [message, setMessage] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState('idle') // 'idle' | 'pending' | 'success'
   const [isDelivering, setIsDelivering] = useState(false)
 
@@ -1018,6 +1019,12 @@ export default function MotionContactForm({ activeSubject }) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
+    if (honeypot.trim()) {
+      // Silent drop for automated bots
+      runDeliverySequence()
+      return
+    }
+
     const trimmedName = name.trim()
     const trimmedEmail = email.trim()
     const trimmedMessage = message.trim()
@@ -1059,6 +1066,20 @@ export default function MotionContactForm({ activeSubject }) {
         </div>
 
         <form className="motion-form" onSubmit={handleSubmit}>
+          {/* Anti-Bot Honeypot */}
+          <div className="sr-only" aria-hidden="true" style={{ display: 'none' }}>
+            <label htmlFor="contact_org_fax">Do not fill this field</label>
+            <input
+              id="contact_org_fax"
+              type="text"
+              name="contact_org_fax"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           {/* Name & Email Row */}
           <div className="motion-form__row">
             <div className="motion-form__group">
