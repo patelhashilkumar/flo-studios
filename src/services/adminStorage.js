@@ -5,7 +5,7 @@
  * ══════════════════════════════════════════════════════════════
  */
 
-import { INITIAL_JOB_POSTINGS } from '../data/jobPostings'
+import { INITIAL_JOB_POSTINGS } from '../data/jobPostings.js'
 
 export const STORAGE_KEY = 'FLO_STUDIOS_SUBMISSIONS_V1'
 export const JOBS_STORAGE_KEY = 'FLO_STUDIOS_JOBS_V1'
