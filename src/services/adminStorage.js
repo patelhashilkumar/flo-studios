@@ -347,10 +347,16 @@ export function getJobs() {
       return INITIAL_JOB_POSTINGS
     }
     const parsed = JSON.parse(raw)
-    if (!Array.isArray(parsed) || parsed.length === 0) {
-      storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
-      return INITIAL_JOB_POSTINGS
+    // Filter out legacy placeholder roles (e.g. 'eng' / 'full-stack-product-engineer')
+    const cleaned = parsed.filter(
+      (job) => job && job.id !== 'eng' && job.slug !== 'full-stack-product-engineer'
+    )
+    if (cleaned.length !== parsed.length) {
+      const sanitized = cleaned.length > 0 ? cleaned : INITIAL_JOB_POSTINGS
+      storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(sanitized))
+      return sanitized
     }
+
     return parsed
   } catch (err) {
     console.error('Failed reading jobs from storage:', err)

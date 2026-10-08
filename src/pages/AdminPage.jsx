@@ -204,10 +204,10 @@ export default function AdminPage() {
   }
 
   const handleResetJobs = () => {
-    if (window.confirm('Reset job postings back to the 2 default openings (Sales Development Representative & Full-Stack Product Engineer)?')) {
+    if (window.confirm('Reset job postings back to the verified default opening (Sales Development Representative)?')) {
       resetJobs()
       setJobs(getJobs())
-      setCmsNotice('✓ Restored 2 default job listings')
+      setCmsNotice('✓ Restored default job listing')
       setTimeout(() => setCmsNotice(''), 4000)
     }
   }
