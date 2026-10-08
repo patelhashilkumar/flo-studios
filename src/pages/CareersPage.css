@@ -18,7 +18,91 @@
   padding-right: var(--container-padding);
 }
 
-/* ── 1. Breadcrumb & Header ── */
+/* ── 1. Top Bar & Role Switcher ── */
+.careers-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.careers-role-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--color-border);
+  padding: 4px;
+  border-radius: var(--radius-full);
+}
+
+.careers-role-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+  user-select: none;
+}
+
+.careers-role-tab:hover {
+  color: var(--color-text);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.careers-role-tab--active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.careers-role-tab--active:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+.careers-role-tab__index {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  opacity: 0.65;
+  letter-spacing: 0.04em;
+}
+
+.careers-role-tab--active .careers-role-tab__index {
+  opacity: 0.9;
+  color: #ffffff;
+}
+
+.careers-role-tab__label {
+  letter-spacing: -0.01em;
+}
+
+.careers-role-tab__badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.careers-role-tab--active .careers-role-tab__badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* ── 2. Header ── */
 .careers-header {
   margin-bottom: clamp(3rem, 6vw, 4.5rem);
   border-bottom: 1px solid var(--color-border);
