@@ -136,7 +136,7 @@
 
 .lg-footer__brand-text {
   font-family: var(--font-panchang), 'Panchang', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(1.35rem, 1.8vw, 1.65rem);
   letter-spacing: -0.015em;
   color: #0e0e12;
