@@ -23,7 +23,7 @@
 
 .hero__wordmark {
   font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   font-size: clamp(2.4rem, 9.6vw, 12rem);
   line-height: 0.88;
