@@ -5,8 +5,8 @@
  * ══════════════════════════════════════════════════════════════
  */
 
-import { supabase, isSupabaseConfigured } from '../lib/supabase'
-import { INITIAL_JOB_POSTINGS } from '../data/jobPostings'
+import { supabase, isSupabaseConfigured } from '../lib/supabase.js'
+import { INITIAL_JOB_POSTINGS } from '../data/jobPostings.js'
 
 /* ─────────────────────────────────────────────────────────────
    1. AUTHENTICATION (ADMIN)
@@ -73,7 +73,7 @@ export async function createInquiry(payload = {}) {
     throw new Error('Supabase is not configured')
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('contact_inquiries')
     .insert([
       {
@@ -87,10 +87,9 @@ export async function createInquiry(payload = {}) {
         starred: false
       }
     ])
-    .select()
 
   if (error) throw error
-  return data?.[0]
+  return { ok: true }
 }
 
 /**
@@ -259,7 +258,7 @@ export async function createJobApplication(payload = {}, file = null) {
     }
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('job_applications')
     .insert([
       {
@@ -279,10 +278,9 @@ export async function createJobApplication(payload = {}, file = null) {
         starred: false
       }
     ])
-    .select()
 
   if (error) throw error
-  return data?.[0]
+  return { ok: true, resume_path: resumeMeta.path }
 }
 
 /**
