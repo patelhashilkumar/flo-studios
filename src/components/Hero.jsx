@@ -107,6 +107,7 @@ export default function Hero() {
             loop
             muted={isMuted}
             playsInline
+            preload="metadata"
             poster={currentReel.posterSrc}
           >
             <source src={currentReel.videoSrc} type="video/mp4" />
