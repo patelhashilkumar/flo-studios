@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SEO from '../components/SEO'
 import './Pages.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -89,6 +90,16 @@ export default function WorkPage() {
 
   return (
     <motion.main className="work-page" variants={pageV} initial="initial" animate="animate" exit="exit">
+      <SEO
+        title="Work & Case Studies — Flo Studios"
+        description="Browse portfolio work and case studies by Flo Studios across 3D motion design, brand identities, and high-performance digital products."
+        canonicalUrl="https://www.flostudio.co/work"
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/' },
+          { name: 'Work & Case Studies', item: 'https://www.flostudio.co/work' },
+        ]}
+      />
+
       <section className="work-page__hero" ref={headerRef}>
         <div className="container">
           <div className="work-page__filters">
@@ -108,7 +119,8 @@ export default function WorkPage() {
             </div>
           </div>
 
-          <h1 className="work-page__tagline">
+          <h1 className="work-page__tagline" aria-label="Flo Studios Work & Case Studies: Work engineered for attention, clarity, and enduring impact.">
+            <span className="sr-only">Flo Studios Work & Case Studies — </span>
             {'Work engineered for attention, clarity, and enduring impact.'.split(' ').map((w, i) => (
               <span key={i} className="work-page__hero-word">{w}</span>
             ))}
@@ -121,7 +133,7 @@ export default function WorkPage() {
         {FEATURED_PROJECTS.map((proj) => (
           <div className="work-page__featured-card" key={proj.slug}>
             <div className="work-page__featured-media">
-              <img src={proj.image} alt={proj.title} loading="lazy" />
+              <img src={proj.image} alt={`${proj.title} — Flo Studios case study`} loading="lazy" />
             </div>
             <div className="work-page__featured-info">
               <h2 className="work-page__featured-title">{proj.title}</h2>
@@ -140,7 +152,7 @@ export default function WorkPage() {
           {filtered.map((proj, i) => (
             <div className="work-page__project-card" key={i}>
               <div className="work-page__project-media">
-                <img src={proj.image} alt={proj.title} loading="lazy" />
+                <img src={proj.image} alt={`${proj.title} — Flo Studios project`} loading="lazy" />
               </div>
               <h3 className="work-page__project-title">{proj.title}</h3>
               <div className="work-page__project-tags">

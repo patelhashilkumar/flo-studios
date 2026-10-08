@@ -39,7 +39,7 @@ export default function PurposeSection() {
   return (
     <section className="purpose" id="about-us" ref={sectionRef}>
       <div className="container">
-        <h2 className="purpose__label">About Us</h2>
+        <h2 className="purpose__label">About Flo Studios</h2>
 
         <div className="purpose__giant">
           {BIG_WORDS.map((word, i) => (
@@ -49,9 +49,9 @@ export default function PurposeSection() {
 
         <div className="purpose__body">
           <p>
-            Great ideas fail in the space between vision and execution. We built Flo to close that gap—keeping one dedicated team aligned from first concept to living product, refining long after launch.
+            Great ideas fail in the space between vision and execution. We built Flo Studios to close that gap—keeping one dedicated team aligned from first concept to living product, refining long after launch.
           </p>
-          <Link to="/about" className="purpose__cta">
+          <Link to="/about" className="purpose__cta" aria-label="Learn more about Flo Studios">
             Learn more about our studio
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

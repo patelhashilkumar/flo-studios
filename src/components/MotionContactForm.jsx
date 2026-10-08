@@ -1059,7 +1059,7 @@ export default function MotionContactForm({ activeSubject }) {
       {/* The Contact Card Form */}
       <div className="motion-form-card" ref={cardRef}>
         <div className="motion-form-card__header">
-          <h3 className="motion-form-card__title">Start a Conversation</h3>
+          <h2 className="motion-form-card__title">Start a Conversation</h2>
           <p className="motion-form-card__desc">
             Tell us about your project, timeline, or vision. We respond within 24 hours.
           </p>

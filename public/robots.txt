@@ -1,0 +1,10 @@
+# ==============================================================================
+# Flo Studios (https://www.flostudio.co) - robots.txt
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# Canonical XML Sitemap
+Sitemap: https://www.flostudio.co/sitemap.xml

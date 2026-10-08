@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
+import SEO from '../components/SEO'
 
 const pageV = {
   initial: { opacity: 0 },
@@ -51,12 +52,23 @@ export default function ServicesPage() {
 
   return (
     <motion.main className="services-page" variants={pageV} initial="initial" animate="animate" exit="exit">
+      <SEO
+        title="Services & Capabilities — Flo Studios"
+        description="Explore Flo Studios services across Brand Systems, Motion & 3D Campaigns, and Digital Products & Engineering. Building scalable digital experiences for visionary brands."
+        canonicalUrl="https://www.flostudio.co/services"
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/' },
+          { name: 'Services', item: 'https://www.flostudio.co/services' },
+        ]}
+      />
+
       <section className="services-page__hero" ref={heroRef}>
         <div className="container">
           <div className="page-breadcrumb">
             <Link to="/">Home</Link> <span>/</span> <span>Services</span>
           </div>
-          <h1 className="services-page__title">
+          <h1 className="services-page__title" aria-label="Flo Studios Services & Capabilities: We design how visionary brands move, interact, and perform.">
+            <span className="sr-only">Flo Studios Services & Capabilities — </span>
             {'We design how visionary brands move, interact, and perform.'.split(' ').map((w, i) => (
               <span key={i} className="services-page__hero-word">{w}</span>
             ))}
@@ -79,7 +91,7 @@ export default function ServicesPage() {
                 {service.cases.map((c) => (
                   <div className="services-page__case" key={c.name}>
                     <div className="services-page__case-img">
-                      <img src={c.image} alt={c.name} loading="lazy" />
+                      <img src={c.image} alt={`${c.name} — ${c.desc} by Flo Studios`} loading="lazy" />
                     </div>
                     <h4 className="services-page__case-name">{c.name}</h4>
                     <p className="services-page__case-desc">{c.desc}</p>
@@ -94,7 +106,7 @@ export default function ServicesPage() {
       {/* Clients */}
       <section className="services-page__clients">
         <div className="container">
-          <h3 className="services-page__clients-label">Selected Clients</h3>
+          <h2 className="services-page__clients-label">Selected Clients</h2>
           <p className="services-page__clients-list">{CLIENTS.join(', ')}</p>
         </div>
       </section>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { getJobs, saveSubmission, loadJobsFromCloud } from '../services/adminStorage'
+import SEO from '../components/SEO'
 import './CareersPage.css'
 
 const pageV = {
@@ -378,6 +379,16 @@ export default function CareersPage() {
       exit="exit"
       ref={heroRef}
     >
+      <SEO
+        title={`Careers at Flo Studios — ${activeJob.title || 'Open Roles'}`}
+        description={`Explore career opportunities at Flo Studios. Currently hiring: ${activeJob.title || 'Creative and engineering roles'}. Join a studio pairing taste with engineering.`}
+        canonicalUrl="https://www.flostudio.co/careers"
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/' },
+          { name: 'Careers', item: 'https://www.flostudio.co/careers' },
+        ]}
+      />
+
       <div className="container careers-container">
         {/* ── Top Bar: Breadcrumb & Role Switcher ── */}
         <div className="careers-top-bar">
@@ -413,7 +424,8 @@ export default function CareersPage() {
 
         {/* ── Header ── */}
         <header className="careers-header">
-          <h1 className="careers-header__title" aria-label={activeJob.title || 'Career Opening'}>
+          <h1 className="careers-header__title" aria-label={`Careers at Flo Studios: ${activeJob.title || 'Career Opening'}`}>
+            <span className="sr-only">Careers at Flo Studios — </span>
             {(activeJob.title || 'Career Opening').split(' ').map((word, idx) => (
               <span key={idx} className="careers-header__title-word">
                 {word}
