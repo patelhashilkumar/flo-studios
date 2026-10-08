@@ -169,6 +169,70 @@
   color: #0e0e12;
 }
 
+.admin-lock-input--left {
+  text-align: left;
+  letter-spacing: normal;
+}
+
+.admin-lock-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.admin-lock-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(14, 14, 18, 0.7);
+}
+
+.admin-lock-toggle-btn {
+  background: none;
+  border: none;
+  color: #0e0e12;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 6px;
+  font-family: var(--font-primary);
+}
+
+.admin-header__status--cloud {
+  color: #059669;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.admin-header__status--local {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.12);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.admin-cloud-notice {
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px dashed rgba(217, 119, 6, 0.3);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #92400e;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
 /* ── 2. Unlocked Admin Dashboard ── */
 .admin-page {
   padding-top: clamp(90px, 12vw, 125px);
