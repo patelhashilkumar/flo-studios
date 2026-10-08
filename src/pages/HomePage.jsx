@@ -1,13 +1,16 @@
+import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Hero from '../components/Hero'
 import WorkSection from '../components/WorkSection'
 import ClientRoster from '../components/ClientRoster'
 import ServicesSection from '../components/ServicesSection'
 import CapabilitiesSection from '../components/CapabilitiesSection'
-import WorkflowSection from '../WorkflowSection'
 import Recognition from '../components/Recognition'
 import PurposeSection from '../components/PurposeSection'
 import NewsSection from '../components/NewsSection'
+
+// Lazy-load the heavy 3D canvas (Three.js / React Three Fiber) below the fold
+const WorkflowSection = lazy(() => import('../WorkflowSection'))
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -23,7 +26,9 @@ export default function HomePage() {
       <ClientRoster />
       <ServicesSection />
       <CapabilitiesSection />
-      <WorkflowSection />
+      <Suspense fallback={<div style={{ minHeight: '380px', background: '#0e0e12' }} />}>
+        <WorkflowSection />
+      </Suspense>
       <Recognition />
       <PurposeSection />
       <NewsSection />
