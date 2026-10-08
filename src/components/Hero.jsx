@@ -12,7 +12,7 @@ const HERO_REELS = [
     id: 'apple',
     name: 'Apple',
     badge: 'APPLE MOTION',
-    videoSrc: '/videos/apple.mov',
+    webmSrc: '/videos/apple.webm',
     mp4Src: '/videos/apple.mp4',
     posterSrc: '/videos/apple-thumb.webp',
   },
@@ -20,7 +20,7 @@ const HERO_REELS = [
     id: 'blitzit',
     name: 'Blitzit',
     badge: 'BLITZIT 2.0',
-    videoSrc: '/videos/blitzit2.mov',
+    webmSrc: '/videos/blitzit2.webm',
     mp4Src: '/videos/blitzit2.mp4',
     posterSrc: '/videos/blitzit-thumb.webp',
   },
@@ -28,7 +28,7 @@ const HERO_REELS = [
     id: 'sv',
     name: 'SV',
     badge: 'SV SHOWCASE',
-    videoSrc: '/videos/sv-final.mov',
+    webmSrc: '/videos/sv-final.webm',
     mp4Src: '/videos/sv-final.mp4',
     posterSrc: '/videos/sv-thumb.webp',
   },
@@ -37,6 +37,8 @@ const HERO_REELS = [
 export default function Hero() {
   const [activeReelIdx, setActiveReelIdx] = useState(0)
   const [isMuted, setIsMuted] = useState(true)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [preloadStrategy, setPreloadStrategy] = useState('auto')
   const heroRef = useRef(null)
   const logoRef = useRef(null)
   const videoCardRef = useRef(null)
@@ -44,6 +46,16 @@ export default function Hero() {
   const wordsRef = useRef([])
 
   const currentReel = HERO_REELS[activeReelIdx]
+
+  // Adaptive network-aware preloading
+  useEffect(() => {
+    if (typeof navigator !== 'undefined' && 'connection' in navigator) {
+      const conn = navigator.connection
+      if (conn?.saveData || conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
+        setPreloadStrategy('metadata')
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -78,6 +90,20 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
+  const handleSelectReel = (idx) => {
+    if (idx === activeReelIdx) return
+    setIsVideoPlaying(false)
+    setActiveReelIdx(idx)
+  }
+
+  const handleTabHover = (idx) => {
+    const reel = HERO_REELS[idx]
+    if (reel?.posterSrc) {
+      const img = new Image()
+      img.src = reel.posterSrc
+    }
+  }
+
   const toggleMute = (e) => {
     e.stopPropagation()
     if (cardVideoRef.current) {
@@ -102,6 +128,16 @@ export default function Hero() {
       {/* ── 2. Rounded Video Player Card ── */}
       <div className="hero__video-wrapper" ref={videoCardRef}>
         <div className="hero__video-card">
+          {/* Smooth Cross-Fade Poster Placeholder */}
+          <img
+            src={currentReel.posterSrc}
+            alt=""
+            className={`hero__video-poster ${isVideoPlaying ? 'hero__video-poster--hidden' : ''}`}
+            fetchPriority={activeReelIdx === 0 ? 'high' : 'auto'}
+            decoding="async"
+            aria-hidden="true"
+          />
+
           {/* Looping HTML5 Background Video for Active Reel */}
           <video
             ref={cardVideoRef}
@@ -111,12 +147,17 @@ export default function Hero() {
             loop
             muted={isMuted}
             playsInline
-            preload="auto"
-            poster={currentReel.posterSrc}
+            preload={preloadStrategy}
+            onPlaying={() => setIsVideoPlaying(true)}
+            onLoadedData={(e) => {
+              const playPromise = e.target.play()
+              if (playPromise !== undefined) {
+                playPromise.then(() => setIsVideoPlaying(true)).catch(() => {})
+              }
+            }}
           >
+            {currentReel.webmSrc && <source src={currentReel.webmSrc} type="video/webm" />}
             {currentReel.mp4Src && <source src={currentReel.mp4Src} type="video/mp4" />}
-            <source src={currentReel.videoSrc} type="video/quicktime" />
-            <source src={currentReel.videoSrc} type="video/mp4" />
           </video>
 
           {/* Bottom Left Glassmorphic Project Switcher */}
@@ -129,8 +170,10 @@ export default function Hero() {
                 className={`hero__reel-tab ${activeReelIdx === idx ? 'hero__reel-tab--active' : ''}`}
                 onClick={(e) => {
                   e.stopPropagation()
-                  setActiveReelIdx(idx)
+                  handleSelectReel(idx)
                 }}
+                onMouseEnter={() => handleTabHover(idx)}
+                onFocus={() => handleTabHover(idx)}
               >
                 {reel.name}
               </button>

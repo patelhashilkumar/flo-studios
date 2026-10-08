@@ -13,21 +13,21 @@ const FEATURED_PROJECTS = [
     title: 'Apple Product Motion',
     desc: 'Product visualization and dynamic 3D motion graphics.',
     tags: ['motion', 'product'],
-    image: '/videos/apple-thumb.png',
+    image: '/videos/apple-thumb.webp',
     slug: 'apple-motion',
   },
   {
     title: 'Blitzit 2.0 Interface Motion',
     desc: 'Fluid micro-interactions and productivity interface design.',
     tags: ['motion', 'product'],
-    image: '/videos/blitzit-thumb.png',
+    image: '/videos/blitzit-thumb.webp',
     slug: 'blitzit-motion',
   },
   {
     title: 'SV Studio Showreel',
     desc: 'Creative direction, kinetic typography, and studio showcase.',
     tags: ['motion', 'brand'],
-    image: '/videos/sv-thumb.png',
+    image: '/videos/sv-thumb.webp',
     slug: 'sv-showreel',
   },
   {
@@ -47,9 +47,9 @@ const FEATURED_PROJECTS = [
 ]
 
 const ALL_PROJECTS = [
-  { title: 'Apple Product Motion', tags: ['motion', 'product'], image: '/videos/apple-thumb.png' },
-  { title: 'Blitzit 2.0 Interface', tags: ['motion', 'product'], image: '/videos/blitzit-thumb.png' },
-  { title: 'SV Studio Showreel', tags: ['motion', 'brand'], image: '/videos/sv-thumb.png' },
+  { title: 'Apple Product Motion', tags: ['motion', 'product'], image: '/videos/apple-thumb.webp' },
+  { title: 'Blitzit 2.0 Interface', tags: ['motion', 'product'], image: '/videos/blitzit-thumb.webp' },
+  { title: 'SV Studio Showreel', tags: ['motion', 'brand'], image: '/videos/sv-thumb.webp' },
   { title: 'Deadstock Coffee', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
   { title: 'Instrument Playspace', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
   { title: 'Feeld', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },

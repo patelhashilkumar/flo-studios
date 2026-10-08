@@ -11,24 +11,27 @@ const WORK_ITEMS = [
     title: 'Apple Product Motion',
     slug: 'apple-motion',
     tags: ['motion', 'product'],
-    image: '/videos/apple-thumb.png',
-    video: '/videos/apple.mov',
+    image: '/videos/apple-thumb.webp',
+    videoWebm: '/videos/apple.webm',
+    videoMp4: '/videos/apple.mp4',
     metric: 'CGI & 3D Motion',
   },
   {
     title: 'Blitzit 2.0 Interface',
     slug: 'blitzit-motion',
     tags: ['motion', 'product'],
-    image: '/videos/blitzit-thumb.png',
-    video: '/videos/blitzit2.mov',
+    image: '/videos/blitzit-thumb.webp',
+    videoWebm: '/videos/blitzit2.webm',
+    videoMp4: '/videos/blitzit2.mp4',
     metric: 'App & Micro-Interactions',
   },
   {
     title: 'SV Studio Showreel',
     slug: 'sv-showreel',
     tags: ['motion', 'brand'],
-    image: '/videos/sv-thumb.png',
-    video: '/videos/sv-final.mov',
+    image: '/videos/sv-thumb.webp',
+    videoWebm: '/videos/sv-final.webm',
+    videoMp4: '/videos/sv-final.mp4',
     metric: 'Direction & Animation',
   },
   {
@@ -125,23 +128,27 @@ function WorkCard({ item }) {
           src={item.image}
           alt={`${item.title} — Flo Studios case study`}
           loading="lazy"
-          className={`work-card__img ${isHovered && item.video ? 'work-card__img--hidden' : ''}`}
+          decoding="async"
+          className={`work-card__img ${isHovered && (item.videoWebm || item.video) ? 'work-card__img--hidden' : ''}`}
         />
-        {item.video && (
+        {(item.videoWebm || item.videoMp4 || item.video) && (
           <video
             ref={videoRef}
-            src={item.video}
             loop
             muted
             playsInline
-            preload="metadata"
+            preload="none"
             className={`work-card__video ${isHovered ? 'work-card__video--active' : ''}`}
-          />
+          >
+            {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
+            {item.videoMp4 && <source src={item.videoMp4} type="video/mp4" />}
+            {item.video && !item.videoMp4 && <source src={item.video} type="video/mp4" />}
+          </video>
         )}
         {item.metric && (
           <span className="work-card__badge-metric">{item.metric}</span>
         )}
-        {item.video && (
+        {(item.videoWebm || item.video) && (
           <span className="work-card__video-badge">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z" />
