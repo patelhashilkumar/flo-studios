@@ -122,7 +122,12 @@
 
 .careers-header__title-word {
   display: inline-block;
+  margin-right: 0.28em;
   will-change: transform, opacity;
+}
+
+.careers-header__title-word:last-child {
+  margin-right: 0;
 }
 
 .careers-meta-badges {

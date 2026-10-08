@@ -42,6 +42,13 @@ export default function CareersPage() {
 
   const [activeJobId, setActiveJobId] = useState(() => availableJobs[0]?.id || 'sdr')
 
+  // Keep activeJobId synced if jobs are modified/deleted in CMS
+  useEffect(() => {
+    if (availableJobs.length > 0 && !availableJobs.some((j) => j.id === activeJobId)) {
+      setActiveJobId(availableJobs[0].id)
+    }
+  }, [availableJobs, activeJobId])
+
   // Find currently active job or fallback to first
   const activeJob = availableJobs.find((j) => j.id === activeJobId) || availableJobs[0] || {}
 
@@ -361,28 +368,30 @@ export default function CareersPage() {
             <Link to="/">Home</Link> <span>/</span> <span>Careers</span>
           </div>
 
-          <div className="careers-role-nav" role="tablist" aria-label="Open Positions">
-            {availableJobs.map((job) => {
-              const isActive = job.id === activeJob.id
-              return (
-                <button
-                  key={job.id}
-                  type="button"
-                  role="tab"
-                  id={`tab-${job.id}`}
-                  aria-selected={isActive}
-                  className={`careers-role-tab ${isActive ? 'careers-role-tab--active' : ''}`}
-                  onClick={() => handleRoleChange(job.id)}
-                >
-                  <span className="careers-role-tab__index">{job.tabNumber}</span>
-                  <span className="careers-role-tab__label">{job.tabLabel || job.title}</span>
-                  <span className="careers-role-tab__badge">
-                    {isActive ? 'Active Opening' : 'Select Role'}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+          {availableJobs.length > 1 && (
+            <div className="careers-role-nav" role="tablist" aria-label="Open Positions">
+              {availableJobs.map((job) => {
+                const isActive = job.id === activeJob.id
+                return (
+                  <button
+                    key={job.id}
+                    type="button"
+                    role="tab"
+                    id={`tab-${job.id}`}
+                    aria-selected={isActive}
+                    className={`careers-role-tab ${isActive ? 'careers-role-tab--active' : ''}`}
+                    onClick={() => handleRoleChange(job.id)}
+                  >
+                    <span className="careers-role-tab__index">{job.tabNumber}</span>
+                    <span className="careers-role-tab__label">{job.tabLabel || job.title}</span>
+                    <span className="careers-role-tab__badge">
+                      {isActive ? 'Active Opening' : 'Select Role'}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </div>
 
         {/* ── Header ── */}
@@ -390,7 +399,7 @@ export default function CareersPage() {
           <h1 className="careers-header__title" aria-label={activeJob.title || 'Career Opening'}>
             {(activeJob.title || 'Career Opening').split(' ').map((word, idx) => (
               <span key={idx} className="careers-header__title-word">
-                {word}{' '}
+                {word}
               </span>
             ))}
           </h1>
