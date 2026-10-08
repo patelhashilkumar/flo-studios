@@ -169,8 +169,8 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 14px;
+  justify-content: center;
+  padding: 6px 14px;
   text-decoration: none;
   color: #0e0e12;
   border-radius: 9999px;
@@ -190,7 +190,7 @@
 .focus-nav-brand__content {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
   will-change: transform, filter, opacity;
 }
 

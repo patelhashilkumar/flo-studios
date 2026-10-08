@@ -220,8 +220,7 @@ export default function FocusLensNavbar() {
             animate={textAnimate}
             transition={LENS_SPRING}
           >
-            <FloLogo className="focus-nav-brand__mark" height="15px" color="#0e0e12" />
-            <span className="focus-nav-brand__text">FLO</span>
+            <FloLogo className="focus-nav-brand__mark" height="16px" color="#0e0e12" />
           </motion.div>
         </Link>
       )
@@ -315,8 +314,7 @@ export default function FocusLensNavbar() {
               }}
               aria-label="Flo Studios Home"
             >
-              <FloLogo height="15px" color="#0e0e12" />
-              <span className="liquid-glass-mobile-brand__text">FLO STUDIOS</span>
+              <FloLogo height="16px" color="#0e0e12" />
             </Link>
 
             <button
