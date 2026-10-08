@@ -39,7 +39,7 @@ function getSafeExternalUrl(url) {
 
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
-  const [authMethod, setAuthMethod] = useState(() => (isSupabaseConfigured() ? 'supabase' : 'passcode')) // 'supabase' | 'passcode'
+  const [authMethod, setAuthMethod] = useState('passcode') // 'passcode' | 'supabase'
   const [adminEmail, setAdminEmail] = useState('')
   const [adminPassword, setAdminPassword] = useState('')
   const [passcode, setPasscode] = useState('')
@@ -357,7 +357,6 @@ export default function AdminPage() {
      VIEW 1: AUTHENTICATION LOCK SCREEN
      ═══════════════════════════════════════════════════ */
   if (!unlocked) {
-    const isCloud = isSupabaseConfigured()
     return (
       <main className="admin-lock-page">
         <div className="admin-lock-card">
@@ -368,19 +367,35 @@ export default function AdminPage() {
 
           <h1 className="admin-lock-title">Flo Studios Admin</h1>
           <p className="admin-lock-sub">
-            {isCloud
+            {authMethod === 'supabase'
               ? 'Authenticate with your Supabase Admin account to access client leads, applications, and job management.'
-              : 'Supabase environment is currently in local preview mode. Add your credentials to .env for cloud sync.'}
+              : 'Enter the studio authorization passcode to access the restricted administrative portal.'}
           </p>
 
-          {!isCloud && (
-            <div className="admin-cloud-notice">
-              <strong>⚙️ Supabase Setup Notice:</strong>
-              <div>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to <code>.env</code>. You can also unlock with studio passcode below.</div>
-            </div>
-          )}
+          <div className="admin-auth-toggle-bar">
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMethod('passcode')
+                setAuthError('')
+              }}
+              className={`admin-auth-toggle-pill ${authMethod === 'passcode' ? 'admin-auth-toggle-pill--active' : ''}`}
+            >
+              Studio Passcode
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMethod('supabase')
+                setAuthError('')
+              }}
+              className={`admin-auth-toggle-pill ${authMethod === 'supabase' ? 'admin-auth-toggle-pill--active' : ''}`}
+            >
+              Supabase Admin
+            </button>
+          </div>
 
-          {authMethod === 'supabase' && isCloud ? (
+          {authMethod === 'supabase' ? (
             /* Supabase Auth Email/Password Form */
             <form onSubmit={handleUnlockWithSupabase} className="admin-lock-form">
               <div className="admin-lock-field">
@@ -418,13 +433,6 @@ export default function AdminPage() {
                 <button type="submit" className="admin-lock-btn" disabled={isSubmittingAuth}>
                   {isSubmittingAuth ? 'Verifying Credentials...' : 'Sign In with Supabase →'}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setAuthMethod('passcode')}
-                  className="admin-lock-toggle-btn"
-                >
-                  Use Developer Passcode Fallback
-                </button>
               </div>
 
               {authError && <p className="admin-lock-err-msg">{authError}</p>}
@@ -436,7 +444,7 @@ export default function AdminPage() {
                 <label className="admin-lock-label">Studio Passcode</label>
                 <input
                   type="password"
-                  placeholder="Enter passcode (flo2026)"
+                  placeholder="••••••••••••"
                   value={passcode}
                   onChange={(e) => {
                     setPasscode(e.target.value)
@@ -452,15 +460,6 @@ export default function AdminPage() {
                 <button type="submit" className="admin-lock-btn">
                   Unlock Studio Portal →
                 </button>
-                {isCloud && (
-                  <button
-                    type="button"
-                    onClick={() => setAuthMethod('supabase')}
-                    className="admin-lock-toggle-btn"
-                  >
-                    Switch to Supabase Email/Password
-                  </button>
-                )}
               </div>
 
               {authError && <p className="admin-lock-err-msg">{authError}</p>}
