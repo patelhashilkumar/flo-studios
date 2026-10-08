@@ -23,12 +23,14 @@
 
 .hero__wordmark {
   font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(2.4rem, 9.6vw, 12rem);
   line-height: 0.88;
   letter-spacing: -0.015em;
   color: #000000;
+  -webkit-text-stroke: clamp(0.3px, 0.04vw, 0.8px) #000000;
+  paint-order: stroke fill;
   width: 100%;
   text-align: center;
   white-space: nowrap;

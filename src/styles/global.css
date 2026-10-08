@@ -15,6 +15,15 @@
 
 @font-face {
   font-family: 'Panchang';
+  src: url('/fonts/Panchang-Extrabold.woff2') format('woff2'),
+       url('https://cdn.fontshare.com/wf/BBOB5VAX4DF6FK5U27HLFW2VBLISCNKC/MIAKLBXTHJJTUKTXLTZZ76B3RNR3JBSO/BYZ4XKAY33UX3C5BSZV4BEIU2HQF4PD7.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Panchang';
   src: url('/fonts/Panchang-Bold.woff2') format('woff2'),
        url('https://cdn.fontshare.com/wf/47WQXPVBB5FZSBSKG7EM3GTGOVFM5BBT/ODED7M7ROA7KYKTD3MYSN4KKO6JVXBQE/EE3DYKUPHF3W5SWXFO53CRP5KMNTTNTH.woff2') format('woff2');
   font-weight: 700;
