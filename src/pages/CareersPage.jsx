@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
-import { getJobs, saveSubmission } from '../services/adminStorage'
+import { getJobs, saveSubmission, loadJobsFromCloud } from '../services/adminStorage'
 import './CareersPage.css'
 
 const pageV = {
@@ -52,6 +52,15 @@ export default function CareersPage() {
   // Find currently active job or fallback to first
   const activeJob = availableJobs.find((j) => j.id === activeJobId) || availableJobs[0] || {}
 
+  // Load latest cloud job postings if Supabase is connected
+  useEffect(() => {
+    loadJobsFromCloud().then((cloudJobs) => {
+      if (Array.isArray(cloudJobs) && cloudJobs.length > 0) {
+        setAllJobs(cloudJobs)
+      }
+    })
+  }, [])
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -59,6 +68,7 @@ export default function CareersPage() {
   const [experience, setExperience] = useState('')
   const [linkedinUrl, setLinkedinUrl] = useState('')
   const [notes, setNotes] = useState('')
+  const [rawFile, setRawFile] = useState(null)
   const [resumeName, setResumeName] = useState('')
   const [resumeSize, setResumeSize] = useState('')
   const [resumeType, setResumeType] = useState('')
@@ -95,6 +105,7 @@ export default function CareersPage() {
     setResumeSize('')
     setResumeType('')
     setResumeData('')
+    setRawFile(null)
     setTermsConfirmed(false)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
@@ -166,6 +177,7 @@ export default function CareersPage() {
 
     const reader = new FileReader()
     reader.onload = (e) => {
+      setRawFile(file)
       setResumeName(file.name)
       setResumeSize(formatFileSize(file.size))
       setResumeType(file.type || 'application/pdf')
@@ -173,6 +185,7 @@ export default function CareersPage() {
       setIsReadingFile(false)
     }
     reader.onerror = () => {
+      setRawFile(null)
       setResumeName('')
       setResumeSize('')
       setResumeType('')
@@ -198,6 +211,7 @@ export default function CareersPage() {
     if (status === 'success') {
       setStatus('idle')
     }
+    setRawFile(null)
     setResumeName('')
     setResumeSize('')
     setResumeType('')
@@ -230,7 +244,7 @@ export default function CareersPage() {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setErrorMessage('')
 
@@ -278,7 +292,7 @@ export default function CareersPage() {
     }
 
     // Mandatory Resume Validation
-    if (!resumeData && !resumeName) {
+    if (!resumeData && !resumeName && !rawFile) {
       setErrorMessage('Resume upload is mandatory. Please upload a PDF, DOC, or DOCX document.')
       return
     }
@@ -301,8 +315,9 @@ export default function CareersPage() {
     setStatus('submitting')
 
     try {
-      const saved = saveSubmission({
+      const saved = await saveSubmission({
         type: 'job',
+        jobId: activeJob.id,
         role: activeJob.title,
         division: activeJob.division || 'Development Division',
         name: name.trim(),
@@ -315,6 +330,7 @@ export default function CareersPage() {
         resumeSize,
         resumeType,
         resumeData,
+        rawFile,
         coverNote: notes.trim(),
         termsConfirmed: true
       })
@@ -333,6 +349,7 @@ export default function CareersPage() {
       setExperience('')
       setLinkedinUrl('')
       setNotes('')
+      setRawFile(null)
       setResumeName('')
       setResumeSize('')
       setResumeType('')
