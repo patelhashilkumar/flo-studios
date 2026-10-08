@@ -11,13 +11,13 @@ const NEWS_ITEMS = [
     type: 'press',
     title: 'Fast Company Innovation by Design Finalist',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/0ab7345c9d/fastco_ibd_2026_experimental_design.png/m/',
-    link: '#',
+    link: '/latest',
   },
   {
     type: 'press',
     title: 'Jack De Caluwé Appointed Chief Creative Officer',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/',
-    link: '#',
+    link: '/latest',
   },
   {
     type: 'article',
@@ -64,7 +64,7 @@ export default function NewsSection() {
             <span className="news-section__label">EDITORIAL &amp; PERSPECTIVES</span>
             <h2 className="news-section__title">Latest Dispatches</h2>
           </div>
-          <Link to="/latest" className="news-section__cta">
+          <Link to="/latest" className="news-section__cta" aria-label="View all Flo Studios dispatches and insights">
             All dispatches
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -80,7 +80,7 @@ export default function NewsSection() {
               key={i}
             >
               <div className="news-card__media">
-                <img src={item.image} alt={item.title} loading="lazy" />
+                <img src={item.image} alt={`${item.title} — Flo Studios dispatch`} loading="lazy" />
               </div>
               <div className="news-card__meta">
                 <span className="news-card__type">{item.type}</span>

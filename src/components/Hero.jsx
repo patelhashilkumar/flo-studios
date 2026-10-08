@@ -93,8 +93,9 @@ export default function Hero() {
     <section className="hero" ref={heroRef} id="hero">
       {/* ── 1. Giant "FLO STUDIOS" Wordmark ── */}
       <div className="hero__logo-container" ref={logoRef}>
-        <h1 className="hero__wordmark" aria-label="Flo Studios">
+        <h1 className="hero__wordmark" aria-label="Flo Studios — Creative & Technology Studio">
           FLO STUDIOS
+          <span className="sr-only"> — Creative &amp; Technology Studio</span>
         </h1>
       </div>
 

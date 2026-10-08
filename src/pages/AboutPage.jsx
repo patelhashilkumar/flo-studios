@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
+import SEO from '../components/SEO'
 
 const pageV = {
   initial: { opacity: 0 },
@@ -37,10 +38,21 @@ export default function AboutPage() {
 
   return (
     <motion.main className="about-page" variants={pageV} initial="initial" animate="animate" exit="exit">
+      <SEO
+        title="About Flo Studios — Creative & Technology Studio"
+        description="Learn about Flo Studios, a creative and technology studio pairing creative direction with technical rigor to build enduring brands, digital products, and motion systems."
+        canonicalUrl="https://www.flostudio.co/about"
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/' },
+          { name: 'About Flo Studios', item: 'https://www.flostudio.co/about' },
+        ]}
+      />
+
       {/* Hero */}
       <section className="about-page__hero" ref={heroRef}>
         <div className="container">
-          <h1 className="about-page__title">
+          <h1 className="about-page__title" aria-label="About Flo Studios: Built at the intersection of taste, motion, and technology.">
+            <span className="sr-only">About Flo Studios — </span>
             {'Built at the intersection of taste, motion, and technology.'.split(' ').map((w, i) => (
               <span key={i} className="about-page__hero-word">{w}</span>
             ))}
@@ -80,9 +92,9 @@ export default function AboutPage() {
             {LEADERS.map((leader) => (
               <div className="about-page__leader" key={leader.name}>
                 <div className="about-page__leader-img">
-                  <img src={leader.image} alt={leader.name} loading="lazy" />
+                  <img src={leader.image} alt={`${leader.name} — ${leader.role} at Flo Studios`} loading="lazy" />
                 </div>
-                <h4 className="about-page__leader-name">{leader.name}</h4>
+                <h3 className="about-page__leader-name">{leader.name}</h3>
                 <p className="about-page__leader-role">{leader.role}</p>
               </div>
             ))}
@@ -93,18 +105,25 @@ export default function AboutPage() {
       {/* Who we are */}
       <section className="about-page__who">
         <div className="container">
-          <h3 className="about-page__who-title">Who we are</h3>
+          <h2 className="about-page__who-title">Who we are</h2>
           <p className="about-page__who-text">
             Strategists, 3D artists, and creative technologists. Opinionated about detail, disciplined in execution, and committed to work that commands attention.
           </p>
           <Link to="/services" className="about-page__cta-pill">Explore services →</Link>
 
           <div className="about-page__images">
-            {IMAGES.map((src, i) => (
-              <div key={i} className="about-page__image-wrap">
-                <img src={src} alt={`Studio culture ${i + 1}`} loading="lazy" />
-              </div>
-            ))}
+            {IMAGES.map((src, i) => {
+              const altDescriptions = [
+                'Flo Studios collaborative design exploration and creative strategy session',
+                'Flo Studios technical architecture and engineering build week sprint',
+                'Flo Studios creative direction and studio team workspace'
+              ]
+              return (
+                <div key={i} className="about-page__image-wrap">
+                  <img src={src} alt={altDescriptions[i] || `Flo Studios workspace ${i + 1}`} loading="lazy" />
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -112,7 +131,7 @@ export default function AboutPage() {
       {/* How we work */}
       <section className="about-page__how">
         <div className="container">
-          <h3 className="about-page__how-title">How we work</h3>
+          <h2 className="about-page__how-title">How we work</h2>
           <div className="about-page__how-content">
             <p>Designers who code and engineers with taste—collaborating in the same room from day one.</p>
             <p>We eliminate handoff friction to preserve conceptual integrity from initial direction through production deployment.</p>

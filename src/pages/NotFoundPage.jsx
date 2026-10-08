@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import './NotFoundPage.css'
 
 export default function NotFoundPage() {
@@ -11,6 +12,11 @@ export default function NotFoundPage() {
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
     >
+      <SEO
+        title="404 — Page Not Found — Flo Studios"
+        description="The page you requested could not be found. Return to the Flo Studios homepage or explore our work and open careers."
+        noindex={true}
+      />
       <div className="not-found-container">
         <span className="not-found-badge">404 // NOT FOUND</span>
         <h1 className="not-found-title">Page Not Found</h1>

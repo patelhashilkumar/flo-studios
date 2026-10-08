@@ -112,7 +112,7 @@ export default function Footer() {
               <div className="lg-footer__legal">
                 <Link to="/" className="lg-footer__legal-link">Privacy Policy</Link>
                 <Link to="/" className="lg-footer__legal-link">Terms of Use</Link>
-                <Link to="/admin" className="lg-footer__legal-link" title="Studio Intake & Applications Admin">Admin</Link>
+                <Link to="/admin" rel="nofollow" className="lg-footer__legal-link" title="Studio Intake & Applications Admin">Admin</Link>
               </div>
             </div>
 

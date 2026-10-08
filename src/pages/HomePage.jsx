@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
+import SEO from '../components/SEO'
 import Hero from '../components/Hero'
 import WorkSection from '../components/WorkSection'
 import ClientRoster from '../components/ClientRoster'
@@ -21,6 +22,11 @@ const pageVariants = {
 export default function HomePage() {
   return (
     <motion.main variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      <SEO
+        title="Flo Studios — Creative & Technology Studio"
+        description="Flo Studios is an independent creative and technology studio engineering brand systems, digital products, 3D motion, and high-performance web infrastructure."
+        canonicalUrl="https://www.flostudio.co/"
+      />
       <Hero />
       <WorkSection />
       <ClientRoster />

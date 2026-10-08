@@ -15,6 +15,15 @@ const CAROUSEL_IMAGES = [
   'https://a-us.storyblok.com/f/1004432/2048x2048/dc9c30f062/pagerduty_homepage_slideshow.png/m/',
 ]
 
+const CAROUSEL_CAPTIONS = [
+  'Flo Studios digital experience for ŌURA',
+  'Flo Studios product storytelling for Notion',
+  'Flo Studios brand design and spatial showcase',
+  'Flo Studios digital commerce platform and creative direction',
+  'Flo Studios dynamic visual system for Nike',
+  'Flo Studios enterprise digital product design for PagerDuty',
+]
+
 export default function ServicesSection() {
   const sectionRef = useRef(null)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -56,7 +65,7 @@ export default function ServicesSection() {
             <p className="services-section__desc">
               From initial direction to final build, executed by one unified team.
             </p>
-            <Link to="/services" className="services-section__cta">
+            <Link to="/services" className="services-section__cta" aria-label="Explore Flo Studios services and capabilities">
               Explore services
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -71,7 +80,7 @@ export default function ServicesSection() {
                   key={i}
                   className={`services-section__slide ${i === currentSlide ? 'services-section__slide--active' : ''}`}
                 >
-                  <img src={src} alt={`Work showcase ${i + 1}`} loading="lazy" />
+                  <img src={src} alt={CAROUSEL_CAPTIONS[i] || `Flo Studios showcase ${i + 1}`} loading="lazy" />
                 </div>
               ))}
             </div>

@@ -26,6 +26,7 @@ import {
   getAdminSession,
   onAuthChange
 } from '../services/supabaseService'
+import SEO from '../components/SEO'
 import './AdminPage.css'
 
 function getSafeExternalUrl(url) {
@@ -359,6 +360,7 @@ export default function AdminPage() {
   if (!unlocked) {
     return (
       <main className="admin-lock-page">
+        <SEO title="Studio Portal — Flo Studios" description="Restricted studio administrative portal." noindex={true} />
         <div className="admin-lock-card">
           <div className="admin-lock-badge">
             <span className="admin-lock-icon">🔒</span>
@@ -481,6 +483,7 @@ export default function AdminPage() {
      ═══════════════════════════════════════════════════ */
   return (
     <main className="admin-page">
+      <SEO title="Studio Admin — Flo Studios" description="Restricted studio administrative portal." noindex={true} />
       <div className="container">
         {/* Top Header Bar */}
         <header className="admin-header">

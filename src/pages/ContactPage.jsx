@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import MotionContactForm from '../components/MotionContactForm'
+import SEO from '../components/SEO'
 
 const pageV = {
   initial: { opacity: 0 },
@@ -16,7 +17,7 @@ export default function ContactPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.contact-page__title span', { y: 60, opacity: 0 },
+      gsap.fromTo('.contact-page__title-word', { y: 60, opacity: 0 },
         { y: 0, opacity: 1, stagger: 0.08, duration: 0.8, ease: 'power3.out', delay: 0.2 })
       gsap.fromTo('.contact-page__action', { y: 30, opacity: 0 },
         { y: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: 'power3.out', delay: 0.5 })
@@ -28,6 +29,16 @@ export default function ContactPage() {
 
   return (
     <motion.main className="contact-page" variants={pageV} initial="initial" animate="animate" exit="exit" ref={heroRef}>
+      <SEO
+        title="Contact Flo Studios — Start a Project"
+        description="Get in touch with Flo Studios. Start a project, explore creative partnerships, or inquire about our design and technology engineering capabilities."
+        canonicalUrl="https://www.flostudio.co/contact"
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/' },
+          { name: 'Contact Flo Studios', item: 'https://www.flostudio.co/contact' },
+        ]}
+      />
+
       <section className="contact-page__hero">
         <div className="container">
           <div className="page-breadcrumb">
@@ -37,8 +48,11 @@ export default function ContactPage() {
           <div className="contact-page__split">
             {/* Left Column: Title & Actions */}
             <div className="contact-page__left">
-              <h1 className="contact-page__title">
-                <span>Contact</span> <span>Us</span>
+              <h1 className="contact-page__title" aria-label="Contact Flo Studios">
+                <span className="sr-only">Flo Studios — </span>
+                <span className="contact-page__title-word">Contact</span>{' '}
+                <span className="contact-page__title-word">Flo</span>{' '}
+                <span className="contact-page__title-word">Studios</span>
               </h1>
               <p className="contact-page__subtitle">
                 Have a new project, creative partnership, or inquiry? Choose an option below or message our team directly.
@@ -84,6 +98,7 @@ export default function ContactPage() {
 
       <section className="contact-page__offices">
         <div className="container">
+          <h2 className="sr-only">Studio Locations</h2>
           <div className="contact-page__offices-grid">
             <div className="contact-page__office">
               <h3 className="contact-page__office-city">Portland, OR</h3>

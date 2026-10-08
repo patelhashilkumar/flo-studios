@@ -123,7 +123,7 @@ function WorkCard({ item }) {
       <div className="work-card__media">
         <img
           src={item.image}
-          alt={item.title}
+          alt={`${item.title} — Flo Studios case study`}
           loading="lazy"
           className={`work-card__img ${isHovered && item.video ? 'work-card__img--hidden' : ''}`}
         />
@@ -278,7 +278,7 @@ export default function WorkSection() {
 
         {/* Footer Link */}
         <div className="work-section__cta">
-          <Link to="/work" className="work-section__cta-link">
+          <Link to="/work" className="work-section__cta-link" aria-label="View all Flo Studios work and case studies">
             View All Work
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
