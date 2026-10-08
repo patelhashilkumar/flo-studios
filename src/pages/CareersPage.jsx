@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
-import { JOB_POSTINGS, getJobById } from '../data/jobPostings'
-import { saveSubmission } from '../services/adminStorage'
+import { getJobs, saveSubmission } from '../services/adminStorage'
 import './CareersPage.css'
 
 const pageV = {
@@ -12,9 +11,39 @@ const pageV = {
   exit: { opacity: 0, transition: { duration: 0.3 } }
 }
 
+const DEFAULT_REGION_OPTIONS = [
+  { value: '', label: 'Select Region' },
+  { value: 'North America', label: 'North America' },
+  { value: 'Europe', label: 'Europe' },
+  { value: 'Other region / Global Remote', label: 'Other region / Global Remote' }
+]
+
+const DEFAULT_EXPERIENCE_OPTIONS = [
+  { value: '', label: 'Select Experience Level' },
+  { value: 'Meets qualification', label: 'Meets qualification requirements' },
+  { value: 'Senior / Lead', label: 'Senior / Lead level' }
+]
+
 export default function CareersPage() {
-  const [activeJobId, setActiveJobId] = useState(JOB_POSTINGS[0].id)
-  const activeJob = getJobById(activeJobId)
+  const [allJobs, setAllJobs] = useState(() => getJobs())
+
+  // Listen to live storage mutations from Admin CMS
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setAllJobs(getJobs())
+    }
+    window.addEventListener('flo-storage-update', handleStorageUpdate)
+    return () => window.removeEventListener('flo-storage-update', handleStorageUpdate)
+  }, [])
+
+  // Filter to active jobs only (fallback to all if none marked active)
+  const activeJobs = allJobs.filter((j) => j.status === 'active')
+  const availableJobs = activeJobs.length > 0 ? activeJobs : allJobs
+
+  const [activeJobId, setActiveJobId] = useState(() => availableJobs[0]?.id || 'sdr')
+
+  // Find currently active job or fallback to first
+  const activeJob = availableJobs.find((j) => j.id === activeJobId) || availableJobs[0] || {}
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -46,10 +75,10 @@ export default function CareersPage() {
       )
     }, heroRef)
     return () => ctx.revert()
-  }, [activeJobId])
+  }, [activeJob?.id])
 
   const handleRoleChange = (newJobId) => {
-    if (newJobId === activeJobId) return
+    if (newJobId === activeJob?.id) return
     setActiveJobId(newJobId)
     setStatus('idle')
     setErrorMessage('')
@@ -222,11 +251,11 @@ export default function CareersPage() {
     }
 
     if (!experience) {
-      setErrorMessage('Please select your sales experience window.')
+      setErrorMessage('Please select your experience level.')
       return
     }
 
-    // URL validation for LinkedIn (optional, but must be valid http/https URL if provided)
+    // URL validation for LinkedIn
     let cleanLinkedinUrl = linkedinUrl.trim()
     if (cleanLinkedinUrl) {
       try {
@@ -253,7 +282,7 @@ export default function CareersPage() {
     }
 
     if (!notes.trim()) {
-      setErrorMessage('Please provide a brief summary of your sales background and experience.')
+      setErrorMessage('Please provide a brief summary of your background and experience.')
       return
     }
 
@@ -268,7 +297,7 @@ export default function CareersPage() {
       const saved = saveSubmission({
         type: 'job',
         role: activeJob.title,
-        division: activeJob.division,
+        division: activeJob.division || 'Development Division',
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
@@ -312,6 +341,10 @@ export default function CareersPage() {
     }
   }
 
+  const regionOptions = activeJob.formConfig?.regionOptions || DEFAULT_REGION_OPTIONS
+  const experienceOptions = activeJob.formConfig?.experienceOptions || DEFAULT_EXPERIENCE_OPTIONS
+  const experienceLabel = activeJob.formConfig?.experienceLabel || 'Experience Level *'
+
   return (
     <motion.main
       className="careers-page"
@@ -329,7 +362,7 @@ export default function CareersPage() {
           </div>
 
           <div className="careers-role-nav" role="tablist" aria-label="Open Positions">
-            {JOB_POSTINGS.map((job) => {
+            {availableJobs.map((job) => {
               const isActive = job.id === activeJob.id
               return (
                 <button
@@ -354,8 +387,8 @@ export default function CareersPage() {
 
         {/* ── Header ── */}
         <header className="careers-header">
-          <h1 className="careers-header__title" aria-label={activeJob.title}>
-            {activeJob.title.split(' ').map((word, idx) => (
+          <h1 className="careers-header__title" aria-label={activeJob.title || 'Career Opening'}>
+            {(activeJob.title || 'Career Opening').split(' ').map((word, idx) => (
               <span key={idx} className="careers-header__title-word">
                 {word}{' '}
               </span>
@@ -363,7 +396,7 @@ export default function CareersPage() {
           </h1>
 
           <div className="careers-meta-badges">
-            {activeJob.badges.map((badge, idx) => (
+            {(activeJob.badges || []).map((badge, idx) => (
               <span key={idx} className="careers-meta-badge">
                 {badge}
               </span>
@@ -389,110 +422,134 @@ export default function CareersPage() {
           <section className="careers-editorial__section">
             <h2 className="careers-editorial__title">About the Job</h2>
             <div className="careers-editorial__prose">
-              {activeJob.aboutJob.map((paragraph, idx) => (
+              {(activeJob.aboutJob || []).map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
           </section>
 
           {/* Section: Responsibilities */}
-          <section className="careers-editorial__section">
-            <h2 className="careers-editorial__title">Responsibilities</h2>
-            <div className="careers-responsibilities-list">
-              {activeJob.responsibilities.map((item) => (
-                <div key={item.num} className="careers-responsibility-card">
-                  <div className="careers-responsibility-card__index">{item.num}</div>
-                  <div className="careers-responsibility-card__content">
-                    <h3 className="careers-responsibility-card__title">{item.title}</h3>
-                    <p className="careers-responsibility-card__desc">{item.desc}</p>
+          {(activeJob.responsibilities || []).length > 0 && (
+            <section className="careers-editorial__section">
+              <h2 className="careers-editorial__title">Responsibilities</h2>
+              <div className="careers-responsibilities-list">
+                {activeJob.responsibilities.map((item, idx) => (
+                  <div key={item.num || idx} className="careers-responsibility-card">
+                    <div className="careers-responsibility-card__index">{item.num || String(idx + 1).padStart(2, '0')}</div>
+                    <div className="careers-responsibility-card__content">
+                      <h3 className="careers-responsibility-card__title">{item.title}</h3>
+                      <p className="careers-responsibility-card__desc">{item.desc}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Section: Compensation */}
-          <section className="careers-editorial__section">
-            <h2 className="careers-editorial__title">Compensation</h2>
-            <div className="careers-editorial__prose">
-              <p className="careers-lead-highlight">{activeJob.compensationLead}</p>
-            </div>
-            <div className="careers-compensation-grid">
-              {activeJob.compensationItems.map((item, idx) => (
-                <div key={idx} className="careers-info-box">
-                  <span className="careers-info-box__label">{item.label}</span>
-                  <p className="careers-info-box__text">{item.text}</p>
+          {(activeJob.compensationLead || (activeJob.compensationItems || []).length > 0) && (
+            <section className="careers-editorial__section">
+              <h2 className="careers-editorial__title">Compensation</h2>
+              {activeJob.compensationLead && (
+                <div className="careers-editorial__prose">
+                  <p className="careers-lead-highlight">{activeJob.compensationLead}</p>
                 </div>
-              ))}
-            </div>
-            <p className="careers-compensation-terms">{activeJob.compensationTerms}</p>
-          </section>
+              )}
+              {(activeJob.compensationItems || []).length > 0 && (
+                <div className="careers-compensation-grid">
+                  {activeJob.compensationItems.map((item, idx) => (
+                    <div key={idx} className="careers-info-box">
+                      <span className="careers-info-box__label">{item.label}</span>
+                      <p className="careers-info-box__text">{item.text}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {activeJob.compensationTerms && (
+                <p className="careers-compensation-terms">{activeJob.compensationTerms}</p>
+              )}
+            </section>
+          )}
 
           {/* Section: Qualifications Split */}
-          <div className="careers-editorial__grid-pair">
-            {/* Minimum Qualifications */}
-            <section className="careers-editorial__section careers-editorial__section--boxed">
-              <h2 className="careers-editorial__title">Minimum Qualifications</h2>
-              <ul className="careers-checklist">
-                {activeJob.minimumQualifications.map((item, idx) => (
-                  <li key={idx} className="careers-checklist__item">
-                    <span className="careers-checklist__bullet" aria-hidden="true">—</span>
-                    <span className="careers-checklist__text">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+          {((activeJob.minimumQualifications || []).length > 0 || (activeJob.preferredQualifications || []).length > 0) && (
+            <div className="careers-editorial__grid-pair">
+              {/* Minimum Qualifications */}
+              {(activeJob.minimumQualifications || []).length > 0 && (
+                <section className="careers-editorial__section careers-editorial__section--boxed">
+                  <h2 className="careers-editorial__title">Minimum Qualifications</h2>
+                  <ul className="careers-checklist">
+                    {activeJob.minimumQualifications.map((item, idx) => (
+                      <li key={idx} className="careers-checklist__item">
+                        <span className="careers-checklist__bullet" aria-hidden="true">—</span>
+                        <span className="careers-checklist__text">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
-            {/* Preferred Qualifications */}
-            <section className="careers-editorial__section careers-editorial__section--boxed">
-              <h2 className="careers-editorial__title">Preferred Qualifications</h2>
-              <ul className="careers-checklist">
-                {activeJob.preferredQualifications.map((item, idx) => (
-                  <li key={idx} className="careers-checklist__item">
-                    <span className="careers-checklist__bullet" aria-hidden="true">—</span>
-                    <span className="careers-checklist__text">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
+              {/* Preferred Qualifications */}
+              {(activeJob.preferredQualifications || []).length > 0 && (
+                <section className="careers-editorial__section careers-editorial__section--boxed">
+                  <h2 className="careers-editorial__title">Preferred Qualifications</h2>
+                  <ul className="careers-checklist">
+                    {activeJob.preferredQualifications.map((item, idx) => (
+                      <li key={idx} className="careers-checklist__item">
+                        <span className="careers-checklist__bullet" aria-hidden="true">—</span>
+                        <span className="careers-checklist__text">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </div>
+          )}
 
           {/* Section: What Success Looks Like */}
-          <section className="careers-editorial__section">
-            <h2 className="careers-editorial__title">What Success Looks Like</h2>
-            <div className="careers-editorial__prose">
-              <p>{activeJob.whatSuccessLooksLike}</p>
-            </div>
-          </section>
+          {activeJob.whatSuccessLooksLike && (
+            <section className="careers-editorial__section">
+              <h2 className="careers-editorial__title">What Success Looks Like</h2>
+              <div className="careers-editorial__prose">
+                <p>{activeJob.whatSuccessLooksLike}</p>
+              </div>
+            </section>
+          )}
 
           {/* Section: You Might Thrive in this Role */}
-          <section className="careers-editorial__section">
-            <h2 className="careers-editorial__title">You Might Thrive in this Role</h2>
-            <ul className="careers-checklist">
-              {activeJob.thrivePoints.map((item, idx) => (
-                <li key={idx} className="careers-checklist__item">
-                  <span className="careers-checklist__bullet" aria-hidden="true">—</span>
-                  <span className="careers-checklist__text">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {(activeJob.thrivePoints || []).length > 0 && (
+            <section className="careers-editorial__section">
+              <h2 className="careers-editorial__title">You Might Thrive in this Role</h2>
+              <ul className="careers-checklist">
+                {activeJob.thrivePoints.map((item, idx) => (
+                  <li key={idx} className="careers-checklist__item">
+                    <span className="careers-checklist__bullet" aria-hidden="true">—</span>
+                    <span className="careers-checklist__text">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {/* Section: Flo Studios' Mission & Diversity */}
-          <section className="careers-editorial__section">
-            <h2 className="careers-editorial__title">Flo Studios' Mission & Diversity</h2>
-            <div className="careers-editorial__prose">
-              <p>{activeJob.companyMission}</p>
-            </div>
-          </section>
+          {activeJob.companyMission && (
+            <section className="careers-editorial__section">
+              <h2 className="careers-editorial__title">Flo Studios' Mission & Diversity</h2>
+              <div className="careers-editorial__prose">
+                <p>{activeJob.companyMission}</p>
+              </div>
+            </section>
+          )}
 
           {/* Section: Equal Opportunity Employer */}
-          <section className="careers-editorial__section">
-            <h2 className="careers-editorial__title">Equal Opportunity Employer</h2>
-            <div className="careers-editorial__prose">
-              <p>{activeJob.equalOpportunity}</p>
-            </div>
-          </section>
+          {activeJob.equalOpportunity && (
+            <section className="careers-editorial__section">
+              <h2 className="careers-editorial__title">Equal Opportunity Employer</h2>
+              <div className="careers-editorial__prose">
+                <p>{activeJob.equalOpportunity}</p>
+              </div>
+            </section>
+          )}
         </article>
 
         {/* ── 3. Application Form ── */}
@@ -588,7 +645,7 @@ export default function CareersPage() {
                 </div>
               </div>
 
-              {/* Row 3: Location / Region & Sales Experience */}
+              {/* Row 3: Location / Region & Experience */}
               <div className="careers-form__row">
                 <div className="careers-form__group">
                   <label htmlFor="careers-region" className="careers-form__label">
@@ -604,7 +661,7 @@ export default function CareersPage() {
                     }}
                     required
                   >
-                    {activeJob.formConfig.regionOptions.map((opt) => (
+                    {regionOptions.map((opt) => (
                       <option key={opt.value} value={opt.value}>
                         {opt.label}
                       </option>
@@ -613,7 +670,7 @@ export default function CareersPage() {
                 </div>
                 <div className="careers-form__group">
                   <label htmlFor="careers-experience" className="careers-form__label">
-                    {activeJob.formConfig.experienceLabel}
+                    {experienceLabel}
                   </label>
                   <select
                     id="careers-experience"
@@ -625,7 +682,7 @@ export default function CareersPage() {
                     }}
                     required
                   >
-                    {activeJob.formConfig.experienceOptions.map((opt) => (
+                    {experienceOptions.map((opt) => (
                       <option key={opt.value} value={opt.value}>
                         {opt.label}
                       </option>
@@ -709,10 +766,10 @@ export default function CareersPage() {
                 </div>
               </div>
 
-              {/* Row 5: Sales Background & Notes */}
+              {/* Row 5: Background & Notes */}
               <div className="careers-form__group">
                 <label htmlFor="careers-notes" className="careers-form__label">
-                  Sales Background & Notes *
+                  Background Summary & Experience *
                 </label>
                 <textarea
                   id="careers-notes"
@@ -741,7 +798,8 @@ export default function CareersPage() {
                   required
                 />
                 <label htmlFor="careers-terms" className="careers-form__checkbox-label">
-                  {activeJob.legalDisclaimer}
+                  {activeJob.legalDisclaimer ||
+                    'By applying for this role, you confirm that all information and details provided to Flo Studios are accurate and truthful, and that all certifications and credentials submitted belong to you.'}
                 </label>
               </div>
 
