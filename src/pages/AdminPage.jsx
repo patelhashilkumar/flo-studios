@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   getSubmissions,
+  loadSubmissionsFromCloud,
   updateSubmissionStatus,
   toggleStar,
   deleteSubmission,
@@ -12,10 +13,19 @@ import {
   isAuthenticated,
   logout,
   getJobs,
+  loadJobsFromCloud,
   saveJob,
   deleteJob,
-  resetJobs
+  resetJobs,
+  isSupabaseConfigured,
+  getResumeSignedUrl
 } from '../services/adminStorage'
+import {
+  signInAdmin,
+  signOutAdmin,
+  getAdminSession,
+  onAuthChange
+} from '../services/supabaseService'
 import './AdminPage.css'
 
 function getSafeExternalUrl(url) {
@@ -29,8 +39,14 @@ function getSafeExternalUrl(url) {
 
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
+  const [authMethod, setAuthMethod] = useState(() => (isSupabaseConfigured() ? 'supabase' : 'passcode')) // 'supabase' | 'passcode'
+  const [adminEmail, setAdminEmail] = useState('')
+  const [adminPassword, setAdminPassword] = useState('')
   const [passcode, setPasscode] = useState('')
-  const [authError, setAuthError] = useState(false)
+  const [authError, setAuthError] = useState('')
+  const [isSubmittingAuth, setIsSubmittingAuth] = useState(false)
+  const [adminUser, setAdminUser] = useState(null)
+  const [resumeLoadingId, setResumeLoadingId] = useState(null)
 
   const [submissions, setSubmissions] = useState([])
   const [jobs, setJobs] = useState([])
@@ -54,9 +70,51 @@ export default function AdminPage() {
 
   // Initialize auth check & data
   useEffect(() => {
-    setUnlocked(isAuthenticated())
-    setSubmissions(getSubmissions())
-    setJobs(getJobs())
+    const initAuthAndData = async () => {
+      if (isSupabaseConfigured()) {
+        const { session, user } = await getAdminSession()
+        if (session && user) {
+          setUnlocked(true)
+          setAdminUser(user)
+          const [cloudSubs, cloudJobs] = await Promise.all([
+            loadSubmissionsFromCloud(),
+            loadJobsFromCloud()
+          ])
+          setSubmissions(cloudSubs)
+          setJobs(cloudJobs)
+          return
+        }
+      }
+      if (isAuthenticated()) {
+        setUnlocked(true)
+        loadSubmissionsFromCloud().then(setSubmissions)
+        loadJobsFromCloud().then(setJobs)
+      } else {
+        setSubmissions(getSubmissions())
+        setJobs(getJobs())
+      }
+    }
+
+    initAuthAndData()
+
+    // Listen to Supabase Auth state transitions
+    const { data: authListener } = onAuthChange((event, session) => {
+      if (session && session.user) {
+        setUnlocked(true)
+        setAdminUser(session.user)
+        loadSubmissionsFromCloud().then(setSubmissions)
+        loadJobsFromCloud().then(setJobs)
+      } else if (event === 'SIGNED_OUT') {
+        setUnlocked(false)
+        setAdminUser(null)
+      }
+    })
+
+    return () => {
+      if (authListener?.subscription?.unsubscribe) {
+        authListener.subscription.unsubscribe()
+      }
+    }
   }, [])
 
   // Listen to live storage mutations from any component
@@ -69,22 +127,55 @@ export default function AdminPage() {
     return () => window.removeEventListener('flo-storage-update', handleStorageUpdate)
   }, [])
 
-  const handleUnlock = (e) => {
+  const handleUnlockWithSupabase = async (e) => {
     if (e) e.preventDefault()
-    if (checkPasscode(passcode)) {
-      setUnlocked(true)
-      setAuthError(false)
-      setSubmissions(getSubmissions())
-      setJobs(getJobs())
-    } else {
-      setAuthError(true)
+    setAuthError('')
+    setIsSubmittingAuth(true)
+    try {
+      const { data, error } = await signInAdmin(adminEmail, adminPassword)
+      if (error) {
+        setAuthError(error.message || 'Invalid admin credentials')
+        setIsSubmittingAuth(false)
+        return
+      }
+      if (data?.session) {
+        setUnlocked(true)
+        setAdminUser(data.session.user)
+        const [cloudSubs, cloudJobs] = await Promise.all([
+          loadSubmissionsFromCloud(),
+          loadJobsFromCloud()
+        ])
+        setSubmissions(cloudSubs)
+        setJobs(cloudJobs)
+      }
+    } catch (err) {
+      setAuthError(err.message || 'Failed to authenticate')
+    } finally {
+      setIsSubmittingAuth(false)
     }
   }
 
-  const handleLock = () => {
+  const handleUnlockWithPasscode = (e) => {
+    if (e) e.preventDefault()
+    if (checkPasscode(passcode)) {
+      setUnlocked(true)
+      setAuthError('')
+      setSubmissions(getSubmissions())
+      setJobs(getJobs())
+      loadSubmissionsFromCloud().then(setSubmissions)
+      loadJobsFromCloud().then(setJobs)
+    } else {
+      setAuthError('Incorrect passcode. Access restricted to authorized Flo Studios team members.')
+    }
+  }
+
+  const handleLock = async () => {
+    await signOutAdmin()
     logout()
     setUnlocked(false)
+    setAdminUser(null)
     setPasscode('')
+    setAdminPassword('')
   }
 
   const handleStatusChange = (id, newStatus) => {
@@ -108,6 +199,24 @@ export default function AdminPage() {
     if (window.confirm('Are you sure you want to clear all submissions from storage?')) {
       seedSampleData()
       setSubmissions(getSubmissions())
+    }
+  }
+
+  const handleViewResume = async (resumePath, resumeName, id) => {
+    if (!resumePath) return
+    setResumeLoadingId(id)
+    try {
+      const signedUrl = await getResumeSignedUrl(resumePath, 3600)
+      if (signedUrl) {
+        window.open(signedUrl, '_blank', 'noopener,noreferrer')
+      } else {
+        alert('Could not generate private signed download link. Verify you are logged into Supabase.')
+      }
+    } catch (err) {
+      console.error('Failed opening signed resume link:', err)
+      alert('Error accessing private resume document.')
+    } finally {
+      setResumeLoadingId(null)
     }
   }
 
@@ -144,7 +253,7 @@ export default function AdminPage() {
     setIsJobModalOpen(true)
   }
 
-  const handleSaveJob = (e) => {
+  const handleSaveJob = async (e) => {
     e.preventDefault()
     if (!jobFormTitle.trim()) return
 
@@ -185,27 +294,27 @@ export default function AdminPage() {
       preferredQualifications
     }
 
-    const success = saveJob(jobPayload)
+    const success = await saveJob(jobPayload)
     if (success) {
       setIsJobModalOpen(false)
       setJobs(getJobs())
-      setCmsNotice(editingJobId ? '✓ Job updated successfully' : '✓ New job created and published')
+      setCmsNotice(editingJobId ? '✓ Job updated in Supabase cloud' : '✓ New job created and published')
       setTimeout(() => setCmsNotice(''), 4000)
     }
   }
 
-  const handleDeleteJob = (id, title) => {
-    if (window.confirm(`Are you sure you want to delete the job listing "${title}"? This will remove it from the Careers page.`)) {
-      deleteJob(id)
+  const handleDeleteJob = async (id, title) => {
+    if (window.confirm(`Are you sure you want to delete the job listing "${title}"? This will remove it from the database and Careers page.`)) {
+      await deleteJob(id)
       setJobs(getJobs())
       setCmsNotice(`✓ Deleted job "${title}"`)
       setTimeout(() => setCmsNotice(''), 4000)
     }
   }
 
-  const handleResetJobs = () => {
+  const handleResetJobs = async () => {
     if (window.confirm('Reset job postings back to the verified default opening (Sales Development Representative)?')) {
-      resetJobs()
+      await resetJobs()
       setJobs(getJobs())
       setCmsNotice('✓ Restored default job listing')
       setTimeout(() => setCmsNotice(''), 4000)
@@ -245,9 +354,10 @@ export default function AdminPage() {
   const activeJobsCount = jobs.filter((j) => j.status === 'active').length
 
   /* ═══════════════════════════════════════════════════
-     VIEW 1: PASSCODE LOCK SCREEN
+     VIEW 1: AUTHENTICATION LOCK SCREEN
      ═══════════════════════════════════════════════════ */
   if (!unlocked) {
+    const isCloud = isSupabaseConfigured()
     return (
       <main className="admin-lock-page">
         <div className="admin-lock-card">
@@ -258,34 +368,110 @@ export default function AdminPage() {
 
           <h1 className="admin-lock-title">Flo Studios Admin</h1>
           <p className="admin-lock-sub">
-            Please enter your studio passcode to access client inquiries, talent applications, and exports.
+            {isCloud
+              ? 'Authenticate with your Supabase Admin account to access client leads, applications, and job management.'
+              : 'Supabase environment is currently in local preview mode. Add your credentials to .env for cloud sync.'}
           </p>
 
-          <form onSubmit={handleUnlock} className="admin-lock-form">
-            <div className="admin-lock-input-wrap">
-              <input
-                type="password"
-                placeholder="Enter studio passcode"
-                value={passcode}
-                onChange={(e) => {
-                  setPasscode(e.target.value)
-                  if (authError) setAuthError(false)
-                }}
-                className={`admin-lock-input ${authError ? 'admin-lock-input--error' : ''}`}
-                autoFocus
-                required
-              />
-              <button type="submit" className="admin-lock-submit">
-                Unlock →
-              </button>
+          {!isCloud && (
+            <div className="admin-cloud-notice">
+              <strong>⚙️ Supabase Setup Notice:</strong>
+              <div>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to <code>.env</code>. You can also unlock with studio passcode below.</div>
             </div>
+          )}
 
-            {authError && (
-              <p className="admin-lock-error">
-                Incorrect passcode. Access restricted to authorized Flo Studios team members.
-              </p>
-            )}
-          </form>
+          {authMethod === 'supabase' && isCloud ? (
+            /* Supabase Auth Email/Password Form */
+            <form onSubmit={handleUnlockWithSupabase} className="admin-lock-form">
+              <div className="admin-lock-field">
+                <label className="admin-lock-label">Admin Email</label>
+                <input
+                  type="email"
+                  placeholder="admin@flostudios.com"
+                  value={adminEmail}
+                  onChange={(e) => {
+                    setAdminEmail(e.target.value)
+                    if (authError) setAuthError('')
+                  }}
+                  className="admin-lock-input admin-lock-input--left"
+                  required
+                  autoFocus
+                />
+              </div>
+
+              <div className="admin-lock-field">
+                <label className="admin-lock-label">Password</label>
+                <input
+                  type="password"
+                  placeholder="••••••••••••"
+                  value={adminPassword}
+                  onChange={(e) => {
+                    setAdminPassword(e.target.value)
+                    if (authError) setAuthError('')
+                  }}
+                  className="admin-lock-input admin-lock-input--left"
+                  required
+                />
+              </div>
+
+              <div className="admin-lock-buttons">
+                <button type="submit" className="admin-lock-btn" disabled={isSubmittingAuth}>
+                  {isSubmittingAuth ? 'Verifying Credentials...' : 'Sign In with Supabase →'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAuthMethod('passcode')}
+                  className="admin-lock-toggle-btn"
+                >
+                  Use Developer Passcode Fallback
+                </button>
+              </div>
+
+              {authError && <p className="admin-lock-err-msg">{authError}</p>}
+            </form>
+          ) : (
+            /* Studio Passcode Form */
+            <form onSubmit={handleUnlockWithPasscode} className="admin-lock-form">
+              <div className="admin-lock-field">
+                <label className="admin-lock-label">Studio Passcode</label>
+                <input
+                  type="password"
+                  placeholder="Enter passcode (flo2026)"
+                  value={passcode}
+                  onChange={(e) => {
+                    setPasscode(e.target.value)
+                    if (authError) setAuthError('')
+                  }}
+                  className={`admin-lock-input ${authError ? 'admin-lock-input--error' : ''}`}
+                  autoFocus
+                  required
+                />
+              </div>
+
+              <div className="admin-lock-buttons">
+                <button type="submit" className="admin-lock-btn">
+                  Unlock Studio Portal →
+                </button>
+                {isCloud && (
+                  <button
+                    type="button"
+                    onClick={() => setAuthMethod('supabase')}
+                    className="admin-lock-toggle-btn"
+                  >
+                    Switch to Supabase Email/Password
+                  </button>
+                )}
+              </div>
+
+              {authError && <p className="admin-lock-err-msg">{authError}</p>}
+            </form>
+          )}
+
+          <div className="admin-lock-footer">
+            <Link to="/" className="admin-lock-back">
+              ← Return to Public Website
+            </Link>
+          </div>
         </div>
       </main>
     )
@@ -304,10 +490,28 @@ export default function AdminPage() {
               <span className="admin-header__dot" />
               <span className="admin-header__title">FLO STUDIOS INTAKE</span>
             </div>
-            <span className="admin-header__status">● LIVE LOCAL SYNC</span>
+            <span
+              className={`admin-header__status ${
+                isSupabaseConfigured() ? 'admin-header__status--cloud' : 'admin-header__status--local'
+              }`}
+            >
+              {isSupabaseConfigured() ? '● SUPABASE CLOUD SYNC' : '● LOCAL PREVIEW MODE'}
+            </span>
           </div>
 
           <div className="admin-header__actions">
+            <button
+              type="button"
+              onClick={async () => {
+                const [s, j] = await Promise.all([loadSubmissionsFromCloud(), loadJobsFromCloud()])
+                setSubmissions(s)
+                setJobs(j)
+              }}
+              className="admin-action-pill"
+              title="Refresh latest data from Supabase Cloud"
+            >
+              🔄 Refresh Cloud
+            </button>
             <button type="button" onClick={exportToCSV} className="admin-action-pill" title="Export as CSV">
               📥 Export CSV
             </button>
@@ -318,130 +522,160 @@ export default function AdminPage() {
               type="button"
               onClick={handleResetData}
               disabled={totalCount === 0}
-              className="admin-action-pill admin-action-pill--subtle"
-              title={totalCount === 0 ? 'No submissions to clear' : 'Clear all submissions'}
+              className="admin-action-pill admin-action-pill--danger"
+              title="Clear all stored submissions"
             >
-              <span aria-hidden="true">🗑️</span> Clear Submissions
+              🧹 Clear Data
             </button>
-            <button type="button" onClick={handleLock} className="admin-action-pill admin-action-pill--danger">
-              🔒 Lock
+            <button
+              type="button"
+              onClick={handleLock}
+              className="admin-action-pill admin-action-pill--subtle"
+              title="Lock Admin Portal"
+            >
+              🔒 Sign Out {adminUser?.email ? `(${adminUser.email})` : ''}
             </button>
           </div>
         </header>
 
-        {/* CMS Notification Banner */}
+        {/* Global Notice Toast */}
         {cmsNotice && (
-          <div className="admin-alert-banner" role="status">
-            {cmsNotice}
+          <div className="admin-notice-toast">
+            <span>{cmsNotice}</span>
           </div>
         )}
 
-        {/* KPI Metrics Summary */}
+        {/* KPI Metric Summary Strip */}
         <section className="admin-kpis">
-          <div className="admin-kpi-card" onClick={() => setActiveTab('all')} style={{ cursor: 'pointer' }}>
+          <div className="admin-kpi-card">
             <span className="admin-kpi-card__label">Total Inquiries</span>
-            <span className="admin-kpi-card__value">{totalCount}</span>
-            <span className="admin-kpi-card__meta">Across all channels</span>
+            <span className="admin-kpi-card__val">{totalCount}</span>
           </div>
-          <div className="admin-kpi-card" onClick={() => setActiveTab('message')} style={{ cursor: 'pointer' }}>
+          <div className="admin-kpi-card">
             <span className="admin-kpi-card__label">Client Messages</span>
-            <span className="admin-kpi-card__value">{messageCount}</span>
-            <span className="admin-kpi-card__meta">Project commissions</span>
+            <span className="admin-kpi-card__val">{messageCount}</span>
           </div>
-          <div className="admin-kpi-card" onClick={() => setActiveTab('job')} style={{ cursor: 'pointer' }}>
-            <span className="admin-kpi-card__label">Job Applications</span>
-            <span className="admin-kpi-card__value">{jobCount}</span>
-            <span className="admin-kpi-card__meta">Talent & resumes</span>
+          <div className="admin-kpi-card">
+            <span className="admin-kpi-card__label">Job Candidates</span>
+            <span className="admin-kpi-card__val">{jobCount}</span>
           </div>
-          <div className="admin-kpi-card admin-kpi-card--accent" onClick={() => setActiveTab('cms')} style={{ cursor: 'pointer' }}>
-            <span className="admin-kpi-card__label">Job Openings (CMS)</span>
-            <span className="admin-kpi-card__value">{activeJobsCount} Active</span>
-            <span className="admin-kpi-card__meta">Manage listings →</span>
+          <div className="admin-kpi-card">
+            <span className="admin-kpi-card__label">Active Job Openings</span>
+            <span className="admin-kpi-card__val admin-kpi-card__val--accent">{activeJobsCount}</span>
+          </div>
+          <div className="admin-kpi-card">
+            <span className="admin-kpi-card__label">Unreviewed (New)</span>
+            <span className="admin-kpi-card__val admin-kpi-card__val--new">{newCount}</span>
+          </div>
+          <div className="admin-kpi-card">
+            <span className="admin-kpi-card__label">Starred for Follow-Up</span>
+            <span className="admin-kpi-card__val admin-kpi-card__val--starred">{starredCount}</span>
           </div>
         </section>
 
-        {/* Navigation Tabs & Search Controls */}
+        {/* Controls Toolbar: Tabs, Search, & Status Filters */}
         <section className="admin-controls">
           <div className="admin-tabs" role="tablist">
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'all'}
               className={`admin-tab ${activeTab === 'all' ? 'admin-tab--active' : ''}`}
               onClick={() => setActiveTab('all')}
             >
-              All Inquiries ({totalCount})
+              All Inquiries <span className="admin-tab__count">{totalCount}</span>
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'message'}
               className={`admin-tab ${activeTab === 'message' ? 'admin-tab--active' : ''}`}
               onClick={() => setActiveTab('message')}
             >
-              Client Messages ({messageCount})
+              Client Messages <span className="admin-tab__count">{messageCount}</span>
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'job'}
               className={`admin-tab ${activeTab === 'job' ? 'admin-tab--active' : ''}`}
               onClick={() => setActiveTab('job')}
             >
-              Job Applications ({jobCount})
+              Job Applications <span className="admin-tab__count">{jobCount}</span>
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'starred'}
               className={`admin-tab ${activeTab === 'starred' ? 'admin-tab--active' : ''}`}
               onClick={() => setActiveTab('starred')}
             >
-              ★ Starred ({starredCount})
+              Starred <span className="admin-tab__count">{starredCount}</span>
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'cms'}
               className={`admin-tab admin-tab--cms ${activeTab === 'cms' ? 'admin-tab--active' : ''}`}
               onClick={() => setActiveTab('cms')}
             >
-              💼 Manage Jobs ({jobs.length})
+              💼 Manage Jobs (CMS) <span className="admin-tab__count">{jobs.length}</span>
             </button>
           </div>
 
           {activeTab !== 'cms' && (
-            <div className="admin-search-wrap">
-              <input
-                type="text"
-                className="admin-search-input"
-                placeholder="Search by name, email, role, or message..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+            <div className="admin-filters">
+              <div className="admin-search-wrap">
+                <input
+                  type="text"
+                  placeholder="Search by name, email, service..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="admin-search-input"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="admin-search-clear"
+                    title="Clear search"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
 
               <select
-                className="admin-filter-select"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
+                className="admin-status-select"
               >
-                <option value="all">All Statuses</option>
-                <option value="new">New</option>
-                <option value="in-review">In Review / Reviewing</option>
-                <option value="interview">Interview Scheduled</option>
-                <option value="replied">Replied</option>
+                <option value="all">All Workflow Statuses</option>
+                <option value="new">New / Unread</option>
+                <option value="reviewed">Reviewed</option>
+                <option value="contacted">Contacted / In Progress</option>
                 <option value="archived">Archived</option>
               </select>
             </div>
           )}
         </section>
 
-        {/* ── VIEW A: JOB MANAGEMENT CMS ── */}
+        {/* ── VIEW A: MANAGE JOBS (CMS) ── */}
         {activeTab === 'cms' ? (
           <section className="admin-cms-section">
             <div className="admin-cms-header">
-              <div className="admin-cms-header__meta">
-                <h2 className="admin-cms-title">Careers Job Openings</h2>
+              <div>
+                <h2 className="admin-cms-title">Career Openings Management (Cloud CMS)</h2>
                 <p className="admin-cms-subtitle">
-                  Create, edit, or remove job listings published to <code>/careers</code> in real-time.
+                  Add, edit, or delete live positions stored in the <code>job_postings</code> database table.
                 </p>
               </div>
-              <div className="admin-cms-header__actions">
+              <div className="admin-cms-header-actions">
                 <button
                   type="button"
                   onClick={handleResetJobs}
                   className="admin-action-pill admin-action-pill--subtle"
-                  title="Reset to 2 default openings"
+                  title="Reset positions to default SDR role"
                 >
                   ↺ Reset Defaults
                 </button>
@@ -455,45 +689,50 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="admin-cms-grid">
+            <div className="admin-jobs-grid">
               {jobs.map((job) => {
-                const applicantCount = submissions.filter(
-                  (s) => s.type === 'job' && s.role?.toLowerCase() === job.title?.toLowerCase()
+                const jobCandidateCount = submissions.filter(
+                  (s) => s.type === 'job' && (s.jobId === job.id || s.role === job.title)
                 ).length
-
                 return (
-                  <div key={job.id} className="admin-cms-card">
-                    <div className="admin-cms-card__top">
-                      <div className="admin-cms-card__badge-row">
-                        <span className="admin-cms-card__num">{job.tabNumber}</span>
-                        <span className="admin-service-pill">{job.division}</span>
-                        <span
-                          className={`admin-cms-status-badge ${
-                            job.status === 'active' ? 'admin-cms-status-badge--active' : ''
-                          }`}
-                        >
-                          ● {job.status === 'active' ? 'Active' : 'Draft'}
-                        </span>
+                  <div key={job.id} className="admin-job-card">
+                    <div className="admin-job-card__top">
+                      <div className="admin-job-card__meta">
+                        <span className="admin-job-card__index">{job.tabNumber || '01'}</span>
+                        <span className="admin-job-card__division">{job.division || 'Development Division'}</span>
                       </div>
-                      <span className="admin-cms-card__applicant-count">
-                        👥 {applicantCount} applicant{applicantCount === 1 ? '' : 's'}
+                      <span
+                        className={`admin-job-card__status admin-job-card__status--${job.status || 'active'}`}
+                      >
+                        {job.status || 'active'}
                       </span>
                     </div>
 
-                    <h3 className="admin-cms-card__title">{job.title}</h3>
-                    {job.compensationLead && (
-                      <p className="admin-cms-card__comp">{job.compensationLead}</p>
-                    )}
+                    <h3 className="admin-job-card__title">{job.title}</h3>
 
-                    <div className="admin-cms-card__tags">
-                      {(job.badges || []).map((badge, idx) => (
-                        <span key={idx} className="admin-card__region-badge">
-                          {badge}
+                    <div className="admin-job-card__badges">
+                      {(job.badges || []).slice(0, 3).map((b, idx) => (
+                        <span key={idx} className="admin-job-card__badge-pill">
+                          {b}
                         </span>
                       ))}
+                      {(job.badges || []).length > 3 && (
+                        <span className="admin-job-card__badge-more">
+                          +{(job.badges || []).length - 3} more
+                        </span>
+                      )}
                     </div>
 
-                    <div className="admin-cms-card__actions">
+                    <p className="admin-job-card__comp">
+                      <strong>Comp:</strong> {job.compensationLead || 'Commission / Retainer'}
+                    </p>
+
+                    <div className="admin-job-card__kpi">
+                      <span>👥 {jobCandidateCount} Applicant{jobCandidateCount === 1 ? '' : 's'}</span>
+                      <span>📋 {(job.responsibilities || []).length} Responsibilities</span>
+                    </div>
+
+                    <div className="admin-job-card__actions">
                       <button
                         type="button"
                         onClick={() => handleOpenEditJob(job)}
@@ -569,65 +808,77 @@ export default function AdminPage() {
                         </button>
 
                         <span
-                          className={`admin-type-badge ${
-                            item.type === 'job' ? 'admin-type-badge--job' : 'admin-type-badge--message'
+                          className={`admin-card__type-pill ${
+                            item.type === 'job'
+                              ? 'admin-card__type-pill--job'
+                              : 'admin-card__type-pill--message'
                           }`}
                         >
-                          {item.type === 'job' ? 'JOB APPLICATION' : 'CLIENT INQUIRY'}
+                          {item.type === 'job' ? '💼 Job Application' : '✉️ Client Inquiry'}
                         </span>
 
-                        <span className="admin-service-pill">
-                          {item.type === 'job' ? item.role : item.service}
+                        <span className="admin-card__date">
+                          {item.createdAt ? new Date(item.createdAt).toLocaleString() : 'Recent'}
                         </span>
                       </div>
 
-                      <div className="admin-card__top-right">
-                        <span className="admin-card__time">
-                          {new Date(item.createdAt).toLocaleDateString(undefined, {
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </span>
-
-                        {/* Status Selector */}
+                      <div className="admin-card__status-ctrl">
                         <select
-                          className={`admin-status-badge admin-status-badge--${item.status}`}
                           value={item.status}
                           onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                          className={`admin-card__status-pill admin-card__status-pill--${item.status}`}
                         >
-                          <option value="new">● New</option>
-                          <option value="in-review">● In Review</option>
-                          <option value="interview">● Interview</option>
-                          <option value="replied">● Replied</option>
-                          <option value="archived">● Archived</option>
+                          <option value="new">New</option>
+                          <option value="reviewed">Reviewed</option>
+                          <option value="contacted">Contacted</option>
+                          <option value="archived">Archived</option>
                         </select>
                       </div>
                     </div>
 
-                    {/* Candidate / Client Details */}
+                    {/* Sender Details */}
                     <div className="admin-card__body">
-                      <div className="admin-card__info-row">
-                        <h3 className="admin-card__name">{item.name}</h3>
-                        <a href={`mailto:${item.email}`} className="admin-card__contact-link">
-                          {item.email}
-                        </a>
-                        {item.phone && <span className="admin-card__phone">{item.phone}</span>}
-                        {item.region && (
-                          <span className="admin-card__region-badge">
-                            <span aria-hidden="true">📍</span> {item.region}
-                          </span>
-                        )}
-                        {item.experience && (
-                          <span className="admin-card__exp-badge">Exp: {item.experience}</span>
+                      <div className="admin-card__profile">
+                        <h4 className="admin-card__name">{item.name}</h4>
+                        <div className="admin-card__contacts">
+                          <a href={`mailto:${item.email}`} className="admin-card__link">
+                            {item.email}
+                          </a>
+                          {item.phone && <span className="admin-card__dot-sep">•</span>}
+                          {item.phone && (
+                            <a href={`tel:${item.phone}`} className="admin-card__link">
+                              {item.phone}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Metadata Badges */}
+                      <div className="admin-card__details">
+                        {item.type === 'job' ? (
+                          <>
+                            <span className="admin-card__tag">Role: {item.role || 'SDR'}</span>
+                            {item.region && <span className="admin-card__tag">Region: {item.region}</span>}
+                            {item.experience && (
+                              <span className="admin-card__tag">Exp: {item.experience}</span>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            {item.service && (
+                              <span className="admin-card__tag">Service: {item.service}</span>
+                            )}
+                            {item.budget && (
+                              <span className="admin-card__tag">Budget: {item.budget}</span>
+                            )}
+                          </>
                         )}
                       </div>
 
-                      {/* Portfolio Link if Job Application */}
+                      {/* Portfolio / LinkedIn Link */}
                       {item.portfolioUrl && (
                         <div className="admin-card__portfolio">
-                          <span className="admin-card__portfolio-label">Portfolio / Showreel:</span>
+                          <span className="admin-card__portfolio-label">Profile / Portfolio:</span>
                           {getSafeExternalUrl(item.portfolioUrl) ? (
                             <a
                               href={getSafeExternalUrl(item.portfolioUrl)}
@@ -653,7 +904,19 @@ export default function AdminPage() {
 
                     {/* Actions Footer */}
                     <div className="admin-card__footer">
-                      {item.resumeData && (
+                      {/* Secure Resume Download: Handles Private Supabase Storage & Local Base64 */}
+                      {item.resumePath ? (
+                        <button
+                          type="button"
+                          onClick={() => handleViewResume(item.resumePath, item.resumeName, item.id)}
+                          className="admin-resume-download-btn"
+                          title="Open private candidate resume from Supabase Storage"
+                          disabled={resumeLoadingId === item.id}
+                        >
+                          <span aria-hidden="true">🔒</span>{' '}
+                          {resumeLoadingId === item.id ? 'Generating Secure Link...' : `View Private Resume (${item.resumeName || 'Document'})`}
+                        </button>
+                      ) : item.resumeData ? (
                         <a
                           href={item.resumeData}
                           download={item.resumeName || `${item.name.replace(/\s+/g, '_')}_resume.pdf`}
@@ -663,13 +926,11 @@ export default function AdminPage() {
                           <span aria-hidden="true">📥</span> View / Download Resume (
                           {item.resumeName || 'Attachment'})
                         </a>
-                      )}
-
-                      {item.resumeName && !item.resumeData && (
-                        <span className="admin-resume-warning" title="Document metadata saved, base64 payload omitted to save storage">
-                          ⚠️ {item.resumeName} (File quota exceeded)
+                      ) : item.resumeName ? (
+                        <span className="admin-resume-warning" title="Document metadata saved">
+                          📄 {item.resumeName}
                         </span>
-                      )}
+                      ) : null}
 
                       <div className="admin-card__footer-actions">
                         <a
@@ -708,132 +969,128 @@ export default function AdminPage() {
                 </h3>
                 <button
                   type="button"
-                  className="admin-modal-close"
                   onClick={() => setIsJobModalOpen(false)}
+                  className="admin-modal-close"
                 >
                   ✕
                 </button>
               </div>
 
               <form onSubmit={handleSaveJob} className="admin-modal-form">
-                <div className="admin-modal-row">
-                  <div className="admin-modal-group">
-                    <label className="admin-modal-label">Job Title *</label>
-                    <input
-                      type="text"
-                      className="admin-modal-input"
-                      value={jobFormTitle}
-                      onChange={(e) => setJobFormTitle(e.target.value)}
-                      placeholder="e.g. Sales Development Representative"
-                      required
-                    />
-                  </div>
-                  <div className="admin-modal-group">
-                    <label className="admin-modal-label">Division *</label>
-                    <select
-                      className="admin-modal-select"
-                      value={jobFormDivision}
-                      onChange={(e) => setJobFormDivision(e.target.value)}
-                    >
-                      <option value="Development Division">Development Division</option>
-                      <option value="Creator Division">Creator Division</option>
-                      <option value="Executive / Operations">Executive / Operations</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="admin-modal-row">
-                  <div className="admin-modal-group">
-                    <label className="admin-modal-label">Status</label>
-                    <select
-                      className="admin-modal-select"
-                      value={jobFormStatus}
-                      onChange={(e) => setJobFormStatus(e.target.value)}
-                    >
-                      <option value="active">Active (Visible on Careers)</option>
-                      <option value="draft">Draft (Hidden)</option>
-                    </select>
-                  </div>
-                  <div className="admin-modal-group">
-                    <label className="admin-modal-label">Meta Badges (comma separated)</label>
-                    <input
-                      type="text"
-                      className="admin-modal-input"
-                      value={jobFormBadges}
-                      onChange={(e) => setJobFormBadges(e.target.value)}
-                      placeholder="e.g. Development Division, Remote, Full-Cycle"
-                    />
-                  </div>
-                </div>
-
-                <div className="admin-modal-group">
-                  <label className="admin-modal-label">Compensation Headline</label>
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Job Title *</label>
                   <input
                     type="text"
-                    className="admin-modal-input"
+                    required
+                    placeholder="e.g. Senior Product Designer"
+                    value={jobFormTitle}
+                    onChange={(e) => setJobFormTitle(e.target.value)}
+                    className="admin-form-input"
+                  />
+                </div>
+
+                <div className="admin-form-row">
+                  <div className="admin-form-group">
+                    <label className="admin-form-label">Division</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Development Division"
+                      value={jobFormDivision}
+                      onChange={(e) => setJobFormDivision(e.target.value)}
+                      className="admin-form-input"
+                    />
+                  </div>
+
+                  <div className="admin-form-group">
+                    <label className="admin-form-label">Status</label>
+                    <select
+                      value={jobFormStatus}
+                      onChange={(e) => setJobFormStatus(e.target.value)}
+                      className="admin-form-select"
+                    >
+                      <option value="active">Active (Published on /careers)</option>
+                      <option value="draft">Draft (Hidden)</option>
+                      <option value="closed">Closed</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Badges (comma separated)</label>
+                  <input
+                    type="text"
+                    placeholder="Development Division, Full-Cycle, Remote, Contract"
+                    value={jobFormBadges}
+                    onChange={(e) => setJobFormBadges(e.target.value)}
+                    className="admin-form-input"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Compensation Summary</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 100% commission-based contract position / Monthly Retainer"
                     value={jobFormCompLead}
                     onChange={(e) => setJobFormCompLead(e.target.value)}
-                    placeholder="e.g. 100% commission-based contract position, with no cap on earnings."
+                    className="admin-form-input"
                   />
                 </div>
 
-                <div className="admin-modal-group">
-                  <label className="admin-modal-label">About the Job (Paragraphs)</label>
+                <div className="admin-form-group">
+                  <label className="admin-form-label">About the Job (Paragraphs separated by blank line)</label>
                   <textarea
-                    className="admin-modal-textarea"
-                    rows={3}
+                    rows={4}
+                    placeholder="Describe role mission and focus..."
                     value={jobFormAboutJob}
                     onChange={(e) => setJobFormAboutJob(e.target.value)}
-                    placeholder="Overview of the role responsibilities and mission..."
+                    className="admin-form-textarea"
                   />
                 </div>
 
-                <div className="admin-modal-group">
-                  <label className="admin-modal-label">
-                    Responsibilities (One per line, formatted as <code>Title: Description</code>)
-                  </label>
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Responsibilities (One per line, 'Title: Description')</label>
                   <textarea
-                    className="admin-modal-textarea"
-                    rows={4}
+                    rows={5}
+                    placeholder="Prospect List Development: Research and build targeted prospect list..."
                     value={jobFormResponsibilities}
                     onChange={(e) => setJobFormResponsibilities(e.target.value)}
-                    placeholder="Prospect List Development: Research and build targeted prospect lists..."
+                    className="admin-form-textarea"
                   />
                 </div>
 
-                <div className="admin-modal-row">
-                  <div className="admin-modal-group">
-                    <label className="admin-modal-label">Minimum Qualifications (One per line)</label>
-                    <textarea
-                      className="admin-modal-textarea"
-                      rows={3}
-                      value={jobFormMinQuals}
-                      onChange={(e) => setJobFormMinQuals(e.target.value)}
-                      placeholder="2-3 years sales experience&#10;Tech industry background"
-                    />
-                  </div>
-                  <div className="admin-modal-group">
-                    <label className="admin-modal-label">Preferred Qualifications (One per line)</label>
-                    <textarea
-                      className="admin-modal-textarea"
-                      rows={3}
-                      value={jobFormPrefQuals}
-                      onChange={(e) => setJobFormPrefQuals(e.target.value)}
-                      placeholder="Experience in software agency&#10;Consultative sales track record"
-                    />
-                  </div>
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Minimum Qualifications (One per line)</label>
+                  <textarea
+                    rows={4}
+                    placeholder="2-3 years sales experience&#10;Based in North America or Europe"
+                    value={jobFormMinQuals}
+                    onChange={(e) => setJobFormMinQuals(e.target.value)}
+                    className="admin-form-textarea"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label className="admin-form-label">Preferred Qualifications (One per line)</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Agency experience&#10;CRM proficiency"
+                    value={jobFormPrefQuals}
+                    onChange={(e) => setJobFormPrefQuals(e.target.value)}
+                    className="admin-form-textarea"
+                  />
                 </div>
 
                 <div className="admin-modal-actions">
                   <button
                     type="button"
-                    className="admin-action-pill"
                     onClick={() => setIsJobModalOpen(false)}
+                    className="admin-action-pill admin-action-pill--subtle"
                   >
                     Cancel
                   </button>
                   <button type="submit" className="admin-action-pill admin-action-pill--primary">
-                    {editingJobId ? 'Save Changes' : 'Publish Job Opening'}
+                    {editingJobId ? 'Save Changes to Cloud' : 'Publish Job Opening'}
                   </button>
                 </div>
               </form>
