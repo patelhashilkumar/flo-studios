@@ -13,21 +13,24 @@ const HERO_REELS = [
     name: 'Apple',
     badge: 'APPLE MOTION',
     videoSrc: '/videos/apple.mov',
-    posterSrc: '/videos/apple-thumb.png',
+    mp4Src: '/videos/apple.mp4',
+    posterSrc: '/videos/apple-thumb.webp',
   },
   {
     id: 'blitzit',
     name: 'Blitzit',
     badge: 'BLITZIT 2.0',
     videoSrc: '/videos/blitzit2.mov',
-    posterSrc: '/videos/blitzit-thumb.png',
+    mp4Src: '/videos/blitzit2.mp4',
+    posterSrc: '/videos/blitzit-thumb.webp',
   },
   {
     id: 'sv',
     name: 'SV',
     badge: 'SV SHOWCASE',
     videoSrc: '/videos/sv-final.mov',
-    posterSrc: '/videos/sv-thumb.png',
+    mp4Src: '/videos/sv-final.mp4',
+    posterSrc: '/videos/sv-thumb.webp',
   },
 ]
 
@@ -107,11 +110,12 @@ export default function Hero() {
             loop
             muted={isMuted}
             playsInline
-            preload="metadata"
+            preload="auto"
             poster={currentReel.posterSrc}
           >
-            <source src={currentReel.videoSrc} type="video/mp4" />
+            {currentReel.mp4Src && <source src={currentReel.mp4Src} type="video/mp4" />}
             <source src={currentReel.videoSrc} type="video/quicktime" />
+            <source src={currentReel.videoSrc} type="video/mp4" />
           </video>
 
           {/* Bottom Left Glassmorphic Project Switcher */}
