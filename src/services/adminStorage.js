@@ -1,11 +1,32 @@
 /**
  * ══════════════════════════════════════════════════════════════
- * FLO STUDIOS — REACTIVE SUBMISSION & ADMIN STORAGE ENGINE
- * Single source of truth for Client Inquiries & Job Applications
+ * FLO STUDIOS — HYBRID DATA GATEWAY & STORAGE ENGINE
+ * Seamlessly manages Submissions, Applications, & CMS via Supabase
+ * with offline local-storage fallback for preview environments.
  * ══════════════════════════════════════════════════════════════
  */
 
 import { INITIAL_JOB_POSTINGS } from '../data/jobPostings.js'
+import { isSupabaseConfigured } from '../lib/supabase.js'
+import {
+  createInquiry,
+  getInquiries,
+  updateInquiryStatus as supabaseUpdateInquiryStatus,
+  toggleInquiryStar as supabaseToggleInquiryStar,
+  deleteInquiry as supabaseDeleteInquiry,
+  createJobApplication,
+  getJobApplications,
+  updateApplicationStatus as supabaseUpdateApplicationStatus,
+  toggleApplicationStar as supabaseToggleApplicationStar,
+  deleteApplication as supabaseDeleteApplication,
+  fetchJobPostings,
+  upsertJobPosting,
+  deleteJobPosting,
+  resetJobPostings,
+  getResumeSignedUrl
+} from './supabaseService.js'
+
+export { isSupabaseConfigured, getResumeSignedUrl }
 
 export const STORAGE_KEY = 'FLO_STUDIOS_SUBMISSIONS_V1'
 export const JOBS_STORAGE_KEY = 'FLO_STUDIOS_JOBS_V1'
@@ -47,9 +68,7 @@ function emitChange() {
 const LEGACY_SEED_PREFIXES = ['msg_172783680', 'job_172783690']
 
 /**
- * Retrieve all submissions from persistent storage.
- * - Initializes with [] if empty
- * - Automatically purges any legacy demo seeds by ID prefix
+ * Synchronously retrieve all cached submissions from persistent storage.
  */
 export function getSubmissions() {
   const storage = getStorage()
@@ -86,15 +105,42 @@ export function getSubmissions() {
 }
 
 /**
- * Save a new submission (Client Message or Job Application)
- * Normalizes all resume metadata and application fields
+ * Asynchronously load submissions directly from Supabase Cloud
  */
-export function saveSubmission(entry = {}) {
+export async function loadSubmissionsFromCloud() {
+  if (!isSupabaseConfigured()) return getSubmissions()
+  try {
+    const [inquiries, applications] = await Promise.all([
+      getInquiries(),
+      getJobApplications()
+    ])
+    const combined = [...inquiries, ...applications].sort((a, b) => {
+      return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+    })
+    const storage = getStorage()
+    if (storage) {
+      storage.setItem(STORAGE_KEY, JSON.stringify(combined))
+    }
+    emitChange()
+    return combined
+  } catch (err) {
+    console.warn('Failed loading submissions from Supabase cloud:', err)
+    return getSubmissions()
+  }
+}
+
+/**
+ * Save a new submission (Client Message or Job Application)
+ * Normalizes metadata, writes to Supabase if configured, and caches locally.
+ */
+export async function saveSubmission(entry = {}) {
   const current = getSubmissions()
   const isJob = entry.type === 'job'
+  const tempId = entry.id || `${isJob ? 'job' : 'msg'}_${Date.now()}`
+
   const newSubmission = {
     ...entry,
-    id: entry.id || `${isJob ? 'job' : 'msg'}_${Date.now()}`,
+    id: tempId,
     type: entry.type || (isJob ? 'job' : 'message'),
     status: entry.status || 'new',
     starred: Boolean(entry.starred),
@@ -104,11 +150,12 @@ export function saveSubmission(entry = {}) {
     resumeName: entry.resumeName || null,
     resumeSize: entry.resumeSize || null,
     resumeType: entry.resumeType || null,
-    resumeData: entry.resumeData || null,
+    resumePath: entry.resumePath || null,
     resumeNote: entry.resumeNote || null,
     termsConfirmed: Boolean(entry.termsConfirmed)
   }
 
+  // Write to local cache immediately for optimistic UI
   const updated = [newSubmission, ...current]
   try {
     const storage = getStorage()
@@ -116,84 +163,130 @@ export function saveSubmission(entry = {}) {
       storage.setItem(STORAGE_KEY, JSON.stringify(updated))
     }
     emitChange()
-    return newSubmission
-  } catch (err) {
-    console.warn('Storage quota exceeded with resumeData, retrying without base64 payload...')
+  } catch (cacheErr) {
+    console.warn('Local storage cache write warning:', cacheErr)
+  }
+
+  // Dispatch to Supabase Cloud if configured
+  if (isSupabaseConfigured()) {
     try {
-      const fallbackEntry = {
-        ...newSubmission,
-        resumeData: null,
-        resumeNote: 'File exceeds local storage quota. Metadata preserved: ' + (entry.resumeName || '')
+      if (isJob) {
+        const cloudRecord = await createJobApplication(entry, entry.rawFile)
+        if (cloudRecord) {
+          newSubmission.id = cloudRecord.id
+          newSubmission.resumePath = cloudRecord.resume_path
+          // Update cache with cloud ID
+          const refreshed = getSubmissions().map((s) => (s.id === tempId ? newSubmission : s))
+          const storage = getStorage()
+          if (storage) storage.setItem(STORAGE_KEY, JSON.stringify(refreshed))
+          emitChange()
+        }
+      } else {
+        const cloudRecord = await createInquiry(entry)
+        if (cloudRecord) {
+          newSubmission.id = cloudRecord.id
+          const refreshed = getSubmissions().map((s) => (s.id === tempId ? newSubmission : s))
+          const storage = getStorage()
+          if (storage) storage.setItem(STORAGE_KEY, JSON.stringify(refreshed))
+          emitChange()
+        }
       }
-      const fallbackUpdated = [fallbackEntry, ...current]
-      const storage = getStorage()
-      if (storage) {
-        storage.setItem(STORAGE_KEY, JSON.stringify(fallbackUpdated))
-      }
-      emitChange()
-      return fallbackEntry
-    } catch (fallbackErr) {
-      console.error('Failed saving submission:', fallbackErr)
-      return null
+    } catch (cloudErr) {
+      console.error('Supabase submission error (saved to local fallback):', cloudErr)
     }
   }
+
+  return newSubmission
 }
 
 /**
  * Update the review / workflow status of a submission
  */
-export function updateSubmissionStatus(id, newStatus) {
+export async function updateSubmissionStatus(id, newStatus) {
   const current = getSubmissions()
+  const target = current.find((item) => item.id === id)
   const updated = current.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
-  try {
-    const storage = getStorage()
-    if (storage) {
-      storage.setItem(STORAGE_KEY, JSON.stringify(updated))
-    }
-    emitChange()
-    return true
-  } catch (err) {
-    console.error('Failed updating submission status:', err)
-    return false
+
+  const storage = getStorage()
+  if (storage) {
+    storage.setItem(STORAGE_KEY, JSON.stringify(updated))
   }
+  emitChange()
+
+  if (isSupabaseConfigured() && target) {
+    try {
+      if (target.type === 'job') {
+        await supabaseUpdateApplicationStatus(id, newStatus)
+      } else {
+        await supabaseUpdateInquiryStatus(id, newStatus)
+      }
+    } catch (err) {
+      console.warn('Failed cloud status update:', err)
+    }
+  }
+
+  return true
 }
 
 /**
  * Toggle starred status of a submission
  */
-export function toggleStar(id) {
+export async function toggleStar(id) {
   const current = getSubmissions()
-  const updated = current.map((item) => (item.id === id ? { ...item, starred: !item.starred } : item))
-  try {
-    const storage = getStorage()
-    if (storage) {
-      storage.setItem(STORAGE_KEY, JSON.stringify(updated))
-    }
-    emitChange()
-    return true
-  } catch (err) {
-    console.error('Failed toggling star:', err)
-    return false
+  const target = current.find((item) => item.id === id)
+  if (!target) return false
+
+  const newStarred = !target.starred
+  const updated = current.map((item) => (item.id === id ? { ...item, starred: newStarred } : item))
+
+  const storage = getStorage()
+  if (storage) {
+    storage.setItem(STORAGE_KEY, JSON.stringify(updated))
   }
+  emitChange()
+
+  if (isSupabaseConfigured()) {
+    try {
+      if (target.type === 'job') {
+        await supabaseToggleApplicationStar(id, target.starred)
+      } else {
+        await supabaseToggleInquiryStar(id, target.starred)
+      }
+    } catch (err) {
+      console.warn('Failed cloud star toggle:', err)
+    }
+  }
+
+  return true
 }
 
 /**
  * Delete a submission by ID
  */
-export function deleteSubmission(id) {
+export async function deleteSubmission(id) {
   const current = getSubmissions()
+  const target = current.find((item) => item.id === id)
   const updated = current.filter((item) => item.id !== id)
-  try {
-    const storage = getStorage()
-    if (storage) {
-      storage.setItem(STORAGE_KEY, JSON.stringify(updated))
-    }
-    emitChange()
-    return true
-  } catch (err) {
-    console.error('Failed deleting submission:', err)
-    return false
+
+  const storage = getStorage()
+  if (storage) {
+    storage.setItem(STORAGE_KEY, JSON.stringify(updated))
   }
+  emitChange()
+
+  if (isSupabaseConfigured() && target) {
+    try {
+      if (target.type === 'job') {
+        await supabaseDeleteApplication(id, target.resumePath)
+      } else {
+        await supabaseDeleteInquiry(id)
+      }
+    } catch (err) {
+      console.warn('Failed cloud deletion:', err)
+    }
+  }
+
+  return true
 }
 
 /**
@@ -217,7 +310,6 @@ export const clearAllSubmissions = seedSampleData
 
 /**
  * Export all submissions as CSV download using Blob & createObjectURL
- * Includes Region, Resume Attached, and detailed profile columns
  */
 export function exportToCSV() {
   const records = getSubmissions()
@@ -276,7 +368,7 @@ export function exportToCSV() {
 }
 
 /**
- * Export all submissions as formatted JSON download using Blob & createObjectURL
+ * Export all submissions as formatted JSON download
  */
 export function exportToJSON() {
   const records = getSubmissions()
@@ -298,7 +390,7 @@ export function exportToJSON() {
 }
 
 /**
- * Passcode Authentication Helpers
+ * Passcode Authentication Helpers (Fallback for preview mode)
  */
 export function checkPasscode(pin) {
   const clean = (pin || '').trim().toLowerCase()
@@ -335,7 +427,6 @@ export function logout() {
 
 /**
  * Retrieve all job postings from persistent storage.
- * Initializes with INITIAL_JOB_POSTINGS if storage is empty.
  */
 export function getJobs() {
   const storage = getStorage()
@@ -347,7 +438,7 @@ export function getJobs() {
       return INITIAL_JOB_POSTINGS
     }
     const parsed = JSON.parse(raw)
-    // Filter out legacy placeholder roles (e.g. 'eng' / 'full-stack-product-engineer')
+    // Filter out legacy placeholder roles
     const cleaned = parsed.filter(
       (job) => job && job.id !== 'eng' && job.slug !== 'full-stack-product-engineer'
     )
@@ -365,9 +456,31 @@ export function getJobs() {
 }
 
 /**
+ * Asynchronously load job postings directly from Supabase Cloud
+ */
+export async function loadJobsFromCloud() {
+  if (!isSupabaseConfigured()) return getJobs()
+  try {
+    const cloudJobs = await fetchJobPostings()
+    if (Array.isArray(cloudJobs) && cloudJobs.length > 0) {
+      const storage = getStorage()
+      if (storage) {
+        storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(cloudJobs))
+      }
+      emitChange()
+      return cloudJobs
+    }
+    return getJobs()
+  } catch (err) {
+    console.warn('Failed loading jobs from Supabase cloud:', err)
+    return getJobs()
+  }
+}
+
+/**
  * Save (create or update) a job posting.
  */
-export function saveJob(jobData = {}) {
+export async function saveJob(jobData = {}) {
   const storage = getStorage()
   if (!storage) return false
   try {
@@ -388,7 +501,12 @@ export function saveJob(jobData = {}) {
       slug,
       status: jobData.status || 'active',
       division: jobData.division || 'Development Division',
-      badges: Array.isArray(jobData.badges) ? jobData.badges : (jobData.badges || '').split(',').map((b) => b.trim()).filter(Boolean),
+      badges: Array.isArray(jobData.badges)
+        ? jobData.badges
+        : (jobData.badges || '')
+            .split(',')
+            .map((b) => b.trim())
+            .filter(Boolean),
       aboutCompany: jobData.aboutCompany || INITIAL_JOB_POSTINGS[0].aboutCompany,
       aboutJob: Array.isArray(jobData.aboutJob) ? jobData.aboutJob : [jobData.aboutJob || ''],
       responsibilities: Array.isArray(jobData.responsibilities) ? jobData.responsibilities : [],
@@ -439,6 +557,12 @@ export function saveJob(jobData = {}) {
 
     storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(nextJobs))
     emitChange()
+
+    // Sync to Supabase
+    if (isSupabaseConfigured()) {
+      await upsertJobPosting(updatedJob)
+    }
+
     return true
   } catch (err) {
     console.error('Failed saving job to storage:', err)
@@ -449,7 +573,7 @@ export function saveJob(jobData = {}) {
 /**
  * Delete a job posting by ID.
  */
-export function deleteJob(id) {
+export async function deleteJob(id) {
   const storage = getStorage()
   if (!storage) return false
   try {
@@ -463,6 +587,12 @@ export function deleteJob(id) {
 
     storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(nextJobs))
     emitChange()
+
+    // Sync to Supabase
+    if (isSupabaseConfigured()) {
+      await deleteJobPosting(id)
+    }
+
     return true
   } catch (err) {
     console.error('Failed deleting job from storage:', err)
@@ -473,16 +603,21 @@ export function deleteJob(id) {
 /**
  * Reset job listings back to factory defaults.
  */
-export function resetJobs() {
+export async function resetJobs() {
   const storage = getStorage()
   if (!storage) return false
   try {
     storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
     emitChange()
+
+    // Sync to Supabase
+    if (isSupabaseConfigured()) {
+      await resetJobPostings()
+    }
+
     return true
   } catch (err) {
     console.error('Failed resetting jobs in storage:', err)
     return false
   }
 }
-
