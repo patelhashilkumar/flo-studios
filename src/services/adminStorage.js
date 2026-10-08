@@ -5,7 +5,10 @@
  * ══════════════════════════════════════════════════════════════
  */
 
+import { INITIAL_JOB_POSTINGS } from '../data/jobPostings'
+
 export const STORAGE_KEY = 'FLO_STUDIOS_SUBMISSIONS_V1'
+export const JOBS_STORAGE_KEY = 'FLO_STUDIOS_JOBS_V1'
 export const AUTH_KEY = 'FLO_STUDIOS_ADMIN_AUTH_V1'
 export const DEFAULT_PASSCODE = 'flo2026'
 
@@ -323,3 +326,157 @@ export function logout() {
     session.removeItem(AUTH_KEY)
   }
 }
+
+/**
+ * ══════════════════════════════════════════════════════════════
+ * JOB OPENINGS CMS STORAGE (Add, Edit, Delete, Reorder)
+ * ══════════════════════════════════════════════════════════════
+ */
+
+/**
+ * Retrieve all job postings from persistent storage.
+ * Initializes with INITIAL_JOB_POSTINGS if storage is empty.
+ */
+export function getJobs() {
+  const storage = getStorage()
+  if (!storage) return INITIAL_JOB_POSTINGS
+  try {
+    const raw = storage.getItem(JOBS_STORAGE_KEY)
+    if (!raw) {
+      storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
+      return INITIAL_JOB_POSTINGS
+    }
+    const parsed = JSON.parse(raw)
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
+      return INITIAL_JOB_POSTINGS
+    }
+    return parsed
+  } catch (err) {
+    console.error('Failed reading jobs from storage:', err)
+    return INITIAL_JOB_POSTINGS
+  }
+}
+
+/**
+ * Save (create or update) a job posting.
+ */
+export function saveJob(jobData = {}) {
+  const storage = getStorage()
+  if (!storage) return false
+  try {
+    const currentJobs = getJobs()
+    const id = jobData.id || `job_${Date.now()}`
+    const slug =
+      jobData.slug ||
+      (jobData.title || 'role')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)+/g, '')
+
+    const existingIndex = currentJobs.findIndex((j) => j.id === id)
+
+    const updatedJob = {
+      ...jobData,
+      id,
+      slug,
+      status: jobData.status || 'active',
+      division: jobData.division || 'Development Division',
+      badges: Array.isArray(jobData.badges) ? jobData.badges : (jobData.badges || '').split(',').map((b) => b.trim()).filter(Boolean),
+      aboutCompany: jobData.aboutCompany || INITIAL_JOB_POSTINGS[0].aboutCompany,
+      aboutJob: Array.isArray(jobData.aboutJob) ? jobData.aboutJob : [jobData.aboutJob || ''],
+      responsibilities: Array.isArray(jobData.responsibilities) ? jobData.responsibilities : [],
+      compensationLead: jobData.compensationLead || '',
+      compensationItems: Array.isArray(jobData.compensationItems) ? jobData.compensationItems : [],
+      compensationTerms: jobData.compensationTerms || '',
+      minimumQualifications: Array.isArray(jobData.minimumQualifications) ? jobData.minimumQualifications : [],
+      preferredQualifications: Array.isArray(jobData.preferredQualifications) ? jobData.preferredQualifications : [],
+      whatSuccessLooksLike: jobData.whatSuccessLooksLike || '',
+      thrivePoints: Array.isArray(jobData.thrivePoints) ? jobData.thrivePoints : [],
+      companyMission: jobData.companyMission || INITIAL_JOB_POSTINGS[0].companyMission,
+      equalOpportunity: jobData.equalOpportunity || INITIAL_JOB_POSTINGS[0].equalOpportunity,
+      legalDisclaimer: jobData.legalDisclaimer || INITIAL_JOB_POSTINGS[0].legalDisclaimer,
+      formConfig: jobData.formConfig || {
+        roleTitle: jobData.title,
+        division: jobData.division || 'Development Division',
+        experienceLabel: 'Experience *',
+        experienceOptions: [
+          { value: '', label: 'Select Experience Level' },
+          { value: 'Meets qualification', label: 'Meets qualification requirements' },
+          { value: 'Senior / Lead', label: 'Senior / Lead level' }
+        ],
+        regionOptions: [
+          { value: '', label: 'Select Region' },
+          { value: 'North America', label: 'North America' },
+          { value: 'Europe', label: 'Europe' },
+          { value: 'Other / Global Remote', label: 'Other / Global Remote' }
+        ]
+      }
+    }
+
+    let nextJobs = []
+    if (existingIndex >= 0) {
+      nextJobs = [...currentJobs]
+      nextJobs[existingIndex] = {
+        ...nextJobs[existingIndex],
+        ...updatedJob
+      }
+    } else {
+      nextJobs = [...currentJobs, updatedJob]
+    }
+
+    // Renumber tab numbers
+    nextJobs = nextJobs.map((j, idx) => ({
+      ...j,
+      tabNumber: String(idx + 1).padStart(2, '0')
+    }))
+
+    storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(nextJobs))
+    emitChange()
+    return true
+  } catch (err) {
+    console.error('Failed saving job to storage:', err)
+    return false
+  }
+}
+
+/**
+ * Delete a job posting by ID.
+ */
+export function deleteJob(id) {
+  const storage = getStorage()
+  if (!storage) return false
+  try {
+    const currentJobs = getJobs()
+    const nextJobs = currentJobs
+      .filter((j) => j.id !== id)
+      .map((j, idx) => ({
+        ...j,
+        tabNumber: String(idx + 1).padStart(2, '0')
+      }))
+
+    storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(nextJobs))
+    emitChange()
+    return true
+  } catch (err) {
+    console.error('Failed deleting job from storage:', err)
+    return false
+  }
+}
+
+/**
+ * Reset job listings back to factory defaults.
+ */
+export function resetJobs() {
+  const storage = getStorage()
+  if (!storage) return false
+  try {
+    storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
+    emitChange()
+    return true
+  } catch (err) {
+    console.error('Failed resetting jobs in storage:', err)
+    return false
+  }
+}
+
