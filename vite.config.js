@@ -6,6 +6,7 @@ export default defineConfig({
   base: '/',
   plugins: [react()],
   build: {
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks(id) {
