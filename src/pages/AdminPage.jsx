@@ -40,7 +40,7 @@ function getSafeExternalUrl(url) {
 
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
-  const [authMethod, setAuthMethod] = useState('passcode') // 'passcode' | 'supabase'
+  const [authMethod, setAuthMethod] = useState(() => (isSupabaseConfigured() ? 'supabase' : 'passcode'))
   const [adminEmail, setAdminEmail] = useState('')
   const [adminPassword, setAdminPassword] = useState('')
   const [passcode, setPasscode] = useState('')
@@ -166,7 +166,7 @@ export default function AdminPage() {
       loadSubmissionsFromCloud().then(setSubmissions)
       loadJobsFromCloud().then(setJobs)
     } else {
-      setAuthError('Incorrect passcode. Access restricted to authorized Flo Studios team members.')
+      setAuthError('Incorrect passcode or unconfigured. Access restricted to authorized Flo Studios team members.')
     }
   }
 

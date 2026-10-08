@@ -6,18 +6,15 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const FALLBACK_SUPABASE_URL = 'https://jemvbvzucqvetaghoyjg.supabase.co'
-const FALLBACK_SUPABASE_ANON_KEY = 'sb_publishable_peQ2bFpIImyQWF0g-GQtUw_1P48vaDj'
-
 const supabaseUrl =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_URL) ||
   (typeof process !== 'undefined' && process.env && process.env.VITE_SUPABASE_URL) ||
-  FALLBACK_SUPABASE_URL
+  ''
 
 const supabaseAnonKey =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) ||
   (typeof process !== 'undefined' && process.env && process.env.VITE_SUPABASE_ANON_KEY) ||
-  FALLBACK_SUPABASE_ANON_KEY
+  ''
 
 /**
  * Returns true if valid Supabase environment credentials are present

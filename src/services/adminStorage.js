@@ -31,7 +31,11 @@ export { isSupabaseConfigured, getResumeSignedUrl }
 export const STORAGE_KEY = 'FLO_STUDIOS_SUBMISSIONS_V1'
 export const JOBS_STORAGE_KEY = 'FLO_STUDIOS_JOBS_V1'
 export const AUTH_KEY = 'FLO_STUDIOS_ADMIN_AUTH_V1'
-export const DEFAULT_PASSCODE = 'flo2026'
+
+const configuredPasscode =
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_ADMIN_PASSCODE) ||
+  (typeof process !== 'undefined' && process.env && process.env.VITE_ADMIN_PASSCODE) ||
+  ''
 
 export const DEFAULT_SEEDS = []
 
@@ -393,8 +397,11 @@ export function exportToJSON() {
  * Passcode Authentication Helpers (Fallback for preview mode)
  */
 export function checkPasscode(pin) {
-  const clean = (pin || '').trim().toLowerCase()
-  if (clean === DEFAULT_PASSCODE || clean === 'flo') {
+  if (!configuredPasscode || configuredPasscode.trim().length === 0) {
+    return false
+  }
+  const clean = (pin || '').trim()
+  if (clean === configuredPasscode.trim()) {
     const session = getSessionStorage()
     if (session) {
       session.setItem(AUTH_KEY, 'true')
