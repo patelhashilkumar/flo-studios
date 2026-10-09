@@ -94,6 +94,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   background: #ffffff;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
@@ -102,6 +104,23 @@ body {
   color: var(--color-text);
   line-height: 1.55;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* ── Hide browser scrollbars globally ── */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 img {
