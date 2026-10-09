@@ -83,38 +83,48 @@ export default function SEO({
     let scriptEl = document.getElementById(scriptId)
 
     if (breadcrumbs || schema) {
-      if (!scriptEl) {
-        scriptEl = document.createElement('script')
-        scriptEl.id = scriptId
-        scriptEl.type = 'application/ld+json'
-        document.head.appendChild(scriptEl)
-      }
-
-      const schemas = []
-      if (breadcrumbs && Array.isArray(breadcrumbs) && breadcrumbs.length > 0) {
-        schemas.push({
-          '@type': 'BreadcrumbList',
-          'itemListElement': breadcrumbs.map((item, index) => ({
-            '@type': 'ListItem',
-            'position': index + 1,
-            'name': item.name,
-            'item': item.url.startsWith('http') ? item.url : `${CANONICAL_DOMAIN}${item.url}`
-          }))
-        })
-      }
-
-      if (schema) {
-        if (Array.isArray(schema)) {
-          schemas.push(...schema)
-        } else {
-          schemas.push(schema)
+      try {
+        if (!scriptEl) {
+          scriptEl = document.createElement('script')
+          scriptEl.id = scriptId
+          scriptEl.type = 'application/ld+json'
+          document.head.appendChild(scriptEl)
         }
-      }
 
-      scriptEl.textContent = JSON.stringify({
-        '@context': 'https://schema.org',
-        '@graph': schemas
-      })
+        const schemas = []
+        if (breadcrumbs && Array.isArray(breadcrumbs) && breadcrumbs.length > 0) {
+          schemas.push({
+            '@type': 'BreadcrumbList',
+            'itemListElement': breadcrumbs.map((crumb, index) => {
+              const rawUrl = String(crumb?.item || crumb?.url || '')
+              const fullUrl = rawUrl.startsWith('http')
+                ? rawUrl
+                : `${CANONICAL_DOMAIN}${rawUrl ? (rawUrl.startsWith('/') ? '' : '/') + rawUrl : ''}`
+              return {
+                '@type': 'ListItem',
+                'position': index + 1,
+                'name': crumb?.name || '',
+                'item': fullUrl
+              }
+            })
+          })
+        }
+
+        if (schema) {
+          if (Array.isArray(schema)) {
+            schemas.push(...schema)
+          } else {
+            schemas.push(schema)
+          }
+        }
+
+        scriptEl.textContent = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@graph': schemas
+        })
+      } catch (err) {
+        console.warn('Flo Studios SEO Schema Generation Warning:', err)
+      }
     } else if (scriptEl) {
       scriptEl.remove()
     }

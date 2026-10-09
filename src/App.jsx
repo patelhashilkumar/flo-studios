@@ -9,15 +9,32 @@ import ErrorBoundary from './components/ErrorBoundary'
 import HomePage from './pages/HomePage'
 import './pages/Pages.css'
 
-// Lazy-loaded secondary routes for ultra-fast initial page load
-const WorkPage = lazy(() => import('./pages/WorkPage'))
-const AboutPage = lazy(() => import('./pages/AboutPage'))
-const ServicesPage = lazy(() => import('./pages/ServicesPage'))
-const LatestPage = lazy(() => import('./pages/LatestPage'))
-const ContactPage = lazy(() => import('./pages/ContactPage'))
-const CareersPage = lazy(() => import('./pages/CareersPage'))
-const AdminPage = lazy(() => import('./pages/AdminPage'))
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
+// Resilient lazy-loaded secondary routes: auto-reloads if browser attempts to load stale deployment chunk
+function lazyWithRetry(componentImport) {
+  return lazy(async () => {
+    try {
+      return await componentImport()
+    } catch (error) {
+      const alreadyRefreshed = sessionStorage.getItem('flo_chunk_retry')
+      if (!alreadyRefreshed) {
+        sessionStorage.setItem('flo_chunk_retry', 'true')
+        window.location.reload()
+        return { default: () => null }
+      }
+      sessionStorage.removeItem('flo_chunk_retry')
+      throw error
+    }
+  })
+}
+
+const WorkPage = lazyWithRetry(() => import('./pages/WorkPage'))
+const AboutPage = lazyWithRetry(() => import('./pages/AboutPage'))
+const ServicesPage = lazyWithRetry(() => import('./pages/ServicesPage'))
+const LatestPage = lazyWithRetry(() => import('./pages/LatestPage'))
+const ContactPage = lazyWithRetry(() => import('./pages/ContactPage'))
+const CareersPage = lazyWithRetry(() => import('./pages/CareersPage'))
+const AdminPage = lazyWithRetry(() => import('./pages/AdminPage'))
+const NotFoundPage = lazyWithRetry(() => import('./pages/NotFoundPage'))
 
 function RouteFallback() {
   return (

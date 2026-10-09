@@ -34,8 +34,8 @@ export default function ContactPage() {
         description="Get in touch with Flo Studios. Start a project, explore creative partnerships, or inquire about our design and technology engineering capabilities."
         canonicalUrl="https://www.flostudio.co/contact"
         breadcrumbs={[
-          { name: 'Home', item: 'https://www.flostudio.co/' },
-          { name: 'Contact Flo Studios', item: 'https://www.flostudio.co/contact' },
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Contact Flo Studios', item: 'https://www.flostudio.co/contact', url: 'https://www.flostudio.co/contact' },
         ]}
       />
 

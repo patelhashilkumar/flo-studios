@@ -57,8 +57,8 @@ export default function ServicesPage() {
         description="Explore Flo Studios services across Brand Systems, Motion & 3D Campaigns, and Digital Products & Engineering. Building scalable digital experiences for visionary brands."
         canonicalUrl="https://www.flostudio.co/services"
         breadcrumbs={[
-          { name: 'Home', item: 'https://www.flostudio.co/' },
-          { name: 'Services', item: 'https://www.flostudio.co/services' },
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Services', item: 'https://www.flostudio.co/services', url: 'https://www.flostudio.co/services' },
         ]}
       />
 
