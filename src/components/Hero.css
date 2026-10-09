@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   background: #ffffff;
-  padding-top: 68px;
+  padding-top: 56px;
   padding-bottom: clamp(4rem, 8vw, 8rem);
   overflow: hidden;
 }
@@ -14,7 +14,7 @@
 /* ── 1. Giant "FLO STUDIOS" Wordmark ── */
 .hero__logo-container {
   width: 100%;
-  padding: clamp(8px, 1.2vw, 16px) clamp(14px, 2.5vw, 36px) clamp(18px, 3vw, 36px) clamp(14px, 2.5vw, 36px);
+  padding: 8px clamp(12px, 2vw, 24px) clamp(18px, 3vw, 36px) clamp(12px, 2vw, 24px);
   display: flex;
   justify-content: center;
   align-items: center;
