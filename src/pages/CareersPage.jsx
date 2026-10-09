@@ -38,20 +38,21 @@ export default function CareersPage() {
   }, [])
 
   // Filter to active jobs only (fallback to all if none marked active)
-  const activeJobs = allJobs.filter((j) => j.status === 'active')
-  const availableJobs = activeJobs.length > 0 ? activeJobs : allJobs
+  const safeAllJobs = Array.isArray(allJobs) && allJobs.length > 0 ? allJobs : getJobs()
+  const activeJobs = safeAllJobs.filter((j) => j?.status === 'active')
+  const availableJobs = activeJobs.length > 0 ? activeJobs : safeAllJobs
 
   const [activeJobId, setActiveJobId] = useState(() => availableJobs[0]?.id || 'sdr')
 
   // Keep activeJobId synced if jobs are modified/deleted in CMS
   useEffect(() => {
-    if (availableJobs.length > 0 && !availableJobs.some((j) => j.id === activeJobId)) {
-      setActiveJobId(availableJobs[0].id)
+    if (availableJobs.length > 0 && !availableJobs.some((j) => j?.id === activeJobId)) {
+      setActiveJobId(availableJobs[0]?.id || 'sdr')
     }
   }, [availableJobs, activeJobId])
 
   // Find currently active job or fallback to first
-  const activeJob = availableJobs.find((j) => j.id === activeJobId) || availableJobs[0] || {}
+  const activeJob = availableJobs.find((j) => j?.id === activeJobId) || availableJobs[0] || {}
 
   // Load latest cloud job postings if Supabase is connected
   useEffect(() => {
@@ -517,7 +518,7 @@ export default function CareersPage() {
                 <section className="careers-editorial__section careers-editorial__section--boxed">
                   <h2 className="careers-editorial__title">Minimum Qualifications</h2>
                   <ul className="careers-checklist">
-                    {activeJob.minimumQualifications.map((item, idx) => (
+                    {(activeJob.minimumQualifications || []).map((item, idx) => (
                       <li key={idx} className="careers-checklist__item">
                         <span className="careers-checklist__bullet" aria-hidden="true">—</span>
                         <span className="careers-checklist__text">{item}</span>
@@ -532,7 +533,7 @@ export default function CareersPage() {
                 <section className="careers-editorial__section careers-editorial__section--boxed">
                   <h2 className="careers-editorial__title">Preferred Qualifications</h2>
                   <ul className="careers-checklist">
-                    {activeJob.preferredQualifications.map((item, idx) => (
+                    {(activeJob.preferredQualifications || []).map((item, idx) => (
                       <li key={idx} className="careers-checklist__item">
                         <span className="careers-checklist__bullet" aria-hidden="true">—</span>
                         <span className="careers-checklist__text">{item}</span>
@@ -559,7 +560,7 @@ export default function CareersPage() {
             <section className="careers-editorial__section">
               <h2 className="careers-editorial__title">You Might Thrive in this Role</h2>
               <ul className="careers-checklist">
-                {activeJob.thrivePoints.map((item, idx) => (
+                {(activeJob.thrivePoints || []).map((item, idx) => (
                   <li key={idx} className="careers-checklist__item">
                     <span className="careers-checklist__bullet" aria-hidden="true">—</span>
                     <span className="careers-checklist__text">{item}</span>

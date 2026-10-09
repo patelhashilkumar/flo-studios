@@ -68,7 +68,7 @@ export default function LatestPage() {
         <div className="container">
           <h2 className="sr-only">Articles & Studio Dispatches</h2>
           <div className="latest-page__grid">
-            {ARTICLES.map((item, i) => (
+            {(ARTICLES || []).map((item, i) => (
               <div className="latest-page__card" key={i}>
                 <div className="latest-page__card-media">
                   <img src={item.image} alt={`${item.title} — Flo Studios dispatch`} loading="lazy" />

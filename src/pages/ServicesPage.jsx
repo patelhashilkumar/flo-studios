@@ -81,14 +81,14 @@ export default function ServicesPage() {
       <section className="services-page__offerings">
         <div className="container">
           <h2 className="services-page__section-title">Capabilities</h2>
-          {SERVICES.map((service) => (
+          {(SERVICES || []).map((service) => (
             <div className="services-page__offering" key={service.title}>
               <div className="services-page__offering-header">
                 <h3 className="services-page__offering-title">{service.title}</h3>
                 <p className="services-page__offering-desc">{service.desc}</p>
               </div>
               <div className="services-page__offering-cases">
-                {service.cases.map((c) => (
+                {(service.cases || []).map((c) => (
                   <div className="services-page__case" key={c.name}>
                     <div className="services-page__case-img">
                       <img src={c.image} alt={`${c.name} — ${c.desc} by Flo Studios`} loading="lazy" />
@@ -107,7 +107,7 @@ export default function ServicesPage() {
       <section className="services-page__clients">
         <div className="container">
           <h2 className="services-page__clients-label">Selected Clients</h2>
-          <p className="services-page__clients-list">{CLIENTS.join(', ')}</p>
+          <p className="services-page__clients-list">{(CLIENTS || []).join(', ')}</p>
         </div>
       </section>
 

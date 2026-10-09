@@ -30,7 +30,7 @@ export default function ServicesSection() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length)
+      setCurrentSlide((prev) => (prev + 1) % (CAROUSEL_IMAGES?.length || 1))
     }, 3500)
     return () => clearInterval(interval)
   }, [])
@@ -75,7 +75,7 @@ export default function ServicesSection() {
 
           <div className="services-section__visual">
             <div className="services-section__carousel">
-              {CAROUSEL_IMAGES.map((src, i) => (
+              {(CAROUSEL_IMAGES || []).map((src, i) => (
                 <div
                   key={i}
                   className={`services-section__slide ${i === currentSlide ? 'services-section__slide--active' : ''}`}
@@ -85,7 +85,7 @@ export default function ServicesSection() {
               ))}
             </div>
             <div className="services-section__dots">
-              {CAROUSEL_IMAGES.map((_, i) => (
+              {(CAROUSEL_IMAGES || []).map((_, i) => (
                 <button
                   key={i}
                   className={`services-section__dot ${i === currentSlide ? 'services-section__dot--active' : ''}`}

@@ -95,7 +95,7 @@ export default function SEO({
         if (breadcrumbs && Array.isArray(breadcrumbs) && breadcrumbs.length > 0) {
           schemas.push({
             '@type': 'BreadcrumbList',
-            'itemListElement': breadcrumbs.map((crumb, index) => {
+            'itemListElement': (breadcrumbs || []).map((crumb, index) => {
               const rawUrl = String(crumb?.item || crumb?.url || '')
               const fullUrl = rawUrl.startsWith('http')
                 ? rawUrl

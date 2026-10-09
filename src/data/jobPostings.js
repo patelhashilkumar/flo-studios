@@ -152,14 +152,16 @@ export const JOB_POSTINGS = INITIAL_JOB_POSTINGS
  * Retrieve a job posting by unique ID
  */
 export function getJobById(id, list = INITIAL_JOB_POSTINGS) {
-  if (!id) return list[0]
-  return list.find((job) => job.id === id) || list[0]
+  const safeList = Array.isArray(list) && list.length > 0 ? list : INITIAL_JOB_POSTINGS
+  if (!id) return safeList[0] || INITIAL_JOB_POSTINGS[0]
+  return safeList.find((job) => job?.id === id) || safeList[0] || INITIAL_JOB_POSTINGS[0]
 }
 
 /**
  * Retrieve a job posting by URL slug
  */
 export function getJobBySlug(slug, list = INITIAL_JOB_POSTINGS) {
-  if (!slug) return list[0]
-  return list.find((job) => job.slug === slug) || list[0]
+  const safeList = Array.isArray(list) && list.length > 0 ? list : INITIAL_JOB_POSTINGS
+  if (!slug) return safeList[0] || INITIAL_JOB_POSTINGS[0]
+  return safeList.find((job) => job?.slug === slug) || safeList[0] || INITIAL_JOB_POSTINGS[0]
 }

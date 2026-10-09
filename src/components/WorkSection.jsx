@@ -160,7 +160,7 @@ function WorkCard({ item }) {
       <div className="work-card__info">
         <h3 className="work-card__title">{item.title}</h3>
         <div className="work-card__tags">
-          {item.tags.map((t) => (
+          {(item.tags || []).map((t) => (
             <span key={t} className="work-card__tag">{t}</span>
           ))}
         </div>

@@ -88,8 +88,8 @@ export default function AdminPage() {
       }
       if (isAuthenticated()) {
         setUnlocked(true)
-        loadSubmissionsFromCloud().then(setSubmissions)
-        loadJobsFromCloud().then(setJobs)
+        loadSubmissionsFromCloud().then((res) => setSubmissions(Array.isArray(res) ? res : []))
+        loadJobsFromCloud().then((res) => setJobs(Array.isArray(res) ? res : []))
       } else {
         setSubmissions(getSubmissions())
         setJobs(getJobs())
@@ -103,8 +103,8 @@ export default function AdminPage() {
       if (session && session.user) {
         setUnlocked(true)
         setAdminUser(session.user)
-        loadSubmissionsFromCloud().then(setSubmissions)
-        loadJobsFromCloud().then(setJobs)
+        loadSubmissionsFromCloud().then((res) => setSubmissions(Array.isArray(res) ? res : []))
+        loadJobsFromCloud().then((res) => setJobs(Array.isArray(res) ? res : []))
       } else if (event === 'SIGNED_OUT') {
         setUnlocked(false)
         setAdminUser(null)
@@ -256,10 +256,11 @@ export default function AdminPage() {
 
   const handleSaveJob = async (e) => {
     e.preventDefault()
-    if (!jobFormTitle.trim()) return
+    const safeTitle = (jobFormTitle || '').trim()
+    if (!safeTitle) return
 
     // Parse responsibilities
-    const rawRespLines = jobFormResponsibilities.split('\n').filter((l) => l.trim().length > 0)
+    const rawRespLines = (jobFormResponsibilities || '').split('\n').filter((l) => l.trim().length > 0)
     const responsibilities = rawRespLines.map((line, idx) => {
       const colonIdx = line.indexOf(':')
       if (colonIdx > 0) {
@@ -276,21 +277,21 @@ export default function AdminPage() {
       }
     })
 
-    const minimumQualifications = jobFormMinQuals.split('\n').map((l) => l.trim()).filter(Boolean)
-    const preferredQualifications = jobFormPrefQuals.split('\n').map((l) => l.trim()).filter(Boolean)
-    const aboutJob = jobFormAboutJob.split('\n\n').map((p) => p.trim()).filter(Boolean)
-    const badges = jobFormBadges.split(',').map((b) => b.trim()).filter(Boolean)
+    const minimumQualifications = (jobFormMinQuals || '').split('\n').map((l) => l.trim()).filter(Boolean)
+    const preferredQualifications = (jobFormPrefQuals || '').split('\n').map((l) => l.trim()).filter(Boolean)
+    const aboutJob = (jobFormAboutJob || '').split('\n\n').map((p) => p.trim()).filter(Boolean)
+    const badges = (jobFormBadges || '').split(',').map((b) => b.trim()).filter(Boolean)
 
     const jobPayload = {
       id: editingJobId || `job_${Date.now()}`,
-      title: jobFormTitle.trim(),
-      tabLabel: jobFormTitle.trim(),
-      division: jobFormDivision,
-      status: jobFormStatus,
-      badges: badges.length > 0 ? badges : [jobFormDivision, 'Remote'],
-      aboutJob: aboutJob.length > 0 ? aboutJob : [jobFormTitle.trim()],
+      title: safeTitle,
+      tabLabel: safeTitle,
+      division: jobFormDivision || 'Studio',
+      status: jobFormStatus || 'active',
+      badges: badges.length > 0 ? badges : [jobFormDivision || 'Studio', 'Remote'],
+      aboutJob: aboutJob.length > 0 ? aboutJob : [safeTitle],
       responsibilities,
-      compensationLead: jobFormCompLead.trim(),
+      compensationLead: (jobFormCompLead || '').trim(),
       minimumQualifications,
       preferredQualifications
     }
@@ -347,12 +348,14 @@ export default function AdminPage() {
   })
 
   // KPI Calculations
-  const totalCount = submissions.length
-  const messageCount = submissions.filter((s) => s.type === 'message').length
-  const jobCount = submissions.filter((s) => s.type === 'job').length
-  const newCount = submissions.filter((s) => s.status === 'new').length
-  const starredCount = submissions.filter((s) => s.starred).length
-  const activeJobsCount = jobs.filter((j) => j.status === 'active').length
+  const safeSubmissions = Array.isArray(submissions) ? submissions : []
+  const safeJobs = Array.isArray(jobs) ? jobs : []
+  const totalCount = safeSubmissions.length
+  const messageCount = safeSubmissions.filter((s) => s?.type === 'message').length
+  const jobCount = safeSubmissions.filter((s) => s?.type === 'job').length
+  const newCount = safeSubmissions.filter((s) => s?.status === 'new').length
+  const starredCount = safeSubmissions.filter((s) => s?.starred).length
+  const activeJobsCount = safeJobs.filter((j) => j?.status === 'active').length
 
   /* ═══════════════════════════════════════════════════
      VIEW 1: AUTHENTICATION LOCK SCREEN
@@ -692,9 +695,9 @@ export default function AdminPage() {
             </div>
 
             <div className="admin-jobs-grid">
-              {jobs.map((job) => {
-                const jobCandidateCount = submissions.filter(
-                  (s) => s.type === 'job' && (s.jobId === job.id || s.role === job.title)
+              {safeJobs.map((job) => {
+                const jobCandidateCount = safeSubmissions.filter(
+                  (s) => s?.type === 'job' && (s?.jobId === job?.id || s?.role === job?.title)
                 ).length
                 return (
                   <div key={job.id} className="admin-job-card">

@@ -118,7 +118,9 @@ export async function loadSubmissionsFromCloud() {
       getInquiries(),
       getJobApplications()
     ])
-    const combined = [...inquiries, ...applications].sort((a, b) => {
+    const safeInquiries = Array.isArray(inquiries) ? inquiries : []
+    const safeApplications = Array.isArray(applications) ? applications : []
+    const combined = [...safeInquiries, ...safeApplications].sort((a, b) => {
       return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
     })
     const storage = getStorage()
@@ -445,6 +447,10 @@ export function getJobs() {
       return INITIAL_JOB_POSTINGS
     }
     const parsed = JSON.parse(raw)
+    if (!Array.isArray(parsed)) {
+      storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
+      return INITIAL_JOB_POSTINGS
+    }
     // Filter out legacy placeholder roles
     const cleaned = parsed.filter(
       (job) => job && job.id !== 'eng' && job.slug !== 'full-stack-product-engineer'

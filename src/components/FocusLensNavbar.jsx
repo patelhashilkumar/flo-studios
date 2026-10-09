@@ -147,6 +147,7 @@ export default function FocusLensNavbar() {
     let bestDist = Infinity
 
     itemRefs.current.forEach((el, id) => {
+      if (!el || typeof el.getBoundingClientRect !== 'function') return
       const rect = el.getBoundingClientRect()
       const centerX = rect.left + rect.width / 2
       const centerY = rect.top + rect.height / 2
@@ -168,13 +169,13 @@ export default function FocusLensNavbar() {
 
   // Update target coordinates relative to container
   useEffect(() => {
-    if (!hotId || !containerRef.current) {
+    if (!hotId || !containerRef.current || typeof containerRef.current.getBoundingClientRect !== 'function') {
       setLensTarget(null)
       return
     }
 
     const targetEl = itemRefs.current.get(hotId)
-    if (!targetEl) {
+    if (!targetEl || typeof targetEl.getBoundingClientRect !== 'function') {
       setLensTarget(null)
       return
     }

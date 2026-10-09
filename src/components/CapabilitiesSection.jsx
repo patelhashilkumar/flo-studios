@@ -135,9 +135,9 @@ export default function CapabilitiesSection() {
                 >
                   <div className="capabilities-item__content">
                     <p className="capabilities-item__text">{item.desc}</p>
-                    {item.tags && (
+                    {Array.isArray(item.tags) && item.tags.length > 0 && (
                       <div className="capabilities-item__tags">
-                        {item.tags.map((tag) => (
+                        {(item.tags || []).map((tag) => (
                           <span key={tag} className="capabilities-item__tag">{tag}</span>
                         ))}
                       </div>
