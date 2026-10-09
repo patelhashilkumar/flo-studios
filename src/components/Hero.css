@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   background: #ffffff;
-  padding-top: 56px;
+  padding-top: 48px;
   padding-bottom: clamp(4rem, 8vw, 8rem);
   overflow: hidden;
 }
@@ -14,11 +14,15 @@
 /* ── 1. Giant "FLO STUDIOS" Wordmark ── */
 .hero__logo-container {
   width: 100%;
-  padding: 8px clamp(12px, 2vw, 24px) clamp(18px, 3vw, 36px) clamp(12px, 2vw, 24px);
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: clamp(16px, 2.2vw, 32px);
+  padding-right: clamp(16px, 2.2vw, 32px);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .hero__wordmark {
@@ -42,8 +46,13 @@
 /* ── 2. Rounded Video Container ── */
 .hero__video-wrapper {
   width: 100%;
-  padding: 0 20px;
+  margin-top: 0;
+  padding-left: clamp(16px, 2.2vw, 32px);
+  padding-right: clamp(16px, 2.2vw, 32px);
+  padding-top: 0;
+  padding-bottom: 0;
   margin-bottom: clamp(3rem, 6vw, 6rem);
+  box-sizing: border-box;
 }
 
 .hero__video-card {
