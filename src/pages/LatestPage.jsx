@@ -45,8 +45,8 @@ export default function LatestPage() {
         description="Perspectives, design research, and studio dispatches from Flo Studios on creative technology, digital products, and motion systems."
         canonicalUrl="https://www.flostudio.co/latest"
         breadcrumbs={[
-          { name: 'Home', item: 'https://www.flostudio.co/' },
-          { name: 'Latest Dispatches', item: 'https://www.flostudio.co/latest' },
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Latest Dispatches', item: 'https://www.flostudio.co/latest', url: 'https://www.flostudio.co/latest' },
         ]}
       />
 

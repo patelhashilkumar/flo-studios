@@ -384,8 +384,8 @@ export default function CareersPage() {
         description={`Explore career opportunities at Flo Studios. Currently hiring: ${activeJob.title || 'Creative and engineering roles'}. Join a studio pairing taste with engineering.`}
         canonicalUrl="https://www.flostudio.co/careers"
         breadcrumbs={[
-          { name: 'Home', item: 'https://www.flostudio.co/' },
-          { name: 'Careers', item: 'https://www.flostudio.co/careers' },
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Careers', item: 'https://www.flostudio.co/careers', url: 'https://www.flostudio.co/careers' },
         ]}
       />
 

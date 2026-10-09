@@ -95,8 +95,8 @@ export default function WorkPage() {
         description="Browse portfolio work and case studies by Flo Studios across 3D motion design, brand identities, and high-performance digital products."
         canonicalUrl="https://www.flostudio.co/work"
         breadcrumbs={[
-          { name: 'Home', item: 'https://www.flostudio.co/' },
-          { name: 'Work & Case Studies', item: 'https://www.flostudio.co/work' },
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Work & Case Studies', item: 'https://www.flostudio.co/work', url: 'https://www.flostudio.co/work' },
         ]}
       />
 

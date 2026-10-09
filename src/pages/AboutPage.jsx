@@ -43,8 +43,8 @@ export default function AboutPage() {
         description="Learn about Flo Studios, a creative and technology studio pairing creative direction with technical rigor to build enduring brands, digital products, and motion systems."
         canonicalUrl="https://www.flostudio.co/about"
         breadcrumbs={[
-          { name: 'Home', item: 'https://www.flostudio.co/' },
-          { name: 'About Flo Studios', item: 'https://www.flostudio.co/about' },
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'About Flo Studios', item: 'https://www.flostudio.co/about', url: 'https://www.flostudio.co/about' },
         ]}
       />
 
