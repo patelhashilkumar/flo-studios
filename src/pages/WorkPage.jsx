@@ -139,7 +139,7 @@ export default function WorkPage() {
               <h2 className="work-page__featured-title">{proj.title}</h2>
               <p className="work-page__featured-desc">{proj.desc}</p>
               <div className="work-page__featured-tags">
-                {proj.tags.map((t) => <span key={t}>{t}</span>)}
+                {(proj.tags || []).map((t) => <span key={t}>{t}</span>)}
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function WorkPage() {
               </div>
               <h3 className="work-page__project-title">{proj.title}</h3>
               <div className="work-page__project-tags">
-                {proj.tags.map((t) => <span key={t}>{t}</span>)}
+                {(proj.tags || []).map((t) => <span key={t}>{t}</span>)}
               </div>
             </div>
           ))}

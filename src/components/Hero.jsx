@@ -45,7 +45,7 @@ export default function Hero() {
   const cardVideoRef = useRef(null)
   const wordsRef = useRef([])
 
-  const currentReel = HERO_REELS[activeReelIdx]
+  const currentReel = HERO_REELS[activeReelIdx] || HERO_REELS[0] || {}
 
   // Adaptive network-aware preloading
   useEffect(() => {
@@ -130,7 +130,7 @@ export default function Hero() {
         <div className="hero__video-card">
           {/* Smooth Cross-Fade Poster Placeholder */}
           <img
-            src={currentReel.posterSrc}
+            src={currentReel?.posterSrc || ''}
             alt=""
             className={`hero__video-poster ${isVideoPlaying ? 'hero__video-poster--hidden' : ''}`}
             fetchPriority={activeReelIdx === 0 ? 'high' : 'auto'}
@@ -141,7 +141,7 @@ export default function Hero() {
           {/* Looping HTML5 Background Video for Active Reel */}
           <video
             ref={cardVideoRef}
-            key={currentReel.id}
+            key={currentReel?.id || 'default'}
             className="hero__video-media"
             autoPlay
             loop
@@ -156,13 +156,13 @@ export default function Hero() {
               }
             }}
           >
-            {currentReel.webmSrc && <source src={currentReel.webmSrc} type="video/webm" />}
-            {currentReel.mp4Src && <source src={currentReel.mp4Src} type="video/mp4" />}
+            {currentReel?.webmSrc && <source src={currentReel.webmSrc} type="video/webm" />}
+            {currentReel?.mp4Src && <source src={currentReel.mp4Src} type="video/mp4" />}
           </video>
 
           {/* Bottom Left Glassmorphic Project Switcher */}
           <div className="hero__reel-switcher" role="tablist" aria-label="Motion Graphics Reels">
-            {HERO_REELS.map((reel, idx) => (
+            {(HERO_REELS || []).map((reel, idx) => (
               <button
                 key={reel.id}
                 role="tab"
@@ -208,7 +208,7 @@ export default function Hero() {
       {/* ── 3. Intro Statement & CTA ── */}
       <div className="hero__statement-container">
         <h2 className="hero__statement">
-          {STATEMENT_WORDS.map((word, i) => (
+          {(STATEMENT_WORDS || []).map((word, i) => (
             <span key={i} className="hero__word-wrap">
               <span
                 className="hero__word"

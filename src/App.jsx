@@ -15,13 +15,20 @@ function lazyWithRetry(componentImport) {
     try {
       return await componentImport()
     } catch (error) {
-      const alreadyRefreshed = sessionStorage.getItem('flo_chunk_retry')
-      if (!alreadyRefreshed) {
-        sessionStorage.setItem('flo_chunk_retry', 'true')
-        window.location.reload()
-        return { default: () => null }
+      try {
+        const canUseStorage = typeof window !== 'undefined' && typeof window.sessionStorage !== 'undefined'
+        const alreadyRefreshed = canUseStorage ? window.sessionStorage.getItem('flo_chunk_retry') : null
+        if (!alreadyRefreshed) {
+          if (canUseStorage) window.sessionStorage.setItem('flo_chunk_retry', 'true')
+          if (typeof window !== 'undefined') {
+            window.location.reload()
+            return { default: () => null }
+          }
+        }
+        if (canUseStorage) window.sessionStorage.removeItem('flo_chunk_retry')
+      } catch {
+        // Fallback gracefully if storage access is denied
       }
-      sessionStorage.removeItem('flo_chunk_retry')
       throw error
     }
   })

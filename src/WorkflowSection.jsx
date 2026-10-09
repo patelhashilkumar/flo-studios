@@ -301,19 +301,26 @@ function AeroConceptJet({ meshRef, bankRef }) {
 
 function PlaneContactShadow({ shadowRef }) {
   const shadowTex = useMemo(() => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 128;
-    canvas.height = 128;
-    const ctx = canvas.getContext('2d');
-    const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 60);
-    grad.addColorStop(0, 'rgba(15, 23, 42, 0.32)');
-    grad.addColorStop(0.35, 'rgba(15, 23, 42, 0.14)');
-    grad.addColorStop(0.7, 'rgba(15, 23, 42, 0.04)');
-    grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 128, 128);
-    return new THREE.CanvasTexture(canvas);
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return null;
+      const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 60);
+      grad.addColorStop(0, 'rgba(15, 23, 42, 0.32)');
+      grad.addColorStop(0.35, 'rgba(15, 23, 42, 0.14)');
+      grad.addColorStop(0.7, 'rgba(15, 23, 42, 0.04)');
+      grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(canvas);
+    } catch {
+      return null;
+    }
   }, []);
+
+  if (!shadowTex) return null;
 
   return (
     <mesh ref={shadowRef} rotation={[-Math.PI / 2, 0, 0]}>
@@ -641,8 +648,11 @@ export default function WorkflowSection() {
     const scrollTrigger = ScrollTrigger.getAll().find(st => st.trigger === section);
     if (scrollTrigger) {
       const targetFractions = [0.10, 0.36, 0.63, 0.88];
-      const target = scrollTrigger.start + targetFractions[index] * (scrollTrigger.end - scrollTrigger.start);
-      window.scrollTo({ top: target, behavior: 'smooth' });
+      const fraction = targetFractions[index] ?? 0;
+      const target = scrollTrigger.start + fraction * (scrollTrigger.end - scrollTrigger.start);
+      if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      }
     }
   };
 
@@ -661,7 +671,7 @@ export default function WorkflowSection() {
 
         {/* Clean Timeline Navigation (Right Sidebar) */}
         <div className="workflow-steps-indicator" role="navigation" aria-label="Workflow Phases">
-          {WORKFLOW_STEPS.map((step, i) => (
+          {(WORKFLOW_STEPS || []).map((step, i) => (
             <button 
               key={i} 
               type="button"

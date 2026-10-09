@@ -474,12 +474,12 @@ export async function fetchJobPostings() {
     .select('*')
     .order('display_order', { ascending: true })
 
-  if (error || !data || data.length === 0) {
+  if (error || !Array.isArray(data) || data.length === 0) {
     console.warn('Falling back to local job postings data:', error?.message)
     return INITIAL_JOB_POSTINGS
   }
 
-  return data.map(mapJobFromDB)
+  return (data || []).map(mapJobFromDB)
 }
 
 /**
