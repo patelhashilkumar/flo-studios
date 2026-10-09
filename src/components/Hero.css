@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   background: #ffffff;
-  padding-top: 48px;
+  padding-top: 52px;
   padding-bottom: clamp(4rem, 8vw, 8rem);
   overflow: hidden;
 }
@@ -29,9 +29,9 @@
   font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(2.4rem, 9.6vw, 12rem);
+  font-size: clamp(2.6rem, 10.4vw, 13.5rem);
   line-height: 0.88;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   color: #000000;
   -webkit-text-stroke: clamp(0.3px, 0.04vw, 0.8px) #000000;
   paint-order: stroke fill;
