@@ -65,9 +65,9 @@
   max-height: calc(100vh - 180px);
   min-height: 380px;
   background: #000000;
-  border-radius: 0;
+  border-radius: clamp(24px, 2.5vw, 36px);
   overflow: hidden;
-  box-shadow: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 /* Video Media (HTML5 Player) */
@@ -292,7 +292,7 @@
   }
 
   .hero__video-card {
-    border-radius: 0;
+    border-radius: 18px;
     min-height: 240px;
   }
 
