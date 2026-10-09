@@ -14,36 +14,44 @@
 /* ── 1. Giant "FLO STUDIOS" Wordmark ── */
 .hero__logo-container {
   width: 100%;
-  padding-top: clamp(8px, 1vw, 16px);
-  padding-bottom: clamp(10px, 1.4vw, 18px);
-  padding-left: 0;
-  padding-right: 0;
-  display: block;
-  overflow: hidden;
+  padding-top: clamp(14px, 1.6vw, 22px);
+  padding-bottom: clamp(14px, 1.6vw, 22px);
+  padding-left: clamp(16px, 2.2vw, 32px);
+  padding-right: clamp(16px, 2.2vw, 32px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
   box-sizing: border-box;
 }
 
-.hero__wordmark-heading {
+.hero__wordmark {
+  font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.2rem, 8.8vw, 11rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: #000000;
+  -webkit-text-stroke: clamp(0.3px, 0.04vw, 0.8px) #000000;
+  paint-order: stroke fill;
   width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
   margin: 0;
   padding: 0;
-  line-height: 0;
   display: block;
+  transform: scaleY(1.36);
+  transform-origin: center center;
 }
 
-.hero__wordmark-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  color: #000000;
-}
-
-/* ── 2. Rounded Video Container ── */
+/* ── 2. Edge-to-Edge Video Container ── */
 .hero__video-wrapper {
   width: 100%;
   margin-top: 0;
-  padding-left: clamp(14px, 1.8vw, 24px);
-  padding-right: clamp(14px, 1.8vw, 24px);
+  padding-left: 0;
+  padding-right: 0;
   padding-top: 0;
   padding-bottom: 0;
   margin-bottom: clamp(3rem, 6vw, 6rem);
@@ -57,9 +65,9 @@
   max-height: calc(100vh - 180px);
   min-height: 380px;
   background: #000000;
-  border-radius: clamp(16px, 2.2vw, 28px);
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
 /* Video Media (HTML5 Player) */
@@ -267,20 +275,24 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .hero__logo-container {
-    padding-top: 6px;
-    padding-bottom: 10px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero__wordmark {
+    font-size: clamp(1.65rem, 8.8vw, 4rem);
+    letter-spacing: -0.02em;
   }
 
   .hero__video-wrapper {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0;
     margin-bottom: 2.5rem;
   }
 
   .hero__video-card {
-    border-radius: 14px;
+    border-radius: 0;
     min-height: 240px;
   }
 
