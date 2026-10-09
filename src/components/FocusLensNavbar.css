@@ -1,180 +1,211 @@
 /* ═══════════════════════════════════════════════════
-   FLO STUDIOS ARCHITECTURAL TOP BAR NAVBAR
-   Exact Instrument-style layout: Left Pills, Center Announcement, Right Pills
-   with Selective Depth-of-Field Focus Animations
+   AUTHENTIC INSTRUMENT.COM GLOBAL HEADER & NAVBAR
+   3-Column Architecture: Primary Abacus, Center Marquee, Secondary Abacus
    ═══════════════════════════════════════════════════ */
 
-/* Pinned Full-Width Top Bar */
-.studio-nav-header {
+.global-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 52px;
-  background: rgba(255, 255, 255, 0.94);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  backdrop-filter: blur(20px) saturate(160%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  z-index: 1000;
-  box-sizing: border-box;
+  z-index: 1003;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   user-select: none;
+  box-sizing: border-box;
 }
 
-.studio-nav-bar {
+.global-nav {
+  padding: 12px clamp(16px, 2.5vw, 36px);
   width: 100%;
-  height: 100%;
-  max-width: 1920px;
+  box-sizing: border-box;
   margin: 0 auto;
+}
+
+/* ── 3-Column Large Navigation Bar ── */
+.global-nav-large {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(14px, 2.4vw, 36px);
-  box-sizing: border-box;
+  width: 100%;
   position: relative;
+  gap: 16px;
 }
 
-/* ── 1. Left & Right Pill Groups ── */
-.studio-nav-group {
+/* Left & Right Abacus Groups */
+.global-nav-large__primary {
+  flex: 0 0 auto;
+}
+
+.global-nav-large__primary__nav {
   display: flex;
   align-items: center;
   gap: 8px;
-  z-index: 2;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.studio-nav-group--left {
-  justify-content: flex-start;
+.global-nav-large__secondary {
+  flex: 0 0 auto;
 }
 
-.studio-nav-group--right {
-  justify-content: flex-end;
-}
-
-.studio-nav-item-wrap {
-  display: inline-flex;
+.global-nav-large__secondary__nav {
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item-inner {
+  display: inline-flex;
   will-change: transform, filter, opacity;
 }
 
-/* Rounded Pill Button */
-.studio-nav-pill {
+/* ── Pill Button (Exact Instrument .button-small .button-abacus) ── */
+.button-small.button-abacus {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6.5px 16px;
+  padding: 5px 14px;
   border-radius: 9999px;
-  background-color: #ebebeb;
-  color: #111111;
+  background-color: #ededed;
+  color: #000000;
   text-decoration: none;
   outline: none;
+  overflow: hidden;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.22s ease, color 0.22s ease;
 }
 
-.studio-nav-pill:focus-visible {
+.button-small.button-abacus:focus-visible {
   outline: 2px solid #000000;
   outline-offset: 2px;
 }
 
-.studio-nav-pill-label {
-  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: inherit;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-/* Active & Focused States */
-.studio-nav-pill--active {
-  background-color: #0e0e12;
-  color: #ffffff;
-}
-
-.studio-nav-pill--hot {
-  background-color: #0e0e12;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-}
-
-/* ── 2. Center Editorial Announcement Ticker ── */
-.studio-nav-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  max-width: 48%;
-  text-align: center;
-  will-change: transform, filter, opacity;
-}
-
-.studio-nav-ticker {
+.button-abacus .shape {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.button-abacus .label {
   font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.035em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #111111;
-  text-decoration: none;
+  color: #000000;
+  line-height: 1.1;
   white-space: nowrap;
-  outline: none;
-  transition: color 0.2s ease;
+  transition: color 0.22s ease;
 }
 
-.studio-nav-ticker:focus-visible {
-  outline: 2px solid #000000;
-  outline-offset: 3px;
-  border-radius: 4px;
+/* Sliding Focus Bead (Instrument Abacus Glider) */
+.abacus .bead {
+  position: absolute;
+  inset: 0;
+  background-color: #000000;
+  border-radius: 9999px;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.studio-nav-ticker-headline {
+/* When Hovered: text turns crisp white over the black sliding bead */
+.button-abacus--hover .label {
+  color: #ffffff;
+}
+
+/* When Active route: styled cleanly as active */
+.button-abacus--active {
+  background-color: #000000;
+}
+
+.button-abacus--active .label {
+  color: #ffffff;
+}
+
+/* ── Center Editorial Marquee Announcement ── */
+.global-header .marquee {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 0 12px;
+  will-change: transform, filter, opacity;
+}
+
+.global-header .marquee p {
+  margin: 0;
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #000000;
+  line-height: 1.2;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: 100%;
 }
 
-.studio-nav-ticker-cta {
-  font-weight: 600;
+.global-header .marquee .link {
+  color: #000000;
   text-decoration: underline;
   text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 5px;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.global-header .marquee .link .icon {
   display: inline-flex;
   align-items: center;
   transition: transform 0.2s ease;
 }
 
-.studio-nav-ticker--hot .studio-nav-ticker-cta {
+.global-header .marquee:hover .link .icon {
   transform: translateX(3px);
 }
 
-/* ── 3. Mobile Header Bar & Responsive Fallback ── */
-.studio-nav-mobile-bar {
+/* ── Mobile Navigation (< 980px) ── */
+.global-nav-mobile {
   display: none;
   width: 100%;
   align-items: center;
   justify-content: space-between;
 }
 
-.studio-nav-mobile-brand {
+.global-nav-mobile-logo {
   display: flex;
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: #0e0e12;
+  color: #000000;
 }
 
-.studio-nav-mobile-brand-text {
+.global-nav-mobile-logo-text {
   font-family: var(--font-panchang), 'Panchang', -apple-system, sans-serif;
   font-size: 12px;
   font-weight: 800;
@@ -182,102 +213,86 @@
   text-transform: uppercase;
 }
 
-.studio-nav-mobile-toggle {
-  background: #ebebeb;
+.menu-button-toggle {
+  background: #ededed;
   border: none;
   padding: 6px 14px;
   border-radius: 9999px;
   font-family: var(--font-primary), -apple-system, sans-serif;
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #0e0e12;
+  color: #000000;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.studio-nav-mobile-toggle--open {
-  background: #0e0e12;
-  color: #ffffff;
+.menu-button-toggle:active {
+  transform: scale(0.96);
 }
 
-/* ── 4. Mobile Drawer ── */
-.studio-nav-mobile-drawer {
+.global-nav-mobile-drawer {
   position: absolute;
-  top: 52px;
+  top: 100%;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.98);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 16px 20px 24px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 16px 20px 24px;
   box-sizing: border-box;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
 }
 
-.studio-nav-mobile-pills {
+.global-nav-mobile-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
-.studio-nav-mobile-pill {
+.global-nav-mobile-pills .button-small {
   flex: 1 1 calc(33.333% - 8px);
   min-width: 80px;
   text-align: center;
-  padding: 9px 12px;
-  border-radius: 9999px;
-  background-color: #ebebeb;
-  color: #111111;
-  text-decoration: none;
-  font-family: var(--font-primary), -apple-system, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  padding: 8px 12px;
 }
 
-.studio-nav-mobile-pill--active {
-  background-color: #0e0e12;
-  color: #ffffff;
-}
-
-.studio-nav-mobile-ticker-wrap {
+.global-nav-mobile-marquee {
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  padding-top: 14px;
-}
-
-.studio-nav-mobile-ticker {
+  padding-top: 12px;
   font-family: var(--font-primary), -apple-system, sans-serif;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #444444;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 }
 
-/* ── 5. Responsive Breakpoints ── */
-@media (max-width: 1180px) {
-  .studio-nav-ticker-headline {
-    max-width: 280px;
+.global-nav-mobile-marquee .link {
+  color: #000000;
+  text-decoration: underline;
+  margin-left: 4px;
+  font-weight: 600;
+}
+
+/* ── Responsive Queries ── */
+@media (max-width: 1160px) {
+  .global-header .marquee .marquee-text {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: bottom;
   }
 }
 
 @media (max-width: 980px) {
-  .studio-nav-group,
-  .studio-nav-center {
+  .global-nav-large {
     display: none !important;
   }
 
-  .studio-nav-mobile-bar {
+  .global-nav-mobile {
     display: flex;
   }
 }

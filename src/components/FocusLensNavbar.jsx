@@ -4,34 +4,34 @@ import { motion, AnimatePresence } from 'framer-motion'
 import FloLogo from './FloLogo'
 import './FocusLensNavbar.css'
 
-const LEFT_ITEMS = [
-  { id: 'work', label: 'WORK', to: '/work' },
-  { id: 'services', label: 'SERVICES', to: '/services' },
-  { id: 'about', label: 'ABOUT', to: '/about' },
+const LEFT_NAV = [
+  { id: 'work', label: 'Work', to: '/work' },
+  { id: 'services', label: 'Services', to: '/services' },
+  { id: 'about', label: 'About', to: '/about' },
 ]
 
-const RIGHT_ITEMS = [
-  { id: 'careers', label: 'CAREERS', to: '/careers' },
-  { id: 'latest', label: 'LATEST', to: '/latest' },
-  { id: 'contact', label: 'CONTACT', to: '/contact' },
+const RIGHT_NAV = [
+  { id: 'careers', label: 'Careers', to: '/careers' },
+  { id: 'latest', label: 'Latest', to: '/latest' },
+  { id: 'contact', label: 'Contact', to: '/contact' },
 ]
 
 const ANNOUNCEMENT = {
   id: 'announcement',
-  headline: 'CAMPAIGN US WINNERS: DESIGN STUDIO AGENCY OF THE YEAR 2026!',
-  cta: 'SEE MORE →',
+  text: 'Campaign US Winners: Design Studio Agency of the Year 2026!',
+  cta: 'See More',
   to: '/latest',
 }
 
-const FOCUS_SPRING = {
+const SPRING = {
   type: 'spring',
-  stiffness: 440,
-  damping: 34,
+  stiffness: 420,
+  damping: 32,
   mass: 0.6,
 }
 
 export default function FocusLensNavbar() {
-  const [hotId, setHotId] = useState(null)
+  const [hoveredId, setHoveredId] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
@@ -40,142 +40,170 @@ export default function FocusLensNavbar() {
     setMobileOpen(false)
   }, [location.pathname])
 
-  const renderPill = (item) => {
-    const isHot = hotId === item.id
-    const isAnyHot = hotId !== null
+  const renderNavItem = (item, groupKey) => {
+    const isHovered = hoveredId === item.id
+    const isAnyHovered = hoveredId !== null
     const isActive = location.pathname === item.to
 
-    // Selective Focus Depth-of-Field animation physics
-    const pillMotion = isHot
-      ? { opacity: 1, filter: 'blur(0px)', scale: 1.03 }
-      : isAnyHot
-      ? { opacity: 0.35, filter: 'blur(1.6px)', scale: 0.98 }
-      : isActive
-      ? { opacity: 1, filter: 'blur(0px)', scale: 1 }
+    // Depth-of-field focus animation physics
+    const motionStyle = isHovered
+      ? { opacity: 1, filter: 'blur(0px)', scale: 1.02 }
+      : isAnyHovered
+      ? { opacity: 0.38, filter: 'blur(1.4px)', scale: 0.98 }
       : { opacity: 1, filter: 'blur(0px)', scale: 1 }
 
     return (
-      <motion.div
-        key={item.id}
-        className="studio-nav-item-wrap"
-        animate={pillMotion}
-        transition={FOCUS_SPRING}
-        onMouseEnter={() => setHotId(item.id)}
-        onMouseLeave={() => setHotId(null)}
-      >
-        <Link
-          to={item.to}
-          className={`studio-nav-pill ${isActive ? 'studio-nav-pill--active' : ''} ${isHot ? 'studio-nav-pill--hot' : ''}`}
-          onFocus={() => setHotId(item.id)}
-          onBlur={() => setHotId(null)}
-          aria-current={isActive ? 'page' : undefined}
+      <li key={item.id} className="nav-item">
+        <motion.div
+          animate={motionStyle}
+          transition={SPRING}
+          className="nav-item-inner"
         >
-          <span className="studio-nav-pill-label">{item.label}</span>
-        </Link>
-      </motion.div>
+          <Link
+            to={item.to}
+            className={`button-small button-abacus ${isActive ? 'button-abacus--active' : ''} ${isHovered ? 'button-abacus--hover' : ''}`}
+            onMouseEnter={() => setHoveredId(item.id)}
+            onMouseLeave={() => setHoveredId(null)}
+            onFocus={() => setHoveredId(item.id)}
+            onBlur={() => setHoveredId(null)}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {/* Sliding Focus Bead Indicator */}
+            {isHovered && (
+              <motion.div
+                layoutId={`bead-${groupKey}`}
+                className="bead"
+                transition={SPRING}
+              />
+            )}
+            <span className="shape">
+              <span className="label">{item.label}</span>
+            </span>
+          </Link>
+        </motion.div>
+      </li>
     )
   }
 
-  const isCenterHot = hotId === ANNOUNCEMENT.id
-  const isAnyItemHot = hotId !== null && !isCenterHot
+  const isMarqueeHovered = hoveredId === ANNOUNCEMENT.id
+  const isOtherHovered = hoveredId !== null && !isMarqueeHovered
 
-  const centerMotion = isCenterHot
+  const marqueeMotion = isMarqueeHovered
     ? { opacity: 1, filter: 'blur(0px)', scale: 1.01 }
-    : isAnyItemHot
-    ? { opacity: 0.38, filter: 'blur(1.2px)', scale: 0.99 }
-    : { opacity: 0.88, filter: 'blur(0px)', scale: 1 }
+    : isOtherHovered
+    ? { opacity: 0.4, filter: 'blur(1.2px)', scale: 0.99 }
+    : { opacity: 1, filter: 'blur(0px)', scale: 1 }
 
   return (
-    <header className="studio-nav-header" id="site-header">
-      <div className="studio-nav-bar">
-        {/* ── Left Navigation Pills (WORK, SERVICES, ABOUT) ── */}
-        <nav className="studio-nav-group studio-nav-group--left" aria-label="Main Navigation Left">
-          {LEFT_ITEMS.map((item) => renderPill(item))}
+    <>
+      <header className="global-header">
+        <nav className="global-nav">
+          <div className="global-nav-large">
+            {/* ── 1. Left Primary Navigation Group (Work, Services, About) ── */}
+            <div className="global-nav-large__primary abacus">
+              <ul className="global-nav-large__primary__nav">
+                {LEFT_NAV.map((item) => renderNavItem(item, 'primary'))}
+              </ul>
+            </div>
+
+            {/* ── 2. Center Editorial Marquee Announcement ── */}
+            <motion.div
+              className="marquee"
+              animate={marqueeMotion}
+              transition={SPRING}
+              onMouseEnter={() => setHoveredId(ANNOUNCEMENT.id)}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              <p>
+                <span className="marquee-text">{ANNOUNCEMENT.text} </span>
+                <Link
+                  to={ANNOUNCEMENT.to}
+                  className="link"
+                  onFocus={() => setHoveredId(ANNOUNCEMENT.id)}
+                  onBlur={() => setHoveredId(null)}
+                >
+                  <span>{ANNOUNCEMENT.cta}</span>
+                  <span className="icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.33333 8H12.6667" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </Link>
+              </p>
+            </motion.div>
+
+            {/* ── 3. Right Secondary Navigation Group (Careers, Latest, Contact) ── */}
+            <div className="global-nav-large__secondary abacus">
+              <ul className="global-nav-large__secondary__nav">
+                {RIGHT_NAV.map((item) => renderNavItem(item, 'secondary'))}
+              </ul>
+            </div>
+          </div>
+
+          {/* ── 4. Mobile Header Bar (< 980px) ── */}
+          <div className="global-nav-mobile">
+            <Link to="/" className="global-nav-mobile-logo" aria-label="Flo Studios Home">
+              <FloLogo height="16px" color="#000000" />
+              <span className="global-nav-mobile-logo-text">FLO STUDIOS</span>
+            </Link>
+
+            <button
+              type="button"
+              className="menu-button-toggle"
+              onClick={() => setMobileOpen((prev) => !prev)}
+              aria-label={mobileOpen ? 'Close Navigation' : 'Open Navigation'}
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? 'CLOSE ✕' : 'MENU'}
+            </button>
+          </div>
         </nav>
 
-        {/* ── Center Editorial Announcement ── */}
-        <motion.div
-          className="studio-nav-center"
-          animate={centerMotion}
-          transition={FOCUS_SPRING}
-          onMouseEnter={() => setHotId(ANNOUNCEMENT.id)}
-          onMouseLeave={() => setHotId(null)}
-        >
-          <Link
-            to={ANNOUNCEMENT.to}
-            className={`studio-nav-ticker ${isCenterHot ? 'studio-nav-ticker--hot' : ''}`}
-            onFocus={() => setHotId(ANNOUNCEMENT.id)}
-            onBlur={() => setHotId(null)}
-            title="Read announcement dispatch"
-          >
-            <span className="studio-nav-ticker-headline">{ANNOUNCEMENT.headline}</span>
-            <span className="studio-nav-ticker-cta">{ANNOUNCEMENT.cta}</span>
-          </Link>
-        </motion.div>
+        {/* ── 5. Mobile Drawer ── */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              className="global-nav-mobile-drawer"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="global-nav-mobile-pills">
+                {[...LEFT_NAV, ...RIGHT_NAV].map((item) => {
+                  const isActive = location.pathname === item.to
+                  return (
+                    <Link
+                      key={item.id}
+                      to={item.to}
+                      className={`button-small button-abacus ${isActive ? 'button-abacus--active' : ''}`}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <span className="shape">
+                        <span className="label">{item.label}</span>
+                      </span>
+                    </Link>
+                  )
+                })}
+              </div>
 
-        {/* ── Right Navigation Pills (CAREERS, LATEST, CONTACT) ── */}
-        <nav className="studio-nav-group studio-nav-group--right" aria-label="Main Navigation Right">
-          {RIGHT_ITEMS.map((item) => renderPill(item))}
-        </nav>
-
-        {/* ── Mobile Header Bar (Compact fallback for small screens) ── */}
-        <div className="studio-nav-mobile-bar">
-          <Link to="/" className="studio-nav-mobile-brand" aria-label="Flo Studios Home">
-            <FloLogo height="16px" color="#0e0e12" />
-            <span className="studio-nav-mobile-brand-text">FLO STUDIOS</span>
-          </Link>
-
-          <button
-            type="button"
-            className={`studio-nav-mobile-toggle ${mobileOpen ? 'studio-nav-mobile-toggle--open' : ''}`}
-            onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? 'CLOSE ✕' : 'MENU'}
-          </button>
-        </div>
-      </div>
-
-      {/* ── Mobile Flyout Drawer with Focus Animation ── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className="studio-nav-mobile-drawer"
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="studio-nav-mobile-pills">
-              {[...LEFT_ITEMS, ...RIGHT_ITEMS].map((item) => {
-                const isActive = location.pathname === item.to
-                return (
+              <div className="global-nav-mobile-marquee">
+                <p>
+                  <span>{ANNOUNCEMENT.text} </span>
                   <Link
-                    key={item.id}
-                    to={item.to}
-                    className={`studio-nav-mobile-pill ${isActive ? 'studio-nav-mobile-pill--active' : ''}`}
+                    to={ANNOUNCEMENT.to}
+                    className="link"
                     onClick={() => setMobileOpen(false)}
                   >
-                    {item.label}
+                    <span>{ANNOUNCEMENT.cta} →</span>
                   </Link>
-                )
-              })}
-            </div>
-
-            <div className="studio-nav-mobile-ticker-wrap">
-              <Link
-                to={ANNOUNCEMENT.to}
-                className="studio-nav-mobile-ticker"
-                onClick={() => setMobileOpen(false)}
-              >
-                <span>{ANNOUNCEMENT.headline}</span>
-                <span className="studio-nav-ticker-cta">{ANNOUNCEMENT.cta}</span>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   )
 }
