@@ -13,12 +13,6 @@ const pageV = {
   exit: { opacity: 0, transition: { duration: 0.3 } },
 }
 
-const CLIENTS = [
-  'Nike', 'Google', 'Oura', 'ServiceNow', 'EA', 'Netflix', 'Spotify', 'Pinterest',
-  'Microsoft', 'Patagonia', 'Uber', 'Marriott', 'Instagram', 'Sephora', 'Sonos',
-  'PayPal', "Levi's", 'NBA', 'Nordstrom', 'Stripe', 'Salesforce', 'Samsung'
-]
-
 export default function ServicesPage() {
   const [searchParams] = useSearchParams()
   const rawDivision = searchParams.get('division')
@@ -74,14 +68,6 @@ export default function ServicesPage() {
 
       {/* Interactive Two-Division Services Engine */}
       <ServicesSection defaultDivision={initialDivision} id="services-divisions" />
-
-      {/* Clients */}
-      <section className="services-page__clients">
-        <div className="container">
-          <h2 className="services-page__clients-label">Selected Clients</h2>
-          <p className="services-page__clients-list">{(CLIENTS || []).join(', ')}</p>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="services-page__cta-section">
