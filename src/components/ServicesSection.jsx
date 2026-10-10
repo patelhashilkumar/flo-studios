@@ -70,37 +70,39 @@ export default function ServicesSection({
         </header>
 
         {/* Interactive Segmented Switcher */}
-        <div
-          className="services-switcher"
-          role="tablist"
-          aria-label="Flo Studios Divisions"
-        >
-          {tabPills.map((pill, idx) => {
-            const isActive = activeTab === pill.id
-            return (
-              <button
-                key={pill.id}
-                type="button"
-                role="tab"
-                id={`${id}-tab-${pill.id}`}
-                aria-selected={isActive}
-                aria-controls={`${id}-panel-${pill.id}`}
-                tabIndex={isActive ? 0 : -1}
-                className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
-                onClick={() => setActiveTab(pill.id)}
-                onKeyDown={(e) => handleTabKeyDown(e, idx)}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId={`division-active-pill-${id}`}
-                    className="services-switcher__indicator"
-                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                  />
-                )}
-                <span className="services-switcher__label">{pill.label}</span>
-              </button>
-            )
-          })}
+        <div className="services-switcher-wrap">
+          <div
+            className="services-switcher"
+            role="tablist"
+            aria-label="Flo Studios Divisions"
+          >
+            {tabPills.map((pill, idx) => {
+              const isActive = activeTab === pill.id
+              return (
+                <button
+                  key={pill.id}
+                  type="button"
+                  role="tab"
+                  id={`${id}-tab-${pill.id}`}
+                  aria-selected={isActive}
+                  aria-controls={`${id}-panel-${pill.id}`}
+                  tabIndex={isActive ? 0 : -1}
+                  className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
+                  onClick={() => setActiveTab(pill.id)}
+                  onKeyDown={(e) => handleTabKeyDown(e, idx)}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId={`division-active-pill-${id}`}
+                      className="services-switcher__indicator"
+                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                    />
+                  )}
+                  <span className="services-switcher__label">{pill.label}</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         {/* Active Division Content */}

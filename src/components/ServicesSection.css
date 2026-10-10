@@ -22,7 +22,8 @@
 /* ── Section Header ── */
 .services-section__header {
   max-width: 980px;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
 }
 
 .services-section__eyebrow {
@@ -53,17 +54,24 @@
   line-height: 1.65;
   color: var(--color-text-secondary);
   max-width: 780px;
-  margin: 0;
+  margin: 0 auto;
 }
 
 /* ── Interactive Segmented Switcher ── */
+.services-switcher-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
 .services-switcher {
   display: inline-flex;
   background: #f4f4f6;
   padding: 6px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 0;
   position: relative;
   gap: 6px;
   max-width: 100%;
