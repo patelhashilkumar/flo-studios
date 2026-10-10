@@ -420,95 +420,16 @@
   margin-right: 0;
 }
 
-/* ═══ SERVICES PAGE ═══ */
-.services-page__hero {
-  padding-top: 0;
-  padding-bottom: var(--space-section);
-}
-
-.services-page__title {
-  font-family: var(--font-display);
-  font-size: var(--fs-display);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  max-width: 900px;
-  margin-bottom: 1.5rem;
-}
-
-.services-page__hero-word,
 .careers-page__hero-word {
   display: inline-block;
   margin-right: 0.28em;
   will-change: transform, opacity;
 }
-.services-page__hero-word:last-child,
 .careers-page__hero-word:last-child {
   margin-right: 0;
 }
 
-.services-page__offerings {
-  padding-bottom: var(--space-section);
-}
-
-.services-page__section-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 500;
-  margin-bottom: 3rem;
-}
-
-.services-page__offering {
-  margin-bottom: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.services-page__offering-header {
-  margin-bottom: 2rem;
-}
-
-.services-page__offering-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-}
-
-.services-page__offering-desc {
-  font-size: var(--fs-body-lg);
-  color: var(--color-text-secondary);
-  max-width: 500px;
-}
-
-.services-page__offering-cases {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
-.services-page__case-img {
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-bg-card);
-  margin-bottom: 1rem;
-}
-
-.services-page__case-img img { width: 100%; height: 100%; object-fit: cover; }
-
-.services-page__case-name {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.services-page__case-desc {
-  font-size: var(--fs-small);
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-}
-
+/* ═══ SERVICES PAGE ═══ */
 .services-page__cta-section {
   padding: var(--space-section) 0;
   border-top: 1px solid var(--color-border);
