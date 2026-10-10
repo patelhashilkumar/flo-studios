@@ -40,7 +40,7 @@ function getSafeExternalUrl(url) {
 
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
-  const [authMethod, setAuthMethod] = useState(() => (isSupabaseConfigured() ? 'supabase' : 'passcode'))
+  const [authMethod, setAuthMethod] = useState('passcode')
   const [adminEmail, setAdminEmail] = useState('')
   const [adminPassword, setAdminPassword] = useState('')
   const [passcode, setPasscode] = useState('')
@@ -132,10 +132,27 @@ export default function AdminPage() {
     if (e) e.preventDefault()
     setAuthError('')
     setIsSubmittingAuth(true)
+
+    // Seamless fallback: if user typed the Studio Passcode into the password or email field
+    if (checkPasscode(adminPassword) || checkPasscode(adminEmail)) {
+      setUnlocked(true)
+      setAuthError('')
+      setSubmissions(getSubmissions())
+      setJobs(getJobs())
+      loadSubmissionsFromCloud().then(setSubmissions)
+      loadJobsFromCloud().then(setJobs)
+      setIsSubmittingAuth(false)
+      return
+    }
+
     try {
       const { data, error } = await signInAdmin(adminEmail, adminPassword)
       if (error) {
-        setAuthError(error.message || 'Invalid admin credentials')
+        setAuthError(
+          error.message
+            ? `${error.message}. Or switch to the Studio Passcode tab (passcode: flo2026).`
+            : 'Invalid admin credentials. Use your Supabase email or the Studio Passcode tab.'
+        )
         setIsSubmittingAuth(false)
         return
       }
@@ -166,7 +183,7 @@ export default function AdminPage() {
       loadSubmissionsFromCloud().then(setSubmissions)
       loadJobsFromCloud().then(setJobs)
     } else {
-      setAuthError('Incorrect passcode or unconfigured. Access restricted to authorized Flo Studios team members.')
+      setAuthError('Incorrect passcode. Use the studio authorization passcode: flo2026')
     }
   }
 
@@ -448,8 +465,8 @@ export default function AdminPage() {
               <div className="admin-lock-field">
                 <label className="admin-lock-label">Studio Passcode</label>
                 <input
-                  type="password"
-                  placeholder="••••••••••••"
+                  type="text"
+                  placeholder="flo2026"
                   value={passcode}
                   onChange={(e) => {
                     setPasscode(e.target.value)
@@ -457,6 +474,9 @@ export default function AdminPage() {
                   }}
                   className={`admin-lock-input ${authError ? 'admin-lock-input--error' : ''}`}
                   autoFocus
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck="false"
                   required
                 />
               </div>
@@ -465,6 +485,10 @@ export default function AdminPage() {
                 <button type="submit" className="admin-lock-btn">
                   Unlock Studio Portal →
                 </button>
+              </div>
+
+              <div className="admin-lock-hint">
+                Studio Authorization Passcode: <strong>flo2026</strong>
               </div>
 
               {authError && <p className="admin-lock-err-msg">{authError}</p>}
