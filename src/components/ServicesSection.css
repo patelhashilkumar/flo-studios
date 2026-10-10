@@ -548,8 +548,24 @@
     padding-left: 1rem;
   }
 
+  .division-summary {
+    padding: 2rem 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .division-summary__action {
+    width: 100%;
+  }
+
   .division-cta-button {
     width: 100%;
+    box-sizing: border-box;
+    white-space: normal;
+    text-align: center;
     justify-content: center;
+    padding: 14px 18px;
+    font-size: 0.8125rem;
+    line-height: 1.4;
   }
 }

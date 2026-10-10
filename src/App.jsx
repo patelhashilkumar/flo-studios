@@ -83,7 +83,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </AnimatePresence>
-        <Footer />
+        {location.pathname !== '/admin' && <Footer />}
       </SmoothScroll>
     </ErrorBoundary>
   )

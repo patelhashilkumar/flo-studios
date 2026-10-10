@@ -15,7 +15,7 @@ const ARTICLES = [
   { type: 'press', title: 'Jack De Caluwé Appointed Chief Creative Officer', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/' },
   { type: 'article', time: '5 min', title: 'Building Without a Brief: Making with Pure Curiosity', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/4951b14198/thumb_instrument_beyondthebrief.jpg/m/' },
   { type: 'article', time: '3 min', title: 'Taste as a Competitive Advantage in Digital Design', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/dbe87799c5/taste_thumb_instrument.png/m/' },
-  { type: 'press', title: 'Digiday: Rapid Brand Launch Case Study', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/1ac7131b48/digiday_media_buying_briefing_instrument_crocs.jpg/m/' },
+  { type: 'press', title: 'Digiday: Rapid Brand Launch Case Study', image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/' },
   { type: 'article', time: '5 min', title: 'Mentorship and the Next Generation of Designers', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/182321901f/emerging-talent-square-thumbnail-teaser.png/m/' },
   { type: 'press', title: 'The Drum: Creative Direction Beyond Automation', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/d5014e4bd6/instrument_thedrum_cannes_hottake_2026.png/m/' },
   { type: 'article', time: '5 min', title: 'The Next Frontier for AI is Human Trust', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/11e2a67206/ai_adoption_challenge_teaser.png/m/' },
