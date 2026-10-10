@@ -4,6 +4,8 @@ import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import SEO from '../components/SEO'
 import ServicesSection from '../components/ServicesSection'
+import { getDivisionById } from '../data/divisionsData'
+import './Pages.css'
 
 const pageV = {
   initial: { opacity: 0 },
@@ -19,7 +21,8 @@ const CLIENTS = [
 
 export default function ServicesPage() {
   const [searchParams] = useSearchParams()
-  const initialDivision = searchParams.get('division') || 'development'
+  const rawDivision = searchParams.get('division')
+  const initialDivision = rawDivision ? getDivisionById(rawDivision)?.id : 'development'
   const heroRef = useRef(null)
 
   useEffect(() => {
@@ -55,11 +58,13 @@ export default function ServicesPage() {
             aria-label="Flo Studios Services & Divisions: Two specialized divisions. One unified standard of craft."
           >
             <span className="sr-only">Flo Studios Services & Divisions — </span>
-            {'Two specialized divisions. One unified standard of craft.'.split(' ').map((w, i) => (
-              <span key={i} className="services-page__hero-word">
-                {w}
-              </span>
-            ))}
+            <span aria-hidden="true">
+              {'Two specialized divisions. One unified standard of craft.'.split(' ').map((w, i) => (
+                <span key={i} className="services-page__hero-word">
+                  {w}
+                </span>
+              ))}
+            </span>
           </h1>
           <Link to="/contact" className="page-cta-btn">
             Start a project →
