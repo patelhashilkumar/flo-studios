@@ -200,6 +200,45 @@
   transform: translateX(3px);
 }
 
+/* ── Center Flo Studio Logo Slot (Non-Home Pages) ── */
+.global-nav-center-slot {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 12px;
+  will-change: transform, filter, opacity;
+}
+
+.global-nav-center-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #000000;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.global-nav-center-logo:hover {
+  opacity: 0.72;
+}
+
+.global-nav-center-logo-text {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  line-height: 1;
+}
+
 /* ── Mobile Navigation (< 980px) ── */
 .global-nav-mobile {
   display: none;
