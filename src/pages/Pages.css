@@ -509,24 +509,6 @@
   line-height: 1.5;
 }
 
-.services-page__clients {
-  padding: var(--space-section) 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.services-page__clients-label {
-  font-size: var(--fs-small);
-  color: var(--color-text-tertiary);
-  margin-bottom: 1rem;
-}
-
-.services-page__clients-list {
-  font-family: var(--font-display);
-  font-size: var(--fs-body-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.8;
-}
-
 .services-page__cta-section {
   padding: var(--space-section) 0;
   border-top: 1px solid var(--color-border);
