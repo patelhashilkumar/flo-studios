@@ -137,12 +137,18 @@ a {
   color: inherit;
 }
 
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: inherit;
+}
+
 button {
   cursor: pointer;
   border: none;
   background: none;
-  font-family: inherit;
-  color: inherit;
 }
 
 ul, ol {
@@ -174,18 +180,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 0;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 99px;
-}
 
 ::selection {
   background: #000000;
