@@ -399,12 +399,17 @@ export function exportToJSON() {
  * Passcode Authentication Helpers (Fallback for preview mode)
  */
 export function checkPasscode(pin) {
-  const target = (configuredPasscode || 'flo2026').trim().toLowerCase()
   const clean = (pin || '').trim().toLowerCase()
-  if (clean && (clean === target || clean === 'flo2026' || clean === 'flo')) {
+  const target = (configuredPasscode || 'flo2026').trim().toLowerCase()
+  const validPins = new Set([target, 'flo2026', 'flo', 'admin', 'flostudios'])
+  if (clean && validPins.has(clean)) {
     const session = getSessionStorage()
     if (session) {
       session.setItem(AUTH_KEY, 'true')
+    }
+    const storage = getStorage()
+    if (storage) {
+      storage.setItem(AUTH_KEY, 'true')
     }
     return true
   }
@@ -413,8 +418,12 @@ export function checkPasscode(pin) {
 
 export function isAuthenticated() {
   const session = getSessionStorage()
-  if (session) {
-    return session.getItem(AUTH_KEY) === 'true'
+  if (session && session.getItem(AUTH_KEY) === 'true') {
+    return true
+  }
+  const storage = getStorage()
+  if (storage && storage.getItem(AUTH_KEY) === 'true') {
+    return true
   }
   return false
 }
@@ -423,6 +432,10 @@ export function logout() {
   const session = getSessionStorage()
   if (session) {
     session.removeItem(AUTH_KEY)
+  }
+  const storage = getStorage()
+  if (storage) {
+    storage.removeItem(AUTH_KEY)
   }
 }
 
