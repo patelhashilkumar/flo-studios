@@ -1,101 +1,229 @@
-import { useRef, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion, AnimatePresence } from 'framer-motion'
+import { DIVISIONS, getDivisionById } from '../data/divisionsData'
 import './ServicesSection.css'
 
-gsap.registerPlugin(ScrollTrigger)
+export default function ServicesSection({
+  defaultDivision = 'development',
+  showHeaderLabel = true,
+  showHeaderBadge,
+  id = 'services'
+}) {
+  const [userSelectedTab, setUserSelectedTab] = useState(null)
+  const [prevDefaultDivision, setPrevDefaultDivision] = useState(defaultDivision)
 
-const CAROUSEL_IMAGES = [
-  'https://a-us.storyblok.com/f/1004432/2048x2048/485d9ae1f2/oura_homepage_slideshow.jpg/m/',
-  'https://a-us.storyblok.com/f/1004432/1816x1816/43774ed1be/notion_carousel.png/m/',
-  'https://a-us.storyblok.com/f/1004432/2048x2048/6f9fad5a18/eames_carousel.png/m/',
-  'https://a-us.storyblok.com/f/1004432/1816x1816/21bf56a7b4/dropnow.png/m/',
-  'https://a-us.storyblok.com/f/1004432/1816x1816/813fe651cc/nike_carousel.png/m/',
-  'https://a-us.storyblok.com/f/1004432/2048x2048/dc9c30f062/pagerduty_homepage_slideshow.png/m/',
-]
+  if (defaultDivision !== prevDefaultDivision) {
+    setPrevDefaultDivision(defaultDivision)
+    setUserSelectedTab(null)
+  }
 
-const CAROUSEL_CAPTIONS = [
-  'Flo Studios digital experience for ŌURA',
-  'Flo Studios product storytelling for Notion',
-  'Flo Studios brand design and spatial showcase',
-  'Flo Studios digital commerce platform and creative direction',
-  'Flo Studios dynamic visual system for Nike',
-  'Flo Studios enterprise digital product design for PagerDuty',
-]
+  const activeTab = userSelectedTab ?? defaultDivision ?? 'development'
+  const setActiveTab = setUserSelectedTab
 
-export default function ServicesSection() {
-  const sectionRef = useRef(null)
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const showLabel = showHeaderBadge !== undefined ? showHeaderBadge : showHeaderLabel
+  const activeDivision = getDivisionById(activeTab) || DIVISIONS[0]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % (CAROUSEL_IMAGES?.length || 1))
-    }, 3500)
-    return () => clearInterval(interval)
-  }, [])
+  const tabPills = [
+    {
+      id: 'development',
+      label: '01 / DEVELOPMENT DIVISION (PRIMARY)'
+    },
+    {
+      id: 'creator',
+      label: '02 / CREATOR & CONTENT DIVISION'
+    }
+  ]
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.services-section__text',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' } }
-      )
-      gsap.fromTo(
-        '.services-section__visual',
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', delay: 0.15,
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' } }
-      )
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
+  const handleTabKeyDown = (e, index) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault()
+      const nextIdx = (index + 1) % tabPills.length
+      setActiveTab(tabPills[nextIdx].id)
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      const prevIdx = (index - 1 + tabPills.length) % tabPills.length
+      setActiveTab(tabPills[prevIdx].id)
+    }
+  }
 
   return (
-    <section className="services-section" ref={sectionRef}>
-      <div className="container">
-        <h2 className="services-section__label">Services</h2>
-        <div className="services-section__content">
-          <div className="services-section__text">
-            <h3 className="services-section__heading">
-              We shape brands, digital products, and cinematic motion.
-            </h3>
-            <p className="services-section__desc">
-              From initial direction to final build, executed by one unified team.
-            </p>
-            <Link to="/services" className="services-section__cta" aria-label="Explore Flo Studios services and capabilities">
-              Explore services
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
-          </div>
+    <section className="services-section" id={id} aria-label="Services & Divisions">
+      <div className="container services-section__container">
+        {/* Section Header */}
+        <header className="services-section__header">
+          {showLabel && (
+            <span className="services-section__eyebrow">SERVICES & DIVISIONS</span>
+          )}
+          <h2 className="services-section__heading">
+            TWO SPECIALIZED DIVISIONS. ZERO BROKEN HANDOFFS.
+          </h2>
+          <p className="services-section__subtitle">
+            Flo Studios operates across two dedicated divisions designed to eliminate the fragmentation
+            of multi-vendor execution. Whether engineering high-performance digital products or producing
+            stage-calibrated creator media, one accountable team carries the vision from concept to market.
+          </p>
+        </header>
 
-          <div className="services-section__visual">
-            <div className="services-section__carousel">
-              {(CAROUSEL_IMAGES || []).map((src, i) => (
-                <div
-                  key={i}
-                  className={`services-section__slide ${i === currentSlide ? 'services-section__slide--active' : ''}`}
-                >
-                  <img src={src} alt={CAROUSEL_CAPTIONS[i] || `Flo Studios showcase ${i + 1}`} loading="lazy" />
-                </div>
-              ))}
-            </div>
-            <div className="services-section__dots">
-              {(CAROUSEL_IMAGES || []).map((_, i) => (
-                <button
-                  key={i}
-                  className={`services-section__dot ${i === currentSlide ? 'services-section__dot--active' : ''}`}
-                  onClick={() => setCurrentSlide(i)}
-                  aria-label={`Slide ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+        {/* Interactive Segmented Switcher */}
+        <div
+          className="services-switcher"
+          role="tablist"
+          aria-label="Flo Studios Divisions"
+        >
+          {tabPills.map((pill, idx) => {
+            const isActive = activeTab === pill.id
+            return (
+              <button
+                key={pill.id}
+                type="button"
+                role="tab"
+                id={`tab-${pill.id}`}
+                aria-selected={isActive}
+                aria-controls={`panel-${pill.id}`}
+                tabIndex={isActive ? 0 : -1}
+                className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
+                onClick={() => setActiveTab(pill.id)}
+                onKeyDown={(e) => handleTabKeyDown(e, idx)}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="division-active-pill"
+                    className="services-switcher__indicator"
+                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <span className="services-switcher__label">{pill.label}</span>
+              </button>
+            )
+          })}
         </div>
+
+        {/* Active Division Content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeDivision.id}
+            id={`panel-${activeDivision.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${activeDivision.id}`}
+            className="division-content"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Division Overview Banner */}
+            <div className="division-overview">
+              <div className="division-overview__badges">
+                <span className="division-badge division-badge--primary">
+                  {activeDivision.badge}
+                </span>
+                {activeDivision.subBadge && (
+                  <span className="division-badge division-badge--sub">
+                    {activeDivision.subBadge}
+                  </span>
+                )}
+              </div>
+
+              <blockquote className="division-overview__quote">
+                {activeDivision.coreDifferentiator.quote}
+              </blockquote>
+
+              <div className="division-overview__body">
+                {Array.isArray(activeDivision.coreDifferentiator.body) ? (
+                  activeDivision.coreDifferentiator.body.map((paragraph, pIdx) => (
+                    <p key={pIdx} className="division-overview__paragraph">
+                      {paragraph}
+                    </p>
+                  ))
+                ) : (
+                  <p className="division-overview__paragraph">
+                    {activeDivision.coreDifferentiator.text}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* "What We Do" Comparison Cards */}
+            <div className="division-what-we-do">
+              <div className="division-card division-card--problem">
+                <div className="division-card__tag">THE PROBLEM</div>
+                <h4 className="division-card__title">The Fragmented Multi-Vendor Model</h4>
+                <p className="division-card__text">{activeDivision.whatWeDo.problem}</p>
+              </div>
+
+              <div className="division-card division-card--solution">
+                <div className="division-card__tag">THE INTEGRATED SOLUTION</div>
+                <h4 className="division-card__title">The Flo Studios Integrated Model</h4>
+                <p className="division-card__text">{activeDivision.whatWeDo.solution}</p>
+                {activeDivision.whatWeDo.philosophy && (
+                  <div className="division-card__philosophy">
+                    <span className="division-card__philosophy-label">Core Philosophy</span>
+                    <p className="division-card__philosophy-quote">
+                      “{activeDivision.whatWeDo.philosophy}”
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* The Stage-by-Stage Lifecycle Pipeline */}
+            <div className="division-pipeline">
+              <div className="division-pipeline__header">
+                <div className="division-pipeline__meta">
+                  <span className="division-pipeline__eyebrow">STAGE-BY-STAGE EXECUTION</span>
+                  <h3 className="division-pipeline__title">
+                    {activeDivision.pipelineTitle}
+                  </h3>
+                </div>
+                <div className="division-pipeline__count">
+                  <span className="division-pipeline__count-num">
+                    {activeDivision.stages.length}
+                  </span>
+                  <span className="division-pipeline__count-label">
+                    Stages
+                  </span>
+                </div>
+              </div>
+
+              <div className="division-pipeline__grid">
+                {activeDivision.stages.map((stage, sIdx) => {
+                  const stageNum = stage.number || stage.step || String(sIdx + 1).padStart(2, '0')
+                  const stageDesc = stage.description || stage.desc
+                  return (
+                    <div key={stage.id || sIdx} className="stage-card">
+                      <div className="stage-card__header">
+                        <span className="stage-card__number">{stageNum}</span>
+                        <span className="stage-card__step-pill">STAGE {stageNum}</span>
+                      </div>
+                      <h4 className="stage-card__title">{stage.title}</h4>
+                      <p className="stage-card__desc">{stageDesc}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* The One-Line Summary & Contact CTA */}
+            <div className="division-summary">
+              <div className="division-summary__content">
+                <span className="division-summary__tag">THE ONE-LINE SUMMARY</span>
+                <p className="division-summary__text">
+                  {activeDivision.oneLineSummary}
+                </p>
+              </div>
+              <div className="division-summary__action">
+                <Link
+                  to={`/contact?division=${activeDivision.id}`}
+                  className="division-cta-button"
+                  aria-label={`Start a Project with ${activeDivision.shortName}`}
+                >
+                  <span>Start a Project with {activeDivision.shortName} →</span>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   )
