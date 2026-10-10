@@ -36,14 +36,18 @@ export default function ServicesSection({
   ]
 
   const handleTabKeyDown = (e, index) => {
+    let targetIdx = null
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault()
-      const nextIdx = (index + 1) % tabPills.length
-      setActiveTab(tabPills[nextIdx].id)
+      targetIdx = (index + 1) % tabPills.length
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault()
-      const prevIdx = (index - 1 + tabPills.length) % tabPills.length
-      setActiveTab(tabPills[prevIdx].id)
+      targetIdx = (index - 1 + tabPills.length) % tabPills.length
+    }
+    if (targetIdx !== null) {
+      const nextId = tabPills[targetIdx].id
+      setActiveTab(nextId)
+      document.getElementById(`tab-${nextId}`)?.focus()
     }
   }
 
@@ -88,7 +92,7 @@ export default function ServicesSection({
               >
                 {isActive && (
                   <motion.span
-                    layoutId="division-active-pill"
+                    layoutId={`division-active-pill-${id}`}
                     className="services-switcher__indicator"
                     transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                   />
@@ -148,13 +152,13 @@ export default function ServicesSection({
             <div className="division-what-we-do">
               <div className="division-card division-card--problem">
                 <div className="division-card__tag">THE PROBLEM</div>
-                <h4 className="division-card__title">The Fragmented Multi-Vendor Model</h4>
+                <h3 className="division-card__title">The Fragmented Multi-Vendor Model</h3>
                 <p className="division-card__text">{activeDivision.whatWeDo.problem}</p>
               </div>
 
               <div className="division-card division-card--solution">
                 <div className="division-card__tag">THE INTEGRATED SOLUTION</div>
-                <h4 className="division-card__title">The Flo Studios Integrated Model</h4>
+                <h3 className="division-card__title">The Flo Studios Integrated Model</h3>
                 <p className="division-card__text">{activeDivision.whatWeDo.solution}</p>
                 {activeDivision.whatWeDo.philosophy && (
                   <div className="division-card__philosophy">
