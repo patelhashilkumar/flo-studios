@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { getJobs, saveSubmission, loadJobsFromCloud } from '../services/adminStorage'
 import SEO from '../components/SEO'
@@ -391,13 +390,9 @@ export default function CareersPage() {
       />
 
       <div className="container careers-container">
-        {/* ── Top Bar: Breadcrumb & Role Switcher ── */}
-        <div className="careers-top-bar">
-          <div className="page-breadcrumb">
-            <Link to="/">Home</Link> <span>/</span> <span>Careers</span>
-          </div>
-
-          {availableJobs.length > 1 && (
+        {/* ── Top Bar: Role Switcher (when multiple roles exist) ── */}
+        {availableJobs.length > 1 && (
+          <div className="careers-top-bar">
             <div className="careers-role-nav" role="tablist" aria-label="Open Positions">
               {availableJobs.map((job) => {
                 const isActive = job.id === activeJob.id
@@ -420,8 +415,8 @@ export default function CareersPage() {
                 )
               })}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* ── Header ── */}
         <header className="careers-header">
