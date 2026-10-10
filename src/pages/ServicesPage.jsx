@@ -28,11 +28,6 @@ export default function ServicesPage() {
         ]}
       />
 
-      <div className="container" style={{ paddingTop: 'clamp(5rem, 8vw, 7.5rem)', paddingBottom: '0' }}>
-        <div className="page-breadcrumb">
-          <Link to="/">Home</Link> <span>/</span> <span>Services</span>
-        </div>
-      </div>
 
       {/* Interactive Two-Division Services Engine */}
       <ServicesSection defaultDivision={initialDivision} id="services-divisions" />
