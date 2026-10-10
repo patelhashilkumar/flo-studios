@@ -728,7 +728,7 @@ export default function CareersPage() {
               {/* Row 4: Resume Upload */}
               <div className="careers-form__group">
                 <label htmlFor="careers-resume" className="careers-form__label">
-                  Resume (PDF, DOC, DOCX - Max 5MB) *
+                  Resume / CV *
                 </label>
                 <input
                   type="file"
@@ -739,65 +739,95 @@ export default function CareersPage() {
                   onChange={handleFileChange}
                 />
 
-                <div
-                  className={`careers-file-dropzone ${isDragging ? 'careers-file-dropzone--dragging' : ''} ${
-                    resumeName ? 'careers-file-dropzone--has-file' : ''
-                  }`}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      fileInputRef.current?.click()
-                    }
-                  }}
-                  aria-label="Upload resume file dropzone"
-                >
-                  {resumeName ? (
-                    <div className="careers-file-card">
+                {!resumeName ? (
+                  <div
+                    className={`careers-dropzone ${isDragging ? 'careers-dropzone--dragging' : ''}`}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onClick={() => fileInputRef.current?.click()}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        fileInputRef.current?.click()
+                      }
+                    }}
+                    aria-label="Upload resume file dropzone"
+                  >
+                    <div className="careers-dropzone__icon-badge" aria-hidden="true">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                    </div>
+
+                    <div className="careers-dropzone__content">
+                      <p className="careers-dropzone__primary-text">
+                        {isReadingFile ? (
+                          <span className="careers-dropzone__loading">Reading document…</span>
+                        ) : (
+                          <>
+                            <span className="careers-dropzone__action-link">Click to upload resume</span>
+                            <span className="careers-dropzone__drag-text"> or drag and drop</span>
+                          </>
+                        )}
+                      </p>
+                      <p className="careers-dropzone__hint-text">
+                        PDF, DOC, or DOCX · Max file size 5MB
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="careers-file-card">
+                    <div className="careers-file-card__left">
                       <div className="careers-file-card__icon" aria-hidden="true">
-                        📄
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                          <line x1="16" y1="13" x2="8" y2="13" />
+                          <line x1="16" y1="17" x2="8" y2="17" />
+                          <line x1="10" y1="9" x2="8" y2="9" />
+                        </svg>
                       </div>
-                      <div className="careers-file-card__info">
-                        <span className="careers-file-card__name">{resumeName}</span>
-                        <span className="careers-file-card__meta">
-                          {resumeSize} • {resumeType || 'Document'}
-                        </span>
+                      <div className="careers-file-card__details">
+                        <span className="careers-file-card__name" title={resumeName}>{resumeName}</span>
+                        <div className="careers-file-card__meta-row">
+                          <span className="careers-file-card__size">{resumeSize}</span>
+                          <span className="careers-file-card__dot">•</span>
+                          <span className="careers-file-card__status">Ready to submit</span>
+                        </div>
                       </div>
+                    </div>
+
+                    <div className="careers-file-card__actions">
                       <button
                         type="button"
-                        className="careers-file-card__remove"
+                        className="careers-file-card__replace-btn"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          fileInputRef.current?.click()
+                        }}
+                      >
+                        Replace
+                      </button>
+                      <button
+                        type="button"
+                        className="careers-file-card__remove-btn"
                         onClick={handleClearResume}
                         title="Remove file"
                         aria-label="Remove uploaded resume"
                       >
-                        ✕
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
                       </button>
                     </div>
-                  ) : (
-                    <div className="careers-file-placeholder">
-                      <span className="careers-file-placeholder__icon" aria-hidden="true">
-                        📎
-                      </span>
-                      <span className="careers-file-placeholder__text">
-                        {isReadingFile ? (
-                          'Reading document…'
-                        ) : (
-                          <>
-                            <strong>Click to upload resume</strong> or drag and drop
-                          </>
-                        )}
-                      </span>
-                      <span className="careers-file-placeholder__hint">
-                        PDF, DOC, DOCX (Max 5MB)
-                      </span>
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* Row 5: Background & Notes */}
