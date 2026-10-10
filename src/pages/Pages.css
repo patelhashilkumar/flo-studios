@@ -431,6 +431,10 @@
 }
 
 /* ═══ SERVICES PAGE ═══ */
+.services-page .services-section {
+  padding-top: calc(52px + clamp(2.5rem, 5vw, 4.5rem));
+}
+
 .services-page__cta-section {
   padding: var(--space-section) 0;
   border-top: 1px solid var(--color-border);
