@@ -19,7 +19,7 @@
 
 .work-section__label {
   display: inline-block;
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(0.75rem, 1vw, 0.85rem);
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -38,7 +38,7 @@
 }
 
 .work-section__highlight {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-weight: 800;
   letter-spacing: -0.015em;
   text-transform: uppercase;

@@ -5,7 +5,7 @@
 
 .purpose__label {
   display: inline-block;
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(0.75rem, 1vw, 0.85rem);
   font-weight: 800;
   text-transform: uppercase;
