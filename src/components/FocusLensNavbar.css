@@ -138,16 +138,18 @@
 
 /* When Hovered: text turns crisp white over the black sliding bead */
 .button-abacus--hover .label {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
-/* When Active route: styled cleanly as active */
-.button-abacus--active {
-  background-color: #000000;
+/* When Active route: styled cleanly with dark legible text */
+.button-small.button-abacus.button-abacus--active {
+  background-color: #e2e2e4;
+  color: #000000;
 }
 
-.button-abacus--active .label {
-  color: #ffffff;
+.button-small.button-abacus.button-abacus--active:not(.button-abacus--hover) .label {
+  color: #000000 !important;
+  font-weight: 700;
 }
 
 /* ── Center Editorial Marquee Announcement ── */
