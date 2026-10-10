@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion'
 import { Link, useSearchParams } from 'react-router-dom'
-import { useRef, useEffect } from 'react'
-import gsap from 'gsap'
 import SEO from '../components/SEO'
 import ServicesSection from '../components/ServicesSection'
 import { getDivisionById } from '../data/divisionsData'
@@ -17,18 +15,6 @@ export default function ServicesPage() {
   const [searchParams] = useSearchParams()
   const rawDivision = searchParams.get('division')
   const initialDivision = rawDivision ? getDivisionById(rawDivision)?.id : 'development'
-  const heroRef = useRef(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.services-page__hero-word',
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.05, duration: 0.7, ease: 'power3.out', delay: 0.2 }
-      )
-    }, heroRef)
-    return () => ctx.revert()
-  }, [])
 
   return (
     <motion.main className="services-page" variants={pageV} initial="initial" animate="animate" exit="exit">
@@ -42,29 +28,11 @@ export default function ServicesPage() {
         ]}
       />
 
-      <section className="services-page__hero" ref={heroRef}>
-        <div className="container">
-          <div className="page-breadcrumb">
-            <Link to="/">Home</Link> <span>/</span> <span>Services</span>
-          </div>
-          <h1
-            className="services-page__title"
-            aria-label="Flo Studios Services & Divisions: Two specialized divisions. One unified standard of craft."
-          >
-            <span className="sr-only">Flo Studios Services & Divisions — </span>
-            <span aria-hidden="true">
-              {'Two specialized divisions. One unified standard of craft.'.split(' ').map((w, i) => (
-                <span key={i} className="services-page__hero-word">
-                  {w}
-                </span>
-              ))}
-            </span>
-          </h1>
-          <Link to="/contact" className="page-cta-btn">
-            Start a project →
-          </Link>
+      <div className="container" style={{ paddingTop: 'clamp(5rem, 8vw, 7.5rem)', paddingBottom: '0' }}>
+        <div className="page-breadcrumb">
+          <Link to="/">Home</Link> <span>/</span> <span>Services</span>
         </div>
-      </section>
+      </div>
 
       {/* Interactive Two-Division Services Engine */}
       <ServicesSection defaultDivision={initialDivision} id="services-divisions" />
