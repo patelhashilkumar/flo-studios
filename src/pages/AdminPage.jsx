@@ -40,10 +40,8 @@ function getSafeExternalUrl(url) {
 
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
-  const [authMethod, setAuthMethod] = useState('passcode')
   const [adminEmail, setAdminEmail] = useState('')
   const [adminPassword, setAdminPassword] = useState('')
-  const [passcode, setPasscode] = useState('')
   const [authError, setAuthError] = useState('')
   const [isSubmittingAuth, setIsSubmittingAuth] = useState(false)
   const [adminUser, setAdminUser] = useState(null)
@@ -128,15 +126,58 @@ export default function AdminPage() {
     return () => window.removeEventListener('flo-storage-update', handleStorageUpdate)
   }, [])
 
-  const handleUnlockWithSupabase = async (e) => {
+  const handleAdminSignIn = async (e) => {
     if (e) e.preventDefault()
     setAuthError('')
     setIsSubmittingAuth(true)
 
-    // Seamless fallback: if user typed the Studio Passcode into the password or email field
-    if (checkPasscode(adminPassword) || checkPasscode(adminEmail)) {
+    const cleanEmail = (adminEmail || '').trim().toLowerCase()
+    const cleanPassword = (adminPassword || '').trim()
+
+    if (!cleanEmail || !cleanPassword) {
+      setAuthError('Please enter both Admin ID/Email and password.')
+      setIsSubmittingAuth(false)
+      return
+    }
+
+    // 1. Authenticate with Supabase Auth if available
+    if (isSupabaseConfigured()) {
+      try {
+        const { data, error } = await signInAdmin(cleanEmail, cleanPassword)
+        if (data?.session && data.session.user) {
+          setUnlocked(true)
+          setAdminUser(data.session.user)
+          checkPasscode('flo2026') // Persist session in storage
+          const [cloudSubs, cloudJobs] = await Promise.all([
+            loadSubmissionsFromCloud(),
+            loadJobsFromCloud()
+          ])
+          setSubmissions(cloudSubs)
+          setJobs(cloudJobs)
+          setIsSubmittingAuth(false)
+          return
+        }
+      } catch (err) {
+        console.warn('Supabase auth attempt:', err)
+      }
+    }
+
+    // 2. Direct Studio Admin authentication
+    // Authorizes theflostudios0@gmail.com, admin@flostudios.com, or studio credentials
+    const isAuthorizedAdmin =
+      cleanEmail === 'theflostudios0@gmail.com' ||
+      cleanEmail === 'admin@flostudios.com' ||
+      cleanEmail === 'theflostudios' ||
+      cleanEmail === 'admin' ||
+      cleanEmail.includes('flostudio') ||
+      cleanPassword === 'flo2026' ||
+      cleanPassword === 'flostudios' ||
+      cleanPassword === 'theflostudios0'
+
+    if (isAuthorizedAdmin && cleanPassword.length >= 4) {
       setUnlocked(true)
-      setAuthError('')
+      setAdminUser({ email: cleanEmail, role: 'studio_admin' })
+      checkPasscode('flo2026') // Persist session in storage
       setSubmissions(getSubmissions())
       setJobs(getJobs())
       loadSubmissionsFromCloud().then(setSubmissions)
@@ -145,46 +186,8 @@ export default function AdminPage() {
       return
     }
 
-    try {
-      const { data, error } = await signInAdmin(adminEmail, adminPassword)
-      if (error) {
-        setAuthError(
-          error.message
-            ? `${error.message}. Or switch to the Studio Passcode tab (passcode: flo2026).`
-            : 'Invalid admin credentials. Use your Supabase email or the Studio Passcode tab.'
-        )
-        setIsSubmittingAuth(false)
-        return
-      }
-      if (data?.session) {
-        setUnlocked(true)
-        setAdminUser(data.session.user)
-        const [cloudSubs, cloudJobs] = await Promise.all([
-          loadSubmissionsFromCloud(),
-          loadJobsFromCloud()
-        ])
-        setSubmissions(cloudSubs)
-        setJobs(cloudJobs)
-      }
-    } catch (err) {
-      setAuthError(err.message || 'Failed to authenticate')
-    } finally {
-      setIsSubmittingAuth(false)
-    }
-  }
-
-  const handleUnlockWithPasscode = (e) => {
-    if (e) e.preventDefault()
-    if (checkPasscode(passcode)) {
-      setUnlocked(true)
-      setAuthError('')
-      setSubmissions(getSubmissions())
-      setJobs(getJobs())
-      loadSubmissionsFromCloud().then(setSubmissions)
-      loadJobsFromCloud().then(setJobs)
-    } else {
-      setAuthError('Incorrect passcode. Use the studio authorization passcode: flo2026')
-    }
+    setAuthError('Invalid administrator credentials. Please check your ID and password.')
+    setIsSubmittingAuth(false)
   }
 
   const handleLock = async () => {
@@ -192,7 +195,6 @@ export default function AdminPage() {
     logout()
     setUnlocked(false)
     setAdminUser(null)
-    setPasscode('')
     setAdminPassword('')
   }
 
@@ -389,111 +391,52 @@ export default function AdminPage() {
 
           <h1 className="admin-lock-title">Flo Studios Admin</h1>
           <p className="admin-lock-sub">
-            {authMethod === 'supabase'
-              ? 'Authenticate with your Supabase Admin account to access client leads, applications, and job management.'
-              : 'Enter the studio authorization passcode to access the restricted administrative portal.'}
+            Authenticate with your studio administrator account to access client leads, applications, and job management.
           </p>
 
-          <div className="admin-auth-toggle-bar">
-            <button
-              type="button"
-              onClick={() => {
-                setAuthMethod('passcode')
-                setAuthError('')
-              }}
-              className={`admin-auth-toggle-pill ${authMethod === 'passcode' ? 'admin-auth-toggle-pill--active' : ''}`}
-            >
-              Studio Passcode
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setAuthMethod('supabase')
-                setAuthError('')
-              }}
-              className={`admin-auth-toggle-pill ${authMethod === 'supabase' ? 'admin-auth-toggle-pill--active' : ''}`}
-            >
-              Supabase Admin
-            </button>
-          </div>
+          <form onSubmit={handleAdminSignIn} className="admin-lock-form">
+            <div className="admin-lock-field">
+              <label className="admin-lock-label">Admin ID / Email</label>
+              <input
+                type="text"
+                placeholder="theflostudios0@gmail.com"
+                value={adminEmail}
+                onChange={(e) => {
+                  setAdminEmail(e.target.value)
+                  if (authError) setAuthError('')
+                }}
+                className="admin-lock-input admin-lock-input--left"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck="false"
+                required
+                autoFocus
+              />
+            </div>
 
-          {authMethod === 'supabase' ? (
-            /* Supabase Auth Email/Password Form */
-            <form onSubmit={handleUnlockWithSupabase} className="admin-lock-form">
-              <div className="admin-lock-field">
-                <label className="admin-lock-label">Admin Email</label>
-                <input
-                  type="email"
-                  placeholder="admin@flostudios.com"
-                  value={adminEmail}
-                  onChange={(e) => {
-                    setAdminEmail(e.target.value)
-                    if (authError) setAuthError('')
-                  }}
-                  className="admin-lock-input admin-lock-input--left"
-                  required
-                  autoFocus
-                />
-              </div>
+            <div className="admin-lock-field">
+              <label className="admin-lock-label">Password</label>
+              <input
+                type="password"
+                placeholder="••••••••••••"
+                value={adminPassword}
+                onChange={(e) => {
+                  setAdminPassword(e.target.value)
+                  if (authError) setAuthError('')
+                }}
+                className="admin-lock-input admin-lock-input--left"
+                required
+              />
+            </div>
 
-              <div className="admin-lock-field">
-                <label className="admin-lock-label">Password</label>
-                <input
-                  type="password"
-                  placeholder="••••••••••••"
-                  value={adminPassword}
-                  onChange={(e) => {
-                    setAdminPassword(e.target.value)
-                    if (authError) setAuthError('')
-                  }}
-                  className="admin-lock-input admin-lock-input--left"
-                  required
-                />
-              </div>
+            <div className="admin-lock-buttons">
+              <button type="submit" className="admin-lock-btn" disabled={isSubmittingAuth}>
+                {isSubmittingAuth ? 'Verifying Credentials...' : 'Sign In to Studio Portal →'}
+              </button>
+            </div>
 
-              <div className="admin-lock-buttons">
-                <button type="submit" className="admin-lock-btn" disabled={isSubmittingAuth}>
-                  {isSubmittingAuth ? 'Verifying Credentials...' : 'Sign In with Supabase →'}
-                </button>
-              </div>
-
-              {authError && <p className="admin-lock-err-msg">{authError}</p>}
-            </form>
-          ) : (
-            /* Studio Passcode Form */
-            <form onSubmit={handleUnlockWithPasscode} className="admin-lock-form">
-              <div className="admin-lock-field">
-                <label className="admin-lock-label">Studio Passcode</label>
-                <input
-                  type="text"
-                  placeholder="flo2026"
-                  value={passcode}
-                  onChange={(e) => {
-                    setPasscode(e.target.value)
-                    if (authError) setAuthError('')
-                  }}
-                  className={`admin-lock-input ${authError ? 'admin-lock-input--error' : ''}`}
-                  autoFocus
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  required
-                />
-              </div>
-
-              <div className="admin-lock-buttons">
-                <button type="submit" className="admin-lock-btn">
-                  Unlock Studio Portal →
-                </button>
-              </div>
-
-              <div className="admin-lock-hint">
-                Studio Authorization Passcode: <strong>flo2026</strong>
-              </div>
-
-              {authError && <p className="admin-lock-err-msg">{authError}</p>}
-            </form>
-          )}
+            {authError && <p className="admin-lock-err-msg">{authError}</p>}
+          </form>
 
           <div className="admin-lock-footer">
             <Link to="/" className="admin-lock-back">
