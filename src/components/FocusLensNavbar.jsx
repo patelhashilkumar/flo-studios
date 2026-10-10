@@ -33,12 +33,46 @@ const SPRING = {
 export default function FocusLensNavbar() {
   const [hoveredId, setHoveredId] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   const location = useLocation()
 
   // Close mobile drawer on route change
   useEffect(() => {
     setMobileOpen(false)
   }, [location.pathname])
+
+  // Scroll direction detection to auto-hide and reveal navbar
+  useEffect(() => {
+    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0
+    let ticking = false
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY
+          const delta = currentScrollY - lastScrollY
+
+          if (currentScrollY <= 50) {
+            // Near the top of the page - always visible
+            setIsVisible(true)
+          } else if (delta > 8) {
+            // Scrolling down - hide navbar
+            setIsVisible(false)
+          } else if (delta < -8) {
+            // Scrolling up - reveal navbar
+            setIsVisible(true)
+          }
+
+          lastScrollY = currentScrollY
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const renderNavItem = (item, groupKey) => {
     const isHovered = hoveredId === item.id
@@ -94,9 +128,11 @@ export default function FocusLensNavbar() {
     ? { opacity: 0.4, filter: 'blur(1.2px)', scale: 0.99 }
     : { opacity: 1, filter: 'blur(0px)', scale: 1 }
 
+  const shouldHide = !isVisible && !mobileOpen
+
   return (
     <>
-      <header className="global-header">
+      <header className={`global-header ${shouldHide ? 'global-header--hidden' : ''}`}>
         <nav className="global-nav">
           <div className="global-nav-large">
             {/* ── 1. Left Primary Navigation Group (Work, Services, About) ── */}
