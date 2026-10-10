@@ -263,7 +263,16 @@ export const DIVISIONS = [
 export function getDivisionById(id) {
   if (!id) return DIVISIONS[0]
   const normalized = String(id).toLowerCase().trim()
-  return DIVISIONS.find((division) => division.id.toLowerCase() === normalized) || DIVISIONS[0]
+  return (
+    DIVISIONS.find((division) => {
+      const divId = division.id.toLowerCase()
+      return (
+        divId === normalized ||
+        (divId === 'creator' && (normalized === 'content' || normalized === 'creator-content' || normalized === 'media')) ||
+        (divId === 'development' && (normalized === 'dev' || normalized === 'build' || normalized === 'software'))
+      )
+    }) || DIVISIONS[0]
+  )
 }
 
 /**
