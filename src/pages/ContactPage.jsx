@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import MotionContactForm from '../components/MotionContactForm'
@@ -43,10 +43,6 @@ export default function ContactPage() {
 
       <section className="contact-page__hero">
         <div className="container">
-          <div className="page-breadcrumb">
-            <Link to="/">Home</Link> <span>/</span> <span>Contact</span>
-          </div>
-
           <div className="contact-page__split">
             {/* Left Column: Title & Actions */}
             <div className="contact-page__left">

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import SEO from '../components/SEO'
@@ -52,9 +51,6 @@ export default function LatestPage() {
 
       <section className="latest-page__hero">
         <div className="container">
-          <div className="page-breadcrumb">
-            <Link to="/">Home</Link> <span>/</span> <span>Latest</span>
-          </div>
           <h1 className="latest-page__title" aria-label="Flo Studios Latest Dispatches: Perspectives, research, and studio dispatches.">
             <span className="sr-only">Flo Studios Latest Dispatches — </span>
             {'Perspectives, research, and studio dispatches.'.split(' ').map((w, i) => (
