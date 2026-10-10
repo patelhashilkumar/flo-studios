@@ -1,8 +1,7 @@
 # SDD Progress Ledger
 
-Project: Admin Job Management (CMS) & Dual Careers Listings
+Project: Scroll-Aware Navbar Hide/Show Behavior (Instrument.com Style)
 
 Tasks:
-- Task 1: complete (commits 7d84f2b, job storage engine with dual default openings)
-- Task 2: complete (commits ea05737, job management CMS with add, edit, delete in Admin portal)
-- Task 3: complete (CareersPage reactive sync with dual job listings)
+- Task 1: complete (commits 39496a8, CSS transform transition and hidden modifier class, spec & quality reviews clean)
+- Task 2: pending (RAF-throttled scroll delta hook in FocusLensNavbar.jsx)
