@@ -13,7 +13,7 @@
 
 .news-section__label {
   display: inline-block;
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(0.75rem, 1vw, 0.85rem);
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -23,7 +23,7 @@
 }
 
 .news-section__title {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(1.4rem, 2.5vw, 2.2rem);
   font-weight: 800;
   letter-spacing: -0.015em;

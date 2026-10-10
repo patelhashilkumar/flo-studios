@@ -54,7 +54,7 @@
 }
 
 .site-header__center-logo-text {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 1.45rem;
   letter-spacing: -0.015em;
@@ -163,7 +163,7 @@
 }
 
 .site-mobile-menu__brand-text {
-  font-family: var(--font-panchang), 'Panchang', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 1.25rem;
   letter-spacing: -0.015em;
