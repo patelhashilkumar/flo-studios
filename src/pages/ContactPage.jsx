@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import MotionContactForm from '../components/MotionContactForm'
@@ -12,6 +12,8 @@ const pageV = {
 }
 
 export default function ContactPage() {
+  const [searchParams] = useSearchParams()
+  const divisionParam = searchParams.get('division')
   const [activeSubject, setActiveSubject] = useState('Start a Project')
   const heroRef = useRef(null)
 
@@ -90,7 +92,7 @@ export default function ContactPage() {
 
             {/* Right Column: Motion Submit Form Card */}
             <div className="contact-page__right">
-              <MotionContactForm activeSubject={activeSubject} />
+              <MotionContactForm activeSubject={activeSubject} initialDivision={divisionParam} />
             </div>
           </div>
         </div>

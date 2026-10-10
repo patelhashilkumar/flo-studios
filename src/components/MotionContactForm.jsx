@@ -881,17 +881,24 @@ function MotionSubmitButton({ status, disabled, filled, ready, onReset }) {
   )
 }
 
-const SERVICES = ['Motion Graphics', '3D & CGI', 'Creative Tech', 'Brand Identity']
+const SERVICES = [
+  'Development Division',
+  'Creator / Content',
+  'Motion Graphics',
+  '3D & CGI',
+  'Brand Identity',
+  'Creative Tech'
+]
 
 /* ═══════════════════════════════════════════════════
    MAIN COMPONENT: MOTION CONTACT FORM
    ═══════════════════════════════════════════════════ */
 
-export default function MotionContactForm({ activeSubject }) {
+export default function MotionContactForm({ activeSubject, initialDivision }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [selectedService, setSelectedService] = useState('Motion Graphics')
+  const [selectedService, setSelectedService] = useState('Development Division')
   const [message, setMessage] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState('idle') // 'idle' | 'pending' | 'success'
@@ -944,14 +951,25 @@ export default function MotionContactForm({ activeSubject }) {
     return () => unsubscribe()
   }, [bounds.width])
 
-  // Sync external topic clicks if triggered from left sidebar
+  // Sync external topic clicks or initialDivision URL param
   useEffect(() => {
+    if (initialDivision) {
+      const normalized = String(initialDivision).toLowerCase().trim()
+      if (normalized === 'development' || normalized === 'dev' || normalized === 'build') {
+        setSelectedService('Development Division')
+        return
+      }
+      if (normalized === 'creator' || normalized === 'content' || normalized === 'media') {
+        setSelectedService('Creator / Content')
+        return
+      }
+    }
     if (activeSubject) {
-      if (activeSubject === 'Start a Project') setSelectedService('Motion Graphics')
+      if (activeSubject === 'Start a Project') setSelectedService('Development Division')
       if (activeSubject === 'Press & Media') setSelectedService('Brand Identity')
       if (activeSubject === 'General Note') setSelectedService('Creative Tech')
     }
-  }, [activeSubject])
+  }, [activeSubject, initialDivision])
 
   const filled = Boolean(name.trim() || email.trim() || message.trim())
   const ready = Boolean(name.trim() && email.trim())

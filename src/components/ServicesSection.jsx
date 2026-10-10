@@ -47,7 +47,7 @@ export default function ServicesSection({
     if (targetIdx !== null) {
       const nextId = tabPills[targetIdx].id
       setActiveTab(nextId)
-      document.getElementById(`tab-${nextId}`)?.focus()
+      document.getElementById(`${id}-tab-${nextId}`)?.focus()
     }
   }
 
@@ -82,9 +82,9 @@ export default function ServicesSection({
                 key={pill.id}
                 type="button"
                 role="tab"
-                id={`tab-${pill.id}`}
+                id={`${id}-tab-${pill.id}`}
                 aria-selected={isActive}
-                aria-controls={`panel-${pill.id}`}
+                aria-controls={`${id}-panel-${pill.id}`}
                 tabIndex={isActive ? 0 : -1}
                 className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
                 onClick={() => setActiveTab(pill.id)}
@@ -107,9 +107,9 @@ export default function ServicesSection({
         <AnimatePresence mode="wait">
           <motion.div
             key={activeDivision.id}
-            id={`panel-${activeDivision.id}`}
+            id={`${id}-panel-${activeDivision.id}`}
             role="tabpanel"
-            aria-labelledby={`tab-${activeDivision.id}`}
+            aria-labelledby={`${id}-tab-${activeDivision.id}`}
             className="division-content"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
