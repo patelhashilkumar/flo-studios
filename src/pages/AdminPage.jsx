@@ -126,6 +126,18 @@ export default function AdminPage() {
     return () => window.removeEventListener('flo-storage-update', handleStorageUpdate)
   }, [])
 
+  // Lock background body scroll when modal is open
+  useEffect(() => {
+    if (isJobModalOpen) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [isJobModalOpen])
+
+
   const handleAdminSignIn = async (e) => {
     if (e) e.preventDefault()
     setAuthError('')
@@ -933,8 +945,18 @@ export default function AdminPage() {
 
         {/* ── MODAL: ADD / EDIT JOB OPENING ── */}
         {isJobModalOpen && (
-          <div className="admin-modal-backdrop" onClick={() => setIsJobModalOpen(false)}>
-            <div className="admin-modal-card" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="admin-modal-backdrop"
+            data-lenis-prevent="true"
+            onClick={() => setIsJobModalOpen(false)}
+          >
+            <div
+              className="admin-modal-card"
+              data-lenis-prevent="true"
+              onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+            >
               <div className="admin-modal-header">
                 <h3 className="admin-modal-title">
                   {editingJobId ? 'Edit Job Opening' : 'Add New Job Opening'}
