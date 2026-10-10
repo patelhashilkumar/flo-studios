@@ -949,36 +949,36 @@ export default function AdminPage() {
               </div>
 
               <form onSubmit={handleSaveJob} className="admin-modal-form">
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Job Title *</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">Job Title *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Senior Product Designer"
                     value={jobFormTitle}
                     onChange={(e) => setJobFormTitle(e.target.value)}
-                    className="admin-form-input"
+                    className="admin-modal-input"
                   />
                 </div>
 
-                <div className="admin-form-row">
-                  <div className="admin-form-group">
-                    <label className="admin-form-label">Division</label>
+                <div className="admin-modal-row">
+                  <div className="admin-modal-group">
+                    <label className="admin-modal-label">Division</label>
                     <input
                       type="text"
                       placeholder="e.g. Development Division"
                       value={jobFormDivision}
                       onChange={(e) => setJobFormDivision(e.target.value)}
-                      className="admin-form-input"
+                      className="admin-modal-input"
                     />
                   </div>
 
-                  <div className="admin-form-group">
-                    <label className="admin-form-label">Status</label>
+                  <div className="admin-modal-group">
+                    <label className="admin-modal-label">Status</label>
                     <select
                       value={jobFormStatus}
                       onChange={(e) => setJobFormStatus(e.target.value)}
-                      className="admin-form-select"
+                      className="admin-modal-select"
                     >
                       <option value="active">Active (Published on /careers)</option>
                       <option value="draft">Draft (Hidden)</option>
@@ -987,69 +987,69 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Badges (comma separated)</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">Badges (comma separated)</label>
                   <input
                     type="text"
                     placeholder="Development Division, Full-Cycle, Remote, Contract"
                     value={jobFormBadges}
                     onChange={(e) => setJobFormBadges(e.target.value)}
-                    className="admin-form-input"
+                    className="admin-modal-input"
                   />
                 </div>
 
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Compensation Summary</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">Compensation Summary</label>
                   <input
                     type="text"
                     placeholder="e.g. 100% commission-based contract position / Monthly Retainer"
                     value={jobFormCompLead}
                     onChange={(e) => setJobFormCompLead(e.target.value)}
-                    className="admin-form-input"
+                    className="admin-modal-input"
                   />
                 </div>
 
-                <div className="admin-form-group">
-                  <label className="admin-form-label">About the Job (Paragraphs separated by blank line)</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">About the Job (Paragraphs separated by blank line)</label>
                   <textarea
                     rows={4}
                     placeholder="Describe role mission and focus..."
                     value={jobFormAboutJob}
                     onChange={(e) => setJobFormAboutJob(e.target.value)}
-                    className="admin-form-textarea"
+                    className="admin-modal-textarea"
                   />
                 </div>
 
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Responsibilities (One per line, 'Title: Description')</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">Responsibilities (One per line, 'Title: Description')</label>
                   <textarea
                     rows={5}
                     placeholder="Prospect List Development: Research and build targeted prospect list..."
                     value={jobFormResponsibilities}
                     onChange={(e) => setJobFormResponsibilities(e.target.value)}
-                    className="admin-form-textarea"
+                    className="admin-modal-textarea"
                   />
                 </div>
 
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Minimum Qualifications (One per line)</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">Minimum Qualifications (One per line)</label>
                   <textarea
                     rows={4}
                     placeholder="2-3 years sales experience&#10;Based in North America or Europe"
                     value={jobFormMinQuals}
                     onChange={(e) => setJobFormMinQuals(e.target.value)}
-                    className="admin-form-textarea"
+                    className="admin-modal-textarea"
                   />
                 </div>
 
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Preferred Qualifications (One per line)</label>
+                <div className="admin-modal-group">
+                  <label className="admin-modal-label">Preferred Qualifications (One per line)</label>
                   <textarea
                     rows={3}
                     placeholder="Agency experience&#10;CRM proficiency"
                     value={jobFormPrefQuals}
                     onChange={(e) => setJobFormPrefQuals(e.target.value)}
-                    className="admin-form-textarea"
+                    className="admin-modal-textarea"
                   />
                 </div>
 
