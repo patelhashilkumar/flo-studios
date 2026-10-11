@@ -56,9 +56,6 @@ export default function ServicesSection({
       <div className="container services-section__container">
         {/* Section Header */}
         <header className="services-section__header">
-          {showLabel && (
-            <span className="services-section__eyebrow">SERVICES & DIVISIONS</span>
-          )}
           <h2 className="services-section__heading">
             TWO SPECIALIZED DIVISIONS. ZERO BROKEN HANDOFFS.
           </h2>
@@ -177,7 +174,6 @@ export default function ServicesSection({
             <div className="division-pipeline">
               <div className="division-pipeline__header">
                 <div className="division-pipeline__meta">
-                  <span className="division-pipeline__eyebrow">STAGE-BY-STAGE EXECUTION</span>
                   <h3 className="division-pipeline__title">
                     {activeDivision.pipelineTitle}
                   </h3>

@@ -10,17 +10,6 @@
   margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
 }
 
-.capabilities-label {
-  display: inline-block;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(0.75rem, 1vw, 0.85rem);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  margin-bottom: 1rem;
-}
-
 .capabilities-title {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(1.6rem, 3.2vw, 2.75rem);

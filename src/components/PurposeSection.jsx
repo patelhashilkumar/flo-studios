@@ -37,10 +37,8 @@ export default function PurposeSection() {
   }, [])
 
   return (
-    <section className="purpose" id="about-us" ref={sectionRef}>
+    <section className="purpose" id="about-us" ref={sectionRef} aria-label="About Flo Studios">
       <div className="container">
-        <h2 className="purpose__label">About Flo Studios</h2>
-
         <div className="purpose__giant">
           {BIG_WORDS.map((word, i) => (
             <span key={i} className="purpose__giant-word">{word}</span>

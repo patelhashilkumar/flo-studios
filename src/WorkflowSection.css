@@ -39,24 +39,6 @@
   max-width: 520px;
 }
 
-.workflow-label {
-  display: inline-block;
-  font-family: var(--font-primary);
-  font-size: 11px;
-  font-weight: 700;
-  color: #4b5563;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  padding: 5px 14px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}
-
 .workflow-title {
   font-family: var(--font-primary);
   font-size: clamp(34px, 4.4vw, 58px);

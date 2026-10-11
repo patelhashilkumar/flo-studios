@@ -61,7 +61,6 @@ export default function NewsSection() {
       <div className="container">
         <div className="news-section__header">
           <div>
-            <span className="news-section__label">EDITORIAL &amp; PERSPECTIVES</span>
             <h2 className="news-section__title">Latest Dispatches</h2>
           </div>
           <Link to="/latest" className="news-section__cta" aria-label="View all Flo Studios dispatches and insights">

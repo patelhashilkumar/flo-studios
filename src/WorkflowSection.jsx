@@ -662,7 +662,6 @@ export default function WorkflowSection() {
       <div className="workflow-ui">
         {/* Simple & Clean Header (Inter font, no Panchang) */}
         <div className="workflow-header">
-          <span className="workflow-label">CREATIVE PROCESS</span>
           <h2 className="workflow-title">The Journey</h2>
           <p className="workflow-desc">
             How Flo Studios brings cinematic motion and 3D from concept to global launch.

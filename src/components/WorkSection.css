@@ -17,17 +17,6 @@
   max-width: 860px;
 }
 
-.work-section__label {
-  display: inline-block;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #71717a;
-  margin-bottom: 0.75rem;
-}
-
 .work-section__headline {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(1.85rem, 3.4vw, 2.85rem);

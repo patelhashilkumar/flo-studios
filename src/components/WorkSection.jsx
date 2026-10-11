@@ -228,7 +228,6 @@ export default function WorkSection() {
         {/* Section Header */}
         <div className="work-section__header" ref={headerRef}>
           <div className="work-section__title-wrap">
-            <span className="work-section__label">Selected Work</span>
             <h2 className="work-section__headline">
               Selected work across motion, systems, and digital craft.
             </h2>

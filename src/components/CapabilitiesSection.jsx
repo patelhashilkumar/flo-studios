@@ -88,7 +88,6 @@ export default function CapabilitiesSection() {
       <div className="container">
         {/* Section Header */}
         <div className="capabilities-header" ref={headerRef}>
-          <span className="capabilities-label">OUR EDGE</span>
           <h2 className="capabilities-title">
             BUILT ON CRAFT, TECHNICAL RIGOR, AND END-TO-END OWNERSHIP.
           </h2>

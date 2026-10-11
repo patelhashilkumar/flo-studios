@@ -3,17 +3,6 @@
   border-top: 1px solid var(--color-border);
 }
 
-.purpose__label {
-  display: inline-block;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(0.75rem, 1vw, 0.85rem);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-tertiary);
-  margin-bottom: 3rem;
-}
-
 .purpose__giant {
   display: flex;
   flex-wrap: wrap;
