@@ -34,7 +34,7 @@ export const AUTH_KEY = 'FLO_STUDIOS_ADMIN_AUTH_V1'
 
 const configuredPasscode =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_ADMIN_PASSCODE) ||
-  (typeof process !== 'undefined' && process.env && process.env.VITE_ADMIN_PASSCODE) ||
+  (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.env && globalThis.process.env.VITE_ADMIN_PASSCODE) ||
   'flo2026'
 
 export const DEFAULT_SEEDS = []
@@ -120,9 +120,23 @@ export async function loadSubmissionsFromCloud() {
     ])
     const safeInquiries = Array.isArray(inquiries) ? inquiries : []
     const safeApplications = Array.isArray(applications) ? applications : []
-    const combined = [...safeInquiries, ...safeApplications].sort((a, b) => {
+    const cloudCombined = [...safeInquiries, ...safeApplications].sort((a, b) => {
       return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
     })
+
+    // Merge cloud submissions with locally stored submissions to prevent accidental wipeout
+    const local = getSubmissions()
+    const mergedMap = new Map()
+    local.forEach((item) => {
+      if (item && item.id) mergedMap.set(String(item.id), item)
+    })
+    cloudCombined.forEach((item) => {
+      if (item && item.id) mergedMap.set(String(item.id), item)
+    })
+    const combined = Array.from(mergedMap.values()).sort((a, b) => {
+      return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+    })
+
     const storage = getStorage()
     if (storage) {
       storage.setItem(STORAGE_KEY, JSON.stringify(combined))
@@ -179,8 +193,8 @@ export async function saveSubmission(entry = {}) {
       if (isJob) {
         const cloudRecord = await createJobApplication(entry, entry.rawFile)
         if (cloudRecord) {
-          newSubmission.id = cloudRecord.id
-          newSubmission.resumePath = cloudRecord.resume_path
+          newSubmission.id = cloudRecord.id || tempId
+          newSubmission.resumePath = cloudRecord.resume_path || newSubmission.resumePath
           // Update cache with cloud ID
           const refreshed = getSubmissions().map((s) => (s.id === tempId ? newSubmission : s))
           const storage = getStorage()
@@ -190,7 +204,7 @@ export async function saveSubmission(entry = {}) {
       } else {
         const cloudRecord = await createInquiry(entry)
         if (cloudRecord) {
-          newSubmission.id = cloudRecord.id
+          newSubmission.id = cloudRecord.id || tempId
           const refreshed = getSubmissions().map((s) => (s.id === tempId ? newSubmission : s))
           const storage = getStorage()
           if (storage) storage.setItem(STORAGE_KEY, JSON.stringify(refreshed))

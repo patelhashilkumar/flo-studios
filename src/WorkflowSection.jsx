@@ -433,7 +433,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
   // Milestones positioned along the path
   const milestones = useMemo(() => {
     const fractions = [0.10, 0.36, 0.63, 0.88];
-    return fractions.map((f, i) => {
+    return fractions.map((f) => {
       const pos = curve.getPointAt(f);
       const tan = curve.getTangentAt(f).normalize();
       // Vector pointing to the RIGHT side of the plane's flight path

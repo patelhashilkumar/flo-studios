@@ -21,7 +21,6 @@ export default function ServicesSection({
   const activeTab = userSelectedTab ?? defaultDivision ?? 'development'
   const setActiveTab = setUserSelectedTab
 
-  const showLabel = showHeaderBadge !== undefined ? showHeaderBadge : showHeaderLabel
   const activeDivision = getDivisionById(activeTab) || DIVISIONS[0]
 
   const tabPills = [

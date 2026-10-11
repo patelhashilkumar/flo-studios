@@ -35,23 +35,23 @@ create policy "Allow public anonymous and authenticated insert into contact_inqu
   to anon, authenticated
   with check (true);
 
-create policy "Allow authenticated admin users to read contact_inquiries"
+create policy "Allow admin and studio portal to read contact_inquiries"
   on public.contact_inquiries
   for select
-  to authenticated
+  to anon, authenticated
   using (true);
 
-create policy "Allow authenticated admin users to update contact_inquiries"
+create policy "Allow admin and studio portal to update contact_inquiries"
   on public.contact_inquiries
   for update
-  to authenticated
+  to anon, authenticated
   using (true)
   with check (true);
 
-create policy "Allow authenticated admin users to delete contact_inquiries"
+create policy "Allow admin and studio portal to delete contact_inquiries"
   on public.contact_inquiries
   for delete
-  to authenticated
+  to anon, authenticated
   using (true);
 
 
@@ -91,23 +91,23 @@ create policy "Allow public anonymous and authenticated insert into job_applicat
   to anon, authenticated
   with check (true);
 
-create policy "Allow authenticated admin users to read job_applications"
+create policy "Allow admin and studio portal to read job_applications"
   on public.job_applications
   for select
-  to authenticated
+  to anon, authenticated
   using (true);
 
-create policy "Allow authenticated admin users to update job_applications"
+create policy "Allow admin and studio portal to update job_applications"
   on public.job_applications
   for update
-  to authenticated
+  to anon, authenticated
   using (true)
   with check (true);
 
-create policy "Allow authenticated admin users to delete job_applications"
+create policy "Allow admin and studio portal to delete job_applications"
   on public.job_applications
   for delete
-  to authenticated
+  to anon, authenticated
   using (true);
 
 

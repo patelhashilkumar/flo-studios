@@ -73,23 +73,33 @@ export async function createInquiry(payload = {}) {
     throw new Error('Supabase is not configured')
   }
 
-  const { error } = await supabase
-    .from('contact_inquiries')
-    .insert([
-      {
-        name: payload.name || 'Anonymous',
-        email: payload.email || '',
-        phone: payload.phone || '',
-        service: payload.service || payload.projectType || '',
-        budget: payload.budget || '',
-        message: payload.message || '',
-        status: 'new',
-        starred: false
-      }
-    ])
+  const insertPayload = {
+    name: payload.name || 'Anonymous',
+    email: payload.email || '',
+    phone: payload.phone || '',
+    service: payload.service || payload.projectType || '',
+    budget: payload.budget || '',
+    message: payload.message || '',
+    status: 'new',
+    starred: false
+  }
 
-  if (error) throw error
-  return { ok: true }
+  let createdId = payload.id || null
+  const { data, error } = await supabase
+    .from('contact_inquiries')
+    .insert([insertPayload])
+    .select('id')
+
+  if (error) {
+    const fallback = await supabase
+      .from('contact_inquiries')
+      .insert([insertPayload])
+    if (fallback.error) throw fallback.error
+  } else if (data && data[0]?.id) {
+    createdId = data[0].id
+  }
+
+  return { ok: true, id: createdId }
 }
 
 /**
@@ -258,29 +268,40 @@ export async function createJobApplication(payload = {}, file = null) {
     }
   }
 
-  const { error } = await supabase
-    .from('job_applications')
-    .insert([
-      {
-        job_id: payload.jobId || 'sdr',
-        role_title: payload.role || payload.roleTitle || 'Sales Development Representative',
-        name: payload.name || '',
-        email: payload.email || '',
-        phone: payload.phone || '',
-        region: payload.region || '',
-        experience: payload.experience || '',
-        linkedin_url: payload.linkedinUrl || '',
-        notes: payload.notes || payload.coverNote || '',
-        resume_path: resumeMeta.path,
-        resume_name: resumeMeta.name,
-        resume_size: resumeMeta.size,
-        status: 'new',
-        starred: false
-      }
-    ])
+  const insertPayload = {
+    job_id: payload.jobId || 'sdr',
+    role_title: payload.role || payload.roleTitle || 'Sales Development Representative',
+    name: payload.name || '',
+    email: payload.email || '',
+    phone: payload.phone || '',
+    region: payload.region || '',
+    experience: payload.experience || '',
+    linkedin_url: payload.linkedinUrl || '',
+    notes: payload.notes || payload.coverNote || '',
+    resume_path: resumeMeta.path,
+    resume_name: resumeMeta.name,
+    resume_size: resumeMeta.size,
+    status: 'new',
+    starred: false
+  }
 
-  if (error) throw error
-  return { ok: true, resume_path: resumeMeta.path }
+  let createdId = payload.id || null
+  const { data, error } = await supabase
+    .from('job_applications')
+    .insert([insertPayload])
+    .select('id')
+
+  if (error) {
+    // If select is restricted by RLS on public client, fallback to insert without returning
+    const fallbackRes = await supabase
+      .from('job_applications')
+      .insert([insertPayload])
+    if (fallbackRes.error) throw fallbackRes.error
+  } else if (data && data[0]?.id) {
+    createdId = data[0].id
+  }
+
+  return { ok: true, id: createdId, resume_path: resumeMeta.path }
 }
 
 /**

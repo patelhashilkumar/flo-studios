@@ -480,6 +480,8 @@ export default function AdminPage() {
                 const [s, j] = await Promise.all([loadSubmissionsFromCloud(), loadJobsFromCloud()])
                 setSubmissions(s)
                 setJobs(j)
+                setCmsNotice(`✓ Cloud sync complete: ${s.length} submission${s.length === 1 ? '' : 's'}, ${j.length} job opening${j.length === 1 ? '' : 's'}`)
+                setTimeout(() => setCmsNotice(''), 4000)
               }}
               className="admin-action-pill"
               title="Refresh latest data from Supabase Cloud"
