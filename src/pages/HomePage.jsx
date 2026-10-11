@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
 import Hero from '../components/Hero'
 import WorkSection from '../components/WorkSection'
-import ServicesSection from '../components/ServicesSection'
+import HomeServicesSpotlight from '../components/HomeServicesSpotlight'
 import CapabilitiesSection from '../components/CapabilitiesSection'
 import Recognition from '../components/Recognition'
 import PurposeSection from '../components/PurposeSection'
@@ -28,7 +28,7 @@ export default function HomePage() {
       />
       <Hero />
       <WorkSection />
-      <ServicesSection />
+      <HomeServicesSpotlight />
       <CapabilitiesSection />
       <Suspense fallback={<div style={{ minHeight: '380px', background: '#0e0e12' }} />}>
         <WorkflowSection />
