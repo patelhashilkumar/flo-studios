@@ -198,61 +198,89 @@ function PlaneContactShadow({ shadowRef }) {
 }
 
 /* ═══════════════════════════════════════════════════
-   MINIMALIST ARCHITECTURAL WAYPOINT (Pure & Clean)
-   Hairline coordinate ring with subtle sonar ripple
+   AIR TRAFFIC CONTROL TOWER (Architectural 3D Model)
+   Sleek tapered column, cantilever collar, panoramic
+   360° smoked glass control cab, and pulsing red beacon.
    ═══════════════════════════════════════════════════ */
 
-function MinimalWaypoint({ position, isActive }) {
-  const pulseRef = useRef();
+function AirTrafficControlTower({ position, isActive }) {
+  const beaconRef = useRef();
 
   useFrame((state) => {
-    if (pulseRef.current && isActive) {
-      const t = (state.clock.elapsedTime * 1.1) % 1.6;
-      const s = 1 + t * 0.7;
-      pulseRef.current.scale.set(s, s, 1);
-      pulseRef.current.material.opacity = Math.max(0, 0.35 * (1 - t / 1.6));
+    if (beaconRef.current) {
+      // Pulsing aviation beacon at the tower peak
+      const t = state.clock.elapsedTime * 3.5;
+      const pulse = isActive ? Math.sin(t) * 0.5 + 0.5 : 0.2;
+      beaconRef.current.material.opacity = Math.max(0.15, pulse);
     }
   });
 
   return (
     <group position={position}>
-      {/* Flat Floor Marker Right on the Flight Path */}
-      <group position={[0, -0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        {/* Subtle Outer Hairline Ring */}
-        <mesh>
-          <ringGeometry args={[0.45, 0.50, 48]} />
-          <meshBasicMaterial
-            color={isActive ? "#18181b" : "#cbd5e1"}
-            transparent
-            opacity={isActive ? 0.85 : 0.35}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
+      {/* 1. Base Plinth */}
+      <mesh position={[0, 0.2, 0]}>
+        <cylinderGeometry args={[0.85, 1.05, 0.4, 16]} />
+        <meshStandardMaterial color="#1e293b" roughness={0.25} metalness={0.3} />
+      </mesh>
 
-        {/* Center Node Ring */}
-        <mesh>
-          <ringGeometry args={[0.1, 0.18, 32]} />
-          <meshBasicMaterial
-            color={isActive ? "#18181b" : "#94a3b8"}
-            transparent
-            opacity={isActive ? 0.9 : 0.45}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
+      {/* 2. Main Concrete Tower Shaft */}
+      <mesh position={[0, 2.0, 0]}>
+        <cylinderGeometry args={[0.48, 0.72, 3.2, 16]} />
+        <meshStandardMaterial color="#f8fafc" roughness={0.25} metalness={0.08} />
+      </mesh>
 
-        {/* Faint Concentric Pulse when Active */}
-        {isActive && (
-          <mesh ref={pulseRef}>
-            <ringGeometry args={[0.5, 0.54, 48]} />
-            <meshBasicMaterial
-              color="#71717a"
-              transparent
-              opacity={0.3}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-        )}
-      </group>
+      {/* 3. Flo Red Vertical Architectural Stripe */}
+      <mesh position={[0, 2.0, 0]}>
+        <boxGeometry args={[0.08, 3.1, 0.78]} />
+        <meshStandardMaterial color="#dc2626" roughness={0.3} metalness={0.1} />
+      </mesh>
+
+      {/* 4. Cantilever Support Collar */}
+      <mesh position={[0, 3.85, 0]}>
+        <cylinderGeometry args={[1.05, 0.48, 0.5, 16]} />
+        <meshStandardMaterial color="#334155" roughness={0.2} metalness={0.4} />
+      </mesh>
+
+      {/* 5. Observation Cab (Panoramic Control Room) */}
+      <mesh position={[0, 4.42, 0]}>
+        <cylinderGeometry args={[1.05, 0.90, 0.65, 16]} />
+        <meshStandardMaterial
+          color="#0f172a"
+          roughness={0.08}
+          metalness={0.85}
+          transparent
+          opacity={0.88}
+        />
+      </mesh>
+
+      {/* 6. Overhanging Roof Cap */}
+      <mesh position={[0, 4.84, 0]}>
+        <cylinderGeometry args={[1.15, 1.05, 0.2, 16]} />
+        <meshStandardMaterial color="#f8fafc" roughness={0.25} metalness={0.08} />
+      </mesh>
+
+      {/* 7. Antenna Mast & Radar Dome */}
+      <mesh position={[0, 5.29, 0]}>
+        <cylinderGeometry args={[0.03, 0.05, 0.7, 8]} />
+        <meshStandardMaterial color="#475569" roughness={0.2} metalness={0.6} />
+      </mesh>
+
+      <mesh position={[0, 5.15, 0]}>
+        <sphereGeometry args={[0.18, 16, 16]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.1} />
+      </mesh>
+
+      {/* 8. Pulsing Red Aviation Beacon at Peak */}
+      <mesh ref={beaconRef} position={[0, 5.68, 0]}>
+        <sphereGeometry args={[0.07, 12, 12]} />
+        <meshBasicMaterial color="#ef4444" transparent opacity={0.9} />
+      </mesh>
+
+      {/* 9. Ground Contact Shadow */}
+      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0, 1.6, 24]} />
+        <meshBasicMaterial color="#0f172a" transparent opacity={0.12} />
+      </mesh>
     </group>
   );
 }
@@ -326,15 +354,22 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
     const fractions = [0.10, 0.36, 0.63, 0.88];
     return fractions.map((f, i) => {
       const pos = curve.getPointAt(f);
-      const tan = curve.getTangentAt(f);
-      const normal = new THREE.Vector3(-tan.z, 0, tan.x).normalize();
-      const side = i % 2 === 0 ? 1 : -1;
-      const cardOffset = normal.clone().multiplyScalar(side * 4.2).add(new THREE.Vector3(0, 1.6, 0));
+      const tan = curve.getTangentAt(f).normalize();
+      // Vector pointing to the RIGHT side of the plane's flight path
+      const rightDir = new THREE.Vector3(-tan.z, 0, tan.x).normalize();
+
+      // Place ATC Tower safely on the RIGHT side with generous clearance (zero collision)
+      const towerPos = pos.clone()
+        .add(rightDir.clone().multiplyScalar(4.5))
+        .add(new THREE.Vector3(0, -2.6, 0));
+
+      // Place HTML Card on the LEFT side to prevent visual clutter
+      const cardOffset = rightDir.clone().multiplyScalar(-3.8).add(new THREE.Vector3(0, 1.8, 0));
+
       return {
-        beaconPosition: pos,
+        towerPosition: towerPos,
         tangent: tan,
         cardPosition: pos.clone().add(cardOffset),
-        side,
         fraction: f
       };
     });
@@ -431,9 +466,9 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
         
         return (
           <group key={i}>
-            {/* Minimalist Architectural Hairline Waypoint */}
-            <MinimalWaypoint
-              position={m.beaconPosition}
+            {/* Air Traffic Control Tower Safely on the Right Side */}
+            <AirTrafficControlTower
+              position={m.towerPosition}
               isActive={isActive}
             />
 
