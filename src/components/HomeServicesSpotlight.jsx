@@ -85,52 +85,54 @@ export default function HomeServicesSpotlight() {
             </button>
           </div>
 
-          {/* Dynamic Content Block with Framer Motion transition */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current.id}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="home-spotlight__content"
-            >
-              <h2 className="home-spotlight__heading">{current.title}</h2>
-              <p className="home-spotlight__description">{current.description}</p>
+          {/* Dynamic Content Block with Framer Motion transition inside stable stage */}
+          <div className="home-spotlight__content-stage">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                className="home-spotlight__content"
+              >
+                <h2 className="home-spotlight__heading">{current.title}</h2>
+                <p className="home-spotlight__description">{current.description}</p>
 
-              {/* Quick Pillars/Stats */}
-              <div className="home-spotlight__stats-row">
-                {current.stats.map((s, idx) => (
-                  <div key={idx} className="home-spotlight__stat-item">
-                    <span className="home-spotlight__stat-val">{s.value}</span>
-                    <span className="home-spotlight__stat-lbl">{s.label}</span>
-                  </div>
-                ))}
-              </div>
+                {/* Quick Pillars/Stats */}
+                <div className="home-spotlight__stats-row">
+                  {current.stats.map((s, idx) => (
+                    <div key={idx} className="home-spotlight__stat-item">
+                      <span className="home-spotlight__stat-val">{s.value}</span>
+                      <span className="home-spotlight__stat-lbl">{s.label}</span>
+                    </div>
+                  ))}
+                </div>
 
-              {/* Action Button */}
-              <div className="home-spotlight__cta-wrap">
-                <Link to={current.ctaHref} className="home-spotlight__cta-btn">
-                  <span>{current.ctaText}</span>
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                {/* Action Button */}
+                <div className="home-spotlight__cta-wrap">
+                  <Link to={current.ctaHref} className="home-spotlight__cta-btn">
+                    <span>{current.ctaText}</span>
+                  </Link>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Right Column: Sleek Editorial Showcase (Matching Image 3) */}
         <div className="home-spotlight__right">
           <div className="home-spotlight__showcase-frame">
-            {/* Active Presentation Stage */}
+            {/* Active Presentation Stage — Rock-Solid Fixed Height Container */}
             <div className="showcase-stage">
               <AnimatePresence mode="wait">
                 {activeDivision === 'development' ? (
                   <motion.div
                     key="showcase-dev"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
                     className="showcase-slide showcase-slide--dev"
                   >
                     {/* Main Canvas: Warm Editorial Paper Aesthetic matching Image 3 */}
@@ -225,10 +227,10 @@ export default function HomeServicesSpotlight() {
                 ) : (
                   <motion.div
                     key="showcase-creator"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
                     className="showcase-slide showcase-slide--creator"
                   >
                     {/* Main Canvas: Warm Editorial Paper Aesthetic matching Image 3 */}
@@ -242,6 +244,12 @@ export default function HomeServicesSpotlight() {
                         {/* Left: Studio Media Waveform & Timeline Box */}
                         <div className="showcase-canvas__visual">
                           <div className="showcase-canvas__preview-box showcase-canvas__preview-box--studio">
+                            <div className="showcase-canvas__preview-bar">
+                              <span className="sc-dot red" />
+                              <span className="sc-dot yellow" />
+                              <span className="sc-dot green" />
+                              <span className="sc-title">flostudios.co/studio</span>
+                            </div>
                             <div className="showcase-canvas__video-art">
                               <div className="showcase-canvas__waveform">
                                 <span style={{ height: '30%' }} />
@@ -255,9 +263,18 @@ export default function HomeServicesSpotlight() {
                               </div>
                               <span className="showcase-canvas__play-glyph">▶</span>
                             </div>
-                            <div className="showcase-canvas__timeline-slice">
-                              <span className="sc-track-tag">V1 4K MASTER</span>
-                              <div className="sc-track-fill" />
+                            <div className="showcase-canvas__preview-grid">
+                              <div className="sc-grid-card">
+                                <span className="sc-card-lbl">Retention</span>
+                                <span className="sc-card-val">86% Avg</span>
+                              </div>
+                              <div className="sc-grid-card sc-grid-card--accent">
+                                <span className="sc-card-lbl">Master Cut</span>
+                                <span className="sc-card-val">4K 60FPS</span>
+                              </div>
+                            </div>
+                            <div className="showcase-canvas__terminal">
+                              <code>$ flo render --export 4k-master-v1</code>
                             </div>
                           </div>
                         </div>

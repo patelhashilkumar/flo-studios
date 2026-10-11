@@ -89,8 +89,17 @@
 }
 
 /* Dynamic Editorial Content */
+.home-spotlight__content-stage {
+  position: relative;
+  width: 100%;
+  min-height: clamp(340px, 26vw, 390px);
+  display: flex;
+  flex-direction: column;
+}
+
 .home-spotlight__content {
   margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  width: 100%;
 }
 
 .home-spotlight__heading {
@@ -208,22 +217,31 @@
 .showcase-stage {
   position: relative;
   width: 100%;
+  height: clamp(340px, 28vw, 375px);
+  min-height: 340px;
+  max-height: 375px;
+  box-sizing: border-box;
 }
 
 .showcase-slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  position: relative;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 /* Main Presentation Canvas: Warm Editorial Paper (Image 3) */
 .showcase-canvas {
   background: #f6f4ee;
   border-radius: 18px;
-  padding: clamp(20px, 2.4vw, 26px);
+  padding: clamp(18px, 2.2vw, 24px);
   color: #111111;
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
-  min-height: 330px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -234,7 +252,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: clamp(14px, 1.8vw, 18px);
+  margin-bottom: clamp(12px, 1.5vw, 16px);
+  flex-shrink: 0;
 }
 
 .showcase-canvas__kicker {
@@ -267,8 +286,9 @@
   grid-template-columns: 0.95fr 1fr;
   gap: clamp(12px, 1.6vw, 18px);
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   padding-right: clamp(80px, 9.5vw, 112px);
+  flex: 1;
 }
 
 /* Left Column: UI Schematic & Studio Preview Box */
@@ -760,9 +780,26 @@
     gap: 1.25rem;
   }
 
+  .showcase-stage {
+    height: auto;
+    min-height: 480px;
+    max-height: none;
+  }
+
+  .showcase-slide {
+    position: relative;
+    height: auto;
+  }
+
+  .showcase-canvas {
+    height: auto;
+    min-height: 480px;
+  }
+
   .showcase-canvas__body {
     grid-template-columns: 1fr;
     gap: 12px;
+    padding-right: 0;
   }
 
   .showcase-mobile-device {
