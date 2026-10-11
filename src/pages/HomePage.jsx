@@ -30,7 +30,7 @@ export default function HomePage() {
       <WorkSection />
       <HomeServicesSpotlight />
       <CapabilitiesSection />
-      <Suspense fallback={<div style={{ minHeight: '380px', background: '#0e0e12' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '380px', background: '#ffffff' }} />}>
         <WorkflowSection />
       </Suspense>
       <Recognition />

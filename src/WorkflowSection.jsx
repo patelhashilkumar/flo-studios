@@ -549,7 +549,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       {/* Studio Cyclorama Lighting */}
       <ambientLight intensity={1.5} />
       <directionalLight position={[12, 20, 10]} intensity={1.4} color="#ffffff" />
-      <directionalLight position={[-10, 8, -10]} intensity={0.6} color="#eef2f8" />
+      <directionalLight position={[-10, 8, -10]} intensity={0.6} color="#ffffff" />
 
       {/* Flight Corridor Path — In Pure Refined Grey */}
       <DashedPath geometry={dashedLineGeo} />
@@ -687,7 +687,8 @@ export default function WorkflowSection() {
       {/* 3D Canvas */}
       <div className="workflow-canvas-container">
         <Canvas camera={{ position: [7.2, 9.6, 7.5], fov: 46 }}>
-          <fog attach="fog" args={['#edf0f5', 20, 75]} />
+          <color attach="background" args={['#ffffff']} />
+          <fog attach="fog" args={['#ffffff', 20, 80]} />
           <Scene 
             progressRef={progressObj} 
             activeIndex={activeIndex} 
