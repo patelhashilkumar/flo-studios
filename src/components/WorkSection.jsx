@@ -99,7 +99,18 @@ const WORK_ITEMS = [
   },
 ]
 
-const FILTERS = ['all', 'motion', 'brand', 'marketing', 'product']
+const FILTER_CATEGORIES = [
+  { id: 'all', label: 'All' },
+  { id: 'product', label: 'Development' },
+  { id: 'motion', label: 'Motion & 3D' },
+  { id: 'brand', label: 'Brand Identity' },
+  { id: 'marketing', label: 'Campaigns' },
+]
+
+const getFilterCount = (filterId) => {
+  if (filterId === 'all') return WORK_ITEMS.length
+  return WORK_ITEMS.filter((item) => item.tags.includes(filterId)).length
+}
 
 function WorkCard({ item }) {
   const [isHovered, setIsHovered] = useState(false)
@@ -217,22 +228,29 @@ export default function WorkSection() {
         {/* Section Header */}
         <div className="work-section__header" ref={headerRef}>
           <div className="work-section__title-wrap">
-            <span className="work-section__label">Proof Of Work</span>
+            <span className="work-section__label">Selected Work</span>
             <h2 className="work-section__headline">
-              Selected Work Across Motion, Systems, And Digital <span className="work-section__highlight">CRAFT.</span>
+              Selected work across motion, systems, and digital craft.
             </h2>
           </div>
 
-          <div className="work-section__filters">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                className={`work-section__filter ${activeFilter === f ? 'work-section__filter--active' : ''}`}
-                onClick={() => setActiveFilter(f)}
-              >
-                {f}
-              </button>
-            ))}
+          <div className="work-section__filters" role="group" aria-label="Filter case studies">
+            {FILTER_CATEGORIES.map((cat) => {
+              const count = getFilterCount(cat.id)
+              const isActive = activeFilter === cat.id
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={`work-section__filter ${isActive ? 'work-section__filter--active' : ''}`}
+                  onClick={() => setActiveFilter(cat.id)}
+                  aria-pressed={isActive}
+                >
+                  <span className="work-section__filter-label">{cat.label}</span>
+                  <span className="work-section__filter-count">{count}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
 
