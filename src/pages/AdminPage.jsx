@@ -16,7 +16,6 @@ import {
   loadJobsFromCloud,
   saveJob,
   deleteJob,
-  resetJobs,
   isSupabaseConfigured,
   getResumeSignedUrl
 } from '../services/adminStorage'
@@ -155,7 +154,7 @@ export default function AdminPage() {
     // 1. Authenticate with Supabase Auth if available
     if (isSupabaseConfigured()) {
       try {
-        const { data, error } = await signInAdmin(cleanEmail, cleanPassword)
+        const { data } = await signInAdmin(cleanEmail, cleanPassword)
         if (data?.session && data.session.user) {
           setUnlocked(true)
           setAdminUser(data.session.user)
@@ -341,15 +340,6 @@ export default function AdminPage() {
       await deleteJob(id)
       setJobs(getJobs())
       setCmsNotice(`✓ Deleted job "${title}"`)
-      setTimeout(() => setCmsNotice(''), 4000)
-    }
-  }
-
-  const handleResetJobs = async () => {
-    if (window.confirm('Reset job postings back to the verified default opening (Sales Development Representative)?')) {
-      await resetJobs()
-      setJobs(getJobs())
-      setCmsNotice('✓ Restored default job listing')
       setTimeout(() => setCmsNotice(''), 4000)
     }
   }
@@ -655,14 +645,6 @@ export default function AdminPage() {
                 </p>
               </div>
               <div className="admin-cms-header-actions">
-                <button
-                  type="button"
-                  onClick={handleResetJobs}
-                  className="admin-action-pill admin-action-pill--subtle"
-                  title="Reset positions to default SDR role"
-                >
-                  ↺ Reset Defaults
-                </button>
                 <button
                   type="button"
                   onClick={handleOpenAddJob}
