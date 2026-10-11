@@ -203,7 +203,7 @@ function PlaneContactShadow({ shadowRef }) {
    360° smoked glass control cab, and pulsing red beacon.
    ═══════════════════════════════════════════════════ */
 
-function AirTrafficControlTower({ position, isActive }) {
+function AirTrafficControlTower({ position, isActive, scale = 0.48 }) {
   const beaconRef = useRef();
 
   useFrame((state) => {
@@ -216,7 +216,7 @@ function AirTrafficControlTower({ position, isActive }) {
   });
 
   return (
-    <group position={position}>
+    <group position={position} scale={scale}>
       {/* 1. Base Plinth */}
       <mesh position={[0, 0.2, 0]}>
         <cylinderGeometry args={[0.85, 1.05, 0.4, 16]} />
@@ -358,18 +358,20 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       // Vector pointing to the RIGHT side of the plane's flight path
       const rightDir = new THREE.Vector3(-tan.z, 0, tan.x).normalize();
 
-      // Place ATC Tower safely on the RIGHT side with generous clearance (zero collision)
+      // Scaled-down architectural ATC Tower placed safely on the RIGHT side
       const towerPos = pos.clone()
-        .add(rightDir.clone().multiplyScalar(4.5))
-        .add(new THREE.Vector3(0, -2.6, 0));
+        .add(rightDir.clone().multiplyScalar(3.8))
+        .add(new THREE.Vector3(0, -1.6, 0));
 
-      // Place HTML Card on the LEFT side to prevent visual clutter
-      const cardOffset = rightDir.clone().multiplyScalar(-3.8).add(new THREE.Vector3(0, 1.8, 0));
+      // Milestone Card positioned directly ABOVE the tower with clean vertical clearance
+      // Tower height at scale 0.48 is ~2.75 units.
+      // Elevated 4.8 units above tower base places the card hovering cleanly above the antenna beacon
+      const cardPos = towerPos.clone().add(new THREE.Vector3(0, 4.8, 0));
 
       return {
         towerPosition: towerPos,
         tangent: tan,
-        cardPosition: pos.clone().add(cardOffset),
+        cardPosition: cardPos,
         fraction: f
       };
     });
@@ -542,22 +544,6 @@ export default function WorkflowSection() {
     return () => ctx.revert();
   }, []);
 
-  // Jump to specific milestone when clicked on timeline
-  const handleStepClick = (index) => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const scrollTrigger = ScrollTrigger.getAll().find(st => st.trigger === section);
-    if (scrollTrigger) {
-      const targetFractions = [0.10, 0.36, 0.63, 0.88];
-      const fraction = targetFractions[index] ?? 0;
-      const target = scrollTrigger.start + fraction * (scrollTrigger.end - scrollTrigger.start);
-      if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
-        window.scrollTo({ top: target, behavior: 'smooth' });
-      }
-    }
-  };
-
   return (
     <section className="workflow-section" id="workflow" ref={sectionRef}>
       {/* 2D UI Overlay */}
@@ -568,21 +554,6 @@ export default function WorkflowSection() {
           <p className="workflow-desc">
             How Flo Studios brings cinematic motion and 3D from concept to global launch.
           </p>
-        </div>
-
-        {/* Clean Timeline Navigation (Right Sidebar) */}
-        <div className="workflow-steps-indicator" role="navigation" aria-label="Workflow Phases">
-          {(WORKFLOW_STEPS || []).map((step, i) => (
-            <button 
-              key={i} 
-              type="button"
-              onClick={() => handleStepClick(i)}
-              className={`workflow-step-dot ${activeIndex === i ? 'active' : ''}`}
-            >
-              <span className="workflow-step-dot-num">{step.num}</span>
-              <span className="workflow-step-dot-title">{step.title}</span>
-            </button>
-          ))}
         </div>
       </div>
 

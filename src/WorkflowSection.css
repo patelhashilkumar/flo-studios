@@ -58,96 +58,6 @@
   max-width: 440px;
 }
 
-/* ─── Interactive Phase Navigation (Right Sidebar) ─── */
-.workflow-steps-indicator {
-  position: absolute;
-  right: clamp(20px, 3.5vw, 60px);
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  pointer-events: auto;
-  z-index: 10;
-}
-
-.workflow-step-dot {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 14px 6px 6px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 9999px;
-  cursor: pointer;
-  outline: none;
-  opacity: 0.55;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: left;
-}
-
-.workflow-step-dot:hover {
-  opacity: 0.85;
-  background: rgba(255, 255, 255, 0.95);
-  transform: translateX(-3px);
-}
-
-.workflow-step-dot.active {
-  opacity: 1;
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.16);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
-  transform: translateX(-5px);
-}
-
-.workflow-step-dot-num {
-  font-family: var(--font-primary);
-  font-size: 11px;
-  font-weight: 700;
-  color: #0e0e12;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-  flex-shrink: 0;
-}
-
-.workflow-step-dot.active .workflow-step-dot-num {
-  background: #0e0e12;
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.workflow-step-dot-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.workflow-step-dot-tag {
-  font-family: var(--font-primary);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #6b7280;
-  text-transform: uppercase;
-}
-
-.workflow-step-dot-title {
-  font-family: var(--font-primary);
-  font-size: 12px;
-  font-weight: 600;
-  color: #0e0e12;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-
 /* ═══════════════════════════════════════════════════
    LIQUID GLASS MILESTONE CARDS (Active-Only Focus)
    ═══════════════════════════════════════════════════ */
@@ -157,6 +67,7 @@
   pointer-events: auto;
   user-select: none;
   animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 25;
 }
 
 @keyframes cardFadeIn {
@@ -264,12 +175,6 @@
 }
 
 /* ─── Responsive Media Queries ─── */
-@media (max-width: 1024px) {
-  .workflow-steps-indicator {
-    display: none;
-  }
-}
-
 @media (max-width: 768px) {
   .workflow-ui {
     padding: 100px 20px 24px;
