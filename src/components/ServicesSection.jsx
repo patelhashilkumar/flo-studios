@@ -27,11 +27,11 @@ export default function ServicesSection({
   const tabPills = [
     {
       id: 'development',
-      label: '01 / DEVELOPMENT DIVISION (PRIMARY)'
+      label: 'Development Division'
     },
     {
       id: 'creator',
-      label: '02 / CREATOR & CONTENT DIVISION'
+      label: 'Creator Division'
     }
   ]
 

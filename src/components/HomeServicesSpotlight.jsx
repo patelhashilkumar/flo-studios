@@ -6,7 +6,7 @@ import './HomeServicesSpotlight.css'
 const SPOTLIGHT_DATA = {
   development: {
     id: 'development',
-    pillLabel: '01 / DEVELOPMENT DIVISION (PRIMARY)',
+    pillLabel: 'Development Division',
     title: 'We build end-to-end digital products from idea to market.',
     description:
       'We manage the entire journey of turning an idea into a live product — from research and UI/UX design to full-stack engineering and deployment — as one accountable partner with zero broken handoffs.',
@@ -22,7 +22,7 @@ const SPOTLIGHT_DATA = {
   },
   creator: {
     id: 'creator',
-    pillLabel: '02 / CREATOR & CONTENT DIVISION',
+    pillLabel: 'Creator Division',
     title: 'Stage-calibrated media engines for ambitious creators.',
     description:
       'A single, stage-calibrated pipeline from ideation and scripting to post-production, sound design, and packaging that scales channels systematically.',
@@ -64,7 +64,7 @@ export default function HomeServicesSpotlight() {
                   transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                 />
               )}
-              <span className="home-spotlight__toggle-text">01 / DEVELOPMENT DIVISION (PRIMARY)</span>
+              <span className="home-spotlight__toggle-text">Development Division</span>
             </button>
 
             <button
@@ -81,7 +81,7 @@ export default function HomeServicesSpotlight() {
                   transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                 />
               )}
-              <span className="home-spotlight__toggle-text">02 / CREATOR &amp; CONTENT DIVISION</span>
+              <span className="home-spotlight__toggle-text">Creator Division</span>
             </button>
           </div>
 
