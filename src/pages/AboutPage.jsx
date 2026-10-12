@@ -39,8 +39,8 @@ export default function AboutPage() {
   return (
     <motion.main className="about-page" variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="About Flo Studios — Creative & Technology Studio"
-        description="Learn about Flo Studios, a creative and technology studio pairing creative direction with technical rigor to build enduring brands, digital products, and motion systems."
+        title="About Flo Studios — Dual-Engine Media & Development Hub"
+        description="Flo Studios is a progressive dual-engine media and development hub built to scale digital exposure and authority for high-impact creators and venture-backed startups and businesses. Primary focus: Development Division."
         canonicalUrl="https://www.flostudio.co/about"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
@@ -51,16 +51,16 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="about-page__hero" ref={heroRef}>
         <div className="container">
-          <h1 className="about-page__title" aria-label="About Flo Studios: Built at the intersection of taste, motion, and technology.">
+          <h1 className="about-page__title" aria-label="About Flo Studios: Built at the intersection of creative storytelling and digital infrastructure.">
             <span className="sr-only">About Flo Studios — </span>
-            {'Built at the intersection of taste, motion, and technology.'.split(' ').map((w, i) => (
+            {'Built at the intersection of creative storytelling and digital infrastructure.'.split(' ').map((w, i) => (
               <span key={i} className="about-page__hero-word">{w}</span>
             ))}
           </h1>
           <Link to="/work" className="about-page__cta">Explore work →</Link>
 
           <p className="about-page__intro">
-            We pair creative direction with technical rigor to build brands, digital products, and motion systems that endure. Collaborating globally with industry pioneers including Google, Spotify, Electronic Arts, and ŌURA.
+            Flo Studios is a progressive dual-engine media and development hub built to scale digital exposure and authority for high-impact creators and venture-backed startups and businesses. We drive growth through two distinct verticals: our primary Development Division (Full Build Lifecycle) and our Creator Division (Stage-Calibrated Media Engine).
           </p>
 
           <div className="about-page__stats">
@@ -133,8 +133,8 @@ export default function AboutPage() {
         <div className="container">
           <h2 className="about-page__how-title">How we work</h2>
           <div className="about-page__how-content">
-            <p>Designers who code and engineers with taste—collaborating in the same room from day one.</p>
-            <p>We eliminate handoff friction to preserve conceptual integrity from initial direction through production deployment.</p>
+            <p>We operate at the intersection of creative storytelling and digital infrastructure. Our primary focus is our Development Division—partnering with venture-backed founders from the earliest stages to translate vision into products built for scale.</p>
+            <p>Our cross-vertical advantage: the insights gathered across creators, startups, and businesses allow us to develop high-impact strategies that accelerate growth, strengthen digital authority, and eliminate single-stage handoffs.</p>
           </div>
           <Link to="/careers" className="about-page__cta-pill">View open roles →</Link>
         </div>

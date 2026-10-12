@@ -47,7 +47,7 @@ export default function PurposeSection() {
 
         <div className="purpose__body">
           <p>
-            Great ideas fail in the space between vision and execution. We built Flo Studios to close that gap—keeping one dedicated team aligned from first concept to living product, refining long after launch.
+            Great ideas fail in the space between vision and execution. We built Flo Studios to close that gap—helping venture-backed founders and creators translate vision into execution, carrying every product and media engine from initial concept to market scale without single-stage handoffs.
           </p>
           <Link to="/about" className="purpose__cta" aria-label="Learn more about Flo Studios">
             Learn more about our studio

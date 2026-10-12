@@ -7,12 +7,12 @@ const SPOTLIGHT_DATA = {
   development: {
     id: 'development',
     pillLabel: 'Development Division',
-    title: 'We build end-to-end digital products from idea to market.',
+    title: 'We translate founder vision into products positioned for scale.',
     description:
-      'We manage the entire journey of turning an idea into a live product — from research and UI/UX design to full-stack engineering and deployment — as one accountable partner with zero broken handoffs.',
+      'We partner with venture-backed founders and businesses from the earliest stages throughout the entire product lifecycle—from ideation and research to design, engineering, launch, and go-to-market user acquisition. Zero single-stage handoffs.',
     ctaText: 'See our offerings →',
     ctaHref: '/services?division=development',
-    tag: 'Full Build Lifecycle',
+    tag: 'Primary Flagship',
     stats: [
       { label: 'Lifecycle', value: '11 Stages' },
       { label: 'Architecture', value: 'Full-Stack' },
@@ -23,12 +23,12 @@ const SPOTLIGHT_DATA = {
   creator: {
     id: 'creator',
     pillLabel: 'Creator Division',
-    title: 'Stage-calibrated media engines for ambitious creators.',
+    title: 'End-to-end growth systems for high-impact creators.',
     description:
-      'A single, stage-calibrated pipeline from ideation and scripting to post-production, sound design, and packaging that scales channels systematically.',
+      'From ideation, scripting, and production through packaging, distribution, and analytics. We take a creator\'s video idea and transform attention into long-term business assets that travel far in the long run.',
     ctaText: 'See our offerings →',
     ctaHref: '/services?division=creator',
-    tag: 'Integrated Content Pipeline',
+    tag: 'Stage-Calibrated Media Engine',
     stats: [
       { label: 'Pipeline', value: '8 Stages' },
       { label: 'Focus', value: 'Retention' },

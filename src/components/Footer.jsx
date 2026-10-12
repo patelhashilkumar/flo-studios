@@ -29,13 +29,14 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ── Floating Liquid Glass Footer Island ── */}
+      {/* ── Full-Bleed Grounded Liquid Glass Footer ── */}
       <div className="liquid-glass-footer-rim">
         <div className="liquid-glass-footer-body">
-          {/* Top Grid */}
-          <div className="lg-footer__top-grid">
-            {/* Brand & Newsletter Column */}
-            <div className="lg-footer__brand-col">
+          <div className="lg-footer__inner">
+            {/* Top Grid */}
+            <div className="lg-footer__top-grid">
+              {/* Brand & Newsletter Column */}
+              <div className="lg-footer__brand-col">
               <Link to="/" className="lg-footer__brand" aria-label="Flo Studios Home">
                 <FloLogo className="lg-footer__brand-icon" height="28px" color="#0e0e12" />
                 <span className="lg-footer__brand-text">FLO STUDIOS</span>
@@ -74,15 +75,15 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Column 2: Disciplines */}
+            {/* Column 2: Divisions */}
             <div className="lg-footer__col">
-              <div className="lg-footer__col-title">Disciplines</div>
+              <div className="lg-footer__col-title">Divisions</div>
               <div className="lg-footer__nav-list">
-                <span className="lg-footer__link">Motion Graphics</span>
-                <span className="lg-footer__link">3D & CGI</span>
-                <span className="lg-footer__link">Creative Tech</span>
-                <span className="lg-footer__link">Brand Systems</span>
-                <span className="lg-footer__link">Art Direction</span>
+                <Link to="/services?division=development" className="lg-footer__link">Development Division</Link>
+                <Link to="/services?division=creator" className="lg-footer__link">Creator Division</Link>
+                <Link to="/services?division=development" className="lg-footer__link">Full Build Lifecycle</Link>
+                <Link to="/services?division=creator" className="lg-footer__link">Media Engine</Link>
+                <Link to="/work" className="lg-footer__link">Selected Work</Link>
               </div>
             </div>
 
@@ -154,6 +155,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  )
+    </div>
+  </footer>
+)
 }

@@ -91,7 +91,7 @@ export default function WorkPage() {
     <motion.main className="work-page" variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
         title="Work & Case Studies — Flo Studios"
-        description="Browse portfolio work and case studies by Flo Studios across 3D motion design, brand identities, and high-performance digital products."
+        description="Browse selected digital products, engineering architecture, and creator media productions engineered by Flo Studios across our Development and Creator divisions."
         canonicalUrl="https://www.flostudio.co/work"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },

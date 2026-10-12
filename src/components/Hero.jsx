@@ -161,7 +161,7 @@ export default function Hero() {
           </video>
 
           {/* Bottom Left Glassmorphic Project Switcher */}
-          <div className="hero__reel-switcher" role="tablist" aria-label="Motion Graphics Reels">
+          <div className="hero__reel-switcher" role="tablist" aria-label="Studio Project Reels">
             {(HERO_REELS || []).map((reel, idx) => (
               <button
                 key={reel.id}

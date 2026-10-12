@@ -11,17 +11,17 @@ export const DIVISIONS = [
     name: 'Development Division',
     shortName: 'Development',
     badge: 'Primary Flagship',
-    subBadge: 'One Owner, Start to Finish',
+    subBadge: 'Our Core Studio Focus',
     label: 'Primary Flagship',
     tag: 'Full Build Lifecycle',
     whatWeDo: {
       heading: 'What We Do',
       problem:
-        "The Development Division exists to solve one core problem: founders and businesses with a great idea rarely have a single partner who can take that idea all the way to a live, functioning, growing digital product. They're forced to stitch together freelance designers, developers, QA testers, and marketers - each with no visibility into what the others are doing, and no one owning the outcome.",
+        "Founders and venture-backed businesses rarely have a single partner who can translate their vision into creative direction across product strategy, design, development, launch, and go-to-market distribution. They're forced to stitch together disconnected vendors with no one owning the outcome.",
       solution:
-        'Flo Studios replaces that fragmentation with a single, integrated build lifecycle. We manage the entire journey of turning an idea into a live product - from the first planning conversation to post-launch growth - as one continuous, connected process. Every stage is handled by specialists who are already aligned with what came before and what comes next, so nothing gets lost in translation between design, development, and launch.',
+        "Our Development Division partners with venture-backed founders and businesses from the earliest stages throughout the entire lifecycle of the product. We translate the founder's vision into creative direction across product strategy, UI/UX design, full-stack engineering, production launch, and a go-to-market distribution strategy that drives user acquisition—helping companies bridge the gap between vision and execution while building products positioned for scale. We help companies from the very start—ideation and market research all the way through development and deployment at the end—with zero single-stage handoffs.",
       philosophy:
-        "We don't sell deliverables. We sell a product that works, and the outcome of it going live successfully."
+        "We don't sell disconnected deliverables. We build products positioned for scale and carry them all the way to market."
     },
     coreDifferentiator: {
       label: 'Core Differentiator: One Owner, Start to Finish',
@@ -137,7 +137,7 @@ export const DIVISIONS = [
       }
     ],
     oneLineSummary:
-      "Flo Studios' Development Division is a full build lifecycle for founders and businesses - we don't just build your product, we carry it from idea to market and beyond, as one accountable partner instead of a chain of vendors.",
+      "Our Development Division partners with venture-backed founders and businesses from the earliest stages throughout the entire product lifecycle—translating vision into creative direction across strategy, design, engineering, launch, and go-to-market user acquisition with zero broken handoffs.",
     cta: {
       text: 'Start a Project with Development',
       label: 'Start a Project with Development',
@@ -148,16 +148,16 @@ export const DIVISIONS = [
     id: 'creator',
     name: 'Creator / Content Division',
     shortName: 'Creator & Content',
-    badge: 'Secondary Division',
-    subBadge: 'Stage-Specialized Execution',
-    label: 'Secondary Division',
-    tag: 'Integrated Content Pipeline',
+    badge: 'Creator Division',
+    subBadge: 'End-to-End Growth Systems',
+    label: 'Creator Division',
+    tag: 'Integrated Growth Pipeline',
     whatWeDo: {
       heading: 'What We Do',
       problem:
-        'The Creator Division exists to solve one core problem: creators trying to grow are forced to piece together their content process from disconnected freelancers, tools, and guesswork - an editor here, a scriptwriter there, a thumbnail designer somewhere else, with no one thinking about the channel as a whole.',
+        'Creators trying to grow are forced to piece together their content process from disconnected freelancers and tools—an editor here, a scriptwriter there, a thumbnail designer somewhere else—with no one thinking about the channel as a long-term business asset.',
       solution:
-        "Creator Division replaces that chaos with a single, integrated content pipeline. We manage the entire life cycle of a creator's content, from the first idea to post-publish analysis, as one continuous, connected process. Every stage of that pipeline is calibrated to the creator's current stage of growth, so a channel that's stuck at 5K subscribers gets a fundamentally different approach than one plateaued at 500K."
+        "Our Creator Division builds end-to-end growth systems for high-impact creators—from ideation, scripting, and production through distribution, analytics, and high-impact digital strategies crafted from research aggregated across every engagement. We take a creator's idea for a video or series and help them throughout the entire process of creating, packaging, and distributing that content, helping creators transform attention into long-term business assets that travel far in the long run."
     },
     coreDifferentiator: {
       label: 'Core Differentiator: Stage-Specialized Execution',
@@ -244,7 +244,7 @@ export const DIVISIONS = [
       }
     ],
     oneLineSummary:
-      "Flo Studios' Creator Division replaces content chaos with a single, stage-calibrated pipeline - turning raw ideas into high-retention, multi-platform media engines that scale channels systematically.",
+      "Our Creator Division builds end-to-end growth systems for high-impact creators—taking initial video ideas through scripting, production, packaging, distribution, and analytics to transform attention into long-term business assets that travel far in the long run.",
     cta: {
       text: 'Start a Project with Creator Division',
       label: 'Start a Project with Creator Division',
@@ -252,6 +252,16 @@ export const DIVISIONS = [
     }
   }
 ]
+
+export const STUDIO_MANIFESTO = {
+  name: 'Flo Studios',
+  positioning: 'Progressive Dual-Engine Media & Development Hub',
+  tagline: 'Built to scale digital exposure and authority for high-impact creators and venture-backed startups/businesses.',
+  intersection: 'We operate at the intersection of creative storytelling and digital infrastructure, driving growth and exposure through two distinct, specialized verticals.',
+  primaryGoal: 'Our primary goal and core studio focus is the Development Division.',
+  crossEngineAdvantage: 'The insights we gather from creators, startups, and businesses allow us to develop high-impact strategies that accelerate growth, strengthen digital authority, improve operational efficiency, and unlock new opportunities for expansion.',
+  handoffGuarantee: 'We help our clients in each division throughout the build lifecycle of the product from the very start to the very end without doing handoffs in single stages.'
+}
 
 /**
  * Returns a division by ID ('development' or 'creator').

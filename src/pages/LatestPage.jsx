@@ -41,7 +41,7 @@ export default function LatestPage() {
     <motion.main className="latest-page" variants={pageV} initial="initial" animate="animate" exit="exit" ref={heroRef}>
       <SEO
         title="Latest Dispatches & Insights — Flo Studios"
-        description="Perspectives, design research, and studio dispatches from Flo Studios on creative technology, digital products, and motion systems."
+        description="Perspectives, engineering research, and studio dispatches from Flo Studios on digital product architecture and creator media engines."
         canonicalUrl="https://www.flostudio.co/latest"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },

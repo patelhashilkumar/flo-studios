@@ -22,8 +22,8 @@ export default function HomePage() {
   return (
     <motion.main variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="Flo Studios — Creative & Technology Studio"
-        description="Flo Studios is an independent creative and technology studio engineering brand systems, digital products, 3D motion, and high-performance web infrastructure."
+        title="Flo Studios — Dual-Engine Media & Development Hub"
+        description="Flo Studios is a progressive dual-engine media and development hub built to scale digital exposure and authority for high-impact creators and venture-backed startups and businesses. Primary focus: Development Division (Full Build Lifecycle)."
         canonicalUrl="https://www.flostudio.co/"
       />
       <Hero />

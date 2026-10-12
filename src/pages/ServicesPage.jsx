@@ -20,11 +20,11 @@ export default function ServicesPage() {
     <motion.main className="services-page" variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
         title="Services & Divisions — Flo Studios"
-        description="Explore Flo Studios' two specialized divisions: Development Division (full build lifecycle) and Creator / Content Division (integrated content pipeline). One unified standard of craft."
+        description="Flo Studios operates through two specialized verticals: Development Division (Primary Flagship: Full Build Lifecycle for venture-backed founders) and Creator Division (End-to-End Growth Systems for creators). Zero broken handoffs."
         canonicalUrl="https://www.flostudio.co/services"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
-          { name: 'Services', item: 'https://www.flostudio.co/services', url: 'https://www.flostudio.co/services' },
+          { name: 'Services & Divisions', item: 'https://www.flostudio.co/services', url: 'https://www.flostudio.co/services' },
         ]}
       />
 

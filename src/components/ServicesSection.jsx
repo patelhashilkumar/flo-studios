@@ -59,9 +59,10 @@ export default function ServicesSection({
             TWO SPECIALIZED DIVISIONS. ZERO BROKEN HANDOFFS.
           </h2>
           <p className="services-section__subtitle">
-            Flo Studios operates across two dedicated divisions designed to eliminate the fragmentation
-            of multi-vendor execution. Whether engineering high-performance digital products or producing
-            stage-calibrated creator media, one accountable team carries the vision from concept to market.
+            Flo Studios is a progressive dual-engine media and development hub operating at the intersection
+            of creative storytelling and digital infrastructure. Our primary focus is our Development Division—partnering
+            with venture-backed founders from ideation to production scale—paired with our Creator Division to transform
+            digital exposure into enduring business assets without single-stage handoffs.
           </p>
         </header>
 

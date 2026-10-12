@@ -32,7 +32,7 @@ const CAPABILITY_ITEMS = [
     num: '04',
     title: 'OWNERSHIP THROUGH COMPLETION',
     desc: 'We stay through deployment and live release, continuously testing, refining, and tuning real-world performance.',
-    tags: ['Production Rigor', 'Live Optimization', 'End-to-End Delivery'],
+    tags: ['Production Rigor', 'Live Refinement', 'End-to-End Delivery'],
   },
 ]
 
