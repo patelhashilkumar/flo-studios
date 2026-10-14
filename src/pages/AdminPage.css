@@ -245,6 +245,39 @@
   color: rgba(14, 14, 18, 0.7);
 }
 
+.admin-lock-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.admin-lock-input--password {
+  padding-right: 48px;
+}
+
+.admin-lock-eye-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(14, 14, 18, 0.45);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.admin-lock-eye-btn:hover {
+  color: #0e0e12;
+  background: rgba(14, 14, 18, 0.05);
+}
+
 .admin-lock-toggle-btn {
   background: none;
   border: none;
