@@ -382,11 +382,6 @@ export default function AdminPage() {
       <main className="admin-lock-page">
         <SEO title="Studio Portal — Flo Studios" description="Restricted studio administrative portal." noindex={true} />
         <div className="admin-lock-card">
-          <div className="admin-lock-badge">
-            <span className="admin-lock-icon">🔒</span>
-            <span>RESTRICTED STUDIO PORTAL</span>
-          </div>
-
           <h1 className="admin-lock-title">Flo Studios Admin</h1>
           <p className="admin-lock-sub">
             Authenticate with your studio administrator account to access client leads, applications, and job management.
