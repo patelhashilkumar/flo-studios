@@ -2,6 +2,7 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
+import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './WorkflowSection.css';
@@ -472,11 +473,18 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
   useFrame(() => {
     const p = progressRef.current?.value ?? 0;
     
-    // Determine active milestone index
-    let newIndex = 0;
-    if (p > 0.75) newIndex = 3;
-    else if (p > 0.50) newIndex = 2;
-    else if (p > 0.25) newIndex = 1;
+    // Determine active milestone index with hysteresis deadband (prevents boundary flicker)
+    let newIndex = activeIndex;
+    if (activeIndex === 0 && p >= 0.25) newIndex = 1;
+    else if (activeIndex === 1) {
+      if (p <= 0.22) newIndex = 0;
+      else if (p >= 0.50) newIndex = 2;
+    } else if (activeIndex === 2) {
+      if (p <= 0.47) newIndex = 1;
+      else if (p >= 0.75) newIndex = 3;
+    } else if (activeIndex === 3 && p <= 0.72) {
+      newIndex = 2;
+    }
     if (newIndex !== activeIndex) setActiveIndex(newIndex);
 
     const t = Math.min(p, 0.99);
@@ -647,12 +655,24 @@ export default function WorkflowSection() {
         </div>
 
         {/* Mobile HUD Milestone Card (Docked cleanly at bottom on small screens) */}
-        <div className="workflow-mobile-card" key={activeIndex} aria-live="polite">
+        <div className="workflow-mobile-card" aria-live="polite">
           <div className="milestone-card__glass">
             <div className="milestone-card__top">
-              <div className="milestone-card__phase">
-                PHASE {activeStep.num} — {activeStep.tag}
+              <div className="workflow-mobile-card__phase-wrap">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeIndex}
+                    className="milestone-card__phase"
+                    initial={{ opacity: 0, y: 3 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -3 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    PHASE {activeStep.num} — {activeStep.tag}
+                  </motion.div>
+                </AnimatePresence>
               </div>
+
               <div className="workflow-mobile-card__dots" aria-hidden="true">
                 {WORKFLOW_STEPS.map((_, dotIdx) => (
                   <span
@@ -663,12 +683,25 @@ export default function WorkflowSection() {
               </div>
             </div>
 
-            <h3 className="milestone-card__title">{activeStep.title}</h3>
-            <p className="milestone-card__desc">{activeStep.desc}</p>
+            <div className="workflow-mobile-card__body">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={activeIndex}
+                  className="workflow-mobile-card__content"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <h3 className="milestone-card__title">{activeStep.title}</h3>
+                  <p className="milestone-card__desc">{activeStep.desc}</p>
 
-            <div className="milestone-card__deliverable">
-              <span className="milestone-card__deliverable-dot" />
-              <span>Deliverable: {activeStep.deliverable}</span>
+                  <div className="milestone-card__deliverable">
+                    <span className="milestone-card__deliverable-dot" />
+                    <span>Deliverable: {activeStep.deliverable}</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
