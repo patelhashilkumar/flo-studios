@@ -22,8 +22,8 @@ export default function HomePage() {
   return (
     <motion.main variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="Flo Studios — Dual-Engine Media & Development Hub"
-        description="Flo Studios is a progressive dual-engine media and development hub built to scale digital exposure and authority for high-impact creators and venture-backed startups and businesses. Primary focus: Development Division (Full Build Lifecycle)."
+        title="Flo Studios — Development Division (Primary Flagship) & Creator Systems"
+        description="Flo Studios' primary flagship is our Development Division: partnering with venture-backed founders across the full build lifecycle—from strategy, UI/UX, and engineering to launch with zero broken handoffs. Secondarily backed by our Creator Division."
         canonicalUrl="https://www.flostudio.co/"
       />
       <Hero />

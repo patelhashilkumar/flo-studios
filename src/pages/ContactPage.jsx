@@ -33,7 +33,7 @@ export default function ContactPage() {
     <motion.main className="contact-page" variants={pageV} initial="initial" animate="animate" exit="exit" ref={heroRef}>
       <SEO
         title="Contact Flo Studios — Start a Project"
-        description="Partner with Flo Studios. Inquire with our Development Division for full-cycle digital product engineering or our Creator Division for stage-calibrated media production."
+        description="Partner with Flo Studios. Inquire with our Development Division (Primary Flagship: Full Build Lifecycle from strategy to launch) or our Creator Division (Secondary Vertical: End-to-End Growth Systems)."
         canonicalUrl="https://www.flostudio.co/contact"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },

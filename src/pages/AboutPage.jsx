@@ -234,8 +234,8 @@ export default function AboutPage() {
   return (
     <motion.main className="about" ref={rootRef} variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="About Flo Studios — Dual-Engine Media & Development Hub"
-        description="Flo Studios is a progressive dual-engine media and development hub built to scale digital exposure and authority for high-impact creators and venture-backed startups and businesses. Primary focus: Development Division."
+        title="About Flo Studios — Development Division (Primary) & Creator Systems"
+        description="About Flo Studios: Our primary flagship is the Development Division—carrying products from idea to market as one accountable partner. Secondarily powering high-impact creator growth systems."
         canonicalUrl="https://www.flostudio.co/about"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
