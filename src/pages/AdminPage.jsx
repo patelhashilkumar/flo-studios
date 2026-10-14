@@ -171,13 +171,25 @@ export default function AdminPage() {
         setIsSubmittingAuth(false)
         return
       }
-      setAuthError(
-        error?.message ||
-          'Invalid administrator credentials or unauthorized account.'
-      )
+      if (error) {
+        if (error.message === 'Failed to fetch') {
+          setAuthError(
+            'Network error: Unable to reach Supabase. If using Brave or an ad blocker, disable Shields for this site; or enable Secure DNS (Cloudflare 1.1.1.1 / Google) if your ISP blocks supabase.co.'
+          )
+        } else {
+          setAuthError(error.message)
+        }
+      } else {
+        setAuthError('Invalid administrator credentials or unauthorized account.')
+      }
     } catch (err) {
       console.warn('Supabase auth attempt failed:', err)
-      setAuthError('Unable to verify administrator credentials. Please try again.')
+      const isFetchErr = err?.message === 'Failed to fetch' || err?.name === 'TypeError'
+      setAuthError(
+        isFetchErr
+          ? 'Network error: Unable to reach Supabase. Check your internet connection or disable ad blockers / Brave Shields.'
+          : 'Unable to verify administrator credentials. Please try again.'
+      )
     }
 
     setIsSubmittingAuth(false)
