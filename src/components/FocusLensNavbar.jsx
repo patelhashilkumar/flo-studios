@@ -32,14 +32,14 @@ const SPRING = {
 
 export default function FocusLensNavbar() {
   const [hoveredId, setHoveredId] = useState(null)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileOpenPath, setMobileOpenPath] = useState(null)
   const [isVisible, setIsVisible] = useState(true)
   const location = useLocation()
-
-  // Close mobile drawer on route change
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [location.pathname])
+  const mobileOpen = mobileOpenPath === location.pathname
+  const setMobileOpen = (next) => {
+    const isOpen = typeof next === 'function' ? next(mobileOpen) : Boolean(next)
+    setMobileOpenPath(isOpen ? location.pathname : null)
+  }
 
   // Scroll direction detection to auto-hide and reveal navbar
   useEffect(() => {

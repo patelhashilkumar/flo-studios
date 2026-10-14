@@ -894,11 +894,33 @@ const SERVICES = [
    MAIN COMPONENT: MOTION CONTACT FORM
    ═══════════════════════════════════════════════════ */
 
+function resolveDefaultService(initialDivision, activeSubject) {
+  if (initialDivision) {
+    const normalized = String(initialDivision).toLowerCase().trim()
+    if (normalized === 'development' || normalized === 'dev' || normalized === 'build') {
+      return 'Development Division'
+    }
+    if (normalized === 'creator' || normalized === 'content' || normalized === 'media') {
+      return 'Creator / Content'
+    }
+  }
+  if (activeSubject === 'Start a Project') return 'Development Division'
+  if (activeSubject === 'Press & Media') return 'Brand Identity'
+  if (activeSubject === 'General Note') return 'Creative Tech'
+  return 'Development Division'
+}
+
 export default function MotionContactForm({ activeSubject, initialDivision }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [selectedService, setSelectedService] = useState('Development Division')
+  const propKey = `${initialDivision || ''}:${activeSubject || ''}`
+  const [serviceSelection, setServiceSelection] = useState({ key: propKey, value: null })
+  const selectedService =
+    serviceSelection.key === propKey && serviceSelection.value
+      ? serviceSelection.value
+      : resolveDefaultService(initialDivision, activeSubject)
+  const setSelectedService = (value) => setServiceSelection({ key: propKey, value })
   const [message, setMessage] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState('idle') // 'idle' | 'pending' | 'success'
@@ -949,27 +971,7 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
     })
 
     return () => unsubscribe()
-  }, [bounds.width])
-
-  // Sync external topic clicks or initialDivision URL param
-  useEffect(() => {
-    if (initialDivision) {
-      const normalized = String(initialDivision).toLowerCase().trim()
-      if (normalized === 'development' || normalized === 'dev' || normalized === 'build') {
-        setSelectedService('Development Division')
-        return
-      }
-      if (normalized === 'creator' || normalized === 'content' || normalized === 'media') {
-        setSelectedService('Creator / Content')
-        return
-      }
-    }
-    if (activeSubject) {
-      if (activeSubject === 'Start a Project') setSelectedService('Development Division')
-      if (activeSubject === 'Press & Media') setSelectedService('Brand Identity')
-      if (activeSubject === 'General Note') setSelectedService('Creative Tech')
-    }
-  }, [activeSubject, initialDivision])
+  }, [bounds.width, progress])
 
   const filled = Boolean(name.trim() || email.trim() || message.trim())
   const ready = Boolean(name.trim() && email.trim())
@@ -1034,8 +1036,12 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
     }, 8000)
   }
 
-  const handleSubmit = (e) => {
+  const [submitError, setSubmitError] = useState('')
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if (status === 'pending' || isRunningRef.current) return
+    setSubmitError('')
 
     if (honeypot.trim()) {
       // Silent drop for automated bots
@@ -1048,24 +1054,41 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
     const trimmedMessage = message.trim()
 
     if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      setSubmitError('Please fill out your name, email address, and message.')
       return
     }
 
-    // Save to persistent admin storage
-    saveSubmission({
-      type: 'message',
-      name: trimmedName,
-      email: trimmedEmail,
-      phone: phone.trim() || '',
-      service: selectedService,
-      message: trimmedMessage
-    })
+    setStatus('pending')
+    try {
+      const saved = await saveSubmission({
+        type: 'message',
+        name: trimmedName,
+        email: trimmedEmail,
+        phone: phone.trim() || '',
+        service: selectedService,
+        message: trimmedMessage
+      })
 
-    runDeliverySequence()
+      if (!saved) {
+        setStatus('idle')
+        setSubmitError('Unable to deliver your message right now. Please try again.')
+        return
+      }
+
+      await runDeliverySequence()
+    } catch (err) {
+      console.error('Contact inquiry submission failed:', err)
+      setStatus('idle')
+      setSubmitError(
+        err?.message ||
+          'Unable to deliver your message right now. Please check your connection and try again.'
+      )
+    }
   }
 
   const handleReset = () => {
     setStatus('idle')
+    setSubmitError('')
     setName('')
     setEmail('')
     setPhone('')
@@ -1110,6 +1133,7 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
                 onChange={(e) => {
                   setName(e.target.value)
                   if (status === 'success') setStatus('idle')
+                  if (submitError) setSubmitError('')
                 }}
                 required
               />
@@ -1124,6 +1148,7 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
                 onChange={(e) => {
                   setEmail(e.target.value)
                   if (status === 'success') setStatus('idle')
+                  if (submitError) setSubmitError('')
                 }}
                 required
               />
@@ -1169,6 +1194,7 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
               onChange={(e) => {
                 setMessage(e.target.value)
                 if (status === 'success') setStatus('idle')
+                if (submitError) setSubmitError('')
               }}
               rows={4}
               required
@@ -1185,9 +1211,21 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
             />
           </div>
 
-          {/* Feedback note when delivery finishes */}
+          {/* Feedback note when delivery finishes or fails */}
           <AnimatePresence>
-            {status === 'success' && (
+            {submitError && (
+              <motion.div
+                role="alert"
+                className="motion-form__feedback motion-form__feedback--error"
+                style={{ color: '#c53030', marginTop: '0.75rem', fontWeight: 500 }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                ⚠️ {submitError}
+              </motion.div>
+            )}
+            {status === 'success' && !submitError && (
               <motion.div
                 className="motion-form__feedback"
                 initial={{ opacity: 0, y: 6 }}

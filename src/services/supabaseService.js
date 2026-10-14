@@ -8,55 +8,173 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase.js'
 import { INITIAL_JOB_POSTINGS } from '../data/jobPostings.js'
 
+let clientOverride = undefined
+
+/**
+ * Test hook to inject a mock Supabase client in automated tests
+ */
+export function __setSupabaseClientForTests(mockClient) {
+  clientOverride = mockClient
+}
+
+function getClient() {
+  return clientOverride !== undefined ? clientOverride : supabase
+}
+
+function isClientReady() {
+  if (clientOverride !== undefined) return Boolean(clientOverride)
+  return isSupabaseConfigured() && Boolean(supabase)
+}
+
+export const STUDIO_ADMIN_EMAILS = ['theflostudios0@gmail.com', 'admin@flostudios.com']
+export const INQUIRY_STATUSES = ['new', 'reviewed', 'contacted', 'archived']
+export const JOB_APPLICATION_STATUSES = [
+  'new',
+  'reviewing',
+  'interviewing',
+  'offer',
+  'rejected',
+  'archived'
+]
+
+export function isValidStatusForType(type, status) {
+  if (typeof status !== 'string' || !status.trim()) return false
+  const allowed = type === 'job' || type === 'career' ? JOB_APPLICATION_STATUSES : INQUIRY_STATUSES
+  return allowed.includes(status.trim())
+}
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
+export function ensureUuid(candidate) {
+  if (typeof candidate === 'string' && UUID_REGEX.test(candidate.trim())) {
+    return candidate.trim()
+  }
+  if (typeof globalThis !== 'undefined' && globalThis.crypto?.randomUUID) {
+    return globalThis.crypto.randomUUID()
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
+const inFlightSubmissionKeys = new Set()
+
 /* ─────────────────────────────────────────────────────────────
-   1. AUTHENTICATION (ADMIN)
+   1. AUTHENTICATION & AUTHORIZATION (ADMIN)
    ───────────────────────────────────────────────────────────── */
 
 /**
- * Sign in admin user with email & password
+ * Verifies whether an authenticated Supabase user has studio admin authorization.
+ * Never trusts user_metadata (which is user-editable). Checks app_metadata or verified studio admin email.
+ */
+export function isAuthorizedAdminUser(user) {
+  if (!user || typeof user !== 'object' || typeof user.id !== 'string' || !user.id.trim()) {
+    return false
+  }
+  if (user.is_anonymous === true) {
+    return false
+  }
+  const appMeta = user.app_metadata && typeof user.app_metadata === 'object' ? user.app_metadata : {}
+  if (
+    appMeta.role === 'admin' ||
+    appMeta.role === 'studio_admin' ||
+    appMeta.is_admin === true
+  ) {
+    return true
+  }
+  const email = typeof user.email === 'string' ? user.email.trim().toLowerCase() : ''
+  return Boolean(email && STUDIO_ADMIN_EMAILS.includes(email))
+}
+
+async function requireAuthorizedAdmin() {
+  const { session, user } = await getAdminSession()
+  if (!session || !user || !isAuthorizedAdminUser(user)) {
+    throw new Error('Unauthorized: Valid studio administrator session required.')
+  }
+  return { session, user }
+}
+
+/**
+ * Sign in admin user with email & password and verify admin authorization
  */
 export async function signInAdmin(email, password) {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     return { data: null, error: new Error('Supabase is not configured') }
   }
-  return await supabase.auth.signInWithPassword({
-    email: email.trim(),
-    password: password.trim()
+  const cleanEmail = typeof email === 'string' ? email.trim() : ''
+  const cleanPassword = typeof password === 'string' ? password.trim() : ''
+  if (!cleanEmail || !cleanPassword) {
+    return { data: null, error: new Error('Email and password are required') }
+  }
+
+  const result = await client.auth.signInWithPassword({
+    email: cleanEmail,
+    password: cleanPassword
   })
+
+  if (result?.error) {
+    return result
+  }
+
+  const user = result?.data?.session?.user || result?.data?.user || null
+  if (!isAuthorizedAdminUser(user)) {
+    try {
+      await client.auth.signOut()
+    } catch {
+      // Ignore sign-out cleanup error
+    }
+    return {
+      data: { session: null, user: null },
+      error: new Error('Unauthorized: Account does not have studio administrator privileges.')
+    }
+  }
+
+  return result
 }
 
 /**
  * Sign out current admin user
  */
 export async function signOutAdmin() {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     return { error: null }
   }
-  return await supabase.auth.signOut()
+  return await client.auth.signOut()
 }
 
 /**
- * Get active admin session
+ * Get active admin session (only returns session if user is an authorized studio admin)
  */
 export async function getAdminSession() {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     return { session: null, user: null }
   }
-  const { data, error } = await supabase.auth.getSession()
-  if (error || !data) return { session: null, user: null }
-  return { session: data.session, user: data.session?.user || null }
+  const { data, error } = await client.auth.getSession()
+  if (error || !data?.session?.user) return { session: null, user: null }
+  if (!isAuthorizedAdminUser(data.session.user)) {
+    return { session: null, user: null }
+  }
+  return { session: data.session, user: data.session.user }
 }
 
 /**
  * Listen to auth state transitions
  */
 export function onAuthChange(callback) {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     return { data: { subscription: { unsubscribe: () => {} } } }
   }
-  return supabase.auth.onAuthStateChange((event, session) => {
+  return client.auth.onAuthStateChange((event, session) => {
     if (typeof callback === 'function') {
-      callback(event, session)
+      const authorizedSession =
+        session && isAuthorizedAdminUser(session.user) ? session : null
+      callback(event, authorizedSession)
     }
   })
 }
@@ -66,49 +184,60 @@ export function onAuthChange(callback) {
    ───────────────────────────────────────────────────────────── */
 
 /**
- * Public submission of contact form / inquiry
+ * Public submission of contact form / inquiry (single-insert idempotent strategy)
  */
 export async function createInquiry(payload = {}) {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     throw new Error('Supabase is not configured')
   }
 
-  const insertPayload = {
-    name: payload.name || 'Anonymous',
-    email: payload.email || '',
-    phone: payload.phone || '',
-    service: payload.service || payload.projectType || '',
-    budget: payload.budget || '',
-    message: payload.message || '',
-    status: 'new',
-    starred: false
+  const id = ensureUuid(payload.id)
+  const dedupeKey = `inquiry:${id}:${(payload.email || '').trim().toLowerCase()}:${(payload.message || '').trim()}`
+  if (inFlightSubmissionKeys.has(dedupeKey)) {
+    throw new Error('Duplicate submission in progress')
   }
 
-  let createdId = payload.id || null
-  const { data, error } = await supabase
-    .from('contact_inquiries')
-    .insert([insertPayload])
-    .select('id')
+  inFlightSubmissionKeys.add(dedupeKey)
+  try {
+    const insertPayload = {
+      id,
+      name: (payload.name || 'Anonymous').trim(),
+      email: (payload.email || '').trim(),
+      phone: (payload.phone || '').trim(),
+      service: payload.service || payload.projectType || '',
+      budget: payload.budget || '',
+      message: (payload.message || '').trim(),
+      status: 'new',
+      starred: false
+    }
 
-  if (error) {
-    const fallback = await supabase
-      .from('contact_inquiries')
-      .insert([insertPayload])
-    if (fallback.error) throw fallback.error
-  } else if (data && data[0]?.id) {
-    createdId = data[0].id
+    // Single insert without .select() so restricted SELECT RLS never triggers a duplicate retry
+    const { error } = await client.from('contact_inquiries').insert([insertPayload])
+    if (error) {
+      throw error
+    }
+
+    return { ok: true, id }
+  } finally {
+    inFlightSubmissionKeys.delete(dedupeKey)
   }
-
-  return { ok: true, id: createdId }
 }
 
 /**
  * Admin: Retrieve all contact inquiries
  */
 export async function getInquiries() {
-  if (!isSupabaseConfigured() || !supabase) return []
+  const client = getClient()
+  if (!isClientReady() || !client) return []
 
-  const { data, error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return []
+  }
+
+  const { data, error } = await client
     .from('contact_inquiries')
     .select('*')
     .order('created_at', { ascending: false })
@@ -138,9 +267,20 @@ export async function getInquiries() {
  * Admin: Update inquiry status
  */
 export async function updateInquiryStatus(id, newStatus) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
+  if (!isValidStatusForType('message', newStatus)) {
+    console.error(`Invalid inquiry status "${newStatus}". Allowed: ${INQUIRY_STATUSES.join(', ')}`)
+    return false
+  }
 
-  const { error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
+
+  const { error } = await client
     .from('contact_inquiries')
     .update({ status: newStatus })
     .eq('id', id)
@@ -156,9 +296,16 @@ export async function updateInquiryStatus(id, newStatus) {
  * Admin: Toggle starred flag on inquiry
  */
 export async function toggleInquiryStar(id, currentStarred) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
 
-  const { error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
+
+  const { error } = await client
     .from('contact_inquiries')
     .update({ starred: !currentStarred })
     .eq('id', id)
@@ -174,9 +321,16 @@ export async function toggleInquiryStar(id, currentStarred) {
  * Admin: Delete an inquiry
  */
 export async function deleteInquiry(id) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
 
-  const { error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
+
+  const { error } = await client
     .from('contact_inquiries')
     .delete()
     .eq('id', id)
@@ -196,13 +350,13 @@ export async function deleteInquiry(id) {
  * Upload resume file to private Supabase Storage bucket
  */
 export async function uploadResumeFile(file, appId) {
-  if (!isSupabaseConfigured() || !supabase || !file) return null
+  const client = getClient()
+  if (!isClientReady() || !client || !file) return null
 
-  const sanitizeName = (file.name || 'resume.pdf')
-    .replace(/[^a-zA-Z0-9._-]/g, '_')
+  const sanitizeName = (file.name || 'resume.pdf').replace(/[^a-zA-Z0-9._-]/g, '_')
   const filePath = `resumes_${appId || Date.now()}/${Date.now()}_${sanitizeName}`
 
-  const { error: uploadError } = await supabase.storage
+  const { error: uploadError } = await client.storage
     .from('resumes')
     .upload(filePath, file, {
       cacheControl: '3600',
@@ -217,7 +371,7 @@ export async function uploadResumeFile(file, appId) {
   return {
     path: filePath,
     name: file.name,
-    size: `${(file.size / 1024 / 1024).toFixed(2)} MB`
+    size: typeof file.size === 'number' ? `${(file.size / 1024 / 1024).toFixed(2)} MB` : ''
   }
 }
 
@@ -225,9 +379,16 @@ export async function uploadResumeFile(file, appId) {
  * Admin: Create a secure temporary signed URL for a candidate's resume
  */
 export async function getResumeSignedUrl(resumePath, expiresInSeconds = 3600) {
-  if (!isSupabaseConfigured() || !supabase || !resumePath) return null
+  const client = getClient()
+  if (!isClientReady() || !client || !resumePath) return null
 
-  const { data, error } = await supabase.storage
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return null
+  }
+
+  const { data, error } = await client.storage
     .from('resumes')
     .createSignedUrl(resumePath, expiresInSeconds)
 
@@ -242,75 +403,88 @@ export async function getResumeSignedUrl(resumePath, expiresInSeconds = 3600) {
    4. JOB APPLICATIONS
    ───────────────────────────────────────────────────────────── */
 
+function isUploadableFile(file) {
+  if (!file || typeof file !== 'object') return false
+  if (typeof File !== 'undefined' && file instanceof File) return true
+  if (typeof Blob !== 'undefined' && file instanceof Blob) return true
+  return typeof file.name === 'string' && typeof file.size === 'number'
+}
+
 /**
- * Public submission of job application with optional file upload
+ * Public submission of job application with file upload (single-insert idempotent strategy)
  */
 export async function createJobApplication(payload = {}, file = null) {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     throw new Error('Supabase is not configured')
   }
 
-  let resumeMeta = {
-    path: payload.resumePath || '',
-    name: payload.resumeName || '',
-    size: payload.resumeSize || ''
+  const id = ensureUuid(payload.id)
+  const dedupeKey = `job:${id}:${(payload.email || '').trim().toLowerCase()}:${payload.jobId || 'sdr'}`
+  if (inFlightSubmissionKeys.has(dedupeKey)) {
+    throw new Error('Duplicate application submission in progress')
   }
 
-  // Upload file to private storage if binary file provided
-  if (file instanceof File || file instanceof Blob) {
-    try {
+  inFlightSubmissionKeys.add(dedupeKey)
+  try {
+    let resumeMeta = {
+      path: payload.resumePath || '',
+      name: payload.resumeName || '',
+      size: payload.resumeSize || ''
+    }
+
+    // Upload file to private storage if binary file provided; propagate upload errors
+    if (isUploadableFile(file)) {
       const uploaded = await uploadResumeFile(file, payload.jobId || 'app')
       if (uploaded) {
         resumeMeta = uploaded
       }
-    } catch (err) {
-      console.warn('File upload failed, proceeding with application metadata:', err)
     }
+
+    const insertPayload = {
+      id,
+      job_id: payload.jobId || 'sdr',
+      role_title: payload.role || payload.roleTitle || 'Sales Development Representative',
+      name: (payload.name || '').trim(),
+      email: (payload.email || '').trim(),
+      phone: (payload.phone || '').trim(),
+      region: payload.region || '',
+      experience: payload.experience || '',
+      linkedin_url: payload.linkedinUrl || payload.portfolioUrl || '',
+      notes: payload.notes || payload.coverNote || '',
+      resume_path: resumeMeta.path,
+      resume_name: resumeMeta.name,
+      resume_size: resumeMeta.size,
+      status: 'new',
+      starred: false
+    }
+
+    // Single insert without .select() so restricted SELECT RLS never triggers a duplicate retry
+    const { error } = await client.from('job_applications').insert([insertPayload])
+    if (error) {
+      throw error
+    }
+
+    return { ok: true, id, resume_path: resumeMeta.path }
+  } finally {
+    inFlightSubmissionKeys.delete(dedupeKey)
   }
-
-  const insertPayload = {
-    job_id: payload.jobId || 'sdr',
-    role_title: payload.role || payload.roleTitle || 'Sales Development Representative',
-    name: payload.name || '',
-    email: payload.email || '',
-    phone: payload.phone || '',
-    region: payload.region || '',
-    experience: payload.experience || '',
-    linkedin_url: payload.linkedinUrl || '',
-    notes: payload.notes || payload.coverNote || '',
-    resume_path: resumeMeta.path,
-    resume_name: resumeMeta.name,
-    resume_size: resumeMeta.size,
-    status: 'new',
-    starred: false
-  }
-
-  let createdId = payload.id || null
-  const { data, error } = await supabase
-    .from('job_applications')
-    .insert([insertPayload])
-    .select('id')
-
-  if (error) {
-    // If select is restricted by RLS on public client, fallback to insert without returning
-    const fallbackRes = await supabase
-      .from('job_applications')
-      .insert([insertPayload])
-    if (fallbackRes.error) throw fallbackRes.error
-  } else if (data && data[0]?.id) {
-    createdId = data[0].id
-  }
-
-  return { ok: true, id: createdId, resume_path: resumeMeta.path }
 }
 
 /**
  * Admin: Retrieve all job applications
  */
 export async function getJobApplications() {
-  if (!isSupabaseConfigured() || !supabase) return []
+  const client = getClient()
+  if (!isClientReady() || !client) return []
 
-  const { data, error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return []
+  }
+
+  const { data, error } = await client
     .from('job_applications')
     .select('*')
     .order('created_at', { ascending: false })
@@ -349,9 +523,22 @@ export async function getJobApplications() {
  * Admin: Update application status
  */
 export async function updateApplicationStatus(id, newStatus) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
+  if (!isValidStatusForType('job', newStatus)) {
+    console.error(
+      `Invalid job application status "${newStatus}". Allowed: ${JOB_APPLICATION_STATUSES.join(', ')}`
+    )
+    return false
+  }
 
-  const { error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
+
+  const { error } = await client
     .from('job_applications')
     .update({ status: newStatus })
     .eq('id', id)
@@ -367,9 +554,16 @@ export async function updateApplicationStatus(id, newStatus) {
  * Admin: Toggle application starred
  */
 export async function toggleApplicationStar(id, currentStarred) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
 
-  const { error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
+
+  const { error } = await client
     .from('job_applications')
     .update({ starred: !currentStarred })
     .eq('id', id)
@@ -385,18 +579,25 @@ export async function toggleApplicationStar(id, currentStarred) {
  * Admin: Delete an application (and its resume file from storage)
  */
 export async function deleteApplication(id, resumePath) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
+
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
 
   // Delete resume from storage if it exists
   if (resumePath) {
     try {
-      await supabase.storage.from('resumes').remove([resumePath])
+      await client.storage.from('resumes').remove([resumePath])
     } catch (err) {
       console.warn('Failed deleting resume file from storage:', err)
     }
   }
 
-  const { error } = await supabase
+  const { error } = await client
     .from('job_applications')
     .delete()
     .eq('id', id)
@@ -407,6 +608,7 @@ export async function deleteApplication(id, resumePath) {
   }
   return true
 }
+
 
 /* ─────────────────────────────────────────────────────────────
    5. JOB POSTINGS (CMS)
@@ -486,11 +688,12 @@ function mapJobToDB(job, order = 1) {
  * Fetch all job postings from Supabase
  */
 export async function fetchJobPostings() {
-  if (!isSupabaseConfigured() || !supabase) {
+  const client = getClient()
+  if (!isClientReady() || !client) {
     return INITIAL_JOB_POSTINGS
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('job_postings')
     .select('*')
     .order('display_order', { ascending: true })
@@ -507,12 +710,19 @@ export async function fetchJobPostings() {
  * Admin: Create or update a job posting in Supabase
  */
 export async function upsertJobPosting(jobData) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
+
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
 
   const id = jobData.id || `job_${Date.now()}`
   const dbPayload = mapJobToDB({ ...jobData, id })
 
-  const { error } = await supabase
+  const { error } = await client
     .from('job_postings')
     .upsert([dbPayload], { onConflict: 'id' })
 
@@ -527,9 +737,16 @@ export async function upsertJobPosting(jobData) {
  * Admin: Delete a job posting from Supabase
  */
 export async function deleteJobPosting(id) {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
 
-  const { error } = await supabase
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
+
+  const { error } = await client
     .from('job_postings')
     .delete()
     .eq('id', id)
@@ -545,14 +762,21 @@ export async function deleteJobPosting(id) {
  * Admin: Restore default job listings in Supabase
  */
 export async function resetJobPostings() {
-  if (!isSupabaseConfigured() || !supabase) return false
+  const client = getClient()
+  if (!isClientReady() || !client) return false
+
+  try {
+    await requireAuthorizedAdmin()
+  } catch {
+    return false
+  }
 
   // Delete all
-  await supabase.from('job_postings').delete().neq('id', '___none___')
+  await client.from('job_postings').delete().neq('id', '___none___')
 
   // Re-insert initial SDR job
   const sdrDb = mapJobToDB(INITIAL_JOB_POSTINGS[0], 1)
-  const { error } = await supabase
+  const { error } = await client
     .from('job_postings')
     .insert([sdrDb])
 
@@ -562,3 +786,4 @@ export async function resetJobPostings() {
   }
   return true
 }
+

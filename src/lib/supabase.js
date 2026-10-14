@@ -6,35 +6,48 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl =
-  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_URL) ||
-  (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.env && globalThis.process.env.VITE_SUPABASE_URL) ||
-  'https://jemvbvzucqvetaghoyjg.supabase.co'
+function readEnv(key) {
+  if (typeof globalThis !== 'undefined' && globalThis.process?.env && key in globalThis.process.env) {
+    return globalThis.process.env[key] || ''
+  }
+  if (typeof import.meta !== 'undefined' && import.meta.env && key in import.meta.env) {
+    return import.meta.env[key] || ''
+  }
+  return ''
+}
 
-const supabaseAnonKey =
-  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) ||
-  (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.env && globalThis.process.env.VITE_SUPABASE_ANON_KEY) ||
-  'sb_publishable_peQ2bFpIImyQWF0g-GQtUw_1P48vaDj'
+export function getSupabaseCredentials() {
+  const url = (readEnv('VITE_SUPABASE_URL') || readEnv('NEXT_PUBLIC_SUPABASE_URL') || '').trim()
+  const anonKey = (
+    readEnv('VITE_SUPABASE_ANON_KEY') ||
+    readEnv('VITE_SUPABASE_PUBLISHABLE_KEY') ||
+    readEnv('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY') ||
+    ''
+  ).trim()
+  return { url, anonKey }
+}
 
 /**
  * Returns true if valid Supabase environment credentials are present
  */
 export function isSupabaseConfigured() {
+  const { url, anonKey } = getSupabaseCredentials()
   return (
-    typeof supabaseUrl === 'string' &&
-    supabaseUrl.trim().length > 0 &&
-    supabaseUrl.startsWith('http') &&
-    typeof supabaseAnonKey === 'string' &&
-    supabaseAnonKey.trim().length > 0
+    typeof url === 'string' &&
+    url.length > 0 &&
+    url.startsWith('http') &&
+    typeof anonKey === 'string' &&
+    anonKey.length > 0
   )
 }
 
+const initialCreds = getSupabaseCredentials()
+
 /**
- * Initialize Supabase client
- * Fallback to dummy client if unconfigured so components don't crash on boot
+ * Initialize Supabase client when environment variables are configured
  */
 export const supabase = isSupabaseConfigured()
-  ? createClient(supabaseUrl, supabaseAnonKey, {
+  ? createClient(initialCreds.url, initialCreds.anonKey, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
@@ -42,3 +55,4 @@ export const supabase = isSupabaseConfigured()
       }
     })
   : null
+

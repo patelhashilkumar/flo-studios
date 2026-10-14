@@ -23,19 +23,24 @@ import {
   upsertJobPosting,
   deleteJobPosting,
   resetJobPostings,
-  getResumeSignedUrl
+  getResumeSignedUrl,
+  INQUIRY_STATUSES,
+  JOB_APPLICATION_STATUSES,
+  isValidStatusForType,
+  ensureUuid
 } from './supabaseService.js'
 
-export { isSupabaseConfigured, getResumeSignedUrl }
+export {
+  isSupabaseConfigured,
+  getResumeSignedUrl,
+  INQUIRY_STATUSES,
+  JOB_APPLICATION_STATUSES,
+  isValidStatusForType
+}
 
 export const STORAGE_KEY = 'FLO_STUDIOS_SUBMISSIONS_V1'
 export const JOBS_STORAGE_KEY = 'FLO_STUDIOS_JOBS_V1'
 export const AUTH_KEY = 'FLO_STUDIOS_ADMIN_AUTH_V1'
-
-const configuredPasscode =
-  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_ADMIN_PASSCODE) ||
-  (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.env && globalThis.process.env.VITE_ADMIN_PASSCODE) ||
-  'flo2026'
 
 export const DEFAULT_SEEDS = []
 
@@ -55,6 +60,44 @@ function getSessionStorage() {
   if (typeof sessionStorage !== 'undefined') return sessionStorage
   if (typeof window !== 'undefined' && window.sessionStorage) return window.sessionStorage
   return null
+}
+
+/**
+ * Strip binary/Base64 payload fields so localStorage only ever stores compact metadata
+ */
+function stripBinaryResumeFields(record) {
+  if (!record || typeof record !== 'object') return record
+  const metadataOnly = { ...record }
+  delete metadataOnly.rawFile
+  delete metadataOnly.resumeData
+  return metadataOnly
+}
+
+/**
+ * Write submissions array to localStorage with QuotaExceededError eviction fallback
+ */
+function writeSubmissionsToStorage(storage, items) {
+  if (!storage) return false
+  const sanitized = (Array.isArray(items) ? items : []).map(stripBinaryResumeFields)
+  try {
+    storage.setItem(STORAGE_KEY, JSON.stringify(sanitized))
+    return true
+  } catch (err) {
+    // QuotaExceededError fallback: keep most recent half, or just the newest item
+    try {
+      const trimmed = sanitized.slice(0, Math.max(1, Math.floor(sanitized.length / 2)))
+      storage.setItem(STORAGE_KEY, JSON.stringify(trimmed))
+      return true
+    } catch {
+      try {
+        storage.setItem(STORAGE_KEY, JSON.stringify(sanitized.slice(0, 1)))
+        return true
+      } catch (finalErr) {
+        console.warn('Local storage quota exceeded and unable to persist cache:', finalErr || err)
+        return false
+      }
+    }
+  }
 }
 
 /**
@@ -89,16 +132,29 @@ export function getSubmissions() {
       return []
     }
 
-    // Filter out legacy dummy seeds
-    const cleaned = parsed.filter((item) => {
-      if (!item || typeof item !== 'object') return false
-      const idStr = String(item.id || '')
-      const isLegacySeed = LEGACY_SEED_PREFIXES.some((prefix) => idStr.startsWith(prefix))
-      return !isLegacySeed
-    })
+    let modified = false
+    // Filter out legacy dummy seeds and strip any legacy Base64 resumeData
+    const cleaned = parsed
+      .filter((item) => {
+        if (!item || typeof item !== 'object') {
+          modified = true
+          return false
+        }
+        const idStr = String(item.id || '')
+        const isLegacySeed = LEGACY_SEED_PREFIXES.some((prefix) => idStr.startsWith(prefix))
+        if (isLegacySeed) modified = true
+        return !isLegacySeed
+      })
+      .map((item) => {
+        if ('resumeData' in item || 'rawFile' in item) {
+          modified = true
+          return stripBinaryResumeFields(item)
+        }
+        return item
+      })
 
-    if (cleaned.length !== parsed.length) {
-      storage.setItem(STORAGE_KEY, JSON.stringify(cleaned))
+    if (modified || cleaned.length !== parsed.length) {
+      writeSubmissionsToStorage(storage, cleaned)
     }
 
     return cleaned
@@ -128,10 +184,10 @@ export async function loadSubmissionsFromCloud() {
     const local = getSubmissions()
     const mergedMap = new Map()
     local.forEach((item) => {
-      if (item && item.id) mergedMap.set(String(item.id), item)
+      if (item && item.id) mergedMap.set(String(item.id), stripBinaryResumeFields(item))
     })
     cloudCombined.forEach((item) => {
-      if (item && item.id) mergedMap.set(String(item.id), item)
+      if (item && item.id) mergedMap.set(String(item.id), stripBinaryResumeFields(item))
     })
     const combined = Array.from(mergedMap.values()).sort((a, b) => {
       return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
@@ -139,7 +195,7 @@ export async function loadSubmissionsFromCloud() {
 
     const storage = getStorage()
     if (storage) {
-      storage.setItem(STORAGE_KEY, JSON.stringify(combined))
+      writeSubmissionsToStorage(storage, combined)
     }
     emitChange()
     return combined
@@ -150,102 +206,108 @@ export async function loadSubmissionsFromCloud() {
 }
 
 /**
- * Save a new submission (Client Message or Job Application)
- * Normalizes metadata, writes to Supabase if configured, and caches locally.
+ * Save a new submission (Client Message or Job Application).
+ * Never writes Base64 resumeData or rawFile to localStorage.
+ * Propagates cloud errors when Supabase is configured so forms do not report false success.
  */
 export async function saveSubmission(entry = {}) {
-  const current = getSubmissions()
-  const isJob = entry.type === 'job'
-  const tempId = entry.id || `${isJob ? 'job' : 'msg'}_${Date.now()}`
+  const rawFile = entry?.rawFile
+  const cleanEntry = stripBinaryResumeFields(entry || {})
+  const isJob = cleanEntry.type === 'job'
+  const submissionId = ensureUuid(cleanEntry.id)
 
   const newSubmission = {
-    ...entry,
-    id: tempId,
-    type: entry.type || (isJob ? 'job' : 'message'),
-    status: entry.status || 'new',
-    starred: Boolean(entry.starred),
-    createdAt: entry.createdAt || new Date().toISOString(),
-    region: entry.region || '',
-    division: entry.division || '',
-    resumeName: entry.resumeName || null,
-    resumeSize: entry.resumeSize || null,
-    resumeType: entry.resumeType || null,
-    resumePath: entry.resumePath || null,
-    resumeNote: entry.resumeNote || null,
-    termsConfirmed: Boolean(entry.termsConfirmed)
+    ...cleanEntry,
+    id: submissionId,
+    type: cleanEntry.type || (isJob ? 'job' : 'message'),
+    status: 'new',
+    starred: Boolean(cleanEntry.starred),
+    createdAt: cleanEntry.createdAt || new Date().toISOString(),
+    region: cleanEntry.region || '',
+    division: cleanEntry.division || '',
+    resumeName: cleanEntry.resumeName || (rawFile && rawFile.name) || null,
+    resumeSize: cleanEntry.resumeSize || null,
+    resumeType: cleanEntry.resumeType || (rawFile && rawFile.type) || null,
+    resumePath: cleanEntry.resumePath || null,
+    resumeNote: cleanEntry.resumeNote || null,
+    termsConfirmed: Boolean(cleanEntry.termsConfirmed)
   }
 
-  // Write to local cache immediately for optimistic UI
-  const updated = [newSubmission, ...current]
-  try {
+  // Dispatch to Supabase Cloud first when configured so network/upload errors propagate
+  if (isSupabaseConfigured()) {
+    if (isJob) {
+      const cloudRecord = await createJobApplication(
+        { ...cleanEntry, id: submissionId },
+        rawFile || null
+      )
+      if (cloudRecord) {
+        newSubmission.id = cloudRecord.id || submissionId
+        newSubmission.resumePath = cloudRecord.resume_path || newSubmission.resumePath
+      }
+    } else {
+      const cloudRecord = await createInquiry({ ...cleanEntry, id: submissionId })
+      if (cloudRecord) {
+        newSubmission.id = cloudRecord.id || submissionId
+      }
+    }
+
+    const current = getSubmissions().filter((s) => s.id !== newSubmission.id)
     const storage = getStorage()
     if (storage) {
-      storage.setItem(STORAGE_KEY, JSON.stringify(updated))
+      writeSubmissionsToStorage(storage, [newSubmission, ...current])
     }
     emitChange()
-  } catch (cacheErr) {
-    console.warn('Local storage cache write warning:', cacheErr)
+    return newSubmission
   }
 
-  // Dispatch to Supabase Cloud if configured
-  if (isSupabaseConfigured()) {
-    try {
-      if (isJob) {
-        const cloudRecord = await createJobApplication(entry, entry.rawFile)
-        if (cloudRecord) {
-          newSubmission.id = cloudRecord.id || tempId
-          newSubmission.resumePath = cloudRecord.resume_path || newSubmission.resumePath
-          // Update cache with cloud ID
-          const refreshed = getSubmissions().map((s) => (s.id === tempId ? newSubmission : s))
-          const storage = getStorage()
-          if (storage) storage.setItem(STORAGE_KEY, JSON.stringify(refreshed))
-          emitChange()
-        }
-      } else {
-        const cloudRecord = await createInquiry(entry)
-        if (cloudRecord) {
-          newSubmission.id = cloudRecord.id || tempId
-          const refreshed = getSubmissions().map((s) => (s.id === tempId ? newSubmission : s))
-          const storage = getStorage()
-          if (storage) storage.setItem(STORAGE_KEY, JSON.stringify(refreshed))
-          emitChange()
-        }
-      }
-    } catch (cloudErr) {
-      console.error('Supabase submission error (saved to local fallback):', cloudErr)
+  // Offline / unconfigured preview mode: persist metadata-only record to localStorage
+  const current = getSubmissions().filter((s) => s.id !== newSubmission.id)
+  const storage = getStorage()
+  if (storage) {
+    const wrote = writeSubmissionsToStorage(storage, [newSubmission, ...current])
+    if (!wrote) {
+      throw new Error('Local storage quota exceeded. Unable to save submission.')
     }
   }
-
+  emitChange()
   return newSubmission
 }
 
 /**
- * Update the review / workflow status of a submission
+ * Update the review / workflow status of a submission (validates against DB CHECK constraints)
  */
 export async function updateSubmissionStatus(id, newStatus) {
   const current = getSubmissions()
   const target = current.find((item) => item.id === id)
-  const updated = current.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
+  const recordType = target?.type || 'message'
 
-  const storage = getStorage()
-  if (storage) {
-    storage.setItem(STORAGE_KEY, JSON.stringify(updated))
+  if (!isValidStatusForType(recordType, newStatus)) {
+    console.warn(`Rejected invalid status "${newStatus}" for submission type "${recordType}"`)
+    return false
   }
-  emitChange()
 
-  if (isSupabaseConfigured() && target) {
+  if (target) {
+    const updated = current.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
+    const storage = getStorage()
+    if (storage) {
+      writeSubmissionsToStorage(storage, updated)
+    }
+    emitChange()
+  }
+
+  if (isSupabaseConfigured()) {
     try {
-      if (target.type === 'job') {
-        await supabaseUpdateApplicationStatus(id, newStatus)
-      } else {
-        await supabaseUpdateInquiryStatus(id, newStatus)
+      if (recordType === 'job') {
+        return await supabaseUpdateApplicationStatus(id, newStatus)
       }
+      return await supabaseUpdateInquiryStatus(id, newStatus)
     } catch (err) {
       console.warn('Failed cloud status update:', err)
+      return false
     }
   }
 
-  return true
+  return Boolean(target)
 }
 
 /**
@@ -261,7 +323,7 @@ export async function toggleStar(id) {
 
   const storage = getStorage()
   if (storage) {
-    storage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    writeSubmissionsToStorage(storage, updated)
   }
   emitChange()
 
@@ -290,7 +352,7 @@ export async function deleteSubmission(id) {
 
   const storage = getStorage()
   if (storage) {
-    storage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    writeSubmissionsToStorage(storage, updated)
   }
   emitChange()
 
@@ -410,35 +472,16 @@ export function exportToJSON() {
 }
 
 /**
- * Passcode Authentication Helpers (Fallback for preview mode)
+ * Client-side passcode / localStorage auth fallbacks are disabled for security.
+ * Admin authentication strictly requires a valid, authorized Supabase Auth session.
  */
-export function checkPasscode(pin) {
-  const clean = (pin || '').trim().toLowerCase()
-  const target = (configuredPasscode || 'flo2026').trim().toLowerCase()
-  const validPins = new Set([target, 'flo2026', 'flo', 'admin', 'flostudios'])
-  if (clean && validPins.has(clean)) {
-    const session = getSessionStorage()
-    if (session) {
-      session.setItem(AUTH_KEY, 'true')
-    }
-    const storage = getStorage()
-    if (storage) {
-      storage.setItem(AUTH_KEY, 'true')
-    }
-    return true
-  }
+export function checkPasscode() {
+  logout()
   return false
 }
 
 export function isAuthenticated() {
-  const session = getSessionStorage()
-  if (session && session.getItem(AUTH_KEY) === 'true') {
-    return true
-  }
-  const storage = getStorage()
-  if (storage && storage.getItem(AUTH_KEY) === 'true') {
-    return true
-  }
+  logout()
   return false
 }
 
@@ -516,7 +559,7 @@ export async function loadJobsFromCloud() {
 }
 
 /**
- * Save (create or update) a job posting.
+ * Save (create or update) a job posting while preserving existing fields not present in jobData.
  */
 export async function saveJob(jobData = {}) {
   const storage = getStorage()
@@ -524,43 +567,86 @@ export async function saveJob(jobData = {}) {
   try {
     const currentJobs = getJobs()
     const id = jobData.id || `job_${Date.now()}`
+    const existingIndex = currentJobs.findIndex((j) => j.id === id)
+    const existingJob = existingIndex >= 0 ? currentJobs[existingIndex] : null
+    const defaultTemplate = INITIAL_JOB_POSTINGS[0] || {}
+
+    const resolvedTitle = jobData.title ?? existingJob?.title ?? 'Role'
     const slug =
       jobData.slug ||
-      (jobData.title || 'role')
+      existingJob?.slug ||
+      resolvedTitle
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)+/g, '')
 
-    const existingIndex = currentJobs.findIndex((j) => j.id === id)
+    const resolvedDivision =
+      jobData.division || existingJob?.division || 'Development Division'
+
+    const resolvedBadges = Array.isArray(jobData.badges)
+      ? jobData.badges
+      : typeof jobData.badges === 'string'
+      ? jobData.badges
+          .split(',')
+          .map((b) => b.trim())
+          .filter(Boolean)
+      : existingJob?.badges || []
+
+    const resolvedAboutJob = Array.isArray(jobData.aboutJob)
+      ? jobData.aboutJob
+      : typeof jobData.aboutJob === 'string'
+      ? [jobData.aboutJob]
+      : existingJob?.aboutJob || []
 
     const updatedJob = {
+      ...(existingJob || {}),
       ...jobData,
       id,
       slug,
-      status: jobData.status || 'active',
-      division: jobData.division || 'Development Division',
-      badges: Array.isArray(jobData.badges)
-        ? jobData.badges
-        : (jobData.badges || '')
-            .split(',')
-            .map((b) => b.trim())
-            .filter(Boolean),
-      aboutCompany: jobData.aboutCompany || INITIAL_JOB_POSTINGS[0].aboutCompany,
-      aboutJob: Array.isArray(jobData.aboutJob) ? jobData.aboutJob : [jobData.aboutJob || ''],
-      responsibilities: Array.isArray(jobData.responsibilities) ? jobData.responsibilities : [],
-      compensationLead: jobData.compensationLead || '',
-      compensationItems: Array.isArray(jobData.compensationItems) ? jobData.compensationItems : [],
-      compensationTerms: jobData.compensationTerms || '',
-      minimumQualifications: Array.isArray(jobData.minimumQualifications) ? jobData.minimumQualifications : [],
-      preferredQualifications: Array.isArray(jobData.preferredQualifications) ? jobData.preferredQualifications : [],
-      whatSuccessLooksLike: jobData.whatSuccessLooksLike || '',
-      thrivePoints: Array.isArray(jobData.thrivePoints) ? jobData.thrivePoints : [],
-      companyMission: jobData.companyMission || INITIAL_JOB_POSTINGS[0].companyMission,
-      equalOpportunity: jobData.equalOpportunity || INITIAL_JOB_POSTINGS[0].equalOpportunity,
-      legalDisclaimer: jobData.legalDisclaimer || INITIAL_JOB_POSTINGS[0].legalDisclaimer,
-      formConfig: jobData.formConfig || {
-        roleTitle: jobData.title,
-        division: jobData.division || 'Development Division',
+      title: resolvedTitle,
+      tabLabel: jobData.tabLabel || resolvedTitle,
+      status: jobData.status || existingJob?.status || 'active',
+      division: resolvedDivision,
+      badges: resolvedBadges,
+      aboutCompany:
+        jobData.aboutCompany ?? existingJob?.aboutCompany ?? defaultTemplate.aboutCompany ?? '',
+      aboutJob: resolvedAboutJob,
+      responsibilities: Array.isArray(jobData.responsibilities)
+        ? jobData.responsibilities
+        : existingJob?.responsibilities || [],
+      compensationLead:
+        jobData.compensationLead ?? existingJob?.compensationLead ?? '',
+      compensationItems: Array.isArray(jobData.compensationItems)
+        ? jobData.compensationItems
+        : existingJob?.compensationItems || [],
+      compensationTerms:
+        jobData.compensationTerms ?? existingJob?.compensationTerms ?? '',
+      minimumQualifications: Array.isArray(jobData.minimumQualifications)
+        ? jobData.minimumQualifications
+        : existingJob?.minimumQualifications || [],
+      preferredQualifications: Array.isArray(jobData.preferredQualifications)
+        ? jobData.preferredQualifications
+        : existingJob?.preferredQualifications || [],
+      whatSuccessLooksLike:
+        jobData.whatSuccessLooksLike ?? existingJob?.whatSuccessLooksLike ?? '',
+      thrivePoints: Array.isArray(jobData.thrivePoints)
+        ? jobData.thrivePoints
+        : existingJob?.thrivePoints || [],
+      companyMission:
+        jobData.companyMission ?? existingJob?.companyMission ?? defaultTemplate.companyMission ?? '',
+      equalOpportunity:
+        jobData.equalOpportunity ??
+        existingJob?.equalOpportunity ??
+        defaultTemplate.equalOpportunity ??
+        '',
+      legalDisclaimer:
+        jobData.legalDisclaimer ??
+        existingJob?.legalDisclaimer ??
+        defaultTemplate.legalDisclaimer ??
+        '',
+      formConfig: jobData.formConfig || existingJob?.formConfig || {
+        roleTitle: resolvedTitle,
+        division: resolvedDivision,
         experienceLabel: 'Experience *',
         experienceOptions: [
           { value: '', label: 'Select Experience Level' },
@@ -579,10 +665,7 @@ export async function saveJob(jobData = {}) {
     let nextJobs = []
     if (existingIndex >= 0) {
       nextJobs = [...currentJobs]
-      nextJobs[existingIndex] = {
-        ...nextJobs[existingIndex],
-        ...updatedJob
-      }
+      nextJobs[existingIndex] = updatedJob
     } else {
       nextJobs = [...currentJobs, updatedJob]
     }
@@ -593,12 +676,14 @@ export async function saveJob(jobData = {}) {
       tabNumber: String(idx + 1).padStart(2, '0')
     }))
 
+    const savedJob = nextJobs.find((j) => j.id === id) || updatedJob
+
     storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(nextJobs))
     emitChange()
 
-    // Sync to Supabase
+    // Sync full preserved job object to Supabase
     if (isSupabaseConfigured()) {
-      await upsertJobPosting(updatedJob)
+      await upsertJobPosting(savedJob)
     }
 
     return true
@@ -607,6 +692,7 @@ export async function saveJob(jobData = {}) {
     return false
   }
 }
+
 
 /**
  * Delete a job posting by ID.

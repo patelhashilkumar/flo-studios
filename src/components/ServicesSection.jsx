@@ -6,8 +6,6 @@ import './ServicesSection.css'
 
 export default function ServicesSection({
   defaultDivision = 'development',
-  showHeaderLabel = true,
-  showHeaderBadge,
   id = 'services'
 }) {
   const [userSelectedTab, setUserSelectedTab] = useState(null)

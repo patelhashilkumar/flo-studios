@@ -201,226 +201,6 @@
   color: var(--color-text-tertiary);
 }
 
-/* ═══ ABOUT PAGE ═══ */
-.about-page__hero {
-  padding-top: 120px;
-  padding-bottom: var(--space-section);
-}
-
-.about-page__title {
-  font-family: var(--font-display);
-  font-size: var(--fs-hero);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin-bottom: 1.5rem;
-}
-
-.about-page__hero-word {
-  display: inline-block;
-  margin-right: 0.28em;
-  will-change: transform, opacity;
-}
-.about-page__hero-word:last-child {
-  margin-right: 0;
-}
-
-.about-page__cta {
-  display: inline-flex;
-  font-size: var(--fs-small);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  padding: 10px 22px;
-  border-radius: var(--radius-full);
-  margin-bottom: 3rem;
-  transition: all 0.3s;
-}
-
-.about-page__cta:hover { color: var(--color-text); border-color: var(--color-text); opacity: 1; }
-
-.about-page__intro {
-  font-size: var(--fs-body-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  max-width: 700px;
-  margin-bottom: 4rem;
-}
-
-.about-page__stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.about-page__stat {
-  will-change: transform, opacity;
-}
-
-.about-page__stat-num {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  display: block;
-}
-
-.about-page__stat-label {
-  font-size: var(--fs-small);
-  color: var(--color-text-secondary);
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.about-page__stat-desc {
-  font-size: var(--fs-small);
-  color: var(--color-text-tertiary);
-  line-height: 1.5;
-}
-
-/* Leadership */
-.about-page__leadership {
-  padding: var(--space-section) 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.about-page__section-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-.about-page__section-sub {
-  font-size: var(--fs-body);
-  color: var(--color-text-secondary);
-  margin-bottom: 3rem;
-}
-
-.about-page__leaders-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-
-.about-page__leader-img {
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-bg-card);
-  margin-bottom: 1rem;
-}
-
-.about-page__leader-img img { width: 100%; height: 100%; object-fit: cover; }
-
-.about-page__leader-name {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-}
-
-.about-page__leader-role {
-  font-size: var(--fs-small);
-  color: var(--color-text-secondary);
-}
-
-/* Who we are */
-.about-page__who {
-  padding: var(--space-section) 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.about-page__who-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-}
-
-.about-page__who-text {
-  font-size: var(--fs-body-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  max-width: 600px;
-  margin-bottom: 2rem;
-}
-
-.about-page__cta-pill {
-  display: inline-flex;
-  font-size: var(--fs-small);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  padding: 10px 22px;
-  border-radius: var(--radius-full);
-  transition: all 0.3s;
-}
-
-.about-page__cta-pill:hover { color: var(--color-text); border-color: var(--color-text); opacity: 1; }
-
-.about-page__images {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-
-.about-page__image-wrap {
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-bg-card);
-}
-
-.about-page__image-wrap img { width: 100%; height: 100%; object-fit: cover; }
-
-/* How we work */
-.about-page__how {
-  padding: var(--space-section) 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.about-page__how-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 500;
-  margin-bottom: 2rem;
-}
-
-.about-page__how-content {
-  max-width: 600px;
-  margin-bottom: 2rem;
-}
-
-.about-page__how-content p {
-  font-size: var(--fs-body-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: 1rem;
-}
-
-/* Careers CTA */
-.about-page__careers-cta {
-  padding: var(--space-section) 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.about-page__careers-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-display);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 2rem;
-  max-width: 800px;
-}
-
-.about-page__careers-word {
-  display: inline-block;
-  margin-right: 0.28em;
-}
-.about-page__careers-word:last-child {
-  margin-right: 0;
-}
-
 .careers-page__hero-word {
   display: inline-block;
   margin-right: 0.28em;
@@ -672,14 +452,11 @@
   .work-page__featured-card:nth-child(even) { direction: ltr; }
   .work-page__project-grid { grid-template-columns: repeat(2, 1fr); }
   .work-page__project-grid--compact { grid-template-columns: repeat(3, 1fr); }
-  .about-page__leaders-grid { grid-template-columns: repeat(2, 1fr); }
   .latest-page__grid { grid-template-columns: repeat(3, 1fr); }
   .services-page__offering-cases { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-  .about-page__stats { grid-template-columns: 1fr; gap: 2rem; }
-  .about-page__images { grid-template-columns: 1fr; }
   .contact-page__offices-grid { grid-template-columns: 1fr; }
   .latest-page__grid { grid-template-columns: repeat(2, 1fr); }
   .work-page__filters { flex-direction: column; align-items: flex-start; }
@@ -688,6 +465,5 @@
 @media (max-width: 600px) {
   .work-page__project-grid,
   .work-page__project-grid--compact { grid-template-columns: 1fr; }
-  .about-page__leaders-grid { grid-template-columns: 1fr; }
   .latest-page__grid { grid-template-columns: 1fr; }
 }

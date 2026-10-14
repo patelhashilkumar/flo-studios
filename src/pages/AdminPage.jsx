@@ -9,8 +9,6 @@ import {
   exportToCSV,
   exportToJSON,
   seedSampleData,
-  checkPasscode,
-  isAuthenticated,
   logout,
   getJobs,
   loadJobsFromCloud,
@@ -23,7 +21,8 @@ import {
   signInAdmin,
   signOutAdmin,
   getAdminSession,
-  onAuthChange
+  onAuthChange,
+  isAuthorizedAdminUser
 } from '../services/supabaseService'
 import SEO from '../components/SEO'
 import './AdminPage.css'
@@ -66,30 +65,29 @@ export default function AdminPage() {
   const [jobFormPrefQuals, setJobFormPrefQuals] = useState('')
   const [cmsNotice, setCmsNotice] = useState('')
 
-  // Initialize auth check & data
+  // Initialize auth check & data (strictly requires an authorized Supabase Auth session)
   useEffect(() => {
+    logout() // Purge any legacy localStorage auth tokens
+
     const initAuthAndData = async () => {
-      if (isSupabaseConfigured()) {
-        const { session, user } = await getAdminSession()
-        if (session && user) {
-          setUnlocked(true)
-          setAdminUser(user)
-          const [cloudSubs, cloudJobs] = await Promise.all([
-            loadSubmissionsFromCloud(),
-            loadJobsFromCloud()
-          ])
-          setSubmissions(cloudSubs)
-          setJobs(cloudJobs)
-          return
-        }
+      if (!isSupabaseConfigured()) {
+        setUnlocked(false)
+        setAdminUser(null)
+        return
       }
-      if (isAuthenticated()) {
+      const { session, user } = await getAdminSession()
+      if (session && user && isAuthorizedAdminUser(user)) {
         setUnlocked(true)
-        loadSubmissionsFromCloud().then((res) => setSubmissions(Array.isArray(res) ? res : []))
-        loadJobsFromCloud().then((res) => setJobs(Array.isArray(res) ? res : []))
+        setAdminUser(user)
+        const [cloudSubs, cloudJobs] = await Promise.all([
+          loadSubmissionsFromCloud(),
+          loadJobsFromCloud()
+        ])
+        setSubmissions(Array.isArray(cloudSubs) ? cloudSubs : [])
+        setJobs(Array.isArray(cloudJobs) ? cloudJobs : [])
       } else {
-        setSubmissions(getSubmissions())
-        setJobs(getJobs())
+        setUnlocked(false)
+        setAdminUser(null)
       }
     }
 
@@ -97,14 +95,15 @@ export default function AdminPage() {
 
     // Listen to Supabase Auth state transitions
     const { data: authListener } = onAuthChange((event, session) => {
-      if (session && session.user) {
+      if (session?.user && isAuthorizedAdminUser(session.user)) {
         setUnlocked(true)
         setAdminUser(session.user)
         loadSubmissionsFromCloud().then((res) => setSubmissions(Array.isArray(res) ? res : []))
         loadJobsFromCloud().then((res) => setJobs(Array.isArray(res) ? res : []))
-      } else if (event === 'SIGNED_OUT') {
+      } else if (event === 'SIGNED_OUT' || !session) {
         setUnlocked(false)
         setAdminUser(null)
+        setSubmissions([])
       }
     })
 
@@ -115,15 +114,16 @@ export default function AdminPage() {
     }
   }, [])
 
-  // Listen to live storage mutations from any component
+  // Listen to live storage mutations only while unlocked
   useEffect(() => {
+    if (!unlocked) return
     const handleStorageUpdate = () => {
       setSubmissions(getSubmissions())
       setJobs(getJobs())
     }
     window.addEventListener('flo-storage-update', handleStorageUpdate)
     return () => window.removeEventListener('flo-storage-update', handleStorageUpdate)
-  }, [])
+  }, [unlocked])
 
   // Lock background body scroll when modal is open
   useEffect(() => {
@@ -136,7 +136,6 @@ export default function AdminPage() {
     }
   }, [isJobModalOpen])
 
-
   const handleAdminSignIn = async (e) => {
     if (e) e.preventDefault()
     setAuthError('')
@@ -146,58 +145,41 @@ export default function AdminPage() {
     const cleanPassword = (adminPassword || '').trim()
 
     if (!cleanEmail || !cleanPassword) {
-      setAuthError('Please enter both Admin ID/Email and password.')
+      setAuthError('Please enter both Admin Email and password.')
       setIsSubmittingAuth(false)
       return
     }
 
-    // 1. Authenticate with Supabase Auth if available
-    if (isSupabaseConfigured()) {
-      try {
-        const { data } = await signInAdmin(cleanEmail, cleanPassword)
-        if (data?.session && data.session.user) {
-          setUnlocked(true)
-          setAdminUser(data.session.user)
-          checkPasscode('flo2026') // Persist session in storage
-          const [cloudSubs, cloudJobs] = await Promise.all([
-            loadSubmissionsFromCloud(),
-            loadJobsFromCloud()
-          ])
-          setSubmissions(cloudSubs)
-          setJobs(cloudJobs)
-          setIsSubmittingAuth(false)
-          return
-        }
-      } catch (err) {
-        console.warn('Supabase auth attempt:', err)
+    if (!isSupabaseConfigured()) {
+      setAuthError('Supabase authentication is not configured for this environment.')
+      setIsSubmittingAuth(false)
+      return
+    }
+
+    try {
+      const { data, error } = await signInAdmin(cleanEmail, cleanPassword)
+      const user = data?.session?.user || null
+      if (!error && data?.session && isAuthorizedAdminUser(user)) {
+        setUnlocked(true)
+        setAdminUser(user)
+        const [cloudSubs, cloudJobs] = await Promise.all([
+          loadSubmissionsFromCloud(),
+          loadJobsFromCloud()
+        ])
+        setSubmissions(Array.isArray(cloudSubs) ? cloudSubs : [])
+        setJobs(Array.isArray(cloudJobs) ? cloudJobs : [])
+        setIsSubmittingAuth(false)
+        return
       }
+      setAuthError(
+        error?.message ||
+          'Invalid administrator credentials or unauthorized account.'
+      )
+    } catch (err) {
+      console.warn('Supabase auth attempt failed:', err)
+      setAuthError('Unable to verify administrator credentials. Please try again.')
     }
 
-    // 2. Direct Studio Admin authentication
-    // Authorizes theflostudios0@gmail.com, admin@flostudios.com, or studio credentials
-    const isAuthorizedAdmin =
-      cleanEmail === 'theflostudios0@gmail.com' ||
-      cleanEmail === 'admin@flostudios.com' ||
-      cleanEmail === 'theflostudios' ||
-      cleanEmail === 'admin' ||
-      cleanEmail.includes('flostudio') ||
-      cleanPassword === 'flo2026' ||
-      cleanPassword === 'flostudios' ||
-      cleanPassword === 'theflostudios0'
-
-    if (isAuthorizedAdmin && cleanPassword.length >= 4) {
-      setUnlocked(true)
-      setAdminUser({ email: cleanEmail, role: 'studio_admin' })
-      checkPasscode('flo2026') // Persist session in storage
-      setSubmissions(getSubmissions())
-      setJobs(getJobs())
-      loadSubmissionsFromCloud().then(setSubmissions)
-      loadJobsFromCloud().then(setJobs)
-      setIsSubmittingAuth(false)
-      return
-    }
-
-    setAuthError('Invalid administrator credentials. Please check your ID and password.')
     setIsSubmittingAuth(false)
   }
 
@@ -207,7 +189,9 @@ export default function AdminPage() {
     setUnlocked(false)
     setAdminUser(null)
     setAdminPassword('')
+    setSubmissions([])
   }
+
 
   const handleStatusChange = (id, newStatus) => {
     updateSubmissionStatus(id, newStatus)
@@ -628,8 +612,20 @@ export default function AdminPage() {
               >
                 <option value="all">All Workflow Statuses</option>
                 <option value="new">New / Unread</option>
-                <option value="reviewed">Reviewed</option>
-                <option value="contacted">Contacted / In Progress</option>
+                {activeTab !== 'job' && (
+                  <>
+                    <option value="reviewed">Reviewed (Inquiries)</option>
+                    <option value="contacted">Contacted (Inquiries)</option>
+                  </>
+                )}
+                {activeTab !== 'message' && (
+                  <>
+                    <option value="reviewing">Reviewing (Candidates)</option>
+                    <option value="interviewing">Interviewing (Candidates)</option>
+                    <option value="offer">Offer (Candidates)</option>
+                    <option value="rejected">Rejected (Candidates)</option>
+                  </>
+                )}
                 <option value="archived">Archived</option>
               </select>
             </div>
@@ -796,10 +792,23 @@ export default function AdminPage() {
                           onChange={(e) => handleStatusChange(item.id, e.target.value)}
                           className={`admin-card__status-pill admin-card__status-pill--${item.status}`}
                         >
-                          <option value="new">New</option>
-                          <option value="reviewed">Reviewed</option>
-                          <option value="contacted">Contacted</option>
-                          <option value="archived">Archived</option>
+                          {item.type === 'job' ? (
+                            <>
+                              <option value="new">New</option>
+                              <option value="reviewing">Reviewing</option>
+                              <option value="interviewing">Interviewing</option>
+                              <option value="offer">Offer</option>
+                              <option value="rejected">Rejected</option>
+                              <option value="archived">Archived</option>
+                            </>
+                          ) : (
+                            <>
+                              <option value="new">New</option>
+                              <option value="reviewed">Reviewed</option>
+                              <option value="contacted">Contacted</option>
+                              <option value="archived">Archived</option>
+                            </>
+                          )}
                         </select>
                       </div>
                     </div>
@@ -872,7 +881,7 @@ export default function AdminPage() {
 
                     {/* Actions Footer */}
                     <div className="admin-card__footer">
-                      {/* Secure Resume Download: Handles Private Supabase Storage & Local Base64 */}
+                      {/* Secure Resume Download via Private Supabase Storage */}
                       {item.resumePath ? (
                         <button
                           type="button"
@@ -884,16 +893,6 @@ export default function AdminPage() {
                           <span aria-hidden="true">🔒</span>{' '}
                           {resumeLoadingId === item.id ? 'Generating Secure Link...' : `View Private Resume (${item.resumeName || 'Document'})`}
                         </button>
-                      ) : item.resumeData ? (
-                        <a
-                          href={item.resumeData}
-                          download={item.resumeName || `${item.name.replace(/\s+/g, '_')}_resume.pdf`}
-                          className="admin-resume-download-btn"
-                          title="Download submitted candidate document"
-                        >
-                          <span aria-hidden="true">📥</span> View / Download Resume (
-                          {item.resumeName || 'Attachment'})
-                        </a>
                       ) : item.resumeName ? (
                         <span className="admin-resume-warning" title="Document metadata saved">
                           📄 {item.resumeName}

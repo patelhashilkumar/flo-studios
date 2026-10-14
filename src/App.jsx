@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import Header from './components/Header'
+import FocusLensNavbar from './components/FocusLensNavbar'
 import Footer from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
 import ScrollToTop from './components/ScrollToTop'
@@ -59,7 +59,7 @@ export default function App() {
     <ErrorBoundary>
       <SmoothScroll>
         <ScrollToTop />
-        <Header />
+        <FocusLensNavbar />
         <AnimatePresence mode="wait">
           <Suspense fallback={<RouteFallback />}>
             <Routes location={location} key={location.pathname}>

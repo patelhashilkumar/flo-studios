@@ -112,12 +112,17 @@ const getFilterCount = (filterId) => {
   return WORK_ITEMS.filter((item) => item.tags.includes(filterId)).length
 }
 
+function hasWorkItemVideo(item) {
+  return Boolean(item && (item.videoWebm || item.videoMp4 || item.video))
+}
+
 function WorkCard({ item }) {
   const [isHovered, setIsHovered] = useState(false)
   const videoRef = useRef(null)
+  const hasVideo = hasWorkItemVideo(item)
 
   useEffect(() => {
-    if (item.video && videoRef.current) {
+    if (hasVideo && videoRef.current) {
       if (isHovered) {
         videoRef.current.currentTime = 0
         videoRef.current.play().catch(() => {})
@@ -125,7 +130,7 @@ function WorkCard({ item }) {
         videoRef.current.pause()
       }
     }
-  }, [isHovered, item.video])
+  }, [isHovered, hasVideo])
 
   return (
     <Link
@@ -140,9 +145,9 @@ function WorkCard({ item }) {
           alt={`${item.title} — Flo Studios case study`}
           loading="lazy"
           decoding="async"
-          className={`work-card__img ${isHovered && (item.videoWebm || item.video) ? 'work-card__img--hidden' : ''}`}
+          className={`work-card__img ${isHovered && hasVideo ? 'work-card__img--hidden' : ''}`}
         />
-        {(item.videoWebm || item.videoMp4 || item.video) && (
+        {hasVideo && (
           <video
             ref={videoRef}
             loop
@@ -159,7 +164,7 @@ function WorkCard({ item }) {
         {item.metric && (
           <span className="work-card__badge-metric">{item.metric}</span>
         )}
-        {(item.videoWebm || item.video) && (
+        {hasVideo && (
           <span className="work-card__video-badge">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z" />

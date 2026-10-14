@@ -43,13 +43,6 @@ export default function CareersPage() {
 
   const [activeJobId, setActiveJobId] = useState(() => availableJobs[0]?.id || 'sdr')
 
-  // Keep activeJobId synced if jobs are modified/deleted in CMS
-  useEffect(() => {
-    if (availableJobs.length > 0 && !availableJobs.some((j) => j?.id === activeJobId)) {
-      setActiveJobId(availableJobs[0]?.id || 'sdr')
-    }
-  }, [availableJobs, activeJobId])
-
   // Find currently active job or fallback to first
   const activeJob = availableJobs.find((j) => j?.id === activeJobId) || availableJobs[0] || {}
 
@@ -73,7 +66,6 @@ export default function CareersPage() {
   const [resumeName, setResumeName] = useState('')
   const [resumeSize, setResumeSize] = useState('')
   const [resumeType, setResumeType] = useState('')
-  const [resumeData, setResumeData] = useState('')
   const [isReadingFile, setIsReadingFile] = useState(false)
   const [termsConfirmed, setTermsConfirmed] = useState(false)
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success'
@@ -105,7 +97,6 @@ export default function CareersPage() {
     setResumeName('')
     setResumeSize('')
     setResumeType('')
-    setResumeData('')
     setRawFile(null)
     setTermsConfirmed(false)
     if (fileInputRef.current) {
@@ -174,30 +165,11 @@ export default function CareersPage() {
       return
     }
 
-    setIsReadingFile(true)
-
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      setRawFile(file)
-      setResumeName(file.name)
-      setResumeSize(formatFileSize(file.size))
-      setResumeType(file.type || 'application/pdf')
-      setResumeData(e.target?.result || '')
-      setIsReadingFile(false)
-    }
-    reader.onerror = () => {
-      setRawFile(null)
-      setResumeName('')
-      setResumeSize('')
-      setResumeType('')
-      setResumeData('')
-      if (fileInputRef.current) {
-        fileInputRef.current.value = ''
-      }
-      setIsReadingFile(false)
-      setErrorMessage('Failed to read file. Please try another file.')
-    }
-    reader.readAsDataURL(file)
+    setRawFile(file)
+    setResumeName(file.name)
+    setResumeSize(formatFileSize(file.size))
+    setResumeType(file.type || 'application/pdf')
+    setIsReadingFile(false)
   }
 
   const handleFileChange = (e) => {
@@ -216,7 +188,6 @@ export default function CareersPage() {
     setResumeName('')
     setResumeSize('')
     setResumeType('')
-    setResumeData('')
     setIsReadingFile(false)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
@@ -247,6 +218,7 @@ export default function CareersPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (status === 'submitting') return
     setErrorMessage('')
 
     // Honeypot check
@@ -293,7 +265,7 @@ export default function CareersPage() {
     }
 
     // Mandatory Resume Validation
-    if (!resumeData && !resumeName && !rawFile) {
+    if (!resumeName || !rawFile) {
       setErrorMessage('Resume upload is mandatory. Please upload a PDF, DOC, or DOCX document.')
       return
     }
@@ -330,14 +302,13 @@ export default function CareersPage() {
         resumeName,
         resumeSize,
         resumeType,
-        resumeData,
         rawFile,
         coverNote: notes.trim(),
         termsConfirmed: true
       })
 
       if (!saved) {
-        setErrorMessage('Unable to save application to storage. Please try again or reach out to us directly.')
+        setErrorMessage('Unable to save application. Please check your connection and try again.')
         setStatus('idle')
         return
       }
@@ -354,14 +325,15 @@ export default function CareersPage() {
       setResumeName('')
       setResumeSize('')
       setResumeType('')
-      setResumeData('')
       setTermsConfirmed(false)
       if (fileInputRef.current) {
         fileInputRef.current.value = ''
       }
     } catch (err) {
       console.error('Failed to submit application:', err)
-      setErrorMessage('An unexpected error occurred while submitting. Please try again.')
+      setErrorMessage(
+        err?.message || 'Unable to submit application right now. Please check your connection and try again.'
+      )
       setStatus('idle')
     }
   }

@@ -38,7 +38,15 @@ export default function Hero() {
   const [activeReelIdx, setActiveReelIdx] = useState(0)
   const [isMuted, setIsMuted] = useState(true)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
-  const [preloadStrategy, setPreloadStrategy] = useState('auto')
+  const [preloadStrategy] = useState(() => {
+    if (typeof navigator !== 'undefined' && 'connection' in navigator) {
+      const conn = navigator.connection
+      if (conn?.saveData || conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
+        return 'metadata'
+      }
+    }
+    return 'auto'
+  })
   const heroRef = useRef(null)
   const logoRef = useRef(null)
   const videoCardRef = useRef(null)
@@ -46,16 +54,6 @@ export default function Hero() {
   const wordsRef = useRef([])
 
   const currentReel = HERO_REELS[activeReelIdx] || HERO_REELS[0] || {}
-
-  // Adaptive network-aware preloading
-  useEffect(() => {
-    if (typeof navigator !== 'undefined' && 'connection' in navigator) {
-      const conn = navigator.connection
-      if (conn?.saveData || conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
-        setPreloadStrategy('metadata')
-      }
-    }
-  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {

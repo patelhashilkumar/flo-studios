@@ -3,8 +3,28 @@
 -- Production Schema: Inquiries, Job Applications, Job Postings (CMS), & Resumes
 -- ==============================================================================
 
--- 1. EXTENSIONS
+-- 1. EXTENSIONS & ADMIN AUTHORIZATION HELPER
 create extension if not exists "pgcrypto";
+
+create or replace function public.is_studio_admin()
+returns boolean
+language sql
+stable
+security invoker
+set search_path = ''
+as $$
+  select
+    (select auth.uid()) is not null
+    and coalesce(((select auth.jwt()) ->> 'is_anonymous')::boolean, false) = false
+    and (
+      coalesce(((select auth.jwt()) -> 'app_metadata' ->> 'role'), '') in ('admin', 'studio_admin')
+      or coalesce(((select auth.jwt()) -> 'app_metadata' ->> 'is_admin'), '') = 'true'
+      or lower(coalesce(((select auth.jwt()) ->> 'email'), '')) in (
+        'theflostudios0@gmail.com',
+        'admin@flostudios.com'
+      )
+    );
+$$;
 
 -- ==============================================================================
 -- 2. TABLE: contact_inquiries
@@ -29,30 +49,36 @@ create index if not exists idx_contact_inquiries_status on public.contact_inquir
 alter table public.contact_inquiries enable row level security;
 
 -- Policies
-create policy "Allow public anonymous and authenticated insert into contact_inquiries"
+create policy "Allow public insert into contact_inquiries"
   on public.contact_inquiries
   for insert
   to anon, authenticated
-  with check (true);
+  with check (
+    status = 'new'
+    and starred = false
+    and length(trim(name)) > 0
+    and length(trim(email)) > 0
+    and length(trim(message)) > 0
+  );
 
-create policy "Allow admin and studio portal to read contact_inquiries"
+create policy "Allow authorized studio admins to read contact_inquiries"
   on public.contact_inquiries
   for select
-  to anon, authenticated
-  using (true);
+  to authenticated
+  using ((select public.is_studio_admin()));
 
-create policy "Allow admin and studio portal to update contact_inquiries"
+create policy "Allow authorized studio admins to update contact_inquiries"
   on public.contact_inquiries
   for update
-  to anon, authenticated
-  using (true)
-  with check (true);
+  to authenticated
+  using ((select public.is_studio_admin()))
+  with check ((select public.is_studio_admin()));
 
-create policy "Allow admin and studio portal to delete contact_inquiries"
+create policy "Allow authorized studio admins to delete contact_inquiries"
   on public.contact_inquiries
   for delete
-  to anon, authenticated
-  using (true);
+  to authenticated
+  using ((select public.is_studio_admin()));
 
 
 -- ==============================================================================
@@ -85,30 +111,35 @@ create index if not exists idx_job_applications_status on public.job_application
 alter table public.job_applications enable row level security;
 
 -- Policies
-create policy "Allow public anonymous and authenticated insert into job_applications"
+create policy "Allow public insert into job_applications"
   on public.job_applications
   for insert
   to anon, authenticated
-  with check (true);
+  with check (
+    status = 'new'
+    and starred = false
+    and length(trim(name)) > 0
+    and length(trim(email)) > 0
+  );
 
-create policy "Allow admin and studio portal to read job_applications"
+create policy "Allow authorized studio admins to read job_applications"
   on public.job_applications
   for select
-  to anon, authenticated
-  using (true);
+  to authenticated
+  using ((select public.is_studio_admin()));
 
-create policy "Allow admin and studio portal to update job_applications"
+create policy "Allow authorized studio admins to update job_applications"
   on public.job_applications
   for update
-  to anon, authenticated
-  using (true)
-  with check (true);
+  to authenticated
+  using ((select public.is_studio_admin()))
+  with check ((select public.is_studio_admin()));
 
-create policy "Allow admin and studio portal to delete job_applications"
+create policy "Allow authorized studio admins to delete job_applications"
   on public.job_applications
   for delete
-  to anon, authenticated
-  using (true);
+  to authenticated
+  using ((select public.is_studio_admin()));
 
 
 -- ==============================================================================
@@ -133,9 +164,9 @@ create table if not exists public.job_postings (
   preferred_qualifications jsonb default '[]'::jsonb not null,
   what_success_looks_like text default '',
   thrive_points jsonb default '[]'::jsonb not null,
-  company_mission text default '',
-  equal_opportunity text default '',
-  legal_disclaimer text default '',
+  company_mission text not null default '',
+  equal_opportunity text not null default '',
+  legal_disclaimer text not null default '',
   form_config jsonb default '{}'::jsonb not null,
   display_order integer default 1 not null,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -153,26 +184,26 @@ create policy "Allow public read of active job postings and admin read of all"
   on public.job_postings
   for select
   to anon, authenticated
-  using (status = 'active' or (select auth.uid()) is not null);
+  using (status = 'active' or (select public.is_studio_admin()));
 
-create policy "Allow authenticated admin users to insert job_postings"
+create policy "Allow authorized studio admins to insert job_postings"
   on public.job_postings
   for insert
   to authenticated
-  with check (true);
+  with check ((select public.is_studio_admin()));
 
-create policy "Allow authenticated admin users to update job_postings"
+create policy "Allow authorized studio admins to update job_postings"
   on public.job_postings
   for update
   to authenticated
-  using (true)
-  with check (true);
+  using ((select public.is_studio_admin()))
+  with check ((select public.is_studio_admin()));
 
-create policy "Allow authenticated admin users to delete job_postings"
+create policy "Allow authorized studio admins to delete job_postings"
   on public.job_postings
   for delete
   to authenticated
-  using (true);
+  using ((select public.is_studio_admin()));
 
 
 -- ==============================================================================
@@ -188,26 +219,58 @@ values (
 )
 on conflict (id) do update set
   public = false,
-  file_size_limit = 5242880;
+  file_size_limit = 5242880,
+  allowed_mime_types = array['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
 -- Storage RLS Policies
+drop policy if exists "Allow anonymous and authenticated candidates to upload resumes" on storage.objects;
+drop policy if exists "Allow authenticated admin users to read candidate resumes" on storage.objects;
+drop policy if exists "Allow authenticated read resumes" on storage.objects;
+drop policy if exists "Allow read resumes" on storage.objects;
+drop policy if exists "Allow authenticated admin users to delete resumes" on storage.objects;
+drop policy if exists "Allow authorized studio admins to read candidate resumes" on storage.objects;
+drop policy if exists "Allow authorized studio admins to update candidate resumes" on storage.objects;
+drop policy if exists "Allow authorized studio admins to delete candidate resumes" on storage.objects;
+
 create policy "Allow anonymous and authenticated candidates to upload resumes"
   on storage.objects
   for insert
   to anon, authenticated
-  with check (bucket_id = 'resumes');
+  with check (
+    bucket_id = 'resumes'
+    and (storage.foldername(name))[1] like 'resumes_%'
+  );
 
-create policy "Allow authenticated admin users to read candidate resumes"
+create policy "Allow authorized studio admins to read candidate resumes"
   on storage.objects
   for select
   to authenticated
-  using (bucket_id = 'resumes');
+  using (
+    bucket_id = 'resumes'
+    and (select public.is_studio_admin())
+  );
 
-create policy "Allow authenticated admin users to delete resumes"
+create policy "Allow authorized studio admins to update candidate resumes"
+  on storage.objects
+  for update
+  to authenticated
+  using (
+    bucket_id = 'resumes'
+    and (select public.is_studio_admin())
+  )
+  with check (
+    bucket_id = 'resumes'
+    and (select public.is_studio_admin())
+  );
+
+create policy "Allow authorized studio admins to delete candidate resumes"
   on storage.objects
   for delete
   to authenticated
-  using (bucket_id = 'resumes');
+  using (
+    bucket_id = 'resumes'
+    and (select public.is_studio_admin())
+  );
 
 
 -- ==============================================================================
