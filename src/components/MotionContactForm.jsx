@@ -733,114 +733,47 @@ function Envelope({ progress: p, bounds: b, config: c }) {
 }
 
 /* ═══════════════════════════════════════════════════
-   POSTAL BUTTON ICON (Hover Loop & Morphing Check)
+   SUBMIT BUTTON ICON (Clean Arrow, Spinner, Checkmark)
    ═══════════════════════════════════════════════════ */
 
-function PostalButtonIcon({ active, quiet = false, filled = false, ready = false, checked = false }) {
-  const uid = React.useId().replace(/:/g, '')
-  const loop = {
-    duration: 2.65,
-    times: [0, 0.14, 0.26, 0.6, 0.72, 0.88, 1],
-    repeat: Infinity,
-    ease: 'easeInOut'
+function SubmitIcon({ isPending, isSuccess }) {
+  if (isPending) {
+    return <span className="motion-submit-spinner" aria-hidden="true" />
   }
-  const rest = { duration: quiet ? 0 : 0.18 }
-
+  if (isSuccess) {
+    return (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+        style={{ flexShrink: 0 }}
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    )
+  }
   return (
     <svg
-      data-delivery-glyph=""
-      data-postal-loop={active ? 'true' : 'false'}
-      width="24"
-      height="24"
-      viewBox="0 2 32 28"
+      className="motion-submit-arrow"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.65"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      style={{ overflow: 'visible', pointerEvents: 'none', flexShrink: 0 }}
+      aria-hidden="true"
+      style={{ flexShrink: 0 }}
     >
-      <defs>
-        <clipPath id={`postal-icon-entry-${uid}`}>
-          <rect x="0" y="10" width="18.2" height="14" />
-        </clipPath>
-      </defs>
-
-      {/* Default / Unhovered Envelope */}
-      <motion.g
-        initial={false}
-        animate={{ opacity: active || checked ? 0 : 1, scale: active ? 0.85 : 1 }}
-        transition={rest}
-        style={{ transformOrigin: '16px 16px' }}
-      >
-        <g transform="translate(0 -3)">
-          <rect x="5" y="12" width="22" height="14" rx="3" />
-          <motion.path
-            d="M11 10V7h10v3M14 9h4"
-            initial={false}
-            animate={{ y: filled ? 0 : 3, opacity: filled ? 1 : 0 }}
-            transition={{ duration: quiet ? 0 : 0.24 }}
-          />
-          <motion.path
-            initial={false}
-            animate={{ d: ready ? 'M6 13l10 4 10-4' : 'M6 13l10 7 10-7' }}
-            transition={{ duration: quiet ? 0 : 0.25 }}
-          />
-        </g>
-      </motion.g>
-
-      {/* Hover Mailbox Animation */}
-      <motion.g initial={false} animate={{ opacity: active && !checked ? 1 : 0 }} transition={rest}>
-        <path
-          d="M18 21h12v-9a4.5 4.5 0 0 0-4.5-4.5H22a4 4 0 0 0-4 4.5M22 7.5c2.5 0 4 1.8 4 4.5v9M24 21v6M21 27h6"
-          strokeOpacity="1"
-        />
-        <motion.path
-          d="M27 17V5h4v4h-4"
-          initial={false}
-          animate={{ rotate: active ? [-65, -65, -65, -65, 0, 0, -65] : -65 }}
-          transition={active ? loop : rest}
-          style={{ transformOrigin: '27px 17px' }}
-        />
-        <g clipPath={`url(#postal-icon-entry-${uid})`}>
-          <motion.g
-            initial={false}
-            animate={{
-              x: active ? [0, 0, 1, 18, 18, 18, 0] : 0,
-              opacity: active ? [0, 1, 1, 1, 0, 0, 0] : 0
-            }}
-            transition={active ? loop : rest}
-          >
-            <rect x="1" y="13.5" width="10" height="7" rx="1.2" />
-            <path d="m2 14.5 4 3 4-3" strokeWidth="1.4" />
-          </motion.g>
-        </g>
-        <motion.path
-          initial={false}
-          animate={{
-            d: active
-              ? [
-                  'M18 12L18 21',
-                  'M10 23L18 21',
-                  'M10 23L18 21',
-                  'M10 23L18 21',
-                  'M18 12L18 21',
-                  'M18 12L18 21',
-                  'M18 12L18 21'
-                ]
-              : 'M18 12L18 21'
-          }}
-          transition={active ? loop : rest}
-        />
-      </motion.g>
-
-      {/* Checked Checkmark */}
-      <motion.path
-        d="m8 16 5 5L25 9"
-        initial={false}
-        animate={{ pathLength: checked ? 1 : 0, opacity: checked ? 1 : 0 }}
-        transition={{ duration: quiet ? 0 : 0.3 }}
-      />
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
     </svg>
   )
 }
@@ -849,19 +782,15 @@ function PostalButtonIcon({ active, quiet = false, filled = false, ready = false
    MOTION SUBMIT BUTTON COMPONENT
    ═══════════════════════════════════════════════════ */
 
-function MotionSubmitButton({ status, disabled, filled, ready, onReset }) {
-  const [isHovered, setIsHovered] = useState(false)
+function MotionSubmitButton({ status, disabled, onReset }) {
   const isPending = status === 'pending'
   const isSuccess = status === 'success'
-  const activeHover = (isHovered || isPending) && !isSuccess
 
   return (
     <motion.button
       type={isSuccess ? 'button' : 'submit'}
       disabled={disabled || isPending}
       onClick={isSuccess ? onReset : undefined}
-      onPointerEnter={() => setIsHovered(true)}
-      onPointerLeave={() => setIsHovered(false)}
       className={`motion-submit-btn ${isSuccess ? 'motion-submit-btn--success' : ''}`}
       layout
       transition={{ type: 'spring', stiffness: 450, damping: 32 }}
@@ -871,12 +800,7 @@ function MotionSubmitButton({ status, disabled, filled, ready, onReset }) {
       <span className="motion-submit-btn__label">
         {isPending ? 'Sending…' : isSuccess ? 'Thank you, message received.' : 'Send message'}
       </span>
-      <PostalButtonIcon
-        active={activeHover}
-        filled={filled}
-        ready={ready}
-        checked={isSuccess}
-      />
+      <SubmitIcon isPending={isPending} isSuccess={isSuccess} />
     </motion.button>
   )
 }
@@ -972,9 +896,6 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
 
     return () => unsubscribe()
   }, [bounds.width, progress])
-
-  const filled = Boolean(name.trim() || email.trim() || message.trim())
-  const ready = Boolean(name.trim() && email.trim())
 
   const runDeliverySequence = async () => {
     if (isRunningRef.current) return
@@ -1205,8 +1126,6 @@ export default function MotionContactForm({ activeSubject, initialDivision }) {
           <div className="motion-submit-btn-wrap">
             <MotionSubmitButton
               status={status}
-              filled={filled}
-              ready={ready}
               onReset={handleReset}
             />
           </div>
