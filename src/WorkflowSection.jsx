@@ -412,7 +412,7 @@ function DashedPath({ geometry }) {
    ═══════════════════════════════════════════════════ */
 
 function Scene({ progressRef, activeIndex, setActiveIndex }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const planeRef = useRef();
   const bankRef = useRef();
   const shadowRef = useRef();
@@ -508,9 +508,10 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
 
     // Dynamic 3/4 Isometric camera framed to capture plane and tower together
     const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
-    const distBehind = 8.6;
-    const distAbove = 5.4;
-    const distSide = 2.8;
+    const isMobile = size.width < 768;
+    const distBehind = isMobile ? 10.5 : 8.6;
+    const distAbove = isMobile ? 6.2 : 5.4;
+    const distSide = isMobile ? 0.9 : 2.8;
 
     const cameraOffset = new THREE.Vector3()
       .copy(tangent).multiplyScalar(-distBehind)
@@ -522,9 +523,9 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
 
     // Frame the plane and tower together comfortably in view
     const targetLookAt = point.clone()
-      .add(tangent.clone().multiplyScalar(1.5))
-      .add(normal.clone().multiplyScalar(0.75))
-      .add(new THREE.Vector3(0, 0.5, 0));
+      .add(tangent.clone().multiplyScalar(isMobile ? 0.8 : 1.5))
+      .add(normal.clone().multiplyScalar(isMobile ? 0.25 : 0.75))
+      .add(new THREE.Vector3(0, isMobile ? 0.2 : 0.5, 0));
 
     if (currentLookAt.current.lengthSq() === 0) {
       currentLookAt.current.copy(targetLookAt);
@@ -566,6 +567,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
                 <Html 
                   distanceFactor={13.5}
                   center
+                  className="milestone-card-3d-wrap"
                   style={{ pointerEvents: 'auto' }}
                 >
                   <div className="milestone-card milestone-card--active">
@@ -630,6 +632,8 @@ export default function WorkflowSection() {
     return () => ctx.revert();
   }, []);
 
+  const activeStep = WORKFLOW_STEPS[activeIndex] || WORKFLOW_STEPS[0];
+
   return (
     <section className="workflow-section" id="workflow" ref={sectionRef}>
       {/* 2D UI Overlay */}
@@ -640,6 +644,33 @@ export default function WorkflowSection() {
           <p className="workflow-desc">
             How Flo Studios brings cinematic motion and 3D from concept to global launch.
           </p>
+        </div>
+
+        {/* Mobile HUD Milestone Card (Docked cleanly at bottom on small screens) */}
+        <div className="workflow-mobile-card" key={activeIndex} aria-live="polite">
+          <div className="milestone-card__glass">
+            <div className="milestone-card__top">
+              <div className="milestone-card__phase">
+                PHASE {activeStep.num} — {activeStep.tag}
+              </div>
+              <div className="workflow-mobile-card__dots" aria-hidden="true">
+                {WORKFLOW_STEPS.map((_, dotIdx) => (
+                  <span
+                    key={dotIdx}
+                    className={`workflow-mobile-dot ${dotIdx === activeIndex ? 'workflow-mobile-dot--active' : ''}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <h3 className="milestone-card__title">{activeStep.title}</h3>
+            <p className="milestone-card__desc">{activeStep.desc}</p>
+
+            <div className="milestone-card__deliverable">
+              <span className="milestone-card__deliverable-dot" />
+              <span>Deliverable: {activeStep.deliverable}</span>
+            </div>
+          </div>
         </div>
       </div>
 

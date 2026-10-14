@@ -174,21 +174,112 @@
   color: #111827;
 }
 
+.workflow-mobile-card {
+  display: none;
+}
+
 /* ─── Responsive Media Queries ─── */
 @media (max-width: 768px) {
-  .workflow-ui {
-    padding: 100px 20px 24px;
+  /* Hide the 3D projected HTML card on mobile to eliminate overlap & overflow */
+  .milestone-card-3d-wrap {
+    display: none !important;
   }
+
+  .workflow-ui {
+    padding: 72px 18px 20px;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
   .workflow-header {
     max-width: 100%;
+    pointer-events: auto;
   }
-  .milestone-card {
-    width: clamp(260px, 78vw, 310px);
+
+  .workflow-title {
+    font-size: clamp(26px, 6.5vw, 34px);
+    margin: 0 0 6px;
   }
-  .milestone-card__glass {
-    padding: 18px 18px 16px;
+
+  .workflow-desc {
+    font-size: 13px;
+    line-height: 1.45;
+    max-width: 290px;
   }
-  .milestone-card__title {
+
+  /* Docked Mobile Milestone HUD Card */
+  .workflow-mobile-card {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    pointer-events: auto;
+    animation: mobileCardFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .workflow-mobile-card .milestone-card__glass {
+    padding: 16px 18px 14px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    box-shadow: 
+      0 1px 0 rgba(255, 255, 255, 0.95) inset,
+      0 12px 32px -8px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.04);
+  }
+
+  .workflow-mobile-card .milestone-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .workflow-mobile-card__dots {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .workflow-mobile-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+  }
+
+  .workflow-mobile-dot--active {
+    width: 16px;
+    background: #e11d48;
+  }
+
+  .workflow-mobile-card .milestone-card__title {
     font-size: 16px;
+    margin: 0 0 4px;
+  }
+
+  .workflow-mobile-card .milestone-card__desc {
+    font-size: 12px;
+    line-height: 1.45;
+    margin: 0 0 10px;
+  }
+
+  .workflow-mobile-card .milestone-card__deliverable {
+    font-size: 10.5px;
+    padding: 4px 10px;
+  }
+}
+
+@keyframes mobileCardFade {
+  from {
+    opacity: 0.6;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
