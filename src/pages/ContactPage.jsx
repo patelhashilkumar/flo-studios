@@ -99,25 +99,25 @@ export default function ContactPage() {
           <h2 className="sr-only">Studio Locations</h2>
           <div className="contact-page__offices-grid">
             <div className="contact-page__office">
-              <h3 className="contact-page__office-city">Portland, OR</h3>
+              <h3 className="contact-page__office-city">London, UK</h3>
               <p className="contact-page__office-addr">
-                2035 NW Front Ave, Suite 600<br/>
-                Portland, OR 97209<br/>
-                (503) 928-3188
+                Sugar House Ln<br/>
+                London E15 2QS<br/>
+                United Kingdom
               </p>
-              <a href="https://maps.app.goo.gl/7P7qaAWdyCbBDAHHA" target="_blank" rel="noopener noreferrer" className="contact-page__office-link">
+              <a href="https://maps.google.com/?q=Sugar+House+Ln,+London+E15+2QS,+United+Kingdom" target="_blank" rel="noopener noreferrer" className="contact-page__office-link">
                 Get Directions →
               </a>
             </div>
             <div className="contact-page__office">
-              <h3 className="contact-page__office-city">New York, NY</h3>
+              <h3 className="contact-page__office-city">Global / Remote</h3>
               <p className="contact-page__office-addr">
-                One World Trade Center<br/>
-                87 Vesey St., Floor 69<br/>
-                New York, NY 10007
+                Collaborating Worldwide<br/>
+                Available for Global Commissions<br/>
+                hello@flostudios.com
               </p>
-              <a href="https://goo.gl/maps/QXcxACd6tRw49MX18" target="_blank" rel="noopener noreferrer" className="contact-page__office-link">
-                Get Directions →
+              <a href="mailto:hello@flostudios.com" className="contact-page__office-link">
+                Contact Studio →
               </a>
             </div>
           </div>

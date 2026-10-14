@@ -75,7 +75,7 @@ const PAINTERS = {
     })
     if (p >= 1) { const q = at((t * 0.35) % 1); x.beginPath(); x.arc(q[0], q[1], 3, 0, 7); x.fill() }
     x.font = '600 11px Manrope, sans-serif'
-    x.fillText('Portland', a[0] - 22, a[1] + 24); x.fillText('New York', b[0] - 24, b[1] + 24)
+    x.fillText('London', a[0] - 20, a[1] + 24); x.fillText('Remote', b[0] - 20, b[1] + 24)
   },
   // Closing band: three ribbons that swell and taper like the Flo wave mark, thickening under the cursor
   flow(x, w, h, t, ink, p, mouse) {
@@ -300,7 +300,7 @@ export default function AboutPage() {
               <span className="about__num" data-count="2" data-pad="2">0</span>
               <canvas className="about__graphic" data-g="pins" aria-hidden="true" />
               <h3 className="about__card-title">Studios</h3>
-              <p className="about__card-text">Portland · New York · Remote</p>
+              <p className="about__card-text">London · Remote</p>
             </div>
 
             <div className="about__card about__hub about__reveal">

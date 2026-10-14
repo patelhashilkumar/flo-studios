@@ -92,12 +92,12 @@ export default function Footer() {
               <div className="lg-footer__col-title">Studio</div>
               <div className="lg-footer__studio-grid">
                 <div className="lg-footer__info-block">
-                  <p className="lg-footer__info-primary">Los Angeles, CA</p>
-                  <p className="lg-footer__info-secondary">Arts District Studio<br />hello@flostudios.com</p>
+                  <p className="lg-footer__info-primary">London, UK</p>
+                  <p className="lg-footer__info-secondary">Sugar House Ln, London E15 2QS<br />United Kingdom</p>
                 </div>
                 <div className="lg-footer__info-block">
                   <p className="lg-footer__info-primary">Global / Remote</p>
-                  <p className="lg-footer__info-secondary">Collaborating Worldwide<br />Available for Commissions</p>
+                  <p className="lg-footer__info-secondary">Collaborating Worldwide<br />hello@flostudios.com</p>
                 </div>
               </div>
             </div>
