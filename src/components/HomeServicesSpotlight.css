@@ -67,8 +67,15 @@
   color: #111111;
 }
 
-.home-spotlight__toggle-btn.is-active {
-  color: #ffffff;
+.home-spotlight__toggle-btn.is-active,
+.home-spotlight__toggle-btn.is-active:hover,
+.home-spotlight__toggle-btn.is-active:focus,
+.home-spotlight__toggle-btn.is-active:focus-visible {
+  color: #ffffff !important;
+}
+
+.home-spotlight__toggle-btn.is-active .home-spotlight__toggle-text {
+  color: #ffffff !important;
 }
 
 .home-spotlight__toggle-indicator {

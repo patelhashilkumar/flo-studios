@@ -93,8 +93,15 @@
   color: var(--color-text);
 }
 
-.services-switcher__tab--active {
-  color: #ffffff;
+.services-switcher__tab--active,
+.services-switcher__tab--active:hover,
+.services-switcher__tab--active:focus,
+.services-switcher__tab--active:focus-visible {
+  color: #ffffff !important;
+}
+
+.services-switcher__tab--active .services-switcher__label {
+  color: #ffffff !important;
 }
 
 .services-switcher__tab:focus-visible {
