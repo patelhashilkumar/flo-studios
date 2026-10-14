@@ -26,7 +26,11 @@ function isClientReady() {
   return isSupabaseConfigured() && Boolean(supabase)
 }
 
-export const STUDIO_ADMIN_EMAILS = ['theflostudios0@gmail.com', 'admin@flostudios.com']
+export const STUDIO_ADMIN_EMAILS = [
+  'theflostudios0@gmail.com',
+  'admin@flostudios.com',
+  'hashilisbest@gmail.com'
+]
 export const INQUIRY_STATUSES = ['new', 'reviewed', 'contacted', 'archived']
 export const JOB_APPLICATION_STATUSES = [
   'new',
