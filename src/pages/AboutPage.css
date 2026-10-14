@@ -37,14 +37,26 @@
 
 .about__pill {
   display: inline-flex;
+  align-items: center;
   font-size: var(--fs-small);
   color: var(--about-ink-2);
   border: 1px solid var(--about-line);
   padding: 10px 22px;
   border-radius: var(--radius-full);
-  transition: color 0.3s, border-color 0.3s;
+  background: transparent;
+  transition: all 0.3s var(--ease-out);
 }
-.about__pill:hover { color: var(--about-ink); border-color: var(--about-ink); opacity: 1; }
+.about__pill:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  opacity: 1;
+}
+[data-theme="dark"] .about__pill:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
 
 .about__reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
 .about__reveal.is-in { opacity: 1; transform: none; }

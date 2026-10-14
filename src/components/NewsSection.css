@@ -34,14 +34,16 @@
   padding: 10px 22px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
-  transition: all 0.3s var(--ease-out);
+  background: transparent;
+  transition: all 0.35s var(--ease-out);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .news-section__cta:hover {
-  color: var(--color-text);
-  border-color: var(--color-text);
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
   opacity: 1;
 }
 

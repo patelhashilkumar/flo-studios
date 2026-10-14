@@ -27,11 +27,17 @@
   padding: 12px 26px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
+  background: transparent;
   transition: all 0.35s var(--ease-out);
   margin-top: 1.5rem;
 }
 
-.page-cta-btn:hover { border-color: var(--color-text); opacity: 1; }
+.page-cta-btn:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  opacity: 1;
+}
 
 /* ═══ WORK PAGE ═══ */
 .work-page__hero {
