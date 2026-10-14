@@ -88,15 +88,17 @@ export default function Footer() {
             </div>
 
             {/* Column 3: Studio */}
-            <div className="lg-footer__col">
+            <div className="lg-footer__col lg-footer__col--studio">
               <div className="lg-footer__col-title">Studio</div>
-              <div className="lg-footer__info-block">
-                <p className="lg-footer__info-primary">Los Angeles, CA</p>
-                <p className="lg-footer__info-secondary">Arts District Studio<br />hello@flostudios.com</p>
-              </div>
-              <div className="lg-footer__info-block">
-                <p className="lg-footer__info-primary">Global / Remote</p>
-                <p className="lg-footer__info-secondary">Collaborating Worldwide<br />Available for Commissions</p>
+              <div className="lg-footer__studio-grid">
+                <div className="lg-footer__info-block">
+                  <p className="lg-footer__info-primary">Los Angeles, CA</p>
+                  <p className="lg-footer__info-secondary">Arts District Studio<br />hello@flostudios.com</p>
+                </div>
+                <div className="lg-footer__info-block">
+                  <p className="lg-footer__info-primary">Global / Remote</p>
+                  <p className="lg-footer__info-secondary">Collaborating Worldwide<br />Available for Commissions</p>
+                </div>
               </div>
             </div>
           </div>
