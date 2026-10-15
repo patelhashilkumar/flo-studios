@@ -16,6 +16,9 @@ dist-ssr
 !.env.example
 supabase/.temp/
 .agents/
+.superpowers/
+.firecrawl/
+scratch/
 skills-lock.json
 
 # Editor directories and files
