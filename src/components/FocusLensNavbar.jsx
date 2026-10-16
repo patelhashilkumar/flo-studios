@@ -41,6 +41,13 @@ export default function FocusLensNavbar() {
     setMobileOpenPath(isOpen ? location.pathname : null)
   }
 
+  // Ensure navbar is visible when navigating to any new page
+  const [prevPath, setPrevPath] = useState(location.pathname)
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname)
+    setIsVisible(true)
+  }
+
   // Scroll direction detection to auto-hide and reveal navbar
   useEffect(() => {
     let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0

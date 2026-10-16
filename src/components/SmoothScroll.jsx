@@ -5,6 +5,10 @@ export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null)
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
     if (
       typeof window !== 'undefined' &&
       typeof window.matchMedia === 'function' &&
@@ -19,6 +23,7 @@ export default function SmoothScroll({ children }) {
       smoothWheel: true,
     })
     lenisRef.current = lenis
+    window.__lenis = lenis
 
     let rafId
     function raf(time) {
@@ -31,6 +36,7 @@ export default function SmoothScroll({ children }) {
       if (rafId) {
         cancelAnimationFrame(rafId)
       }
+      delete window.__lenis
       lenis.destroy()
     }
   }, [])
