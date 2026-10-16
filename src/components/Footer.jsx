@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import FloLogo from './FloLogo'
+import FooterWave from './FooterWave'
 import './Footer.css'
 
 export default function Footer() {
@@ -18,16 +19,8 @@ export default function Footer() {
 
   return (
     <footer className="footer" id="site-footer">
-      {/* ── Marquee Ribbon ── */}
-      <div className="footer__marquee-wrap">
-        <div className="footer__marquee">
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="footer__marquee-item">
-              ART DIRECTION&nbsp;&nbsp;✦&nbsp;&nbsp;3D MOTION DESIGN&nbsp;&nbsp;✦&nbsp;&nbsp;DIGITAL INFRASTRUCTURE&nbsp;&nbsp;✦&nbsp;&nbsp;CREATIVE TECHNOLOGY&nbsp;&nbsp;✦&nbsp;&nbsp;
-            </span>
-          ))}
-        </div>
-      </div>
+      {/* ── Flo Wave Ribbons Header ── */}
+      <FooterWave />
 
       {/* ── Full-Bleed Grounded Liquid Glass Footer ── */}
       <div className="liquid-glass-footer-rim">

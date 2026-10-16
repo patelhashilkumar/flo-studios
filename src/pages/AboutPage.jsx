@@ -87,24 +87,6 @@ const PAINTERS = {
     x.font = '600 11px Manrope, sans-serif'
     x.fillText('London', a[0] - 20, a[1] + 24); x.fillText('Remote', b[0] - 20, b[1] + 24)
   },
-  // Closing band: three ribbons that swell and taper like the Flo wave mark, thickening under the cursor
-  flow(x, w, h, t, ink, p, mouse) {
-    for (let i = 0; i < 3; i++) {
-      const y0 = h * (0.3 + 0.2 * i), top = [], bottom = []
-      for (let px = 0; px <= w + 8; px += 8) {
-        const mid = y0 + Math.sin(px * 0.004 + t * 1.2 + i * 1.3) * 16 + Math.sin(px * 0.009 - t * 0.8 + i) * 6
-        const swell = (0.5 + 0.5 * Math.sin(px * 0.006 - t * 1.5 + i * 2)) ** 2
-        const dx = px - mouse.x, dy = mid - mouse.y
-        const half = 1 + 12 * swell + 8 * Math.exp(-(dx * dx + dy * dy) / 12000)
-        top.push([px, mid - half]); bottom.push([px, mid + half])
-      }
-      x.fillStyle = `rgba(${ink},${[1, 0.5, 0.2][i]})`
-      x.beginPath()
-      top.forEach(([px, y], k) => (k ? x.lineTo(px, y) : x.moveTo(px, y)))
-      bottom.reverse().forEach(([px, y]) => x.lineTo(px, y))
-      x.fill()
-    }
-  },
   orbit(x, w, h, t, ink) {
     const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.36
     x.strokeStyle = x.fillStyle = `rgb(${ink})`; x.lineWidth = 1.25
@@ -422,7 +404,6 @@ export default function AboutPage() {
             </Link>
           </div>
         </div>
-        <canvas className="about__flow" data-g="flow" aria-hidden="true" />
       </section>
     </motion.main>
   )

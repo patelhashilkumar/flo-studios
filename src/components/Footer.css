@@ -7,34 +7,8 @@
   position: relative;
   width: 100%;
   background: var(--color-bg);
-  padding: clamp(2.5rem, 5vw, 4.5rem) 0 0 0;
+  padding: 0;
   overflow: hidden;
-}
-
-/* ── Marquee Ribbon above the Glass Card ── */
-.footer__marquee-wrap {
-  overflow: hidden;
-  padding-bottom: clamp(2rem, 4vw, 3.5rem);
-}
-
-.footer__marquee {
-  display: flex;
-  white-space: nowrap;
-  animation: footerMarquee 38s linear infinite;
-}
-
-.footer__marquee-item {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(1rem, 1.35vw, 1.25rem);
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  letter-spacing: -0.01em;
-  flex-shrink: 0;
-}
-
-@keyframes footerMarquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 
 /* ── 1. Outer Liquid Glass Footer Bevel Rim ── */
