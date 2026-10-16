@@ -16,13 +16,15 @@ const LEADERS = [
     name: 'Aman Pal',
     role: 'Co-Founder',
     linkedin: 'https://www.linkedin.com/in/aman-pal-841bb2417/',
-    initials: 'AP'
+    initials: 'AP',
+    image: '/images/founders/aman.jpg'
   },
   {
     name: 'Mohit Ninama',
     role: 'Co-Founder',
     linkedin: 'https://www.linkedin.com/in/mohit-ninama-b64939402/',
-    initials: 'MN'
+    initials: 'MN',
+    image: '/images/founders/mohit.jpg'
   }
 ]
 
@@ -383,7 +385,7 @@ export default function AboutPage() {
                     <FloLogo height="24px" color="rgba(255, 255, 255, 0.16)" />
                   </div>
                 )}
-                <svg viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">
+                <svg className="about__leader-frame" viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">
                   <rect pathLength="1" x="0.5" y="0.5" width="99" height="124" rx="5" vectorEffect="non-scaling-stroke" />
                 </svg>
                 <span className="about__scan" aria-hidden="true" />
@@ -393,10 +395,10 @@ export default function AboutPage() {
                     <p className="about__leader-role">{leader.role}</p>
                   </div>
                   <span className="about__leader-badge">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <svg className="about__leader-badge-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                     </svg>
-                    LinkedIn ↗
+                    <span>LinkedIn ↗</span>
                   </span>
                 </div>
               </a>
