@@ -11,7 +11,7 @@ const pageV = {
 
 const ARTICLES = [
   { type: 'press', title: 'Fast Company Innovation by Design Finalist', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/0ab7345c9d/fastco_ibd_2026_experimental_design.png/m/' },
-  { type: 'press', title: 'Jack De Caluwé Appointed Chief Creative Officer', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/' },
+  { type: 'press', title: 'Flo Studios Co-Founders on the Dual-Engine Studio Model', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/' },
   { type: 'article', time: '5 min', title: 'Building Without a Brief: Making with Pure Curiosity', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/4951b14198/thumb_instrument_beyondthebrief.jpg/m/' },
   { type: 'article', time: '3 min', title: 'Taste as a Competitive Advantage in Digital Design', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/dbe87799c5/taste_thumb_instrument.png/m/' },
   { type: 'press', title: 'Digiday: Rapid Brand Launch Case Study', image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/' },

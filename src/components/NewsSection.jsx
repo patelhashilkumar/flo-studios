@@ -15,7 +15,7 @@ const NEWS_ITEMS = [
   },
   {
     type: 'press',
-    title: 'Jack De Caluwé Appointed Chief Creative Officer',
+    title: 'Flo Studios Co-Founders on the Dual-Engine Studio Model',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/',
     link: '/latest',
   },

@@ -12,10 +12,18 @@ const pageV = {
 }
 
 const LEADERS = [
-  { name: 'Laurel Burton', role: 'Chief Executive Officer', image: 'https://a-us.storyblok.com/f/1004432/1282x1604/a9337ef144/laurel-burton.png/m/' },
-  { name: 'Jack De Caluwé', role: 'Chief Creative Officer', image: 'https://a-us.storyblok.com/f/1004432/1282x1604/179f8beb3a/jackdecaluwe_insrument_cco_about_page.png/m/' },
-  { name: 'Coryna Sorin', role: 'Chief Operations Officer', image: 'https://a-us.storyblok.com/f/1004432/1282x1604/f7881acef8/coryna-sorin-2.png/m/' },
-  { name: 'Tessa Baston', role: 'Chief People Officer', image: 'https://a-us.storyblok.com/f/1004432/1282x1604/e5ec3755bd/tessa-baston.png/m/' },
+  {
+    name: 'Aman Pal',
+    role: 'Co-Founder',
+    linkedin: 'https://www.linkedin.com/in/aman-pal-841bb2417/',
+    initials: 'AP'
+  },
+  {
+    name: 'Mohit Ninama',
+    role: 'Co-Founder',
+    linkedin: 'https://www.linkedin.com/in/mohit-ninama-b64939402/',
+    initials: 'MN'
+  }
 ]
 
 const IMAGES = [
@@ -358,17 +366,40 @@ export default function AboutPage() {
           </div>
           <div className="about__leaders">
             {LEADERS.map((leader, i) => (
-              <div className="about__leader about__reveal" key={leader.name} style={{ '--i': i }}>
-                <img src={leader.image} alt={`${leader.name} — ${leader.role} at Flo Studios`} loading="lazy" />
+              <a
+                href={leader.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="about__leader about__reveal"
+                key={leader.name}
+                style={{ '--i': i }}
+                aria-label={`${leader.name} — ${leader.role} at Flo Studios (LinkedIn)`}
+              >
+                {leader.image ? (
+                  <img src={leader.image} alt={`${leader.name} — ${leader.role} at Flo Studios`} loading="lazy" />
+                ) : (
+                  <div className="about__leader-placeholder" aria-hidden="true">
+                    <span className="about__leader-monogram">{leader.initials}</span>
+                    <FloLogo height="24px" color="rgba(255, 255, 255, 0.16)" />
+                  </div>
+                )}
                 <svg viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">
                   <rect pathLength="1" x="0.5" y="0.5" width="99" height="124" rx="5" vectorEffect="non-scaling-stroke" />
                 </svg>
                 <span className="about__scan" aria-hidden="true" />
                 <div className="about__leader-info">
-                  <h3 className="about__leader-name">{leader.name}</h3>
-                  <p className="about__leader-role">{leader.role}</p>
+                  <div className="about__leader-meta">
+                    <h3 className="about__leader-name">{leader.name}</h3>
+                    <p className="about__leader-role">{leader.role}</p>
+                  </div>
+                  <span className="about__leader-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                    LinkedIn ↗
+                  </span>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
