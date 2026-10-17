@@ -25,11 +25,11 @@ test('1. ContactPage imports CalBookingWidget and implements dual-mode switcher'
     'ContactPage must render the contact-mode-switcher container'
   )
   assert.ok(
-    contactPageCode.includes('⚡ Book 15-Min Call'),
+    contactPageCode.includes('Book 15-Min Call'),
     'ContactPage must render the 15-min call tab'
   )
   assert.ok(
-    contactPageCode.includes('✉ Send Written Brief'),
+    contactPageCode.includes('Send Written Brief'),
     'ContactPage must render the written brief tab'
   )
   assert.ok(

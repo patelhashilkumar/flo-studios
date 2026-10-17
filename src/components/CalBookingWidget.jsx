@@ -15,7 +15,7 @@ export default function CalBookingWidget({ calLink = 'flo-studios-nh4bet/15min' 
             <span className="cal-widget-pulse" aria-hidden="true" />
             <span>DIRECT FOUNDER CALENDAR</span>
           </div>
-          <span className="cal-widget-meta-pill">⚡ 15 MIN • GOOGLE MEET</span>
+          <span className="cal-widget-meta-pill">15 MIN • GOOGLE MEET</span>
         </div>
         <h2 className="cal-widget-title">Book a 15-Min Scope Call</h2>
         <p className="cal-widget-desc">

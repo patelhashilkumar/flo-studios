@@ -48,52 +48,51 @@ export default function ContactPage() {
 
       <section className="contact-page__hero">
         <div className="container">
-          {/* Header area inspired by About Page */}
+          {/* Header row: Title on the left, Mode Switcher on the right */}
           <div className="contact-hero__header">
-            <div className="contact-hero__tag">
-              <span className="contact-hero__pulse" aria-hidden="true" />
-              <span>DIRECT FOUNDER ACCESS</span>
+            <div className="contact-hero__row">
+              <h1 className="contact-page__title" aria-label="Contact Flo Studios">
+                <span className="sr-only">Flo Studios — </span>
+                <span className="contact-page__title-word">Contact</span>{' '}
+                <span className="contact-page__title-word">Flo</span>{' '}
+                <span className="contact-page__title-word">Studios</span>
+              </h1>
+
+              {/* Mode Switcher Dock on the right side of the heading */}
+              <div className="contact-mode-wrap">
+                <div className="contact-mode-switcher" role="tablist" aria-label="Contact Methods">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="contact-tab-call"
+                    aria-selected={contactMode === 'call'}
+                    aria-controls="contact-panel-call"
+                    className={`contact-mode-tab ${contactMode === 'call' ? 'contact-mode-tab--active' : ''}`}
+                    onClick={() => setContactMode('call')}
+                  >
+                    <span className="contact-mode-tab__pulse" aria-hidden="true" />
+                    <span>Book 15-Min Call</span>
+                    <span className="contact-mode-tab__pill">Fastest</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="contact-tab-message"
+                    aria-selected={contactMode === 'message'}
+                    aria-controls="contact-panel-message"
+                    className={`contact-mode-tab ${contactMode === 'message' ? 'contact-mode-tab--active' : ''}`}
+                    onClick={() => setContactMode('message')}
+                  >
+                    <span>Send Written Brief</span>
+                    <span className="contact-mode-tab__pill contact-mode-tab__pill--muted">Detailed</span>
+                  </button>
+                </div>
+              </div>
             </div>
-            <h1 className="contact-page__title" aria-label="Contact Flo Studios">
-              <span className="sr-only">Flo Studios — </span>
-              <span className="contact-page__title-word">Contact</span>{' '}
-              <span className="contact-page__title-word">Flo</span>{' '}
-              <span className="contact-page__title-word">Studios</span>
-            </h1>
+
             <p className="contact-page__subtitle">
               Direct collaboration with Flo Studios founding partners. Book a 15-minute discovery call to map scope and timeline, or send us a structured brief.
             </p>
-
-            {/* Mode Switcher Dock */}
-            <div className="contact-mode-wrap">
-              <div className="contact-mode-switcher" role="tablist" aria-label="Contact Methods">
-                <button
-                  type="button"
-                  role="tab"
-                  id="contact-tab-call"
-                  aria-selected={contactMode === 'call'}
-                  aria-controls="contact-panel-call"
-                  className={`contact-mode-tab ${contactMode === 'call' ? 'contact-mode-tab--active' : ''}`}
-                  onClick={() => setContactMode('call')}
-                >
-                  <span className="contact-mode-tab__pulse" aria-hidden="true" />
-                  <span>⚡ Book 15-Min Call</span>
-                  <span className="contact-mode-tab__pill">Fastest</span>
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  id="contact-tab-message"
-                  aria-selected={contactMode === 'message'}
-                  aria-controls="contact-panel-message"
-                  className={`contact-mode-tab ${contactMode === 'message' ? 'contact-mode-tab--active' : ''}`}
-                  onClick={() => setContactMode('message')}
-                >
-                  <span>✉ Send Written Brief</span>
-                  <span className="contact-mode-tab__pill contact-mode-tab__pill--muted">Detailed</span>
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* 1. Primary Interactive Area in Full Landscape */}
@@ -130,21 +129,21 @@ export default function ContactPage() {
 
               <div className="contact-founder-perks">
                 <div className="contact-founder-perk">
-                  <span className="contact-founder-perk-bullet">⚡</span>
+                  <span className="contact-founder-perk-index">01</span>
                   <div className="contact-founder-perk-text">
                     <strong>15-Minute Scoping</strong>
                     <span>Direct technical architecture & feasibility review</span>
                   </div>
                 </div>
                 <div className="contact-founder-perk">
-                  <span className="contact-founder-perk-bullet">⏱</span>
+                  <span className="contact-founder-perk-index">02</span>
                   <div className="contact-founder-perk-text">
                     <strong>24-Hour Review</strong>
                     <span>Concrete milestone breakdown within one business day</span>
                   </div>
                 </div>
                 <div className="contact-founder-perk">
-                  <span className="contact-founder-perk-bullet">🔒</span>
+                  <span className="contact-founder-perk-index">03</span>
                   <div className="contact-founder-perk-text">
                     <strong>Mutual NDA</strong>
                     <span>Full intellectual property ownership & confidentiality</span>
@@ -163,7 +162,7 @@ export default function ContactPage() {
                   onClick={() => setContactMode('call')}
                 >
                   <div className="contact-page__action-lead">
-                    <span className="contact-page__action-pill">⚡ FASTEST</span>
+                    <span className="contact-page__action-pill">FASTEST</span>
                     <span className="contact-page__action-label">BOOK 15-MIN SCOPE CALL</span>
                   </div>
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>

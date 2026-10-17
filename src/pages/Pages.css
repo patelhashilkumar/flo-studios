@@ -325,44 +325,31 @@
 }
 
 .contact-hero__header {
-  margin-bottom: 2.75rem;
+  margin-bottom: 2.5rem;
 }
 
-.contact-hero__tag {
-  display: inline-flex;
+.contact-hero__row {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #10b981;
-  margin-bottom: 1rem;
-}
-
-.contact-hero__pulse {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-  animation: cal-pulse 2s infinite ease-in-out;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
 }
 
 .contact-page__title {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(2.5rem, 5.2vw, 4.25rem);
+  font-size: clamp(2.4rem, 4.8vw, 3.8rem);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.06;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
   color: #0e0e12;
 }
 
 .contact-page__title span {
   display: inline-block;
-  margin-right: 0.26em;
+  margin-right: 0.24em;
   will-change: transform, opacity;
 }
 .contact-page__title span:last-child {
@@ -371,19 +358,19 @@
 
 .contact-page__subtitle {
   font-family: var(--font-primary);
-  font-size: clamp(15px, 1.2vw, 17px);
+  font-size: clamp(15px, 1.15vw, 16.5px);
   color: rgba(14, 14, 18, 0.65);
-  line-height: 1.65;
-  margin: 0 0 2rem;
-  max-width: 660px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 680px;
 }
 
-/* ── Contact Mode Switcher Dock ── */
+/* ── Contact Mode Switcher Dock (Right of Title) ── */
 .contact-mode-wrap {
   display: flex;
   align-items: center;
-  margin-bottom: 1.25rem;
-  width: 100%;
+  margin-bottom: 0;
+  flex-shrink: 0;
 }
 
 .contact-mode-switcher {
@@ -553,10 +540,18 @@
   font-size: 13.5px;
 }
 
-.contact-founder-perk-bullet {
-  font-size: 15px;
-  line-height: 1.3;
+.contact-founder-perk-index {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.09);
+  padding: 3px 7px;
+  border-radius: 6px;
+  line-height: 1.2;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .contact-founder-perk-text {
