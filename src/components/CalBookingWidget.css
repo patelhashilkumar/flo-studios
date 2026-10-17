@@ -1,15 +1,14 @@
-/* ── Cal.com Booking Card ── */
+/* ── Cal.com Booking Card (About Page Inspired) ── */
 .cal-widget-card {
   position: relative;
   width: 100%;
   background: #ffffff;
-  border: 1px solid rgba(24, 22, 20, 0.09);
-  border-radius: 28px;
+  border: 1px solid rgba(24, 22, 20, 0.08);
+  border-radius: 24px;
   box-shadow: 
-    0px 2px 4px -2px rgba(24, 22, 20, 0.04),
-    0px 16px 36px -14px rgba(24, 22, 20, 0.09),
-    0px 1px 0px 0px rgba(255, 255, 255, 0.8) inset;
-  padding: clamp(20px, 3vw, 32px);
+    0px 2px 4px -2px rgba(24, 22, 20, 0.03),
+    0px 16px 40px -12px rgba(24, 22, 20, 0.07);
+  padding: clamp(24px, 3.5vw, 36px);
   box-sizing: border-box;
 }
 
@@ -17,17 +16,38 @@
   margin-bottom: 1.25rem;
 }
 
+.cal-widget-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .cal-widget-tag {
   display: inline-flex;
   align-items: center;
   gap: 7px;
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #10b981;
-  margin-bottom: 0.5rem;
+}
+
+.cal-widget-meta-pill {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(14, 14, 18, 0.7);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .cal-widget-pulse {
@@ -46,9 +66,9 @@
 
 .cal-widget-title {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-weight: 800;
-  font-size: 1.35rem;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
   color: #0e0e12;
   margin: 0 0 6px;
   line-height: 1.2;
@@ -56,19 +76,19 @@
 
 .cal-widget-desc {
   font-family: var(--font-primary);
-  font-size: 13.5px;
-  color: rgba(14, 14, 18, 0.62);
+  font-size: 14px;
+  color: rgba(14, 14, 18, 0.65);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .cal-widget-frame-wrap {
   position: relative;
   width: 100%;
-  height: 560px;
-  border-radius: 18px;
+  height: clamp(620px, 75vh, 680px);
+  border-radius: 16px;
   overflow: hidden;
-  background: #fbfbfb;
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -88,8 +108,8 @@
 }
 
 .cal-widget-spinner {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border: 2px solid rgba(0, 0, 0, 0.08);
   border-top-color: #0e0e12;
   border-radius: 50%;
@@ -105,20 +125,36 @@
   height: 100%;
   border: none;
   display: block;
+  background: #ffffff;
 }
 
 .cal-widget-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1rem;
-  padding-top: 0.85rem;
+  margin-top: 1.15rem;
+  padding-top: 0.95rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   font-size: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cal-widget-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cal-widget-footer-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
 }
 
 .cal-widget-footer-note {
-  color: rgba(14, 14, 18, 0.5);
+  color: rgba(14, 14, 18, 0.55);
   font-family: var(--font-primary);
 }
 
@@ -127,15 +163,27 @@
   font-family: var(--font-primary);
   font-weight: 600;
   text-decoration: none;
-  transition: opacity 0.2s;
+  font-size: 12.5px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+  transition: all 0.2s var(--ease-out);
 }
 
 .cal-widget-direct-link:hover {
-  opacity: 0.7;
+  background: #0e0e12;
+  color: #ffffff;
+  border-color: #0e0e12;
 }
 
 @media (max-width: 640px) {
+  .cal-widget-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
   .cal-widget-frame-wrap {
-    height: 520px;
+    height: 580px;
   }
 }
+

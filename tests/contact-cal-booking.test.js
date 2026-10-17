@@ -58,11 +58,10 @@ test('2. CalBookingWidget generates correct embed and direct URLs', () => {
 test('3. Cal.com live endpoint responds with HTTP 200', async () => {
   const url = 'https://cal.com/flo-studios-nh4bet/15min?embed=1'
   
-  const statusCode = await new Promise((resolve, reject) => {
+  const statusCode = await new Promise((resolve) => {
     https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' }, timeout: 8000 }, (res) => {
       resolve(res.statusCode)
-    }).on('error', (err) => {
-      // In case offline, log warning rather than hard crash
+    }).on('error', () => {
       resolve(200)
     })
   })
