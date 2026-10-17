@@ -96,105 +96,108 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="contact-page__split">
-            {/* Left Column: Founder Leadership & Direct Channels */}
-            <div className="contact-page__left">
-              {/* Founder Direct Card (About Page Inspired) */}
-              <div className="contact-founder-card">
-                <div className="contact-founder-header">
-                  <div className="contact-founder-avatars">
-                    <img src="/images/founders/aman.jpg" alt="Aman Pal — Co-Founder" className="contact-founder-img" />
-                    <img src="/images/founders/mohit.jpg" alt="Mohit Ninama — Co-Founder" className="contact-founder-img contact-founder-img--overlap" />
-                  </div>
-                  <div className="contact-founder-meta">
-                    <h2 className="contact-founder-names">Aman Pal & Mohit Ninama</h2>
-                    <span className="contact-founder-role">Co-Founders, Flo Studios</span>
-                  </div>
+          {/* 1. Primary Interactive Area in Full Landscape */}
+          <div className="contact-landscape-stage">
+            {contactMode === 'call' ? (
+              <div id="contact-panel-call" role="tabpanel" aria-labelledby="contact-tab-call">
+                <CalBookingWidget calLink="flo-studios-nh4bet/15min" />
+              </div>
+            ) : (
+              <div id="contact-panel-message" role="tabpanel" aria-labelledby="contact-tab-message">
+                <MotionContactForm activeSubject={activeSubject} initialDivision={divisionParam} />
+              </div>
+            )}
+          </div>
+
+          {/* 2. Below Stage: Founder Leadership & Direct Channels Grid */}
+          <div className="contact-below-grid">
+            {/* Founder Direct Card (About Page Inspired) */}
+            <div className="contact-founder-card">
+              <div className="contact-founder-header">
+                <div className="contact-founder-avatars">
+                  <img src="/images/founders/aman.jpg" alt="Aman Pal — Co-Founder" className="contact-founder-img" />
+                  <img src="/images/founders/mohit.jpg" alt="Mohit Ninama — Co-Founder" className="contact-founder-img contact-founder-img--overlap" />
                 </div>
-
-                <p className="contact-founder-quote">
-                  “We don’t hand you off to sales reps. Every discovery call is run directly with our founding partners who will architect, design, and ship your product.”
-                </p>
-
-                <div className="contact-founder-perks">
-                  <div className="contact-founder-perk">
-                    <span className="contact-founder-perk-bullet">⚡</span>
-                    <div className="contact-founder-perk-text">
-                      <strong>15-Minute Scoping</strong>
-                      <span>Direct technical architecture & feasibility review</span>
-                    </div>
-                  </div>
-                  <div className="contact-founder-perk">
-                    <span className="contact-founder-perk-bullet">⏱</span>
-                    <div className="contact-founder-perk-text">
-                      <strong>24-Hour Review</strong>
-                      <span>Concrete milestone breakdown within one business day</span>
-                    </div>
-                  </div>
-                  <div className="contact-founder-perk">
-                    <span className="contact-founder-perk-bullet">🔒</span>
-                    <div className="contact-founder-perk-text">
-                      <strong>Mutual NDA</strong>
-                      <span>Full intellectual property ownership & confidentiality</span>
-                    </div>
-                  </div>
+                <div className="contact-founder-meta">
+                  <h2 className="contact-founder-names">Aman Pal & Mohit Ninama</h2>
+                  <span className="contact-founder-role">Co-Founders, Flo Studios</span>
                 </div>
               </div>
 
-              {/* Direct Studio Topics / Inquiries */}
-              <div className="contact-channels-box">
-                <span className="contact-channels-label">SELECT A TOPIC OR DIRECT CHANNEL</span>
-                <div className="contact-page__actions">
-                  <button
-                    type="button"
-                    className={`contact-page__action ${contactMode === 'call' ? 'contact-page__action--active' : ''}`}
-                    onClick={() => setContactMode('call')}
-                  >
-                    <div className="contact-page__action-lead">
-                      <span className="contact-page__action-pill">⚡ FASTEST</span>
-                      <span className="contact-page__action-label">BOOK 15-MIN SCOPE CALL</span>
-                    </div>
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </button>
-                  <button
-                    type="button"
-                    className={`contact-page__action ${contactMode === 'message' && activeSubject === 'Start a Project' ? 'contact-page__action--active' : ''}`}
-                    onClick={() => { setContactMode('message'); setActiveSubject('Start a Project') }}
-                  >
-                    <span className="contact-page__action-label">START A PROJECT (BRIEF)</span>
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </button>
-                  <button
-                    type="button"
-                    className={`contact-page__action ${contactMode === 'message' && activeSubject === 'Press & Media' ? 'contact-page__action--active' : ''}`}
-                    onClick={() => { setContactMode('message'); setActiveSubject('Press & Media') }}
-                  >
-                    <span className="contact-page__action-label">PRESS & MEDIA</span>
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </button>
-                  <button
-                    type="button"
-                    className={`contact-page__action ${contactMode === 'message' && activeSubject === 'General Note' ? 'contact-page__action--active' : ''}`}
-                    onClick={() => { setContactMode('message'); setActiveSubject('General Note') }}
-                  >
-                    <span className="contact-page__action-label">WRITE US A NOTE</span>
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </button>
+              <p className="contact-founder-quote">
+                “We don’t hand you off to sales reps. Every discovery call is run directly with our founding partners who will architect, design, and ship your product.”
+              </p>
+
+              <div className="contact-founder-perks">
+                <div className="contact-founder-perk">
+                  <span className="contact-founder-perk-bullet">⚡</span>
+                  <div className="contact-founder-perk-text">
+                    <strong>15-Minute Scoping</strong>
+                    <span>Direct technical architecture & feasibility review</span>
+                  </div>
+                </div>
+                <div className="contact-founder-perk">
+                  <span className="contact-founder-perk-bullet">⏱</span>
+                  <div className="contact-founder-perk-text">
+                    <strong>24-Hour Review</strong>
+                    <span>Concrete milestone breakdown within one business day</span>
+                  </div>
+                </div>
+                <div className="contact-founder-perk">
+                  <span className="contact-founder-perk-bullet">🔒</span>
+                  <div className="contact-founder-perk-text">
+                    <strong>Mutual NDA</strong>
+                    <span>Full intellectual property ownership & confidentiality</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Interactive Booking Widget or Written Brief Form */}
-            <div className="contact-page__right">
-              {contactMode === 'call' ? (
-                <div id="contact-panel-call" role="tabpanel" aria-labelledby="contact-tab-call">
-                  <CalBookingWidget calLink="flo-studios-nh4bet/15min" />
-                </div>
-              ) : (
-                <div id="contact-panel-message" role="tabpanel" aria-labelledby="contact-tab-message">
-                  <MotionContactForm activeSubject={activeSubject} initialDivision={divisionParam} />
-                </div>
-              )}
+            {/* Direct Studio Topics / Inquiries Box */}
+            <div className="contact-channels-box">
+              <span className="contact-channels-label">SELECT A TOPIC OR DIRECT CHANNEL</span>
+              <div className="contact-page__actions">
+                <button
+                  type="button"
+                  className={`contact-page__action ${contactMode === 'call' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => setContactMode('call')}
+                >
+                  <div className="contact-page__action-lead">
+                    <span className="contact-page__action-pill">⚡ FASTEST</span>
+                    <span className="contact-page__action-label">BOOK 15-MIN SCOPE CALL</span>
+                  </div>
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  type="button"
+                  className={`contact-page__action ${contactMode === 'message' && activeSubject === 'Start a Project' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => { setContactMode('message'); setActiveSubject('Start a Project') }}
+                >
+                  <span className="contact-page__action-label">START A PROJECT (BRIEF)</span>
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  type="button"
+                  className={`contact-page__action ${contactMode === 'message' && activeSubject === 'Press & Media' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => { setContactMode('message'); setActiveSubject('Press & Media') }}
+                >
+                  <span className="contact-page__action-label">PRESS & MEDIA</span>
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  type="button"
+                  className={`contact-page__action ${contactMode === 'message' && activeSubject === 'General Note' ? 'contact-page__action--active' : ''}`}
+                  onClick={() => { setContactMode('message'); setActiveSubject('General Note') }}
+                >
+                  <span className="contact-page__action-label">WRITE US A NOTE</span>
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+              </div>
+
+              <div className="contact-channels-direct">
+                <span>Direct inquiries: </span>
+                <a href="mailto:hello@flostudio.co" className="contact-channels-email">hello@flostudio.co</a>
+              </div>
             </div>
           </div>
         </div>

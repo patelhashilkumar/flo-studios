@@ -85,7 +85,7 @@
 .cal-widget-frame-wrap {
   position: relative;
   width: 100%;
-  height: clamp(620px, 75vh, 680px);
+  height: clamp(660px, 80vh, 720px);
   border-radius: 16px;
   overflow: hidden;
   background: #ffffff;
