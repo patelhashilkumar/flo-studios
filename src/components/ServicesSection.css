@@ -131,31 +131,86 @@
   width: 100%;
 }
 
-/* ── Division Overview Banner ── */
+/* ── Division Overview / Architectural Manifest ── */
 .division-overview {
-  background: #fafafb;
+  background: linear-gradient(180deg, #ffffff 0%, #f9f9fa 100%);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  padding: clamp(2rem, 4.5vw, 3.5rem);
+  border-radius: 20px;
+  padding: clamp(2rem, 4vw, 3.25rem);
   margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    0 12px 32px -4px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.division-overview::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.15) 30%, transparent 70%);
+}
+
+.division-overview__header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.division-overview__meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.division-overview__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  animation: pulse-dot 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+.division-overview__meta-text {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
 }
 
 .division-overview__badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 2rem;
+  align-items: center;
+  gap: 8px;
 }
 
 .division-badge {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .division-badge--primary {
@@ -164,36 +219,101 @@
 }
 
 .division-badge--sub {
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.09);
   color: var(--color-text);
 }
 
-.division-overview__quote {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.4rem, 2.75vw, 2.25rem);
-  font-weight: 800;
-  line-height: 1.25;
-  letter-spacing: -0.025em;
-  color: var(--color-text);
-  margin: 0 0 1.75rem 0;
-  border-left: 3px solid #000000;
-  padding-left: 1.5rem;
+/* 2-Column Editorial Grid */
+.division-overview__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
 }
 
-.division-overview__body {
+.division-overview__col-thesis {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-width: 920px;
+  justify-content: space-between;
 }
 
-.division-overview__paragraph {
+.division-overview__thesis {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
-  line-height: 1.7;
+  font-size: clamp(1.65rem, 2.5vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #0e0e12;
+  margin: 0 0 1.5rem 0;
+}
+
+.division-overview__caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0.5rem;
+}
+
+.division-overview__caption-line {
+  width: 28px;
+  height: 1.5px;
+  background: #000000;
+  flex-shrink: 0;
+}
+
+.division-overview__caption-text {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--color-text-secondary);
+}
+
+.division-overview__col-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+.division-overview__insight-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.division-overview__insight-card:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.division-overview__insight-num {
+  display: block;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.division-overview__insight-text {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(0.88rem, 1vw, 0.95rem);
+  line-height: 1.62;
+  color: #333338;
   margin: 0;
+}
+
+@media (max-width: 900px) {
+  .division-overview__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 /* ── "What We Do" Comparison Cards ── */
@@ -537,8 +657,8 @@
     grid-template-columns: 1fr;
   }
 
-  .division-overview__quote {
-    padding-left: 1rem;
+  .division-overview {
+    padding: 1.5rem 1.25rem;
   }
 
   .division-summary {

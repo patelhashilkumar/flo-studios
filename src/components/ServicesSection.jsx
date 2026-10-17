@@ -113,35 +113,69 @@ export default function ServicesSection({
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Division Overview Banner */}
+            {/* Division Overview / Architectural Manifest */}
             <div className="division-overview">
-              <div className="division-overview__badges">
-                <span className="division-badge division-badge--primary">
-                  {activeDivision.badge}
-                </span>
-                {activeDivision.subBadge && (
-                  <span className="division-badge division-badge--sub">
-                    {activeDivision.subBadge}
+              <div className="division-overview__header-bar">
+                <div className="division-overview__meta-tag">
+                  <span className="division-overview__status-dot" aria-hidden="true" />
+                  <span className="division-overview__meta-text">
+                    {activeDivision.id === 'development'
+                      ? '01 // ARCHITECTURAL MANIFESTO'
+                      : '02 // CALIBRATED EXECUTION'}
                   </span>
-                )}
+                </div>
+                <div className="division-overview__badges">
+                  <span className="division-badge division-badge--primary">
+                    {activeDivision.badge}
+                  </span>
+                  {activeDivision.subBadge && (
+                    <span className="division-badge division-badge--sub">
+                      {activeDivision.subBadge}
+                    </span>
+                  )}
+                </div>
               </div>
 
-              <blockquote className="division-overview__quote">
-                {activeDivision.coreDifferentiator.quote}
-              </blockquote>
+              <div className="division-overview__grid">
+                <div className="division-overview__col-thesis">
+                  <h3 className="division-overview__thesis">
+                    {activeDivision.coreDifferentiator.quote.replace(/^[“"]|[”"]$/g, '')}
+                  </h3>
+                  <div className="division-overview__caption">
+                    <span className="division-overview__caption-line" aria-hidden="true" />
+                    <span className="division-overview__caption-text">
+                      {activeDivision.id === 'development'
+                        ? 'Single-Point Accountability · Ideation to Production Scale'
+                        : 'Custom Media Infrastructure · Calibrated Per Growth Stage'}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="division-overview__body">
-                {Array.isArray(activeDivision.coreDifferentiator.body) ? (
-                  activeDivision.coreDifferentiator.body.map((paragraph, pIdx) => (
-                    <p key={pIdx} className="division-overview__paragraph">
-                      {paragraph}
-                    </p>
-                  ))
-                ) : (
-                  <p className="division-overview__paragraph">
-                    {activeDivision.coreDifferentiator.text}
-                  </p>
-                )}
+                <div className="division-overview__col-breakdown">
+                  {Array.isArray(activeDivision.coreDifferentiator.body) ? (
+                    activeDivision.coreDifferentiator.body.map((paragraph, pIdx) => {
+                      const labels = activeDivision.id === 'development'
+                        ? ['01 / THE FRACTURE', '02 / THE FLO STANDARD']
+                        : ['01 / STAGE DIAGNOSIS', '02 / SCALED SYSTEM']
+                      return (
+                        <div key={pIdx} className="division-overview__insight-card">
+                          <span className="division-overview__insight-num">
+                            {labels[pIdx] || `0${pIdx + 1} / INSIGHT`}
+                          </span>
+                          <p className="division-overview__insight-text">
+                            {paragraph}
+                          </p>
+                        </div>
+                      )
+                    })
+                  ) : (
+                    <div className="division-overview__insight-card">
+                      <p className="division-overview__insight-text">
+                        {activeDivision.coreDifferentiator.text}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
