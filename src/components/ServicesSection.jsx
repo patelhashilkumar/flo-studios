@@ -60,6 +60,27 @@ export default function ServicesSection({
   const [hoveredRowIdx, setHoveredRowIdx] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState('All')
   const rosterRef = useRef(null)
+  const isScrollingRef = useRef(false)
+  const scrollTimerRef = useRef(null)
+  const hoverTimerRef = useRef(null)
+  const shouldScrollRosterRef = useRef(false)
+
+  // Track window scroll to prevent row hover triggers while user scrolls past
+  useEffect(() => {
+    const handleScroll = () => {
+      isScrollingRef.current = true
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+      scrollTimerRef.current = setTimeout(() => {
+        isScrollingRef.current = false
+      }, 100)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+    }
+  }, [])
 
   const handleSelectDivision = (divisionId) => {
     setActiveTab(divisionId)
@@ -80,8 +101,10 @@ export default function ServicesSection({
   const safeStageIndex = Math.min(activeStageIndex, Math.max(0, visibleStages.length - 1))
   const currentStage = visibleStages[safeStageIndex] || stages[0]
 
-  // Smooth scroll active row into view when navigating via prev/next, keys, or buttons
+  // Smooth scroll active row into view only when explicitly requested (prev/next or keyboard nav)
   useEffect(() => {
+    if (!shouldScrollRosterRef.current) return
+    shouldScrollRosterRef.current = false
     const itemEl = document.getElementById(`${id}-stage-item-${safeStageIndex}`)
     const rosterEl = rosterRef.current
     if (itemEl && rosterEl) {
@@ -105,22 +128,26 @@ export default function ServicesSection({
 
   const handlePrevStage = () => {
     if (visibleStages.length === 0) return
+    shouldScrollRosterRef.current = true
     setActiveStageIndex((prev) => (prev - 1 + visibleStages.length) % visibleStages.length)
   }
 
   const handleNextStage = () => {
     if (visibleStages.length === 0) return
+    shouldScrollRosterRef.current = true
     setActiveStageIndex((prev) => (prev + 1) % visibleStages.length)
   }
 
   const handleStageKeyDown = (e, sIdx) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
+      shouldScrollRosterRef.current = true
       const nextIdx = (sIdx + 1) % visibleStages.length
       setActiveStageIndex(nextIdx)
       document.getElementById(`${id}-stage-btn-${nextIdx}`)?.focus()
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
+      shouldScrollRosterRef.current = true
       const prevIdx = (sIdx - 1 + visibleStages.length) % visibleStages.length
       setActiveStageIndex(prevIdx)
       document.getElementById(`${id}-stage-btn-${prevIdx}`)?.focus()
@@ -415,12 +442,24 @@ export default function ServicesSection({
                             aria-controls={`${id}-stage-panel`}
                             tabIndex={isActive ? 0 : -1}
                             className={`teamwall-row ${isActive ? 'teamwall-row--active' : ''}`}
-                            onClick={() => handleStageSelect(sIdx, true)}
-                            onMouseEnter={() => {
-                              handleStageSelect(sIdx, false)
-                              setHoveredRowIdx(sIdx)
+                            onClick={() => {
+                              if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+                              handleStageSelect(sIdx, true)
                             }}
-                            onMouseLeave={() => setHoveredRowIdx(null)}
+                            onMouseEnter={() => {
+                              if (isScrollingRef.current) return
+                              setHoveredRowIdx(sIdx)
+                              if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+                              hoverTimerRef.current = setTimeout(() => {
+                                if (!isScrollingRef.current) {
+                                  handleStageSelect(sIdx, false)
+                                }
+                              }, 60)
+                            }}
+                            onMouseLeave={() => {
+                              if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
+                              setHoveredRowIdx(null)
+                            }}
                             onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
                           >
                             <div className="teamwall-row__stage-wrap">
@@ -462,13 +501,13 @@ export default function ServicesSection({
                   aria-labelledby={`${id}-stage-btn-${safeStageIndex}`}
                 >
                   <div className="teamwall-frame teamwall-frame--quote">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence initial={false}>
                       <motion.div
                         key={`${activeDivision.id}-${currentStage.id || safeStageIndex}`}
-                        initial={{ opacity: 0, y: 8 }}
+                        initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
                         className="teamwall-quote-card"
                       >
                         <div className="teamwall-quote-card__body">

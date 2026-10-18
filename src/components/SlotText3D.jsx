@@ -27,19 +27,16 @@ export default function SlotText3D({
     }
   }, [controls])
 
-  // Trigger 3D tumble when the stage becomes active or when hovered
+  // Trigger 3D tumble when the row is hovered
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false
-      if (isActive) {
-        playFlip()
-      }
       return
     }
-    if (isActive || isHovered) {
+    if (isHovered) {
       playFlip()
     }
-  }, [isActive, isHovered, playFlip])
+  }, [isHovered, playFlip])
 
   const outgoingVariants = {
     initial: {
@@ -83,7 +80,6 @@ export default function SlotText3D({
   return (
     <span
       className={`slot-3d-text ${isActive ? 'slot-3d-text--active' : ''} ${className}`}
-      onMouseEnter={() => playFlip()}
       aria-label={text}
     >
       <span className="sr-only">{text}</span>

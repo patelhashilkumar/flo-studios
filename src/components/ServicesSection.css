@@ -477,6 +477,7 @@
   margin: clamp(3rem, 5vw, 4.5rem) 0;
   position: relative;
   box-sizing: border-box;
+  scroll-margin-top: 80px;
 }
 
 .teamwall-inner {
@@ -579,6 +580,7 @@
   flex: 1 1 auto;
   min-width: 0;
   scroll-behavior: smooth;
+  contain: layout style;
 }
 
 .teamwall-list {

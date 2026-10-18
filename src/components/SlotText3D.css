@@ -56,7 +56,6 @@
   -webkit-backface-visibility: hidden;
   transform-origin: 50% 50% -0.4em;
   -webkit-transform-origin: 50% 50% -0.4em;
-  will-change: transform, opacity;
 }
 
 .slot-3d-text__face--outgoing {
