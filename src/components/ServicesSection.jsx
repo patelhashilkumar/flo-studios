@@ -170,19 +170,21 @@ export default function ServicesSection({
       {/* Services Hero Header, 4 Cards & Manifesto (Specification from User Mockup) */}
       <div className="services-hero">
         <div className="container services-hero__container">
-          <p className="services-hero__eyebrow">Bringing Ideas to Life</p>
-          <h1 className="services-hero__title">
-            <span className="services-hero__title-line services-hero__title-line--nowrap">
-              From idea to design to deployment to distribution,
-            </span>
-            <span className="services-hero__title-line">
-              we take your vision all the way to market.
-            </span>
-          </h1>
-          <div className="services-hero__cta-wrap">
-            <Link to="/contact" className="services-hero__btn">
-              Get in touch
-            </Link>
+          <div className="services-hero__stage">
+            <p className="services-hero__eyebrow">Bringing Ideas to Life</p>
+            <h1 className="services-hero__title">
+              <span className="services-hero__title-line services-hero__title-line--nowrap">
+                From idea to design to deployment to distribution,
+              </span>
+              <span className="services-hero__title-line">
+                we take your vision all the way to market.
+              </span>
+            </h1>
+            <div className="services-hero__cta-wrap">
+              <Link to="/contact" className="services-hero__btn">
+                Get in touch
+              </Link>
+            </div>
           </div>
 
 

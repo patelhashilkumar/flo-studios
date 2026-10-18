@@ -218,7 +218,7 @@
 
 /* ═══ SERVICES PAGE ═══ */
 .services-page .services-section {
-  padding-top: calc(52px + clamp(2.5rem, 5vw, 4.5rem));
+  padding-top: 52px;
 }
 
 .services-page__cta-section {
