@@ -346,22 +346,26 @@ export default function ServicesSection({
                     }
                   }}
                 >
-                  <div className="schematic-panel__tag-wrap">
-                    <span className="schematic-panel__tag schematic-panel__tag--problem">THE PROBLEM</span>
-                    <span className="schematic-panel__status-pill schematic-panel__status-pill--alert">
+                  <div className="schematic-panel__header">
+                    <div className="schematic-panel__meta">
+                      <span className="schematic-panel__index">01</span>
+                      <span className="schematic-panel__kicker">THE PROBLEM // FRACTURED MODEL</span>
+                    </div>
+                    <span className="schematic-panel__metric-pill schematic-panel__metric-pill--problem">
                       3+ Disconnected Vendors
                     </span>
                   </div>
-                  <h4 className="schematic-panel__title">The Fragmented Multi-Vendor Model</h4>
-                  <p className="schematic-panel__text">{activeDivision.whatWeDo.problem}</p>
 
-                  <div className="schematic-panel__quote-box schematic-panel__quote-box--problem">
-                    <span className="schematic-panel__box-tag">THE FRACTURE DIAGNOSTIC</span>
-                    <p className="schematic-panel__box-text">
-                      {Array.isArray(activeDivision.coreDifferentiator.body)
+                  <h4 className="schematic-panel__title">The Fragmented Multi-Vendor Model</h4>
+                  <p className="schematic-panel__lead">{activeDivision.whatWeDo.problem}</p>
+
+                  <div className="schematic-panel__editorial-zone">
+                    <span className="schematic-panel__editorial-label">THE FRACTURE DIAGNOSTIC</span>
+                    <blockquote className="schematic-panel__pullquote">
+                      “{Array.isArray(activeDivision.coreDifferentiator.body)
                         ? activeDivision.coreDifferentiator.body[0]
-                        : activeDivision.coreDifferentiator.text}
-                    </p>
+                        : activeDivision.coreDifferentiator.text}”
+                    </blockquote>
                   </div>
                 </div>
 
@@ -384,32 +388,38 @@ export default function ServicesSection({
                     }
                   }}
                 >
-                  <div className="schematic-panel__tag-wrap">
-                    <span className="schematic-panel__tag schematic-panel__tag--solution">THE INTEGRATED SOLUTION</span>
-                    <span className="schematic-panel__status-pill schematic-panel__status-pill--success">
+                  <div className="schematic-panel__header">
+                    <div className="schematic-panel__meta">
+                      <span className="schematic-panel__index">02</span>
+                      <span className="schematic-panel__kicker">THE SOLUTION // UNIFIED STUDIO</span>
+                    </div>
+                    <span className="schematic-panel__metric-pill schematic-panel__metric-pill--solution">
                       One Accountable Owner
                     </span>
                   </div>
+
                   <h4 className="schematic-panel__title">The Flo Studios Integrated Model</h4>
-                  <p className="schematic-panel__text">{activeDivision.whatWeDo.solution}</p>
+                  <p className="schematic-panel__lead">{activeDivision.whatWeDo.solution}</p>
 
-                  {activeDivision.whatWeDo.philosophy && (
-                    <div className="schematic-panel__philosophy">
-                      <span className="schematic-panel__box-tag">CORE PHILOSOPHY</span>
-                      <p className="schematic-panel__philosophy-quote">
-                        “{activeDivision.whatWeDo.philosophy}”
-                      </p>
-                    </div>
-                  )}
+                  <div className="schematic-panel__editorial-zone">
+                    {activeDivision.whatWeDo.philosophy && (
+                      <div className="schematic-panel__philosophy-wrap">
+                        <span className="schematic-panel__editorial-label">CORE PHILOSOPHY</span>
+                        <blockquote className="schematic-panel__pullquote schematic-panel__pullquote--dark">
+                          “{activeDivision.whatWeDo.philosophy}”
+                        </blockquote>
+                      </div>
+                    )}
 
-                  {Array.isArray(activeDivision.coreDifferentiator.body) && activeDivision.coreDifferentiator.body[1] && (
-                    <div className="schematic-panel__quote-box schematic-panel__quote-box--solution">
-                      <span className="schematic-panel__box-tag">THE FLO STANDARD</span>
-                      <p className="schematic-panel__box-text">
-                        {activeDivision.coreDifferentiator.body[1]}
-                      </p>
-                    </div>
-                  )}
+                    {Array.isArray(activeDivision.coreDifferentiator.body) && activeDivision.coreDifferentiator.body[1] && (
+                      <div className="schematic-panel__standard-wrap">
+                        <span className="schematic-panel__editorial-label">THE FLO STANDARD</span>
+                        <p className="schematic-panel__standard-text">
+                          {activeDivision.coreDifferentiator.body[1]}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

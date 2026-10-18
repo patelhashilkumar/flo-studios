@@ -406,43 +406,44 @@
   background: #0e0e12;
 }
 
-/* Comparison Panels Grid */
+/* ── High-Craft Editorial Comparison Matrix (No generic nested boxes) ── */
 .schematic-panels-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(0.85rem, 1.8vw, 1.35rem);
-  margin-top: 0.25rem;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-top: 0.35rem;
 }
 
 .schematic-panel {
-  background: #fbfbfd;
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
-  padding: clamp(1rem, 1.6vw, 1.35rem);
+  padding: clamp(1.25rem, 2vw, 1.65rem);
   display: flex;
   flex-direction: column;
-  transition: transform 0.25s var(--ease-out), border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease,
+              box-shadow 0.22s ease;
   cursor: pointer;
   user-select: none;
   outline: none;
   box-sizing: border-box;
+  position: relative;
 }
 
 .schematic-panel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
 }
 
 .schematic-panel--active-fracture {
-  border-color: rgba(220, 38, 38, 0.35);
-  background: #fffcfc;
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.05);
+  border-color: rgba(220, 38, 38, 0.4);
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.05);
 }
 
 .schematic-panel--active-unified {
   border-color: #0e0e12;
-  background: #ffffff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 .schematic-panel:focus-visible {
@@ -450,53 +451,69 @@
   outline-offset: 2px;
 }
 
-.schematic-panel__tag-wrap {
+/* Panel Header Ledger */
+.schematic-panel__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.schematic-panel__meta {
+  display: inline-flex;
+  align-items: baseline;
   gap: 8px;
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
 }
 
-.schematic-panel__tag {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.68rem;
+.schematic-panel__index {
+  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: #0e0e12;
+  letter-spacing: -0.02em;
 }
 
-.schematic-panel__tag--problem {
+.schematic-panel--problem .schematic-panel__index {
   color: #dc2626;
 }
 
-.schematic-panel__tag--solution {
-  color: #0e0e12;
+.schematic-panel__kicker {
+  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
 }
 
-.schematic-panel__status-pill {
+.schematic-panel__metric-pill {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 2.5px 7px;
-  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  padding: 2.5px 8px;
+  border-radius: 4px;
 }
 
-.schematic-panel__status-pill--alert {
-  background: rgba(220, 38, 38, 0.08);
+.schematic-panel__metric-pill--problem {
+  background: rgba(220, 38, 38, 0.05);
   color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.16);
 }
 
-.schematic-panel__status-pill--success {
-  background: rgba(0, 0, 0, 0.06);
+.schematic-panel__metric-pill--solution {
+  background: rgba(0, 0, 0, 0.04);
   color: #0e0e12;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* Panel Title & Lead */
 .schematic-panel__title {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -504,71 +521,76 @@
   margin: 0 0 0.5rem;
 }
 
-.schematic-panel__text {
+.schematic-panel__lead {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: clamp(0.78rem, 0.9vw, 0.835rem);
-  line-height: 1.55;
+  line-height: 1.6;
   color: #4b5563;
-  margin: 0 0 0.85rem;
+  margin: 0 0 1rem;
 }
 
-.schematic-panel__quote-box {
+/* Editorial Zone: Pullouts & Insights (Replacing clumsy nested colored boxes) */
+.schematic-panel__editorial-zone {
   margin-top: auto;
-  border-radius: 8px;
-  padding: 0.75rem 0.85rem;
-  border-left: 3px solid transparent;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.schematic-panel__quote-box--problem {
-  background: rgba(220, 38, 38, 0.04);
-  border-left-color: #dc2626;
-}
-
-.schematic-panel__quote-box--solution {
-  background: rgba(0, 0, 0, 0.03);
-  border-left-color: #0e0e12;
-  margin-top: 0.65rem;
-}
-
-.schematic-panel__box-tag {
+.schematic-panel__editorial-label {
   display: block;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
   font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 0.25rem;
 }
 
-.schematic-panel__box-text {
+.schematic-panel--problem .schematic-panel__editorial-label {
+  color: #dc2626;
+}
+
+.schematic-panel__pullquote {
+  margin: 0;
+  padding-left: 0.75rem;
+  border-left: 2px solid #dc2626;
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: 0.78rem;
-  line-height: 1.5;
-  color: #374151;
-  margin: 0;
-}
-
-.schematic-panel__philosophy {
-  margin-top: auto;
-  background: #0e0e12;
-  color: #ffffff;
-  border-radius: 8px;
-  padding: 0.75rem 0.85rem;
-}
-
-.schematic-panel__philosophy .schematic-panel__box-tag {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.schematic-panel__philosophy-quote {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.8rem;
+  line-height: 1.55;
   font-style: italic;
-  font-weight: 500;
-  line-height: 1.5;
-  color: #ffffff;
+  color: #334155;
+}
+
+.schematic-panel__pullquote--dark {
+  border-left-color: #0e0e12;
+  font-weight: 700;
+  font-style: normal;
+  color: #0e0e12;
+  font-size: 0.835rem;
+}
+
+.schematic-panel__philosophy-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.schematic-panel__standard-wrap {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.65rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.06);
+}
+
+.schematic-panel__standard-text {
   margin: 0;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #64748b;
 }
 
 /* Backward compatibility aliases */
