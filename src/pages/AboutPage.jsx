@@ -211,12 +211,13 @@ export default function AboutPage() {
     root.querySelectorAll('.about__reveal').forEach((el) => io.observe(el))
 
     // Scroll theme switcher: the last section whose top has crossed 80% of the viewport sets the theme.
-    // "How we work" lines draw with the scroll and merge into one.
     const sections = [...root.querySelectorAll('section[data-theme]')]
     const how = root.querySelector('.about__how')
     const lines = [...root.querySelectorAll('.about__merge-line')]
     const merged = root.querySelector('.about__merge-tag')
-    lines.forEach((l) => { l.style.strokeDasharray = l.getTotalLength() })
+    if (lines.length) {
+      lines.forEach((l) => { l.style.strokeDasharray = l.getTotalLength() })
+    }
     let inkTo = 0, ink = 0, raf = 0
     const canvases = [...root.querySelectorAll('canvas[data-g]')]
     const mouse = new WeakMap()
@@ -240,10 +241,12 @@ export default function AboutPage() {
       sections.forEach((s) => { if (s.getBoundingClientRect().top <= trigger) theme = s.dataset.theme })
       root.dataset.theme = theme
       inkTo = theme === 'dark' ? 255 : 0
-      const r = how.getBoundingClientRect()
-      const p = still ? 1 : Math.max(0, Math.min(1, (window.innerHeight * 0.85 - r.top) / (r.height * 0.9)))
-      lines.forEach((l) => { l.style.strokeDashoffset = l.getTotalLength() * (1 - p) })
-      merged.classList.toggle('is-on', p > 0.92)
+      if (how && merged) {
+        const r = how.getBoundingClientRect()
+        const p = still ? 1 : Math.max(0, Math.min(1, (window.innerHeight * 0.85 - r.top) / (r.height * 0.9)))
+        lines.forEach((l) => { l.style.strokeDashoffset = l.getTotalLength() * (1 - p) })
+        merged.classList.toggle('is-on', p > 0.92)
+      }
       if (still) paint(0)
     }
 
@@ -328,11 +331,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Who we are */}
+      {/* The Studio: Stats & Pillars */}
       <section className="about__who" data-theme="dark">
         <div className="container">
           <div className="about__head about__reveal">
-            <h2 className="about__h2">Who we are</h2>
+            <h2 className="about__h2">The Studio</h2>
             <p className="about__lead">
               Strategists, 3D artists, and creative technologists. Opinionated about detail, disciplined in execution, and committed to work that commands attention.
             </p>
@@ -385,30 +388,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* How we work */}
-      <section className="about__how" data-theme="light">
-        <div className="container">
-          <div className="about__head about__reveal">
-            <h2 className="about__h2">How we work</h2>
-            <p className="about__lead">Designers who code and engineers with taste—collaborating in the same room from day one.</p>
-            <p className="about__lead">We eliminate handoff friction to preserve conceptual integrity from initial direction through production deployment.</p>
-          </div>
-          <svg className="about__merge" viewBox="0 0 1200 220" aria-hidden="true">
-            <text className="about__tag" x="0" y="34">Design</text>
-            <text className="about__tag" x="0" y="204">Engineering</text>
-            <path className="about__merge-line" d="M0,50 C180,50 240,190 400,120 S560,40 700,110 S800,120 860,120 L1200,120" />
-            <path className="about__merge-line" d="M0,180 C180,180 240,30 400,110 S560,190 700,128 S800,120 860,120 L1200,120" />
-            <text className="about__tag about__merge-tag" x="1200" y="100" textAnchor="end">One room · one stream</text>
-          </svg>
-          <div className="about__center"><Link to="/careers" className="about__pill">View open roles →</Link></div>
-        </div>
-      </section>
-
-      {/* Leadership */}
+      {/* Co-Founders */}
       <section className="about__leadership" data-theme="dark">
         <div className="container">
           <div className="about__head about__reveal">
-            <h2 className="about__h2">Leadership</h2>
+            <h2 className="about__h2">Co-Founders</h2>
             <p className="about__lead">Led with intention. Built for what's next.</p>
           </div>
           <div className="about__leaders">
