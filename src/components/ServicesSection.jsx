@@ -223,27 +223,6 @@ export default function ServicesSection({
           {/* Division Overview & What We Do in standard container */}
           <div className="container services-section__container">
             <div className="division-overview">
-              <div className="division-overview__header-bar">
-                <div className="division-overview__meta-tag">
-                  <span className="division-overview__status-dot" aria-hidden="true" />
-                  <span className="division-overview__meta-text">
-                    {activeDivision.id === 'development'
-                      ? '01 // ARCHITECTURAL MANIFESTO'
-                      : '02 // CALIBRATED EXECUTION'}
-                  </span>
-                </div>
-                <div className="division-overview__badges">
-                  <span className="division-badge division-badge--primary">
-                    {activeDivision.badge}
-                  </span>
-                  {activeDivision.subBadge && (
-                    <span className="division-badge division-badge--sub">
-                      {activeDivision.subBadge}
-                    </span>
-                  )}
-                </div>
-              </div>
-
               <div className="division-overview__grid">
                 <div className="division-overview__col-thesis">
                   <h3 className="division-overview__thesis">
