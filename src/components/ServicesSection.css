@@ -406,44 +406,45 @@
   background: #0e0e12;
 }
 
-/* ── High-Craft Editorial Comparison Matrix (No generic nested boxes) ── */
+/* ── Framer Feature Section Card Style (Matching framer.com/m/feature-section) ── */
 .schematic-panels-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(1rem, 2vw, 1.5rem);
-  margin-top: 0.35rem;
+  margin-top: 0.5rem;
 }
 
 .schematic-panel {
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
-  padding: clamp(1.25rem, 2vw, 1.65rem);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  padding: 24px 0px 24px 0px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.22s ease,
-              box-shadow 0.22s ease;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease;
   cursor: pointer;
   user-select: none;
   outline: none;
   box-sizing: border-box;
   position: relative;
+  overflow: hidden;
 }
 
 .schematic-panel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .schematic-panel--active-fracture {
-  border-color: rgba(220, 38, 38, 0.4);
-  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.05);
+  box-shadow: 0px 8px 24px 0px rgba(220, 38, 38, 0.08), 0 0 0 1.5px rgba(220, 38, 38, 0.35);
 }
 
 .schematic-panel--active-unified {
-  border-color: #0e0e12;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.1), 0 0 0 1.5px #0e0e12;
 }
 
 .schematic-panel:focus-visible {
@@ -451,146 +452,139 @@
   outline-offset: 2px;
 }
 
-/* Panel Header Ledger */
+/* Top Category Bar */
 .schematic-panel__header {
+  padding: 0px 24px;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 0.85rem;
-  padding-bottom: 0.65rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.schematic-panel__meta {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+.schematic-panel__category {
+  font-family: var(--font-manrope), -apple-system, sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  letter-spacing: -0.01em;
 }
 
-.schematic-panel__index {
-  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: #0e0e12;
-  letter-spacing: -0.02em;
-}
-
-.schematic-panel--problem .schematic-panel__index {
-  color: #dc2626;
-}
-
-.schematic-panel__kicker {
-  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
-  font-size: 0.65rem;
+.schematic-panel__status-tag {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #64748b;
-}
-
-.schematic-panel__metric-pill {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   padding: 2.5px 8px;
   border-radius: 4px;
 }
 
-.schematic-panel__metric-pill--problem {
-  background: rgba(220, 38, 38, 0.05);
+.schematic-panel__status-tag--problem {
+  background: rgba(220, 38, 38, 0.06);
   color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.16);
+  border: 1px solid rgba(220, 38, 38, 0.15);
 }
 
-.schematic-panel__metric-pill--solution {
+.schematic-panel__status-tag--solution {
   background: rgba(0, 0, 0, 0.04);
   color: #0e0e12;
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* Panel Title & Lead */
+/* Center Visual Illustrator */
+.schematic-panel__illustrator {
+  height: 175px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: #fafafa;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.schematic-panel__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.schematic-panel__laser {
+  stroke-dasharray: 60 240;
+  animation: framerLaserFlow 3.2s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes framerLaserFlow {
+  0% {
+    stroke-dashoffset: 120;
+  }
+  100% {
+    stroke-dashoffset: -320;
+  }
+}
+
+/* Bottom Text Content Area */
+.schematic-panel__content {
+  padding: 4px 24px 0px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
 .schematic-panel__title {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-  font-weight: 800;
-  line-height: 1.25;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: #0e0e12;
-  margin: 0 0 0.5rem;
-}
-
-.schematic-panel__lead {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(0.78rem, 0.9vw, 0.835rem);
-  line-height: 1.6;
-  color: #4b5563;
-  margin: 0 0 1rem;
-}
-
-/* Editorial Zone: Pullouts & Insights (Replacing clumsy nested colored boxes) */
-.schematic-panel__editorial-zone {
-  margin-top: auto;
-  padding-top: 0.85rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.schematic-panel__editorial-label {
-  display: block;
-  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #94a3b8;
-  margin-bottom: 0.25rem;
-}
-
-.schematic-panel--problem .schematic-panel__editorial-label {
-  color: #dc2626;
-}
-
-.schematic-panel__pullquote {
   margin: 0;
-  padding-left: 0.75rem;
-  border-left: 2px solid #dc2626;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.78rem;
+  text-align: center;
+}
+
+/* Framer Signature 158px Gradient Hairline Divider */
+.schematic-panel__divider {
+  width: 158px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(255, 255, 255, 0) 100%);
+  flex-shrink: 0;
+  margin: 2px 0;
+}
+
+.schematic-panel__desc {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1.55;
+  color: rgba(0, 0, 0, 0.58);
+  margin: 0;
+  text-align: center;
+}
+
+.schematic-panel__takeaway {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
   font-style: italic;
-  color: #334155;
+  line-height: 1.5;
+  color: #374151;
+  margin: 4px 0 0;
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  width: 100%;
 }
 
-.schematic-panel__pullquote--dark {
-  border-left-color: #0e0e12;
-  font-weight: 700;
-  font-style: normal;
+.schematic-panel__takeaway--highlight {
   color: #0e0e12;
-  font-size: 0.835rem;
-}
-
-.schematic-panel__philosophy-wrap {
-  display: flex;
-  flex-direction: column;
-}
-
-.schematic-panel__standard-wrap {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0.65rem;
-  border-top: 1px dashed rgba(0, 0, 0, 0.06);
-}
-
-.schematic-panel__standard-text {
-  margin: 0;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: #64748b;
+  font-style: normal;
+  font-weight: 700;
 }
 
 /* Backward compatibility aliases */

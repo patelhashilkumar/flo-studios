@@ -325,9 +325,9 @@ export default function ServicesSection({
                 </div>
               </div>
 
-              {/* Bottom Comparison Grid: The Problem vs The Integrated Solution */}
+              {/* Bottom Comparison Grid: The Problem vs The Integrated Solution (Framer Feature Card Style) */}
               <div className="schematic-panels-grid">
-                {/* Panel 1: THE PROBLEM */}
+                {/* Card 1: THE PROBLEM */}
                 <div
                   className={`schematic-panel schematic-panel--problem division-overview__insight-card ${
                     overviewMode === 'fracture'
@@ -346,30 +346,85 @@ export default function ServicesSection({
                     }
                   }}
                 >
+                  {/* Top Category Header Row */}
                   <div className="schematic-panel__header">
-                    <div className="schematic-panel__meta">
-                      <span className="schematic-panel__index">01</span>
-                      <span className="schematic-panel__kicker">THE PROBLEM // FRACTURED MODEL</span>
-                    </div>
-                    <span className="schematic-panel__metric-pill schematic-panel__metric-pill--problem">
+                    <span className="schematic-panel__category">The Problem</span>
+                    <span className="schematic-panel__status-tag schematic-panel__status-tag--problem">
                       3+ Disconnected Vendors
                     </span>
                   </div>
 
-                  <h4 className="schematic-panel__title">The Fragmented Multi-Vendor Model</h4>
-                  <p className="schematic-panel__lead">{activeDivision.whatWeDo.problem}</p>
+                  {/* Center Visual Illustrator */}
+                  <div className="schematic-panel__illustrator" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 380 170"
+                      className="schematic-panel__svg"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {/* Subtle Grid Guidelines */}
+                      <line x1="30" y1="40" x2="350" y2="40" stroke="rgba(0,0,0,0.03)" strokeWidth="1" strokeDasharray="3 3" />
+                      <line x1="30" y1="130" x2="350" y2="130" stroke="rgba(0,0,0,0.03)" strokeWidth="1" strokeDasharray="3 3" />
 
-                  <div className="schematic-panel__editorial-zone">
-                    <span className="schematic-panel__editorial-label">THE FRACTURE DIAGNOSTIC</span>
-                    <blockquote className="schematic-panel__pullquote">
+                      {/* Severed Connection Paths */}
+                      <path d="M 115 65 C 135 65, 142 85, 148 105" stroke="#dc2626" strokeWidth="1.8" strokeDasharray="4 3" />
+                      <path d="M 232 105 C 238 85, 245 65, 265 65" stroke="#dc2626" strokeWidth="1.8" strokeDasharray="4 3" />
+
+                      {/* Break Warning Badges */}
+                      <g transform="translate(108, 76)">
+                        <rect x="0" y="0" width="62" height="18" rx="4" fill="#fee2e2" stroke="#fca5a5" strokeWidth="1" />
+                        <text x="31" y="12" textAnchor="middle" fill="#dc2626" fontSize="7" fontWeight="800" fontFamily="var(--font-manrope), sans-serif">
+                          LOST CONTEXT
+                        </text>
+                      </g>
+
+                      <g transform="translate(210, 76)">
+                        <rect x="0" y="0" width="64" height="18" rx="4" fill="#fee2e2" stroke="#fca5a5" strokeWidth="1" />
+                        <text x="32" y="12" textAnchor="middle" fill="#dc2626" fontSize="7" fontWeight="800" fontFamily="var(--font-manrope), sans-serif">
+                          HANDOFF GAP
+                        </text>
+                      </g>
+
+                      {/* Vendor Node 1 */}
+                      <g transform="translate(30, 40)">
+                        <rect width="85" height="50" rx="8" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" />
+                        <circle cx="16" cy="18" r="3.5" fill="#ef4444" />
+                        <text x="26" y="21" fontSize="9" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">Vendor 01</text>
+                        <text x="12" y="38" fontSize="8" fontWeight="600" fill="#64748b" fontFamily="var(--font-manrope), sans-serif">Strategy Agency</text>
+                      </g>
+
+                      {/* Vendor Node 2 */}
+                      <g transform="translate(148, 85)">
+                        <rect width="85" height="50" rx="8" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" />
+                        <circle cx="16" cy="18" r="3.5" fill="#ef4444" />
+                        <text x="26" y="21" fontSize="9" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">Vendor 02</text>
+                        <text x="12" y="38" fontSize="8" fontWeight="600" fill="#64748b" fontFamily="var(--font-manrope), sans-serif">Design Freelancer</text>
+                      </g>
+
+                      {/* Vendor Node 3 */}
+                      <g transform="translate(265, 40)">
+                        <rect width="85" height="50" rx="8" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" />
+                        <circle cx="16" cy="18" r="3.5" fill="#ef4444" />
+                        <text x="26" y="21" fontSize="9" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">Vendor 03</text>
+                        <text x="12" y="38" fontSize="8" fontWeight="600" fill="#64748b" fontFamily="var(--font-manrope), sans-serif">Offshore Dev</text>
+                      </g>
+                    </svg>
+                  </div>
+
+                  {/* Bottom Text Content Area */}
+                  <div className="schematic-panel__content">
+                    <h4 className="schematic-panel__title">The Fragmented Multi-Vendor Model</h4>
+                    <div className="schematic-panel__divider" aria-hidden="true" />
+                    <p className="schematic-panel__desc">{activeDivision.whatWeDo.problem}</p>
+                    <p className="schematic-panel__takeaway">
                       “{Array.isArray(activeDivision.coreDifferentiator.body)
                         ? activeDivision.coreDifferentiator.body[0]
                         : activeDivision.coreDifferentiator.text}”
-                    </blockquote>
+                    </p>
                   </div>
                 </div>
 
-                {/* Panel 2: THE INTEGRATED SOLUTION */}
+                {/* Card 2: THE INTEGRATED SOLUTION */}
                 <div
                   className={`schematic-panel schematic-panel--solution division-overview__insight-card ${
                     overviewMode === 'unified'
@@ -388,37 +443,89 @@ export default function ServicesSection({
                     }
                   }}
                 >
+                  {/* Top Category Header Row */}
                   <div className="schematic-panel__header">
-                    <div className="schematic-panel__meta">
-                      <span className="schematic-panel__index">02</span>
-                      <span className="schematic-panel__kicker">THE SOLUTION // UNIFIED STUDIO</span>
-                    </div>
-                    <span className="schematic-panel__metric-pill schematic-panel__metric-pill--solution">
-                      One Accountable Owner
+                    <span className="schematic-panel__category">The Integrated Solution</span>
+                    <span className="schematic-panel__status-tag schematic-panel__status-tag--solution">
+                      One Accountable Studio
                     </span>
                   </div>
 
-                  <h4 className="schematic-panel__title">The Flo Studios Integrated Model</h4>
-                  <p className="schematic-panel__lead">{activeDivision.whatWeDo.solution}</p>
+                  {/* Center Visual Illustrator */}
+                  <div className="schematic-panel__illustrator" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 380 170"
+                      className="schematic-panel__svg"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {/* Top Status Pill */}
+                      <g transform="translate(130, 18)">
+                        <rect width="120" height="20" rx="10" fill="#f0fdf4" stroke="#bbf7d0" strokeWidth="1" />
+                        <circle cx="12" cy="10" r="3" fill="#16a34a" />
+                        <text x="65" y="13.5" textAnchor="middle" fill="#15803d" fontSize="7.5" fontWeight="800" fontFamily="var(--font-manrope), sans-serif">
+                          UNBROKEN PIPELINE
+                        </text>
+                      </g>
 
-                  <div className="schematic-panel__editorial-zone">
-                    {activeDivision.whatWeDo.philosophy && (
-                      <div className="schematic-panel__philosophy-wrap">
-                        <span className="schematic-panel__editorial-label">CORE PHILOSOPHY</span>
-                        <blockquote className="schematic-panel__pullquote schematic-panel__pullquote--dark">
-                          “{activeDivision.whatWeDo.philosophy}”
-                        </blockquote>
-                      </div>
-                    )}
+                      {/* Continuous Smooth Backbone Line */}
+                      <path
+                        d="M 40 95 C 100 95, 120 62, 190 62 C 260 62, 280 95, 340 95"
+                        stroke="#0e0e12"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
 
-                    {Array.isArray(activeDivision.coreDifferentiator.body) && activeDivision.coreDifferentiator.body[1] && (
-                      <div className="schematic-panel__standard-wrap">
-                        <span className="schematic-panel__editorial-label">THE FLO STANDARD</span>
-                        <p className="schematic-panel__standard-text">
-                          {activeDivision.coreDifferentiator.body[1]}
-                        </p>
-                      </div>
-                    )}
+                      {/* Traveling Laser Pulse Signal */}
+                      <path
+                        d="M 40 95 C 100 95, 120 62, 190 62 C 260 62, 280 95, 340 95"
+                        className="schematic-panel__laser"
+                        stroke="#16a34a"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+
+                      {/* Station 01 */}
+                      <g transform="translate(55, 95)">
+                        <circle cx="0" cy="0" r="14" fill="#ffffff" stroke="#0e0e12" strokeWidth="2" />
+                        <circle cx="0" cy="0" r="4.5" fill="#0e0e12" />
+                        <text x="0" y="24" textAnchor="middle" fontSize="8" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">PRD</text>
+                      </g>
+
+                      {/* Station 02 */}
+                      <g transform="translate(145, 68)">
+                        <circle cx="0" cy="0" r="14" fill="#ffffff" stroke="#0e0e12" strokeWidth="2" />
+                        <circle cx="0" cy="0" r="4.5" fill="#0e0e12" />
+                        <text x="0" y="24" textAnchor="middle" fontSize="8" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">UI/UX</text>
+                      </g>
+
+                      {/* Station 03 */}
+                      <g transform="translate(235, 68)">
+                        <circle cx="0" cy="0" r="14" fill="#ffffff" stroke="#0e0e12" strokeWidth="2" />
+                        <circle cx="0" cy="0" r="4.5" fill="#0e0e12" />
+                        <text x="0" y="24" textAnchor="middle" fontSize="8" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">Build</text>
+                      </g>
+
+                      {/* Station 04 */}
+                      <g transform="translate(325, 95)">
+                        <circle cx="0" cy="0" r="14" fill="#ffffff" stroke="#0e0e12" strokeWidth="2" />
+                        <circle cx="0" cy="0" r="4.5" fill="#0e0e12" />
+                        <text x="0" y="24" textAnchor="middle" fontSize="8" fontWeight="800" fill="#0e0e12" fontFamily="var(--font-manrope), sans-serif">Launch</text>
+                      </g>
+                    </svg>
+                  </div>
+
+                  {/* Bottom Text Content Area */}
+                  <div className="schematic-panel__content">
+                    <h4 className="schematic-panel__title">The Flo Studios Integrated Model</h4>
+                    <div className="schematic-panel__divider" aria-hidden="true" />
+                    <p className="schematic-panel__desc">{activeDivision.whatWeDo.solution}</p>
+                    <p className="schematic-panel__takeaway schematic-panel__takeaway--highlight">
+                      “{activeDivision.whatWeDo.philosophy ||
+                        (Array.isArray(activeDivision.coreDifferentiator.body) && activeDivision.coreDifferentiator.body[1])}”
+                    </p>
                   </div>
                 </div>
               </div>
