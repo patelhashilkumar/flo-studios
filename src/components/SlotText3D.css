@@ -17,7 +17,7 @@
 
 .slot-3d-text__visual {
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: baseline;
   line-height: inherit;
   transform-style: preserve-3d;

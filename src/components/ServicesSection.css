@@ -484,16 +484,16 @@
   appearance: none;
   background: none;
   border: 0;
-  padding: clamp(0.95rem, 1.4vw, 1.35rem) 0;
+  padding: clamp(0.85rem, 1.25vw, 1.15rem) 0;
   margin: 0;
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   cursor: pointer;
   text-align: left;
   width: 100%;
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) minmax(0, 0.42fr) minmax(0, 0.28fr);
+  grid-template-columns: 36px minmax(0, 1fr) auto auto;
   align-items: baseline;
-  column-gap: clamp(12px, 1.5vw, 20px);
+  column-gap: clamp(14px, 1.8vw, 24px);
   user-select: none;
   box-sizing: border-box;
 }
@@ -524,11 +524,13 @@
   gap: 0.45rem;
   min-width: 0;
   position: relative;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .teamwall-row__arrow {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 600;
   line-height: 1;
   color: #141414;
@@ -546,14 +548,22 @@
 
 .teamwall-row__title {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.3rem, 2.2vw, 2.2rem);
+  font-size: clamp(0.95rem, 1.35vw, 1.325rem);
   font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
   color: rgba(20, 20, 20, 0.4);
-  white-space: normal;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: color 0.25s ease;
+}
+
+.teamwall-row__title .slot-3d-text,
+.teamwall-row__title .slot-3d-text__visual,
+.teamwall-row__title .slot-3d-text__word {
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
 }
 
 .teamwall-row:hover .teamwall-row__title {
@@ -567,7 +577,7 @@
 
 .teamwall-row__discipline {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: -0.005em;
   color: #8c8b86;
@@ -575,6 +585,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color 0.25s ease;
+  min-width: 120px;
 }
 
 .teamwall-row:hover .teamwall-row__discipline {
@@ -588,7 +599,7 @@
 
 .teamwall-row__location {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: -0.005em;
   color: #8c8b86;
@@ -597,6 +608,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color 0.25s ease;
+  min-width: 60px;
 }
 
 .teamwall-row:hover .teamwall-row__location {
