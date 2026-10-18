@@ -21,6 +21,41 @@ export default function ServicesSection({
 
   const activeDivision = getDivisionById(activeTab) || DIVISIONS[0]
 
+  const [activeStageIndex, setActiveStageIndex] = useState(0)
+
+  const handleSelectDivision = (divisionId) => {
+    setActiveTab(divisionId)
+    setActiveStageIndex(0)
+  }
+
+  const stages = activeDivision.stages || []
+  const safeStageIndex = Math.min(activeStageIndex, Math.max(0, stages.length - 1))
+  const currentStage = stages[safeStageIndex] || stages[0]
+
+  const handlePrevStage = () => {
+    if (stages.length === 0) return
+    setActiveStageIndex((prev) => (prev - 1 + stages.length) % stages.length)
+  }
+
+  const handleNextStage = () => {
+    if (stages.length === 0) return
+    setActiveStageIndex((prev) => (prev + 1) % stages.length)
+  }
+
+  const handleStageKeyDown = (e, sIdx) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      const nextIdx = (sIdx + 1) % stages.length
+      setActiveStageIndex(nextIdx)
+      document.getElementById(`${id}-stage-btn-${nextIdx}`)?.focus()
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      const prevIdx = (sIdx - 1 + stages.length) % stages.length
+      setActiveStageIndex(prevIdx)
+      document.getElementById(`${id}-stage-btn-${prevIdx}`)?.focus()
+    }
+  }
+
   const tabPills = [
     {
       id: 'development',
@@ -43,7 +78,7 @@ export default function ServicesSection({
     }
     if (targetIdx !== null) {
       const nextId = tabPills[targetIdx].id
-      setActiveTab(nextId)
+      handleSelectDivision(nextId)
       document.getElementById(`${id}-tab-${nextId}`)?.focus()
     }
   }
@@ -83,7 +118,7 @@ export default function ServicesSection({
                   aria-controls={`${id}-panel-${pill.id}`}
                   tabIndex={isActive ? 0 : -1}
                   className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
-                  onClick={() => setActiveTab(pill.id)}
+                  onClick={() => handleSelectDivision(pill.id)}
                   onKeyDown={(e) => handleTabKeyDown(e, idx)}
                 >
                   {isActive && (
@@ -202,39 +237,155 @@ export default function ServicesSection({
               </div>
             </div>
 
-            {/* The Stage-by-Stage Lifecycle Pipeline */}
-            <div className="division-pipeline">
-              <div className="division-pipeline__header">
-                <div className="division-pipeline__meta">
-                  <h3 className="division-pipeline__title">
+            {/* The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture */}
+            <div className="division-pipeline teamwall-container" aria-label={activeDivision.pipelineTitle}>
+              <div className="teamwall-header">
+                <div className="teamwall-header__left">
+                  <span className="teamwall-header__eyebrow">
+                    {activeDivision.id === 'development'
+                      ? 'FULL BUILD LIFECYCLE · STAGE BY STAGE'
+                      : 'CALIBRATED MEDIA ENGINE PIPELINE'}
+                  </span>
+                  <h3 className="teamwall-header__title">
                     {activeDivision.pipelineTitle}
                   </h3>
                 </div>
-                <div className="division-pipeline__count">
-                  <span className="division-pipeline__count-num">
-                    {activeDivision.stages.length}
+                <div className="teamwall-header__count">
+                  <span className="teamwall-header__count-num">
+                    {stages.length}
                   </span>
-                  <span className="division-pipeline__count-label">
+                  <span className="teamwall-header__count-label">
                     Stages
                   </span>
                 </div>
               </div>
 
-              <div className="division-pipeline__grid">
-                {activeDivision.stages.map((stage, sIdx) => {
-                  const stageNum = stage.number || stage.step || String(sIdx + 1).padStart(2, '0')
-                  const stageDesc = stage.description || stage.desc
-                  return (
-                    <div key={stage.id || sIdx} className="stage-card">
-                      <div className="stage-card__header">
-                        <span className="stage-card__number">{stageNum}</span>
-                        <span className="stage-card__step-pill">STAGE {stageNum}</span>
+              <div className="teamwall-layout">
+                {/* Left Column: Architectural Numbered Roster matching Image 2 */}
+                <div className="teamwall-roster">
+                  <ul
+                    className="teamwall-list"
+                    role="tablist"
+                    aria-label={`${activeDivision.name} stages`}
+                  >
+                    {stages.map((stage, sIdx) => {
+                      const isActive = sIdx === safeStageIndex
+                      const stageNum = stage.number || String(sIdx + 1).padStart(2, '0')
+                      return (
+                        <li
+                          key={stage.id || sIdx}
+                          className={`teamwall-list__item ${isActive ? 'teamwall-list__item--active' : ''}`}
+                        >
+                          <button
+                            type="button"
+                            role="tab"
+                            id={`${id}-stage-btn-${sIdx}`}
+                            aria-selected={isActive}
+                            aria-controls={`${id}-stage-panel`}
+                            tabIndex={isActive ? 0 : -1}
+                            className={`teamwall-row ${isActive ? 'teamwall-row--active' : ''}`}
+                            onClick={() => setActiveStageIndex(sIdx)}
+                            onMouseEnter={() => setActiveStageIndex(sIdx)}
+                            onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
+                          >
+                            <span className="teamwall-row__idx">{stageNum}</span>
+                            <div className="teamwall-row__title-wrap">
+                              {isActive && (
+                                <span className="teamwall-row__arrow" aria-hidden="true">
+                                  →
+                                </span>
+                              )}
+                              <span className="teamwall-row__title">{stage.title}</span>
+                            </div>
+                            <span className="teamwall-row__pill">
+                              STAGE {stageNum}
+                            </span>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+
+                {/* Right Column: Sticky Detail Showcase Card */}
+                <aside
+                  className="teamwall-showcase"
+                  id={`${id}-stage-panel`}
+                  role="tabpanel"
+                  aria-labelledby={`${id}-stage-btn-${safeStageIndex}`}
+                >
+                  <div className="teamwall-card">
+                    <div className="teamwall-card__top">
+                      <div className="teamwall-card__status">
+                        <span className="teamwall-card__dot" aria-hidden="true" />
+                        <span className="teamwall-card__stage-tag">
+                          STAGE {currentStage.number} // {String(stages.length).padStart(2, '0')}
+                        </span>
                       </div>
-                      <h4 className="stage-card__title">{stage.title}</h4>
-                      <p className="stage-card__desc">{stageDesc}</p>
+                      <span className="teamwall-card__no">No. {currentStage.number}</span>
                     </div>
-                  )
-                })}
+
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`${activeDivision.id}-${currentStage.id || safeStageIndex}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                        className="teamwall-card__body"
+                      >
+                        <h4 className="teamwall-card__title">{currentStage.title}</h4>
+                        <p className="teamwall-card__desc">{currentStage.description}</p>
+
+                        {currentStage.focus && (
+                          <div className="teamwall-card__focus-block">
+                            <span className="teamwall-card__focus-label">
+                              Core Outcome & Strategic Deliverable
+                            </span>
+                            <p className="teamwall-card__focus-text">
+                              {currentStage.focus}
+                            </p>
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+
+                    <div className="teamwall-card__footer">
+                      <div className="teamwall-card__counter">
+                        <span className="teamwall-card__counter-curr">
+                          {currentStage.number}
+                        </span>
+                        <span className="teamwall-card__counter-sep">/</span>
+                        <span className="teamwall-card__counter-total">
+                          {String(stages.length).padStart(2, '0')}
+                        </span>
+                      </div>
+
+                      <div className="teamwall-card__nav-group">
+                        <button
+                          type="button"
+                          onClick={handlePrevStage}
+                          className="teamwall-nav-btn"
+                          aria-label="Previous stage"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M14 9H4M8 5L4 9l4 4" />
+                          </svg>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextStage}
+                          className="teamwall-nav-btn"
+                          aria-label="Next stage"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M4 9h10M10 5l4 4-4 4" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </aside>
               </div>
             </div>
 

@@ -421,128 +421,392 @@
   margin: 0;
 }
 
-/* ── Stage-by-Stage Lifecycle Pipeline ── */
-.division-pipeline {
+/* ── The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture ── */
+.teamwall-container {
+  background: #f4f3ef;
+  border: 1px solid rgba(20, 20, 20, 0.08);
+  border-radius: 20px;
+  padding: clamp(2rem, 3.5vw, 3.5rem);
+  color: #141414;
   margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  position: relative;
+  box-sizing: border-box;
 }
 
-.division-pipeline__header {
+.teamwall-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 1.25rem;
   gap: 1.5rem;
   flex-wrap: wrap;
+  padding-bottom: 1.75rem;
+  margin-bottom: clamp(1.75rem, 2.5vw, 2.5rem);
+  border-bottom: 1px solid rgba(20, 20, 20, 0.12);
 }
 
-.division-pipeline__title {
+.teamwall-header__left {
+  max-width: 680px;
+}
+
+.teamwall-header__eyebrow {
+  display: block;
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(20, 20, 20, 0.5);
+  margin-bottom: 0.4rem;
+}
+
+.teamwall-header__title {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.35rem);
   font-weight: 800;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: #141414;
   margin: 0;
 }
 
-.division-pipeline__count {
+.teamwall-header__count {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #f4f4f6;
-  padding: 8px 16px;
+  background: rgba(20, 20, 20, 0.05);
+  border: 1px solid rgba(20, 20, 20, 0.1);
+  padding: 8px 18px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.division-pipeline__count-num {
+.teamwall-header__count-num {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  color: #000000;
+  color: #141414;
   line-height: 1;
 }
 
-.division-pipeline__count-label {
+.teamwall-header__count-label {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
+  color: rgba(20, 20, 20, 0.6);
 }
 
-/* ── Stage Cards Grid ── */
-.division-pipeline__grid {
+/* ── Teamwall Layout (Split Columns) ── */
+.teamwall-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(2rem, 3.5vw, 4rem);
+  align-items: start;
 }
 
-.stage-card {
+/* ── Left Column: Architectural Numbered Roster matching Image 2 ── */
+.teamwall-roster {
+  width: 100%;
+}
+
+.teamwall-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(20, 20, 20, 0.12);
+}
+
+.teamwall-list__item {
+  position: relative;
+  border-bottom: 1px solid rgba(20, 20, 20, 0.12);
+  transition: border-color 0.2s ease;
+}
+
+.teamwall-list__item--active {
+  border-bottom: 1.5px solid #141414;
+}
+
+.teamwall-row {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: clamp(0.95rem, 1.4vw, 1.35rem) 0.5rem;
+  margin: 0;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 1rem;
+  transition: background-color 0.15s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.teamwall-row:focus-visible {
+  outline: 2px solid #141414;
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+.teamwall-row__idx {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: rgba(20, 20, 20, 0.4);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s ease;
+}
+
+.teamwall-row--active .teamwall-row__idx {
+  color: #141414;
+  font-weight: 700;
+}
+
+.teamwall-row__title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.teamwall-row__arrow {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #141414;
+  flex-shrink: 0;
+  animation: teamwall-arrow-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes teamwall-arrow-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.teamwall-row__title {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(1.1rem, 1.55vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: rgba(20, 20, 20, 0.45);
+  white-space: normal;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.teamwall-row:hover .teamwall-row__title {
+  color: rgba(20, 20, 20, 0.85);
+}
+
+.teamwall-row--active .teamwall-row__title {
+  color: #141414;
+  font-weight: 700;
+}
+
+.teamwall-row__pill {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(20, 20, 20, 0.35);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.teamwall-row--active .teamwall-row__pill {
+  color: #141414;
+  font-weight: 700;
+}
+
+/* ── Right Column: Sticky Detail Showcase Card ── */
+.teamwall-showcase {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  width: 100%;
+}
+
+.teamwall-card {
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.09);
-  border-radius: 14px;
-  padding: clamp(1.5rem, 2.2vw, 2rem);
+  border: 1px solid rgba(20, 20, 20, 0.08);
+  border-radius: 16px;
+  padding: clamp(1.75rem, 2.5vw, 2.5rem);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
-  transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
-  position: relative;
 }
 
-.stage-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(0, 0, 0, 0.25);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
-}
-
-.stage-card__header {
+.teamwall-card__top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.25rem;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(20, 20, 20, 0.08);
+  margin-bottom: 1.5rem;
 }
 
-.stage-card__number {
+.teamwall-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teamwall-card__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  animation: pulse-dot 2.5s infinite ease-in-out;
+}
+
+.teamwall-card__stage-tag {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: #000000;
-  line-height: 1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #141414;
 }
 
-.stage-card__step-pill {
+.teamwall-card__no {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(20, 20, 20, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.teamwall-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.teamwall-card__title {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+  color: #141414;
+  margin: 0 0 1rem 0;
+}
+
+.teamwall-card__desc {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(0.925rem, 1.05vw, 1rem);
+  line-height: 1.7;
+  color: rgba(20, 20, 20, 0.75);
+  margin: 0 0 1.5rem 0;
+}
+
+.teamwall-card__focus-block {
+  background: #f4f3ef;
+  border: 1px solid rgba(20, 20, 20, 0.07);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.teamwall-card__focus-label {
+  display: block;
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: 0.6875rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  background: #f4f4f6;
-  color: var(--color-text-secondary);
+  color: rgba(20, 20, 20, 0.5);
+  margin-bottom: 0.4rem;
 }
 
-.stage-card__title {
+.teamwall-card__focus-text {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
-  font-weight: 800;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  color: var(--color-text);
-  margin: 0 0 0.85rem 0;
-}
-
-.stage-card__desc {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #141414;
   margin: 0;
+}
+
+.teamwall-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(20, 20, 20, 0.08);
+}
+
+.teamwall-card__counter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.teamwall-card__counter-curr {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #141414;
+  line-height: 1;
+}
+
+.teamwall-card__counter-sep {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(20, 20, 20, 0.35);
+}
+
+.teamwall-card__counter-total {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(20, 20, 20, 0.4);
+}
+
+.teamwall-card__nav-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teamwall-nav-btn {
+  appearance: none;
+  background: #ffffff;
+  border: 1px solid rgba(20, 20, 20, 0.15);
+  border-radius: var(--radius-full);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #141414;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.teamwall-nav-btn:hover {
+  background: #141414;
+  color: #ffffff;
+  border-color: #141414;
+  transform: scale(1.05);
+}
+
+.teamwall-nav-btn:active {
+  transform: scale(0.96);
 }
 
 /* ── The One-Line Summary & Contact CTA ── */
@@ -617,8 +881,15 @@
 
 /* ── Responsive Adaptations ── */
 @media (max-width: 1024px) {
-  .division-pipeline__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .teamwall-layout {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .teamwall-showcase {
+    position: static;
+    top: auto;
+    order: -1;
   }
 
   .division-summary {
@@ -653,8 +924,34 @@
 }
 
 @media (max-width: 640px) {
-  .division-pipeline__grid {
-    grid-template-columns: 1fr;
+  .teamwall-container {
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .teamwall-header {
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .teamwall-header__title {
+    font-size: 1.45rem;
+  }
+
+  .teamwall-card {
+    padding: 1.25rem;
+  }
+
+  .teamwall-row {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+  }
+
+  .teamwall-row__pill {
+    display: none;
+  }
+
+  .teamwall-row__title {
+    font-size: 1.05rem;
   }
 
   .division-overview {

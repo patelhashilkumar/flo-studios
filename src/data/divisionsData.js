@@ -43,7 +43,8 @@ export const DIVISIONS = [
         title: 'Requirements & Product Planning',
         description:
           "We start by deeply understanding the founder's vision, goals, and constraints - translating a raw idea into clear product requirements, defined scope, and a shared understanding of what's being built and why.",
-        desc: "We start by deeply understanding the founder's vision, goals, and constraints - translating a raw idea into clear product requirements, defined scope, and a shared understanding of what's being built and why."
+        desc: "We start by deeply understanding the founder's vision, goals, and constraints - translating a raw idea into clear product requirements, defined scope, and a shared understanding of what's being built and why.",
+        focus: 'Scope definition, product requirements document (PRD) & architectural boundaries.'
       },
       {
         id: 'market-technical-research',
@@ -52,7 +53,8 @@ export const DIVISIONS = [
         title: 'Market & Technical Research',
         description:
           "Validating the idea against real market conditions and identifying the right technical approach - competitor analysis, user needs, and the technology choices that will actually support the product's goals at scale.",
-        desc: "Validating the idea against real market conditions and identifying the right technical approach - competitor analysis, user needs, and the technology choices that will actually support the product's goals at scale."
+        desc: "Validating the idea against real market conditions and identifying the right technical approach - competitor analysis, user needs, and the technology choices that will actually support the product's goals at scale.",
+        focus: 'Competitor landscape analysis, technical feasibility & tech stack validation.'
       },
       {
         id: 'estimation-proposal-project-setup',
@@ -61,7 +63,8 @@ export const DIVISIONS = [
         title: 'Estimation, Proposal & Project Setup',
         description:
           'Clear timelines, cost estimates, and a structured proposal - followed by formal project setup, so both sides start with full alignment on scope, deliverables, and expectations.',
-        desc: 'Clear timelines, cost estimates, and a structured proposal - followed by formal project setup, so both sides start with full alignment on scope, deliverables, and expectations.'
+        desc: 'Clear timelines, cost estimates, and a structured proposal - followed by formal project setup, so both sides start with full alignment on scope, deliverables, and expectations.',
+        focus: 'Transparent milestone timeline, cost estimates & team alignment.'
       },
       {
         id: 'ui-ux-design',
@@ -70,7 +73,8 @@ export const DIVISIONS = [
         title: 'UI/UX Design',
         description:
           "Designing the product's interface and experience - wireframes through high-fidelity design - built around real user behavior, not just visual polish, ensuring the product is as usable as it is attractive.",
-        desc: "Designing the product's interface and experience - wireframes through high-fidelity design - built around real user behavior, not just visual polish, ensuring the product is as usable as it is attractive."
+        desc: "Designing the product's interface and experience - wireframes through high-fidelity design - built around real user behavior, not just visual polish, ensuring the product is as usable as it is attractive.",
+        focus: 'User flows, wireframes & high-fidelity interactive design system.'
       },
       {
         id: 'technical-architecture-development-planning',
@@ -79,7 +83,8 @@ export const DIVISIONS = [
         title: 'Technical Architecture & Development Planning',
         description:
           'Defining the technical foundation of the product - system architecture, tech stack, database design, and a clear development roadmap - before a single line of production code is written.',
-        desc: 'Defining the technical foundation of the product - system architecture, tech stack, database design, and a clear development roadmap - before a single line of production code is written.'
+        desc: 'Defining the technical foundation of the product - system architecture, tech stack, database design, and a clear development roadmap - before a single line of production code is written.',
+        focus: 'System architecture, database schemas & development roadmap.'
       },
       {
         id: 'development',
@@ -88,7 +93,8 @@ export const DIVISIONS = [
         title: 'Development',
         description:
           'Full-stack build of the product - web, app, or web app - executed against the architecture and design already agreed upon, with structured progress checkpoints throughout.',
-        desc: 'Full-stack build of the product - web, app, or web app - executed against the architecture and design already agreed upon, with structured progress checkpoints throughout.'
+        desc: 'Full-stack build of the product - web, app, or web app - executed against the architecture and design already agreed upon, with structured progress checkpoints throughout.',
+        focus: 'Full-stack web/app engineering with structured sprint checkpoints.'
       },
       {
         id: 'qa-testing',
@@ -97,7 +103,8 @@ export const DIVISIONS = [
         title: 'QA & Testing',
         description:
           'Rigorous testing across functionality, performance, security, and usability to catch issues before they reach real users - not an afterthought, but a dedicated phase.',
-        desc: 'Rigorous testing across functionality, performance, security, and usability to catch issues before they reach real users - not an afterthought, but a dedicated phase.'
+        desc: 'Rigorous testing across functionality, performance, security, and usability to catch issues before they reach real users - not an afterthought, but a dedicated phase.',
+        focus: 'End-to-end functionality, performance, security & cross-device QA.'
       },
       {
         id: 'pre-launch-release-preparation',
@@ -106,7 +113,8 @@ export const DIVISIONS = [
         title: 'Pre-Launch / Release Preparation',
         description:
           'Final readiness checks - performance optimization, environment setup, launch checklists, and contingency planning - to ensure the product goes live without surprises.',
-        desc: 'Final readiness checks - performance optimization, environment setup, launch checklists, and contingency planning - to ensure the product goes live without surprises.'
+        desc: 'Final readiness checks - performance optimization, environment setup, launch checklists, and contingency planning - to ensure the product goes live without surprises.',
+        focus: 'Staging verification, environment setup & launch contingency checklist.'
       },
       {
         id: 'deployment-launch',
@@ -115,7 +123,8 @@ export const DIVISIONS = [
         title: 'Deployment & Launch',
         description:
           'Managing the actual release of the product into the real world - deployment execution, monitoring, and hands-on support through the critical first moments of going live.',
-        desc: 'Managing the actual release of the product into the real world - deployment execution, monitoring, and hands-on support through the critical first moments of going live.'
+        desc: 'Managing the actual release of the product into the real world - deployment execution, monitoring, and hands-on support through the critical first moments of going live.',
+        focus: 'Production rollout, DNS/CDN deployment & real-time live monitoring.'
       },
       {
         id: 'post-launch-support-maintenance',
@@ -124,7 +133,8 @@ export const DIVISIONS = [
         title: 'Post-Launch Support & Maintenance',
         description:
           "Ongoing technical support, bug fixes, and system upkeep after launch - because a product's real test begins the moment users start using it.",
-        desc: "Ongoing technical support, bug fixes, and system upkeep after launch - because a product's real test begins the moment users start using it."
+        desc: "Ongoing technical support, bug fixes, and system upkeep after launch - because a product's real test begins the moment users start using it.",
+        focus: 'SLA technical support, error telemetry & ongoing system maintenance.'
       },
       {
         id: 'optimization-continuous-development',
@@ -133,7 +143,8 @@ export const DIVISIONS = [
         title: 'Optimization & Continuous Development',
         description:
           "Using real user data and performance insights to continuously refine and evolve the product - new features, performance improvements, and iteration based on what's actually happening in the market, not assumptions.",
-        desc: "Using real user data and performance insights to continuously refine and evolve the product - new features, performance improvements, and iteration based on what's actually happening in the market, not assumptions."
+        desc: "Using real user data and performance insights to continuously refine and evolve the product - new features, performance improvements, and iteration based on what's actually happening in the market, not assumptions.",
+        focus: 'User telemetry review, conversion optimization & continuous feature sprints.'
       }
     ],
     oneLineSummary:
@@ -177,7 +188,8 @@ export const DIVISIONS = [
         title: 'Ideation & Format Development',
         description:
           'We identify content ideas and formats aligned to the creator\'s niche, current audience behavior, and platform trends - not generic "content calendars," but ideas built to move that specific channel forward at its specific stage.',
-        desc: 'We identify content ideas and formats aligned to the creator\'s niche, current audience behavior, and platform trends - not generic "content calendars," but ideas built to move that specific channel forward at its specific stage.'
+        desc: 'We identify content ideas and formats aligned to the creator\'s niche, current audience behavior, and platform trends - not generic "content calendars," but ideas built to move that specific channel forward at its specific stage.',
+        focus: 'Channel-specific idea engine & high-retention content formats.'
       },
       {
         id: 'scripting',
@@ -186,7 +198,8 @@ export const DIVISIONS = [
         title: 'Scripting',
         description:
           "Structured scripts or talking-point frameworks (depending on the creator's style and platform) designed to maximize retention, hook strength, and message clarity from the first second. Structured as per the content style and needs of the channel and creator.",
-        desc: "Structured scripts or talking-point frameworks (depending on the creator's style and platform) designed to maximize retention, hook strength, and message clarity from the first second. Structured as per the content style and needs of the channel and creator."
+        desc: "Structured scripts or talking-point frameworks (depending on the creator's style and platform) designed to maximize retention, hook strength, and message clarity from the first second. Structured as per the content style and needs of the channel and creator.",
+        focus: 'Hook calibration, structured scripts & retention-focused talking points.'
       },
       {
         id: 'storyboarding',
@@ -195,7 +208,8 @@ export const DIVISIONS = [
         title: 'Storyboarding',
         description:
           'Visual / shot planning that translates the script into a clear production roadmap, where every frame is meaningful and supports the end goal - ensuring the creator (or our production team) knows exactly what to shoot and how before cameras roll.',
-        desc: 'Visual / shot planning that translates the script into a clear production roadmap, where every frame is meaningful and supports the end goal - ensuring the creator (or our production team) knows exactly what to shoot and how before cameras roll.'
+        desc: 'Visual / shot planning that translates the script into a clear production roadmap, where every frame is meaningful and supports the end goal - ensuring the creator (or our production team) knows exactly what to shoot and how before cameras roll.',
+        focus: 'Visual scene mapping & shot-by-shot production roadmap.'
       },
       {
         id: 'post-production-editing',
@@ -204,7 +218,8 @@ export const DIVISIONS = [
         title: 'Post-Production Editing',
         description:
           "Full editing of raw footage into a polished final cut - pacing, cuts, visual style, and structure tailored to the platform and the creator's brand identity. All of it crafted using techniques ensured to work towards the motive",
-        desc: "Full editing of raw footage into a polished final cut - pacing, cuts, visual style, and structure tailored to the platform and the creator's brand identity. All of it crafted using techniques ensured to work towards the motive"
+        desc: "Full editing of raw footage into a polished final cut - pacing, cuts, visual style, and structure tailored to the platform and the creator's brand identity. All of it crafted using techniques ensured to work towards the motive",
+        focus: 'Pacing, visual narrative cuts & platform-calibrated final master.'
       },
       {
         id: 'sound-design',
@@ -213,7 +228,8 @@ export const DIVISIONS = [
         title: 'Sound Design',
         description:
           'Audio mixing, sound effects, and music selection / integration to elevate production quality, keep viewers engaged throughout and create Depth in the videos.',
-        desc: 'Audio mixing, sound effects, and music selection / integration to elevate production quality, keep viewers engaged throughout and create Depth in the videos.'
+        desc: 'Audio mixing, sound effects, and music selection / integration to elevate production quality, keep viewers engaged throughout and create Depth in the videos.',
+        focus: 'Audio mixing, sound effects & immersive sonic layering.'
       },
       {
         id: 'packaging-design',
@@ -222,7 +238,8 @@ export const DIVISIONS = [
         title: 'Packaging Design',
         description:
           "Thumbnails, titles, and cover art engineered specifically to drive click-through - informed by what's proven to work at the creator's current audience size and niche and crafted with precision by specialized designers.",
-        desc: "Thumbnails, titles, and cover art engineered specifically to drive click-through - informed by what's proven to work at the creator's current audience size and niche and crafted with precision by specialized designers."
+        desc: "Thumbnails, titles, and cover art engineered specifically to drive click-through - informed by what's proven to work at the creator's current audience size and niche and crafted with precision by specialized designers.",
+        focus: 'High-CTR thumbnail engineering, packaging & title positioning.'
       },
       {
         id: 'multi-platform-distribution-planning',
@@ -231,7 +248,8 @@ export const DIVISIONS = [
         title: 'Multi-Platform Distribution Planning',
         description:
           'Strategic planning for how, when, and where content gets published across platforms (YouTube, Instagram, TikTok, etc.), including repurposing and format adaptation per platform. Preparations are made according to the Funnel made by the specialist to drive in the most accurate traffic.',
-        desc: 'Strategic planning for how, when, and where content gets published across platforms (YouTube, Instagram, TikTok, etc.), including repurposing and format adaptation per platform. Preparations are made according to the Funnel made by the specialist to drive in the most accurate traffic.'
+        desc: 'Strategic planning for how, when, and where content gets published across platforms (YouTube, Instagram, TikTok, etc.), including repurposing and format adaptation per platform. Preparations are made according to the Funnel made by the specialist to drive in the most accurate traffic.',
+        focus: 'Cross-platform distribution schedules & content repurposing funnel.'
       },
       {
         id: 'specialized-analysis',
@@ -240,7 +258,8 @@ export const DIVISIONS = [
         title: 'Specialized Analysis',
         description:
           'Post-publish performance analysis - not just views and likes, but retention curves, audience behavior, and growth signals - feeding insights back into the next ideation cycle to keep the pipeline improving over time and the funnel is calibrated as per the needs.',
-        desc: 'Post-publish performance analysis - not just views and likes, but retention curves, audience behavior, and growth signals - feeding insights back into the next ideation cycle to keep the pipeline improving over time and the funnel is calibrated as per the needs.'
+        desc: 'Post-publish performance analysis - not just views and likes, but retention curves, audience behavior, and growth signals - feeding insights back into the next ideation cycle to keep the pipeline improving over time and the funnel is calibrated as per the needs.',
+        focus: 'Retention curve analytics, audience insights & pipeline optimization.'
       }
     ],
     oneLineSummary:
