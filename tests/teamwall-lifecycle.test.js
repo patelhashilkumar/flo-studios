@@ -221,3 +221,33 @@ test('10. ServicesSection renders inverted differentiator quote callout with Get
 
   assert.ok(!pageContent.includes('services-page__cta-section'), 'ServicesPage must not render redundant cta-section')
 })
+
+test('11. ServicesSection renders division intro statement and creator logo matching mockup', () => {
+  const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+  const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
+
+  const jsxContent = fs.readFileSync(jsxPath, 'utf8')
+  const cssContent = fs.readFileSync(cssPath, 'utf8')
+
+  const devDivision = getDivisionById('development')
+  assert.ok(devDivision.introStatement, 'Development division must define introStatement')
+  assert.ok(
+    devDivision.introStatement[0].includes('handpicked limited number of venture-backed startups'),
+    'Development intro statement must contain handpicked startups text'
+  )
+  assert.ok(
+    devDivision.introStatement[1].includes('initial customer acquisition'),
+    'Development intro statement must contain customer acquisition text'
+  )
+
+  const creatorDivision = getDivisionById('creator')
+  assert.ok(creatorDivision.introStatement, 'Creator division must define introStatement')
+
+  assert.ok(jsxContent.includes('services-hero__intro'), 'JSX must render services-hero__intro')
+  assert.ok(jsxContent.includes('services-switcher__creator-img'), 'JSX must render services-switcher__creator-img')
+  assert.ok(jsxContent.includes('creator-division.png'), 'JSX must link to creator-division.png asset')
+
+  assert.ok(cssContent.includes('.services-hero__intro'), 'CSS must define .services-hero__intro')
+  assert.ok(cssContent.includes('.services-switcher__creator-img'), 'CSS must define .services-switcher__creator-img')
+})
+

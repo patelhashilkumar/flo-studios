@@ -228,43 +228,74 @@ export default function ServicesSection({
               from concept to market.
             </p>
           </div>
-        </div>
-      </div>
 
-      <div className="container services-section__container">
-        {/* Interactive Segmented Switcher */}
-        <div className="services-switcher-wrap">
-          <div
-            className="services-switcher"
-            role="tablist"
-            aria-label="Flo Studios Divisions"
-          >
-            {tabPills.map((pill, idx) => {
-              const isActive = activeTab === pill.id
-              return (
-                <button
-                  key={pill.id}
-                  type="button"
-                  role="tab"
-                  id={`${id}-tab-${pill.id}`}
-                  aria-selected={isActive}
-                  aria-controls={`${id}-panel-${pill.id}`}
-                  tabIndex={isActive ? 0 : -1}
-                  className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
-                  onClick={() => handleSelectDivision(pill.id)}
-                  onKeyDown={(e) => handleTabKeyDown(e, idx)}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId={`division-active-pill-${id}`}
-                      className="services-switcher__indicator"
-                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                    />
-                  )}
-                  <span className="services-switcher__label">{pill.label}</span>
-                </button>
-              )
-            })}
+          {/* Interactive Segmented Switcher */}
+          <div className="services-switcher-wrap">
+            <div
+              className="services-switcher"
+              role="tablist"
+              aria-label="Flo Studios Divisions"
+            >
+              {tabPills.map((pill, idx) => {
+                const isActive = activeTab === pill.id
+                return (
+                  <button
+                    key={pill.id}
+                    type="button"
+                    role="tab"
+                    id={`${id}-tab-${pill.id}`}
+                    aria-selected={isActive}
+                    aria-controls={`${id}-panel-${pill.id}`}
+                    tabIndex={isActive ? 0 : -1}
+                    className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''} ${
+                      pill.id === 'creator' ? 'services-switcher__tab--creator' : ''
+                    }`}
+                    onClick={() => handleSelectDivision(pill.id)}
+                    onKeyDown={(e) => handleTabKeyDown(e, idx)}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId={`division-active-pill-${id}`}
+                        className="services-switcher__indicator"
+                        transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                      />
+                    )}
+                    {pill.id === 'creator' ? (
+                      <span className="services-switcher__label services-switcher__label--creator">
+                        <img
+                          src="/images/creator-division.png"
+                          alt="Creator Division"
+                          className="services-switcher__creator-img"
+                        />
+                        <span className="sr-only">{pill.label}</span>
+                      </span>
+                    ) : (
+                      <span className="services-switcher__label">{pill.label}</span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Active Division Intro Statement (From User Mockup) */}
+          <div className="services-hero__intro">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeDivision.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+                className="services-hero__intro-body"
+              >
+                {activeDivision.introStatement?.map((para, pIdx) => (
+                  <p key={pIdx} className="services-hero__intro-text">
+                    {para}
+                  </p>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

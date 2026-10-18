@@ -14,6 +14,10 @@ export const DIVISIONS = [
     subBadge: 'Our Core Studio Focus',
     label: 'Primary Flagship',
     tag: 'Full Build Lifecycle',
+    introStatement: [
+      "In our Development Division, we partner exclusively with a handpicked limited number of venture-backed startups and ambitious companies to transform bold ideas into fully realized digital products, supporting them across the entire product lifecycle. Every stage is led by a specialist, not a generalist.",
+      "In select engagements, we also direct the initial customer acquisition that places your product in front of the right audience. One specialist-led team, from start to finish."
+    ],
     whatWeDo: {
       heading: 'What We Do',
       problem:
@@ -207,6 +211,10 @@ export const DIVISIONS = [
     subBadge: 'End-to-End Growth Systems',
     label: 'Creator Division',
     tag: 'Integrated Growth Pipeline',
+    introStatement: [
+      "In our Creator Division, we build end-to-end growth systems for high-impact creators—managing the entire lifecycle of content from ideation and scripting to production, packaging, and distribution. Every stage is calibrated to the creator's current audience size and growth trajectory.",
+      "In select engagements, we also direct the multi-platform distribution that transforms attention into long-term business assets. One specialist-led pipeline, from start to finish."
+    ],
     whatWeDo: {
       heading: 'What We Do',
       problem:
