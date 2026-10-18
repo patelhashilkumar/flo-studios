@@ -141,15 +141,15 @@
   color: #ffffff !important;
 }
 
-/* When Active route: styled cleanly with dark legible text */
+/* When Active route: solid black button with white text (not bold) */
 .button-small.button-abacus.button-abacus--active {
-  background-color: #e2e2e4;
-  color: #000000;
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.button-small.button-abacus.button-abacus--active:not(.button-abacus--hover) .label {
-  color: #000000 !important;
-  font-weight: 700;
+.button-small.button-abacus.button-abacus--active .label {
+  color: #ffffff !important;
+  font-weight: 500;
 }
 
 /* ── Center Editorial Marquee Announcement ── */

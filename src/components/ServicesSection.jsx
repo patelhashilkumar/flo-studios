@@ -60,27 +60,7 @@ export default function ServicesSection({
   const [hoveredRowIdx, setHoveredRowIdx] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState('All')
   const rosterRef = useRef(null)
-  const isScrollingRef = useRef(false)
-  const scrollTimerRef = useRef(null)
-  const hoverTimerRef = useRef(null)
   const shouldScrollRosterRef = useRef(false)
-
-  // Track window scroll to prevent row hover triggers while user scrolls past
-  useEffect(() => {
-    const handleScroll = () => {
-      isScrollingRef.current = true
-      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
-      scrollTimerRef.current = setTimeout(() => {
-        isScrollingRef.current = false
-      }, 100)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
-      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
-    }
-  }, [])
 
   const handleSelectDivision = (divisionId) => {
     setActiveTab(divisionId)
@@ -417,9 +397,11 @@ export default function ServicesSection({
                     className="teamwall-list"
                     role="tablist"
                     aria-label={`${activeDivision.name} stages`}
+                    onMouseLeave={() => setHoveredRowIdx(null)}
                   >
                     {visibleStages.map((stage, sIdx) => {
-                      const isActive = sIdx === safeStageIndex
+                      const isLineActive = sIdx === (hoveredRowIdx !== null ? hoveredRowIdx : safeStageIndex)
+                      const isActive = isLineActive
                       const stageNum = stage.number || String(sIdx + 1).padStart(2, '0')
                       return (
                         <li
@@ -444,22 +426,11 @@ export default function ServicesSection({
                             tabIndex={isActive ? 0 : -1}
                             className={`teamwall-row ${isActive ? 'teamwall-row--active' : ''}`}
                             onClick={() => {
-                              if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
                               handleStageSelect(sIdx, true)
                             }}
                             onMouseEnter={() => {
-                              if (isScrollingRef.current) return
                               setHoveredRowIdx(sIdx)
-                              if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
-                              hoverTimerRef.current = setTimeout(() => {
-                                if (!isScrollingRef.current) {
-                                  handleStageSelect(sIdx, false)
-                                }
-                              }, 60)
-                            }}
-                            onMouseLeave={() => {
-                              if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
-                              setHoveredRowIdx(null)
+                              handleStageSelect(sIdx, false)
                             }}
                             onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
                           >
