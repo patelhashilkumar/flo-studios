@@ -278,39 +278,6 @@
   transform: translateY(-2px);
 }
 
-/* Careers CTA */
-.about__cta-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--about-line);
-  border-radius: var(--about-radius);
-  padding: clamp(2rem, 6vw, 5rem);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 3rem;
-  flex-wrap: wrap;
-}
-.about__cta-title {
-  position: relative;
-  font-family: var(--font-display);
-  font-size: var(--fs-display);
-  font-weight: 600;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-  max-width: 10em;
-}
-.about__ring { position: relative; flex: none; width: clamp(140px, 16vw, 220px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; font-weight: 600; transition: background-color 0.4s, color 0.4s; }
-.about__ring:hover { background: var(--about-ink); color: var(--about-bg); opacity: 1; }
-.about__ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-.about__ring circle { fill: none; stroke: var(--about-ink); stroke-width: 1; }
-.about__ring-draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s var(--ease-out) 0.3s; }
-.is-in .about__ring-draw { stroke-dashoffset: 0; }
-.about__ring-dash { stroke-dasharray: 2 6; opacity: 0.5; transform-origin: 50% 50%; animation: about-spin 24s linear infinite; }
-@keyframes about-spin { to { transform: rotate(360deg); } }
-
-.about .about__cta { padding-bottom: clamp(2rem, 5vw, 4rem); }
-
 @media (max-width: 1024px) {
   .about__leaders { grid-template-columns: repeat(2, minmax(0, 360px)); }
 }
@@ -319,7 +286,6 @@
   .about__bento, .about__pillars { grid-template-columns: 1fr; }
   .about__arcs { display: none; }
   .about__hub-logo { margin-bottom: 2rem; }
-  .about__cta-card { flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 600px) {
@@ -329,7 +295,7 @@
 @media (prefers-reduced-motion: reduce) {
   .about, .about * { animation: none !important; transition: none !important; }
   .about__reveal, .about__word i { opacity: 1; transform: none; }
-  .about__arc, .about__leader rect, .about__ring-draw { stroke-dashoffset: 0; }
+  .about__arc, .about__leader rect { stroke-dashoffset: 0; }
   .about__leader img { clip-path: none; transform: none; }
   .about__ruler { clip-path: inset(0 60% 0 0); }
 }

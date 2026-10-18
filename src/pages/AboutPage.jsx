@@ -389,22 +389,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Careers CTA */}
-      <section className="about__cta" data-theme="light">
-        <div className="container">
-          <div className="about__cta-card about__reveal">
-            <canvas className="about__tiles" data-g="tiles" aria-hidden="true" />
-            <h2 className="about__cta-title">Think you'd be a good addition to our team?</h2>
-            <Link to="/careers" className="about__ring">
-              <svg viewBox="0 0 100 100" aria-hidden="true">
-                <circle className="about__ring-dash" cx="50" cy="50" r="48" />
-                <circle className="about__ring-draw" pathLength="1" cx="50" cy="50" r="42" />
-              </svg>
-              Careers →
-            </Link>
-          </div>
-        </div>
-      </section>
     </motion.main>
   )
 }
