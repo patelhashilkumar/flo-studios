@@ -108,9 +108,10 @@ export default function ServicesSection({
     const itemEl = document.getElementById(`${id}-stage-item-${safeStageIndex}`)
     const rosterEl = rosterRef.current
     if (itemEl && rosterEl) {
-      const rosterRect = rosterEl.getBoundingClientRect()
-      const itemRect = itemEl.getBoundingClientRect()
-      if (itemRect.top < rosterRect.top || itemRect.bottom > rosterRect.bottom) {
+      if (rosterEl.scrollHeight > rosterEl.clientHeight && rosterEl.clientHeight > 0) {
+        const targetY = itemEl.offsetTop - rosterEl.clientHeight / 2 + itemEl.offsetHeight / 2
+        rosterEl.scrollTo({ top: targetY, behavior: 'smooth' })
+      } else {
         itemEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       }
     }

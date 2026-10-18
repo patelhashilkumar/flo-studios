@@ -5,26 +5,18 @@ export default function SlotText3D({
   isActive = false,
   isHovered = false,
   className = '',
-  staggerDelay = 0.016,
-  duration = 0.38,
+  staggerDelay = 0.014,
 }) {
   // Running character counter for smooth staggered cascade across words
   let globalCharIdx = 0
 
   return (
     <span
-      className={`slot-3d-text ${isActive ? 'slot-3d-text--active' : ''} ${className}`}
+      className={`slot-3d-text ${isActive ? 'slot-3d-text--active' : ''} ${isHovered ? 'slot-3d-text--hovered' : ''} ${className}`}
       aria-label={text}
-      style={{
-        '--stagger-delay': `${staggerDelay}s`,
-        '--duration': `${duration}s`,
-      }}
     >
       <span className="sr-only">{text}</span>
-      <span
-        className={`slot-3d-text__visual ${isHovered ? 'slot-3d-text__visual--animating' : ''}`}
-        aria-hidden="true"
-      >
+      <span className="slot-3d-text__visual" aria-hidden="true">
         {text.split(/(\s+)/).map((token, tIdx) => {
           if (!token) return null
           const isWhitespace = /^\s+$/.test(token)
@@ -40,20 +32,15 @@ export default function SlotText3D({
             <span key={`word-${tIdx}`} className="slot-3d-text__word">
               {token.split('').map((char, cIdx) => {
                 const charIndex = globalCharIdx++
+                const delayMs = Math.round(charIndex * (staggerDelay * 1000))
                 return (
-                  <span
-                    key={`char-${tIdx}-${cIdx}`}
-                    className="slot-3d-text__char-slot"
-                    style={{ '--char-i': charIndex }}
-                  >
-                    {/* Outgoing face: tumbles out 90deg on X axis via GPU CSS keyframe */}
-                    <span className="slot-3d-text__face slot-3d-text__face--outgoing">
-                      {char}
-                    </span>
-
-                    {/* Incoming face: tumbles in from -90deg on X axis via GPU CSS keyframe */}
-                    <span className="slot-3d-text__face slot-3d-text__face--incoming">
-                      {char}
+                  <span key={`char-${tIdx}-${cIdx}`} className="slot-3d-text__ch">
+                    <span
+                      className="slot-3d-text__ch-in"
+                      style={{ transitionDelay: `${delayMs}ms` }}
+                    >
+                      <span className="slot-3d-text__face slot-3d-text__face--top">{char}</span>
+                      <span className="slot-3d-text__face slot-3d-text__face--bottom">{char}</span>
                     </span>
                   </span>
                 )
