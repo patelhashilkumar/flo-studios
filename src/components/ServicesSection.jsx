@@ -403,36 +403,32 @@ export default function ServicesSection({
                   role="tabpanel"
                   aria-labelledby={`${id}-stage-btn-${safeStageIndex}`}
                 >
-                  <div className="teamwall-frame">
+                  <div className="teamwall-frame teamwall-frame--quote">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={`${activeDivision.id}-${currentStage.id || safeStageIndex}`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        className="teamwall-frame__inner"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                        className="teamwall-quote-card"
                       >
-                        <img
-                          src={currentStage.image}
-                          alt={currentStage.title}
-                          className="teamwall-frame__img"
-                          loading="eager"
-                          decoding="async"
-                        />
+                        <div className="teamwall-quote-card__top">
+                          <span className="teamwall-quote-card__tag">
+                            {currentStage.discipline || activeDivision.shortName}
+                          </span>
+                          <span className="teamwall-quote-card__no">
+                            No. <RollingNumber value={currentStage.number} />
+                          </span>
+                        </div>
+
+                        <div className="teamwall-quote-card__body">
+                          <p className="teamwall-quote-card__desc">
+                            {`"${(currentStage.description || currentStage.desc || '').toUpperCase()}"`}
+                          </p>
+                        </div>
                       </motion.div>
                     </AnimatePresence>
-
-                    <div className="teamwall-frame__gradient" aria-hidden="true" />
-
-                    <div className="teamwall-frame__overlay" aria-hidden="true">
-                      <span className="teamwall-frame__tag">
-                        {currentStage.discipline || activeDivision.shortName}
-                      </span>
-                      <span className="teamwall-frame__no">
-                        No. <RollingNumber value={currentStage.number} />
-                      </span>
-                    </div>
                   </div>
 
                   <div className="teamwall-footer">

@@ -140,4 +140,23 @@ test('6. SlotText3D implements 3D slot tumbling text animation and integrates in
   assert.ok(servicesJsx.includes('isActive={isActive}'), 'ServicesSection must wire isActive to SlotText3D')
 })
 
+test('7. ServicesSection quote card renders all-caps stage description with quotes in black text', () => {
+  const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+  const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
+
+  const jsxContent = fs.readFileSync(jsxPath, 'utf8')
+  const cssContent = fs.readFileSync(cssPath, 'utf8')
+
+  assert.ok(jsxContent.includes('teamwall-quote-card'), 'JSX must render teamwall-quote-card')
+  assert.ok(jsxContent.includes('toUpperCase()'), 'JSX must transform stage description to uppercase')
+  assert.ok(jsxContent.includes('teamwall-quote-card__desc'), 'JSX must render teamwall-quote-card__desc')
+  assert.ok(!jsxContent.includes('teamwall-frame__img'), 'JSX must no longer render photo frame image')
+
+  assert.ok(cssContent.includes('.teamwall-quote-card'), 'CSS must define .teamwall-quote-card')
+  assert.ok(cssContent.includes('.teamwall-quote-card__desc'), 'CSS must define .teamwall-quote-card__desc')
+  assert.ok(cssContent.includes('color: #000000') || cssContent.includes('color: #000'), 'CSS must style description in black text')
+  assert.ok(cssContent.includes('text-transform: uppercase'), 'CSS must enforce uppercase styling')
+})
+
+
 
