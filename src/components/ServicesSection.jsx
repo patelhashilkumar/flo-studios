@@ -169,8 +169,13 @@ export default function ServicesSection({
         <div className="container services-hero__container">
           <p className="services-hero__eyebrow">Bringing Ideas to Life</p>
           <h1 className="services-hero__title">
-            From idea to design to deployment to distribution,<br className="services-hero__br" />
-            we take your vision all the way to market.
+            <span className="services-hero__title-line services-hero__title-line--nowrap">
+              From idea to design to deployment to distribution,
+            </span>{' '}
+            <br className="services-hero__br" />
+            <span className="services-hero__title-line">
+              we take your vision all the way to market.
+            </span>
           </h1>
           <div className="services-hero__cta-wrap">
             <Link to="/contact" className="services-hero__btn">
