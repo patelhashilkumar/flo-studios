@@ -194,6 +194,8 @@ test('9. ServicesSection renders dark hero with cards and manifesto before the d
   assert.ok(jsxContent.includes('We operate across two dedicated divisions designed to'), 'JSX must render manifesto text')
 
   assert.ok(cssContent.includes('.services-hero'), 'CSS must define .services-hero')
+  assert.ok(cssContent.includes('.services-hero__title'), 'CSS must define .services-hero__title')
+  assert.ok(cssContent.includes('Instrument Serif'), 'CSS must style headline with Instrument Serif')
   assert.ok(cssContent.includes('.services-hero__cards'), 'CSS must define .services-hero__cards')
   assert.ok(cssContent.includes('.services-hero__manifesto'), 'CSS must define .services-hero__manifesto')
 })

@@ -52,14 +52,14 @@
 }
 
 .services-hero__title {
-  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: clamp(2.1rem, 4.2vw, 3.6rem);
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: -0.03em;
+  font-family: var(--font-serif, 'Instrument Serif', Georgia, serif);
+  font-size: clamp(2.6rem, 5.2vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
   color: #ffffff;
-  margin: 0 auto clamp(1.5rem, 2.5vw, 2.25rem);
-  max-width: 960px;
+  margin: 0 auto clamp(1.75rem, 3vw, 2.5rem);
+  max-width: 1040px;
   text-align: center;
 }
 
