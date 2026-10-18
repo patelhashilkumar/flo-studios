@@ -198,7 +198,26 @@ test('9. ServicesSection renders dark hero with cards and manifesto before the d
   assert.ok(cssContent.includes('.services-hero__manifesto'), 'CSS must define .services-hero__manifesto')
 })
 
+test('10. ServicesSection renders inverted differentiator quote callout with Get in touch pill button', () => {
+  const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+  const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
+  const pagePath = path.join(rootDir, 'src', 'pages', 'ServicesPage.jsx')
 
+  const jsxContent = fs.readFileSync(jsxPath, 'utf8')
+  const cssContent = fs.readFileSync(cssPath, 'utf8')
+  const pageContent = fs.readFileSync(pagePath, 'utf8')
 
+  assert.ok(jsxContent.includes('division-quote-cta'), 'JSX must render division-quote-cta')
+  assert.ok(jsxContent.includes('division-quote-cta__quote'), 'JSX must render division-quote-cta__quote')
+  assert.ok(jsxContent.includes('activeDivision.coreDifferentiator.quote'), 'JSX must dynamically bind active division quote')
+  assert.ok(jsxContent.includes('division-quote-cta__btn'), 'JSX must render division-quote-cta__btn')
+  assert.ok(jsxContent.includes('Get in touch'), 'Button must display "Get in touch"')
 
+  assert.ok(cssContent.includes('.division-quote-cta'), 'CSS must style .division-quote-cta')
+  assert.ok(cssContent.includes('.division-quote-cta__quote'), 'CSS must style .division-quote-cta__quote')
+  assert.ok(cssContent.includes('.division-quote-cta__btn'), 'CSS must style .division-quote-cta__btn')
+  assert.ok(cssContent.includes('background: #000000') || cssContent.includes('background: #000'), 'CTA button must have black background')
+  assert.ok(cssContent.includes('color: #ffffff') || cssContent.includes('color: #fff'), 'CTA button must have white text')
 
+  assert.ok(!pageContent.includes('services-page__cta-section'), 'ServicesPage must not render redundant cta-section')
+})

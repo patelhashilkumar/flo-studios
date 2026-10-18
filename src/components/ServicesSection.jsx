@@ -532,22 +532,19 @@ export default function ServicesSection({
             </div>
           </div>
 
-          {/* The One-Line Summary & Contact CTA in standard container */}
+          {/* Division Differentiator Quote & Contact CTA (Inverted Image 2 style) */}
           <div className="container services-section__container">
-            <div className="division-summary">
-              <div className="division-summary__content">
-                <span className="division-summary__tag">THE ONE-LINE SUMMARY</span>
-                <p className="division-summary__text">
-                  {activeDivision.oneLineSummary}
-                </p>
-              </div>
-              <div className="division-summary__action">
+            <div className="division-quote-cta">
+              <blockquote className="division-quote-cta__quote">
+                “{activeDivision.coreDifferentiator.quote.replace(/^[“"]|[”"]$/g, '')}”
+              </blockquote>
+              <div className="division-quote-cta__action">
                 <Link
-                  to={`/contact?division=${activeDivision.id}`}
-                  className="division-cta-button"
-                  aria-label={`Start a Project with ${activeDivision.shortName}`}
+                  to="/contact"
+                  className="division-quote-cta__btn"
+                  aria-label="Get in touch"
                 >
-                  <span>Start a Project with {activeDivision.shortName} →</span>
+                  Get in touch
                 </Link>
               </div>
             </div>

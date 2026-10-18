@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import SEO from '../components/SEO'
 import ServicesSection from '../components/ServicesSection'
 import { DIVISIONS, getDivisionById } from '../data/divisionsData'
@@ -94,16 +94,6 @@ export default function ServicesPage() {
 
       {/* Interactive Two-Division Services Engine */}
       <ServicesSection defaultDivision={initialDivision} id="services-divisions" />
-
-      {/* CTA */}
-      <section className="services-page__cta-section">
-        <div className="container">
-          <h2 className="services-page__cta-title">Start a project with our studio.</h2>
-          <Link to="/contact" className="page-cta-btn">
-            Get in touch →
-          </Link>
-        </div>
-      </section>
     </motion.main>
   )
 }
