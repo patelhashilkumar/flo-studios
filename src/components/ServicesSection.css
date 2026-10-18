@@ -248,230 +248,339 @@
   overflow: hidden;
 }
 
-/* 2-Column Editorial Grid */
-.division-overview__grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
-  align-items: start;
+/* ── Unified Architectural Master Schematic (Single Cohesive Board) ── */
+.division-schematic-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.division-overview__col-thesis {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* Corner Registration Crosshairs for Architectural Drafting Aesthetic */
+.schematic-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
 }
 
-.division-overview__thesis {
+.schematic-corner::before,
+.schematic-corner::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.schematic-corner--tl { top: 16px; left: 16px; }
+.schematic-corner--tl::before { top: 0; left: 0; width: 10px; height: 1.5px; }
+.schematic-corner--tl::after { top: 0; left: 0; width: 1.5px; height: 10px; }
+
+.schematic-corner--tr { top: 16px; right: 16px; }
+.schematic-corner--tr::before { top: 0; right: 0; width: 10px; height: 1.5px; }
+.schematic-corner--tr::after { top: 0; right: 0; width: 1.5px; height: 10px; }
+
+.schematic-corner--bl { bottom: 16px; left: 16px; }
+.schematic-corner--bl::before { bottom: 0; left: 0; width: 10px; height: 1.5px; }
+.schematic-corner--bl::after { bottom: 0; left: 0; width: 1.5px; height: 10px; }
+
+.schematic-corner--br { bottom: 16px; right: 16px; }
+.schematic-corner--br::before { bottom: 0; right: 0; width: 10px; height: 1.5px; }
+.schematic-corner--br::after { bottom: 0; right: 0; width: 1.5px; height: 10px; }
+
+/* Schematic Header */
+.schematic-header {
+  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.schematic-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 0.85rem;
+}
+
+.schematic-meta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #0e0e12;
+}
+
+.schematic-thesis {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.65rem, 2.5vw, 2.4rem);
+  font-size: clamp(1.75rem, 2.7vw, 2.5rem);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.03em;
   color: #0e0e12;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem;
+  max-width: 900px;
 }
 
-.division-overview__caption {
+.schematic-subtitle {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 0.5rem;
 }
 
-.division-overview__caption-line {
+.schematic-subtitle-line {
   width: 28px;
   height: 1.5px;
-  background: #000000;
+  background: #0e0e12;
   flex-shrink: 0;
 }
 
-.division-overview__caption-text {
+.schematic-subtitle-text {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
+  color: #6b7280;
 }
 
-.division-overview__col-breakdown {
+/* Schematic Pipeline Zone */
+.schematic-pipeline-zone {
+  width: 100%;
+  margin: 0.5rem 0 0;
+}
+
+/* Architectural Circuit Bus / Conduit Lines */
+.schematic-connector-bar {
+  position: relative;
+  width: 100%;
+  margin: 1.5rem 0 1.25rem;
+}
+
+.schematic-connector-line {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.schematic-connector-junctions {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  top: -10px;
+}
+
+.schematic-junction {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ffffff;
+  padding: 0 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+  font-family: var(--font-manrope), 'Manrope', monospace, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  height: 20px;
+}
+
+.schematic-junction-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #dc2626;
+}
+
+.schematic-junction-dot--dark {
+  background: #0e0e12;
+}
+
+/* Comparison Panels Grid */
+.schematic-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin-top: 0.5rem;
+}
+
+.schematic-panel {
+  background: #fbfbfd;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
   display: flex;
   flex-direction: column;
-  gap: 1.125rem;
-}
-
-.division-overview__insight-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  padding: 1.25rem 1.4rem;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.25s var(--ease-out), border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
   cursor: pointer;
   user-select: none;
   outline: none;
+  box-sizing: border-box;
 }
 
-.division-overview__insight-card:hover {
-  border-color: rgba(0, 0, 0, 0.2);
+.schematic-panel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.division-overview__insight-card--active.division-overview__insight-card--unified {
-  border-color: #0e0e12;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-  background: #ffffff;
-}
-
-.division-overview__insight-card--active.division-overview__insight-card--fracture {
+.schematic-panel--active-fracture {
   border-color: rgba(220, 38, 38, 0.35);
-  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.08);
   background: #fffcfc;
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.06);
 }
 
-.division-overview__insight-card--active.division-overview__insight-card--fracture .division-overview__insight-num {
-  color: #dc2626;
+.schematic-panel--active-unified {
+  border-color: #0e0e12;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.division-overview__insight-card--active.division-overview__insight-card--unified .division-overview__insight-num {
-  color: #0e0e12;
-}
-
-.division-overview__insight-card:focus-visible {
+.schematic-panel:focus-visible {
   outline: 2px solid #000000;
   outline-offset: 2px;
 }
 
-.division-overview__insight-num {
-  display: block;
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: 0.5rem;
-}
-
-.division-overview__insight-text {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(0.88rem, 1vw, 0.95rem);
-  line-height: 1.62;
-  color: #333338;
-  margin: 0;
-}
-
-@media (max-width: 900px) {
-  .division-overview__grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-/* ── "What We Do" Comparison Cards ── */
-.division-what-we-do {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
-}
-
-.division-card {
-  border-radius: 16px;
-  padding: clamp(2rem, 3.5vw, 2.75rem);
+.schematic-panel__tag-wrap {
   display: flex;
-  flex-direction: column;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
 }
 
-.division-card--problem {
-  background: #f7f7f8;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  color: var(--color-text);
-}
-
-.division-card--problem .division-card__tag {
-  color: #b91c1c;
-}
-
-.division-card--solution {
-  background: #0e0e12;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.division-card--solution .division-card__tag {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.division-card__tag {
+.schematic-panel__tag {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
 }
 
-.division-card__title {
+.schematic-panel__tag--problem {
+  color: #dc2626;
+}
+
+.schematic-panel__tag--solution {
+  color: #0e0e12;
+}
+
+.schematic-panel__status-pill {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 9999px;
+}
+
+.schematic-panel__status-pill--alert {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+}
+
+.schematic-panel__status-pill--success {
+  background: rgba(0, 0, 0, 0.06);
+  color: #0e0e12;
+}
+
+.schematic-panel__title {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  margin-bottom: 1.25rem;
+  color: #0e0e12;
+  margin: 0 0 1rem;
 }
 
-.division-card--problem .division-card__title {
-  color: var(--color-text);
-}
-
-.division-card--solution .division-card__title {
-  color: #ffffff;
-}
-
-.division-card__text {
+.schematic-panel__text {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: clamp(0.925rem, 1.05vw, 1.025rem);
-  line-height: 1.68;
+  font-size: clamp(0.88rem, 1vw, 0.95rem);
+  line-height: 1.65;
+  color: #4b5563;
+  margin: 0 0 1.5rem;
+}
+
+.schematic-panel__quote-box {
+  margin-top: auto;
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  border-left: 3px solid transparent;
+}
+
+.schematic-panel__quote-box--problem {
+  background: rgba(220, 38, 38, 0.04);
+  border-left-color: #dc2626;
+}
+
+.schematic-panel__quote-box--solution {
+  background: rgba(0, 0, 0, 0.03);
+  border-left-color: #0e0e12;
+  margin-top: 1rem;
+}
+
+.schematic-panel__box-tag {
+  display: block;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 0.4rem;
+}
+
+.schematic-panel__box-text {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #374151;
   margin: 0;
 }
 
-.division-card--problem .division-card__text {
-  color: var(--color-text-secondary);
+.schematic-panel__philosophy {
+  margin-top: auto;
+  background: #0e0e12;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
 }
 
-.division-card--solution .division-card__text {
-  color: rgba(255, 255, 255, 0.8);
+.schematic-panel__philosophy .schematic-panel__box-tag {
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.division-card__philosophy {
-  margin-top: 1.75rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.division-card__philosophy-label {
-  display: block;
+.schematic-panel__philosophy-quote {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 0.5rem;
-}
-
-.division-card__philosophy-quote {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.88rem;
   font-style: italic;
+  font-weight: 500;
   line-height: 1.55;
   color: #ffffff;
   margin: 0;
+}
+
+/* Backward compatibility aliases */
+.division-overview__insight-card--active {
+  /* Aligned with active state */
+}
+
+@media (max-width: 860px) {
+  .schematic-panels-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schematic-connector-bar {
+    display: none;
+  }
 }
 
 /* ── The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture (Full Page Width) ── */

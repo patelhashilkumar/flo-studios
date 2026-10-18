@@ -5,12 +5,11 @@
 
 .lmg-container {
   width: 100%;
-  max-width: 520px;
   background: #fbfbfd;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 14px;
-  padding: 1.15rem 1.25rem;
-  margin: 1.5rem 0 1.25rem;
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0 1.5rem;
   box-sizing: border-box;
   transition: border-color 0.25s ease, background-color 0.25s ease;
   overflow: hidden;
@@ -22,17 +21,17 @@
 }
 
 .lmg-container--fracture {
-  border-color: rgba(220, 38, 38, 0.25);
+  border-color: rgba(220, 38, 38, 0.28);
   background: #fffafa;
 }
 
-/* ── Top Header Controls ── */
+/* ── Top Header Controls & Metadata ── */
 .lmg-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 0.85rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
@@ -42,17 +41,17 @@
   background: #efeff2;
   padding: 3px;
   border-radius: 9999px;
-  gap: 2px;
+  gap: 3px;
 }
 
 .lmg-pill {
   appearance: none;
   background: transparent;
   border: none;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 9999px;
   font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: #64748b;
@@ -60,7 +59,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   user-select: none;
   white-space: nowrap;
 }
@@ -104,16 +103,39 @@
   background: #ffffff;
 }
 
+.lmg-meta-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .lmg-metric-tag {
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: #4b5563;
 }
 
 .lmg-container--fracture .lmg-metric-tag {
+  color: #dc2626;
+}
+
+.lmg-metric-badge {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.06);
+  color: #374151;
+}
+
+.lmg-container--fracture .lmg-metric-badge {
+  background: rgba(220, 38, 38, 0.1);
   color: #dc2626;
 }
 
@@ -128,21 +150,21 @@
 .lmg-canvas {
   width: 100%;
   height: auto;
-  max-width: 440px;
+  max-width: 100%;
   display: block;
   overflow: visible;
 }
 
 /* ── Hardware-Accelerated Line Art Animation ── */
 .lmg-flowing-signal {
-  stroke-dasharray: 24 342;
-  animation: lmgLaserFlow 2.8s linear infinite;
+  stroke-dasharray: 40 620;
+  animation: lmgLaserFlow 3.2s linear infinite;
   will-change: stroke-dashoffset;
 }
 
 @keyframes lmgLaserFlow {
   0% {
-    stroke-dashoffset: 366;
+    stroke-dashoffset: 660;
   }
   100% {
     stroke-dashoffset: 0;
@@ -150,34 +172,34 @@
 }
 
 .lmg-pulse-head {
-  animation: lmgDotTravel 2.8s linear infinite;
+  animation: lmgDotTravel 3.2s linear infinite;
   will-change: transform;
 }
 
 @keyframes lmgDotTravel {
   0% {
-    cx: 40px;
-    cy: 56px;
+    cx: 80px;
+    cy: 62px;
     opacity: 0;
-    r: 3px;
+    r: 3.5px;
   }
-  8% {
+  6% {
     opacity: 1;
-    r: 4.5px;
+    r: 5px;
   }
-  92% {
+  94% {
     opacity: 1;
-    r: 4.5px;
+    r: 5px;
   }
   100% {
-    cx: 382px;
-    cy: 56px;
+    cx: 740px;
+    cy: 62px;
     opacity: 0;
-    r: 3px;
+    r: 3.5px;
   }
 }
 
-/* ── Fracture Badge in Gap ── */
+/* ── Fracture Warning Badge in Gap ── */
 .lmg-fracture-badge-bg {
   animation: lmgBadgePulse 2s ease-in-out infinite;
 }
@@ -187,22 +209,22 @@
     filter: drop-shadow(0 0 0 rgba(220, 38, 38, 0));
   }
   50% {
-    filter: drop-shadow(0 0 6px rgba(220, 38, 38, 0.3));
+    filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.35));
   }
 }
 
 /* ── Milestone Nodes ── */
 .lmg-node-num {
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   fill: #9ca3af;
 }
 
 .lmg-node-ring {
   fill: #ffffff;
   stroke: #0e0e12;
-  stroke-width: 1.75px;
+  stroke-width: 2px;
   transition: stroke 0.2s ease, fill 0.2s ease;
 }
 
@@ -220,10 +242,10 @@
 }
 
 .lmg-node-title {
-  font-size: 8.5px;
-  font-weight: 600;
+  font-size: 9.5px;
+  font-weight: 700;
   letter-spacing: 0.02em;
-  fill: #374151;
+  fill: #111827;
   transition: fill 0.2s ease;
 }
 
@@ -231,21 +253,28 @@
   fill: #dc2626;
 }
 
+.lmg-node-role {
+  font-size: 7.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  fill: #6b7280;
+}
+
 /* ── Status Strip ── */
 .lmg-status-strip {
-  margin-top: 0.65rem;
-  padding-top: 0.65rem;
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .lmg-status-text {
   font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.75rem;
-  line-height: 1.45;
+  font-size: 0.78rem;
+  line-height: 1.5;
   margin: 0;
   display: flex;
   align-items: baseline;
-  gap: 7px;
+  gap: 8px;
 }
 
 .lmg-status-bullet {
@@ -285,12 +314,18 @@
 
 @media (max-width: 640px) {
   .lmg-container {
-    padding: 1rem;
+    padding: 1rem 0.85rem;
     margin: 1.25rem 0 1rem;
   }
 
+  .lmg-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
   .lmg-pill {
-    padding: 4px 9px;
-    font-size: 0.6875rem;
+    padding: 5px 10px;
+    font-size: 0.7rem;
   }
 }

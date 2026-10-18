@@ -273,104 +273,144 @@ export default function ServicesSection({
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Division Overview & What We Do in standard container */}
+          {/* Unified Architectural Master Schematic (Thesis + Full-Width Pipeline Line Art + Problem vs Solution) */}
           <div className="container services-section__container">
-            <div className="division-overview">
-              <div className="division-overview__grid">
-                <div className="division-overview__col-thesis">
-                  <h3 className="division-overview__thesis">
-                    {activeDivision.coreDifferentiator.quote.replace(/^[“"]|[”"]$/g, '')}
-                  </h3>
+            <div className="division-schematic-card">
+              {/* Corner Registration Crosshairs for Architectural Blueprint Aesthetic */}
+              <span className="schematic-corner schematic-corner--tl" aria-hidden="true" />
+              <span className="schematic-corner schematic-corner--tr" aria-hidden="true" />
+              <span className="schematic-corner schematic-corner--bl" aria-hidden="true" />
+              <span className="schematic-corner schematic-corner--br" aria-hidden="true" />
 
-                  {/* Architectural Lifecycle Motion Graphic & Line Art */}
-                  <LifecycleMotionGraphic
-                    divisionId={activeDivision.id}
-                    mode={overviewMode}
-                    onModeChange={setOverviewMode}
-                  />
+              {/* Master Header */}
+              <div className="schematic-header">
+                <div className="schematic-meta-tag">
+                  <span className="schematic-meta-dot" aria-hidden="true" />
+                  <span>CORE DIFFERENTIATOR · ARCHITECTURAL PROOF</span>
+                </div>
+                <h3 className="schematic-thesis">
+                  {activeDivision.coreDifferentiator.quote.replace(/^[“"]|[”"]$/g, '')}
+                </h3>
+                <div className="schematic-subtitle">
+                  <span className="schematic-subtitle-line" aria-hidden="true" />
+                  <span className="schematic-subtitle-text">
+                    {activeDivision.id === 'development'
+                      ? 'Single-Point Accountability · Ideation to Production Scale'
+                      : 'Custom Media Infrastructure · Calibrated Per Growth Stage'}
+                  </span>
+                </div>
+              </div>
 
-                  <div className="division-overview__caption">
-                    <span className="division-overview__caption-line" aria-hidden="true" />
-                    <span className="division-overview__caption-text">
-                      {activeDivision.id === 'development'
-                        ? 'Single-Point Accountability · Ideation to Production Scale'
-                        : 'Custom Media Infrastructure · Calibrated Per Growth Stage'}
+              {/* Central Full-Width Line-Art Motion Graphic Pipeline */}
+              <div className="schematic-pipeline-zone">
+                <LifecycleMotionGraphic
+                  divisionId={activeDivision.id}
+                  mode={overviewMode}
+                  onModeChange={setOverviewMode}
+                />
+              </div>
+
+              {/* Architectural Circuit Bus / Conduit Lines connecting to panels */}
+              <div className="schematic-connector-bar" aria-hidden="true">
+                <div className="schematic-connector-line" />
+                <div className="schematic-connector-junctions">
+                  <div className="schematic-junction schematic-junction--left">
+                    <span className="schematic-junction-dot" />
+                    <span className="schematic-junction-text">01 // THE FRACTURE POINT</span>
+                  </div>
+                  <div className="schematic-junction schematic-junction--right">
+                    <span className="schematic-junction-dot schematic-junction-dot--dark" />
+                    <span className="schematic-junction-text">02 // THE FLO STANDARD</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Comparison Grid: The Problem vs The Integrated Solution */}
+              <div className="schematic-panels-grid">
+                {/* Panel 1: THE PROBLEM */}
+                <div
+                  className={`schematic-panel schematic-panel--problem division-overview__insight-card ${
+                    overviewMode === 'fracture'
+                      ? 'schematic-panel--active-fracture division-overview__insight-card--active division-overview__insight-card--fracture'
+                      : ''
+                  }`}
+                  onMouseEnter={() => setOverviewMode('fracture')}
+                  onClick={() => setOverviewMode('fracture')}
+                  tabIndex={0}
+                  role="button"
+                  aria-label="View Problem: The Fragmented Multi-Vendor Model"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setOverviewMode('fracture')
+                    }
+                  }}
+                >
+                  <div className="schematic-panel__tag-wrap">
+                    <span className="schematic-panel__tag schematic-panel__tag--problem">THE PROBLEM</span>
+                    <span className="schematic-panel__status-pill schematic-panel__status-pill--alert">
+                      3+ Disconnected Vendors
                     </span>
+                  </div>
+                  <h4 className="schematic-panel__title">The Fragmented Multi-Vendor Model</h4>
+                  <p className="schematic-panel__text">{activeDivision.whatWeDo.problem}</p>
+
+                  <div className="schematic-panel__quote-box schematic-panel__quote-box--problem">
+                    <span className="schematic-panel__box-tag">THE FRACTURE DIAGNOSTIC</span>
+                    <p className="schematic-panel__box-text">
+                      {Array.isArray(activeDivision.coreDifferentiator.body)
+                        ? activeDivision.coreDifferentiator.body[0]
+                        : activeDivision.coreDifferentiator.text}
+                    </p>
                   </div>
                 </div>
 
-                <div className="division-overview__col-breakdown">
-                  {Array.isArray(activeDivision.coreDifferentiator.body) ? (
-                    activeDivision.coreDifferentiator.body.map((paragraph, pIdx) => {
-                      const labels = activeDivision.id === 'development'
-                        ? ['01 / THE FRACTURE', '02 / THE FLO STANDARD']
-                        : ['01 / STAGE DIAGNOSIS', '02 / SCALED SYSTEM']
-                      const isCardFracture = pIdx === 0
-                      const isCardActive =
-                        (isCardFracture && overviewMode === 'fracture') ||
-                        (!isCardFracture && overviewMode === 'unified')
-                      return (
-                        <div
-                          key={pIdx}
-                          className={`division-overview__insight-card ${
-                            isCardActive ? 'division-overview__insight-card--active' : ''
-                          } ${
-                            isCardFracture
-                              ? 'division-overview__insight-card--fracture'
-                              : 'division-overview__insight-card--unified'
-                          }`}
-                          onMouseEnter={() => setOverviewMode(isCardFracture ? 'fracture' : 'unified')}
-                          onClick={() => setOverviewMode(isCardFracture ? 'fracture' : 'unified')}
-                          tabIndex={0}
-                          role="button"
-                          aria-label={`View ${labels[pIdx] || 'insight'}`}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault()
-                              setOverviewMode(isCardFracture ? 'fracture' : 'unified')
-                            }
-                          }}
-                        >
-                          <span className="division-overview__insight-num">
-                            {labels[pIdx] || `0${pIdx + 1} / INSIGHT`}
-                          </span>
-                          <p className="division-overview__insight-text">
-                            {paragraph}
-                          </p>
-                        </div>
-                      )
-                    })
-                  ) : (
-                    <div className="division-overview__insight-card">
-                      <p className="division-overview__insight-text">
-                        {activeDivision.coreDifferentiator.text}
+                {/* Panel 2: THE INTEGRATED SOLUTION */}
+                <div
+                  className={`schematic-panel schematic-panel--solution division-overview__insight-card ${
+                    overviewMode === 'unified'
+                      ? 'schematic-panel--active-unified division-overview__insight-card--active division-overview__insight-card--unified'
+                      : ''
+                  }`}
+                  onMouseEnter={() => setOverviewMode('unified')}
+                  onClick={() => setOverviewMode('unified')}
+                  tabIndex={0}
+                  role="button"
+                  aria-label="View Solution: The Flo Studios Integrated Model"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setOverviewMode('unified')
+                    }
+                  }}
+                >
+                  <div className="schematic-panel__tag-wrap">
+                    <span className="schematic-panel__tag schematic-panel__tag--solution">THE INTEGRATED SOLUTION</span>
+                    <span className="schematic-panel__status-pill schematic-panel__status-pill--success">
+                      One Accountable Owner
+                    </span>
+                  </div>
+                  <h4 className="schematic-panel__title">The Flo Studios Integrated Model</h4>
+                  <p className="schematic-panel__text">{activeDivision.whatWeDo.solution}</p>
+
+                  {activeDivision.whatWeDo.philosophy && (
+                    <div className="schematic-panel__philosophy">
+                      <span className="schematic-panel__box-tag">CORE PHILOSOPHY</span>
+                      <p className="schematic-panel__philosophy-quote">
+                        “{activeDivision.whatWeDo.philosophy}”
+                      </p>
+                    </div>
+                  )}
+
+                  {Array.isArray(activeDivision.coreDifferentiator.body) && activeDivision.coreDifferentiator.body[1] && (
+                    <div className="schematic-panel__quote-box schematic-panel__quote-box--solution">
+                      <span className="schematic-panel__box-tag">THE FLO STANDARD</span>
+                      <p className="schematic-panel__box-text">
+                        {activeDivision.coreDifferentiator.body[1]}
                       </p>
                     </div>
                   )}
                 </div>
-              </div>
-            </div>
-
-            {/* "What We Do" Comparison Cards */}
-            <div className="division-what-we-do">
-              <div className="division-card division-card--problem">
-                <div className="division-card__tag">THE PROBLEM</div>
-                <h3 className="division-card__title">The Fragmented Multi-Vendor Model</h3>
-                <p className="division-card__text">{activeDivision.whatWeDo.problem}</p>
-              </div>
-
-              <div className="division-card division-card--solution">
-                <div className="division-card__tag">THE INTEGRATED SOLUTION</div>
-                <h3 className="division-card__title">The Flo Studios Integrated Model</h3>
-                <p className="division-card__text">{activeDivision.whatWeDo.solution}</p>
-                {activeDivision.whatWeDo.philosophy && (
-                  <div className="division-card__philosophy">
-                    <span className="division-card__philosophy-label">Core Philosophy</span>
-                    <p className="division-card__philosophy-quote">
-                      “{activeDivision.whatWeDo.philosophy}”
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
           </div>
