@@ -205,21 +205,23 @@ export default function ServicesSection({
             })}
           </div>
         </div>
+      </div>
 
-        {/* Active Division Content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeDivision.id}
-            id={`${id}-panel-${activeDivision.id}`}
-            role="tabpanel"
-            aria-labelledby={`${id}-tab-${activeDivision.id}`}
-            className="division-content"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* Division Overview / Architectural Manifest */}
+      {/* Active Division Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeDivision.id}
+          id={`${id}-panel-${activeDivision.id}`}
+          role="tabpanel"
+          aria-labelledby={`${id}-tab-${activeDivision.id}`}
+          className="division-content"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {/* Division Overview & What We Do in standard container */}
+          <div className="container services-section__container">
             <div className="division-overview">
               <div className="division-overview__header-bar">
                 <div className="division-overview__meta-tag">
@@ -307,9 +309,11 @@ export default function ServicesSection({
                 )}
               </div>
             </div>
+          </div>
 
-            {/* The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture */}
-            <div className="division-pipeline teamwall-container" aria-label={activeDivision.pipelineTitle}>
+          {/* The Stage-by-Stage Lifecycle Pipeline — Full Width Page Section */}
+          <div className="division-pipeline teamwall-container" aria-label={activeDivision.pipelineTitle}>
+            <div className="teamwall-inner">
               {/* Header Bar matching Image 1: Title(Count) on left, Category pills on right */}
               <div className="teamwall-header">
                 <div className="teamwall-header__left">
@@ -492,8 +496,10 @@ export default function ServicesSection({
                 </aside>
               </div>
             </div>
+          </div>
 
-            {/* The One-Line Summary & Contact CTA */}
+          {/* The One-Line Summary & Contact CTA in standard container */}
+          <div className="container services-section__container">
             <div className="division-summary">
               <div className="division-summary__content">
                 <span className="division-summary__tag">THE ONE-LINE SUMMARY</span>
@@ -511,9 +517,9 @@ export default function ServicesSection({
                 </Link>
               </div>
             </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </section>
   )
 }

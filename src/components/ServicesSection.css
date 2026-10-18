@@ -421,15 +421,22 @@
   margin: 0;
 }
 
-/* ── The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture ── */
+/* ── The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture (Full Page Width) ── */
 .teamwall-container {
+  width: 100%;
   background: #f4f3ef;
-  border-radius: 20px;
-  padding: clamp(2rem, 4vw, 56px);
+  border-radius: 0;
+  padding: clamp(3.5rem, 6vw, 6.5rem) clamp(1.5rem, 5vw, 5rem);
   color: #141414;
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  margin: clamp(3rem, 5vw, 4.5rem) 0;
   position: relative;
   box-sizing: border-box;
+}
+
+.teamwall-inner {
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
 }
 
 .teamwall-header {
@@ -1009,8 +1016,8 @@
 
 @media (max-width: 640px) {
   .teamwall-container {
-    padding: 1.5rem 1.25rem;
-    border-radius: 16px;
+    padding: 2.25rem 1.25rem;
+    border-radius: 0;
   }
 
   .teamwall-header {
