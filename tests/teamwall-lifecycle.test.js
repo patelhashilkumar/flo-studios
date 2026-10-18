@@ -176,6 +176,32 @@ test('8. ServicesSection renders stage column before stage name with correct 3-c
   assert.ok(cssContent.includes('grid-template-columns: auto minmax(0, 1fr) auto'), 'CSS must define 3-column grid with stage first')
 })
 
+test('9. ServicesSection renders dark hero with cards and manifesto before the division switcher', () => {
+  const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+  const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
+
+  const jsxContent = fs.readFileSync(jsxPath, 'utf8')
+  const cssContent = fs.readFileSync(cssPath, 'utf8')
+
+  const heroIdx = jsxContent.indexOf('services-hero')
+  const switcherIdx = jsxContent.indexOf('services-switcher-wrap')
+
+  assert.ok(heroIdx !== -1, 'JSX must contain services-hero')
+  assert.ok(switcherIdx !== -1, 'JSX must contain services-switcher-wrap')
+  assert.ok(heroIdx < switcherIdx, 'services-hero must appear before services-switcher-wrap')
+
+  assert.ok(jsxContent.includes('Bringing Ideas to Life'), 'JSX must render eyebrow text')
+  assert.ok(jsxContent.includes('From idea to design to deployment to distribution'), 'JSX must render headline text')
+  assert.ok(jsxContent.includes('Get in touch'), 'JSX must render CTA button')
+  assert.ok(jsxContent.includes('services-hero__cards'), 'JSX must render showcase cards')
+  assert.ok(jsxContent.includes('We operate across two dedicated divisions designed to'), 'JSX must render manifesto text')
+
+  assert.ok(cssContent.includes('.services-hero'), 'CSS must define .services-hero')
+  assert.ok(cssContent.includes('.services-hero__cards'), 'CSS must define .services-hero__cards')
+  assert.ok(cssContent.includes('.services-hero__manifesto'), 'CSS must define .services-hero__manifesto')
+})
+
+
 
 
 

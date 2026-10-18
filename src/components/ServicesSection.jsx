@@ -156,20 +156,74 @@ export default function ServicesSection({
 
   return (
     <section className="services-section" id={id} aria-label="Services & Divisions">
-      <div className="container services-section__container">
-        {/* Section Header */}
-        <header className="services-section__header">
-          <h2 className="services-section__heading">
-            TWO SPECIALIZED DIVISIONS. ZERO BROKEN HANDOFFS.
-          </h2>
-          <p className="services-section__subtitle">
-            Flo Studios is a progressive dual-engine media and development hub operating at the intersection
-            of creative storytelling and digital infrastructure. Our primary focus is our Development Division—partnering
-            with venture-backed founders from ideation to production scale—paired with our Creator Division to transform
-            digital exposure into enduring business assets without single-stage handoffs.
-          </p>
-        </header>
+      {/* Services Hero Header, 4 Cards & Manifesto (Specification from User Mockup) */}
+      <div className="services-hero">
+        <div className="container services-hero__container">
+          <p className="services-hero__eyebrow">Bringing Ideas to Life</p>
+          <h1 className="services-hero__title">
+            From idea to design to deployment to distribution,<br className="services-hero__br" />
+            we take your vision all the way to market.
+          </h1>
+          <div className="services-hero__cta-wrap">
+            <Link to="/contact" className="services-hero__btn">
+              Get in touch
+            </Link>
+          </div>
 
+          {/* 4 Showcase Cards Strip */}
+          <div className="services-hero__cards" aria-hidden="true">
+            <div className="services-hero__card services-hero__card--portrait">
+              <img
+                src="/videos/apple-thumb.webp"
+                alt="Apple Product Motion"
+                className="services-hero__card-img"
+                loading="eager"
+              />
+            </div>
+            <div className="services-hero__card services-hero__card--landscape">
+              <img
+                src="/videos/blitzit-thumb.webp"
+                alt="Blitzit 2.0 Interface"
+                className="services-hero__card-img"
+                loading="eager"
+              />
+            </div>
+            <div className="services-hero__card services-hero__card--portrait">
+              <img
+                src="/videos/sv-thumb.webp"
+                alt="SV Studio Showreel"
+                className="services-hero__card-img"
+                loading="eager"
+              />
+            </div>
+            <div className="services-hero__card services-hero__card--square">
+              <img
+                src="https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/"
+                alt="Deadstock Coffee"
+                className="services-hero__card-img"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Horizontal Divider Line */}
+          <div className="services-hero__divider" aria-hidden="true" />
+
+          {/* Editorial Manifesto */}
+          <div className="services-hero__manifesto">
+            <p className="services-hero__manifesto-text">
+              We operate across two dedicated divisions designed to<br className="services-hero__br" />
+              eliminate the decentralized execution of the project.<br className="services-hero__br" />
+              Whether engineering industry level digital products or crafting<br className="services-hero__br" />
+              stage-calibrated creator media.<br className="services-hero__br" />
+              One single team through out the life-cycle of the project,<br className="services-hero__br" />
+              from concept to market.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="container services-section__container">
         {/* Interactive Segmented Switcher */}
         <div className="services-switcher-wrap">
           <div
