@@ -83,21 +83,23 @@ test('4. ServicesSection styles enforce Manrope typography and Teamwall layout w
   assert.ok(!emojiRegex.test(jsxContent), 'ServicesSection.jsx must not contain emojis')
 })
 
-test('5. ServicesSection implements RollingNumber odometer, layoutId active line, and smooth scroll', () => {
+test('5. ServicesSection implements RollingNumber odometer, layoutId active line, photo frame, and smooth scroll', () => {
   const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
   const jsxContent = fs.readFileSync(jsxPath, 'utf8')
 
   assert.ok(jsxContent.includes('RollingNumber'), 'ServicesSection must include RollingNumber component')
   assert.ok(jsxContent.includes('teamwall-active-line'), 'ServicesSection must include teamwall-active-line layoutId')
-  assert.ok(jsxContent.includes('teamwall-card__progress-bar'), 'ServicesSection must include progress bar')
+  assert.ok(jsxContent.includes('teamwall-frame'), 'ServicesSection must include teamwall-frame')
+  assert.ok(jsxContent.includes('teamwall-footer'), 'ServicesSection must include teamwall-footer')
   assert.ok(jsxContent.includes('scrollIntoView'), 'ServicesSection must support smooth scrolling into view')
   assert.ok(jsxContent.includes("behavior: 'smooth'"), 'ServicesSection must use smooth scroll behavior')
 
   const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
   const cssContent = fs.readFileSync(cssPath, 'utf8')
   assert.ok(cssContent.includes('.rolling-number'), 'CSS must include .rolling-number styles')
-  assert.ok(cssContent.includes('.teamwall-list__active-line'), 'CSS must include .teamwall-list__active-line styles')
-  assert.ok(cssContent.includes('.teamwall-card__progress-bar'), 'CSS must include progress bar styles')
+  assert.ok(cssContent.includes('.teamwall-list__active-line') || cssContent.includes('.teamwall-bar'), 'CSS must include active line styles')
+  assert.ok(cssContent.includes('.teamwall-frame'), 'CSS must include frame styles')
+  assert.ok(cssContent.includes('.teamwall-footer'), 'CSS must include footer styles')
   assert.ok(cssContent.includes('scroll-behavior: smooth'), 'CSS must include smooth scroll behavior on roster')
 })
 
