@@ -101,3 +101,41 @@ test('5. ServicesSection implements RollingNumber odometer, layoutId active line
   assert.ok(cssContent.includes('scroll-behavior: smooth'), 'CSS must include smooth scroll behavior on roster')
 })
 
+test('6. SlotText3D implements 3D slot tumbling text animation and integrates into stage rows', () => {
+  const slotJsxPath = path.join(rootDir, 'src', 'components', 'SlotText3D.jsx')
+  const slotCssPath = path.join(rootDir, 'src', 'components', 'SlotText3D.css')
+  const servicesJsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+
+  assert.ok(fs.existsSync(slotJsxPath), 'SlotText3D.jsx must exist')
+  assert.ok(fs.existsSync(slotCssPath), 'SlotText3D.css must exist')
+
+  const slotJsx = fs.readFileSync(slotJsxPath, 'utf8')
+  const slotCss = fs.readFileSync(slotCssPath, 'utf8')
+  const servicesJsx = fs.readFileSync(servicesJsxPath, 'utf8')
+
+  // Zero emojis check
+  const emojiRegex = /[\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u
+  assert.ok(!emojiRegex.test(slotJsx), 'SlotText3D.jsx must not contain emojis')
+  assert.ok(!emojiRegex.test(slotCss), 'SlotText3D.css must not contain emojis')
+
+  // 3D Slot Architecture assertions
+  assert.ok(slotJsx.includes('useAnimationControls'), 'SlotText3D must use Framer Motion animation controls')
+  assert.ok(slotJsx.includes('rotateX: 90'), 'SlotText3D outgoing face must tumble 90 degrees around X axis')
+  assert.ok(slotJsx.includes('rotateX: -90'), 'SlotText3D incoming face must start at -90 degrees around X axis')
+  assert.ok(slotJsx.includes('staggerDelay'), 'SlotText3D must support staggered character delay')
+  assert.ok(slotJsx.includes('sr-only'), 'SlotText3D must provide screen reader text accessibility')
+
+  // CSS 3D specifications
+  assert.ok(slotCss.includes('perspective: 1000px'), 'SlotText3D.css must define 3D perspective')
+  assert.ok(slotCss.includes('transform-style: preserve-3d'), 'SlotText3D.css must preserve 3D nested transforms')
+  assert.ok(slotCss.includes('transform-origin: 50% 50% -0.4em'), 'SlotText3D.css must set cylindrical transform origin')
+  assert.ok(slotCss.includes('backface-visibility: hidden'), 'SlotText3D.css must hide backfaces')
+
+  // ServicesSection integration
+  assert.ok(servicesJsx.includes("import SlotText3D from './SlotText3D'"), 'ServicesSection must import SlotText3D')
+  assert.ok(servicesJsx.includes('<SlotText3D'), 'ServicesSection must mount SlotText3D component')
+  assert.ok(servicesJsx.includes('isHovered={hoveredRowIdx === sIdx}'), 'ServicesSection must wire hoveredRowIdx to SlotText3D')
+  assert.ok(servicesJsx.includes('isActive={isActive}'), 'ServicesSection must wire isActive to SlotText3D')
+})
+
+

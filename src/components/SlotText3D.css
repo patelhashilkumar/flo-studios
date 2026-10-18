@@ -1,0 +1,90 @@
+/* ==========================================================================
+   SlotText3D — 3D Mechanical Slot Text Character Tumbler Effect
+   Faithful implementation of Framer 3D Slot Text Architecture
+   Strictly Manrope typography, zero emojis, hardware-accelerated transforms
+   ========================================================================== */
+
+.slot-3d-text {
+  display: inline-block;
+  vertical-align: baseline;
+  line-height: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+.slot-3d-text__visual {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  line-height: inherit;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.slot-3d-text__word {
+  display: inline-flex;
+  white-space: nowrap;
+  line-height: inherit;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.slot-3d-text__space {
+  display: inline-block;
+  white-space: pre;
+  line-height: inherit;
+}
+
+.slot-3d-text__char-slot {
+  position: relative;
+  display: inline-block;
+  line-height: inherit;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.slot-3d-text__face {
+  display: inline-block;
+  line-height: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: 50% 50% -0.4em;
+  -webkit-transform-origin: 50% 50% -0.4em;
+  will-change: transform, opacity;
+}
+
+.slot-3d-text__face--outgoing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+
+.slot-3d-text__face--incoming {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .slot-3d-text {
+    perspective: none !important;
+  }
+
+  .slot-3d-text__char-slot,
+  .slot-3d-text__face {
+    transform: none !important;
+    transform-origin: center center !important;
+    transition: none !important;
+  }
+}

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DIVISIONS, getDivisionById } from '../data/divisionsData'
+import SlotText3D from './SlotText3D'
 import './ServicesSection.css'
 
 function RollingNumber({ value }) {
@@ -56,11 +57,13 @@ export default function ServicesSection({
   const activeDivision = getDivisionById(activeTab) || DIVISIONS[0]
 
   const [activeStageIndex, setActiveStageIndex] = useState(0)
+  const [hoveredRowIdx, setHoveredRowIdx] = useState(null)
   const rosterRef = useRef(null)
 
   const handleSelectDivision = (divisionId) => {
     setActiveTab(divisionId)
     setActiveStageIndex(0)
+    setHoveredRowIdx(null)
   }
 
   const stages = activeDivision.stages || []
@@ -352,7 +355,11 @@ export default function ServicesSection({
                             tabIndex={isActive ? 0 : -1}
                             className={`teamwall-row ${isActive ? 'teamwall-row--active' : ''}`}
                             onClick={() => handleStageSelect(sIdx, true)}
-                            onMouseEnter={() => handleStageSelect(sIdx, false)}
+                            onMouseEnter={() => {
+                              handleStageSelect(sIdx, false)
+                              setHoveredRowIdx(sIdx)
+                            }}
+                            onMouseLeave={() => setHoveredRowIdx(null)}
                             onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
                           >
                             <span className="teamwall-row__idx">{stageNum}</span>
@@ -371,16 +378,12 @@ export default function ServicesSection({
                                   </motion.span>
                                 )}
                               </AnimatePresence>
-                              <motion.span
+                              <SlotText3D
+                                text={stage.title}
+                                isActive={isActive}
+                                isHovered={hoveredRowIdx === sIdx}
                                 className="teamwall-row__title"
-                                animate={{
-                                  x: isActive ? 2 : 0,
-                                  color: isActive ? '#141414' : 'rgba(20, 20, 20, 0.45)'
-                                }}
-                                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                              >
-                                {stage.title}
-                              </motion.span>
+                              />
                             </div>
                             <span className="teamwall-row__pill">
                               STAGE {stageNum}
