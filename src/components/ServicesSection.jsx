@@ -183,41 +183,6 @@ export default function ServicesSection({
             </Link>
           </div>
 
-          {/* 4 Showcase Cards Strip */}
-          <div className="services-hero__cards" aria-hidden="true">
-            <div className="services-hero__card services-hero__card--portrait">
-              <img
-                src="/videos/apple-thumb.webp"
-                alt="Apple Product Motion"
-                className="services-hero__card-img"
-                loading="eager"
-              />
-            </div>
-            <div className="services-hero__card services-hero__card--landscape">
-              <img
-                src="/videos/blitzit-thumb.webp"
-                alt="Blitzit 2.0 Interface"
-                className="services-hero__card-img"
-                loading="eager"
-              />
-            </div>
-            <div className="services-hero__card services-hero__card--portrait">
-              <img
-                src="/videos/sv-thumb.webp"
-                alt="SV Studio Showreel"
-                className="services-hero__card-img"
-                loading="eager"
-              />
-            </div>
-            <div className="services-hero__card services-hero__card--square">
-              <img
-                src="https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/"
-                alt="Deadstock Coffee"
-                className="services-hero__card-img"
-                loading="lazy"
-              />
-            </div>
-          </div>
 
           {/* Horizontal Divider Line */}
           <div className="services-hero__divider" aria-hidden="true" />
