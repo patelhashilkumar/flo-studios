@@ -369,13 +369,19 @@ export default function ServicesSection({
                             onMouseLeave={() => setHoveredRowIdx(null)}
                             onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
                           >
-                            <div className="teamwall-row__title-wrap">
+                            <div className="teamwall-row__stage-wrap">
                               <span
                                 className={`teamwall-row__arrow ${isActive ? 'teamwall-row__arrow--active' : ''}`}
                                 aria-hidden="true"
                               >
                                 →
                               </span>
+                              <span className="teamwall-row__location">
+                                {stage.location || `Stage ${stageNum}`}
+                              </span>
+                            </div>
+
+                            <div className="teamwall-row__title-wrap">
                               <SlotText3D
                                 text={stage.title}
                                 isActive={isActive}
@@ -383,11 +389,9 @@ export default function ServicesSection({
                                 className="teamwall-row__title"
                               />
                             </div>
+
                             <span className="teamwall-row__discipline">
                               {stage.discipline || 'Architecture'}
-                            </span>
-                            <span className="teamwall-row__location">
-                              {stage.location || `Stage ${stageNum}`}
                             </span>
                           </button>
                         </li>

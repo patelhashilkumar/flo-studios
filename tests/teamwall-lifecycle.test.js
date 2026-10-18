@@ -158,5 +158,24 @@ test('7. ServicesSection quote card renders all-caps stage description with quot
   assert.ok(cssContent.includes('text-transform: uppercase'), 'CSS must enforce uppercase styling')
 })
 
+test('8. ServicesSection renders stage column before stage name with correct 3-column grid', () => {
+  const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+  const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
+
+  const jsxContent = fs.readFileSync(jsxPath, 'utf8')
+  const cssContent = fs.readFileSync(cssPath, 'utf8')
+
+  const stageWrapIdx = jsxContent.indexOf('teamwall-row__stage-wrap')
+  const titleWrapIdx = jsxContent.indexOf('teamwall-row__title-wrap')
+
+  assert.ok(stageWrapIdx !== -1, 'JSX must contain teamwall-row__stage-wrap')
+  assert.ok(titleWrapIdx !== -1, 'JSX must contain teamwall-row__title-wrap')
+  assert.ok(stageWrapIdx < titleWrapIdx, 'Stage column must be positioned before stage name in DOM')
+
+  assert.ok(cssContent.includes('.teamwall-row__stage-wrap'), 'CSS must define .teamwall-row__stage-wrap')
+  assert.ok(cssContent.includes('grid-template-columns: auto minmax(0, 1fr) auto'), 'CSS must define 3-column grid with stage first')
+})
+
+
 
 
