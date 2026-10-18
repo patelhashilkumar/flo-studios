@@ -1,8 +1,42 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DIVISIONS, getDivisionById } from '../data/divisionsData'
 import './ServicesSection.css'
+
+function RollingNumber({ value }) {
+  const chars = String(value).split('')
+  return (
+    <span className="rolling-number" aria-hidden="true">
+      {chars.map((char, cIdx) => {
+        const num = parseInt(char, 10)
+        if (isNaN(num)) {
+          return (
+            <span key={cIdx} className="rolling-number__char">
+              {char}
+            </span>
+          )
+        }
+        return (
+          <span key={cIdx} className="rolling-number__slot">
+            <motion.span
+              className="rolling-number__column"
+              initial={false}
+              animate={{ y: `-${num * 10}%` }}
+              transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+            >
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => (
+                <span key={digit} className="rolling-number__digit">
+                  {digit}
+                </span>
+              ))}
+            </motion.span>
+          </span>
+        )
+      })}
+    </span>
+  )
+}
 
 export default function ServicesSection({
   defaultDivision = 'development',
@@ -22,6 +56,7 @@ export default function ServicesSection({
   const activeDivision = getDivisionById(activeTab) || DIVISIONS[0]
 
   const [activeStageIndex, setActiveStageIndex] = useState(0)
+  const rosterRef = useRef(null)
 
   const handleSelectDivision = (divisionId) => {
     setActiveTab(divisionId)
@@ -31,6 +66,29 @@ export default function ServicesSection({
   const stages = activeDivision.stages || []
   const safeStageIndex = Math.min(activeStageIndex, Math.max(0, stages.length - 1))
   const currentStage = stages[safeStageIndex] || stages[0]
+
+  // Smooth scroll active row into view when navigating via prev/next, keys, or buttons
+  useEffect(() => {
+    const itemEl = document.getElementById(`${id}-stage-item-${safeStageIndex}`)
+    const rosterEl = rosterRef.current
+    if (itemEl && rosterEl) {
+      const rosterRect = rosterEl.getBoundingClientRect()
+      const itemRect = itemEl.getBoundingClientRect()
+      if (itemRect.top < rosterRect.top || itemRect.bottom > rosterRect.bottom) {
+        itemEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+    }
+  }, [safeStageIndex, id])
+
+  const handleStageSelect = (sIdx, shouldScrollMobile = false) => {
+    setActiveStageIndex(sIdx)
+    if (shouldScrollMobile && typeof window !== 'undefined' && window.innerWidth < 1024) {
+      const showcaseEl = document.getElementById(`${id}-stage-panel`)
+      if (showcaseEl) {
+        showcaseEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+    }
+  }
 
   const handlePrevStage = () => {
     if (stages.length === 0) return
@@ -262,7 +320,7 @@ export default function ServicesSection({
 
               <div className="teamwall-layout">
                 {/* Left Column: Architectural Numbered Roster matching Image 2 */}
-                <div className="teamwall-roster">
+                <div className="teamwall-roster" ref={rosterRef}>
                   <ul
                     className="teamwall-list"
                     role="tablist"
@@ -274,8 +332,17 @@ export default function ServicesSection({
                       return (
                         <li
                           key={stage.id || sIdx}
+                          id={`${id}-stage-item-${sIdx}`}
                           className={`teamwall-list__item ${isActive ? 'teamwall-list__item--active' : ''}`}
                         >
+                          {isActive && (
+                            <motion.span
+                              layoutId={`teamwall-active-line-${id}-${activeDivision.id}`}
+                              className="teamwall-list__active-line"
+                              transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                              aria-hidden="true"
+                            />
+                          )}
                           <button
                             type="button"
                             role="tab"
@@ -284,18 +351,36 @@ export default function ServicesSection({
                             aria-controls={`${id}-stage-panel`}
                             tabIndex={isActive ? 0 : -1}
                             className={`teamwall-row ${isActive ? 'teamwall-row--active' : ''}`}
-                            onClick={() => setActiveStageIndex(sIdx)}
-                            onMouseEnter={() => setActiveStageIndex(sIdx)}
+                            onClick={() => handleStageSelect(sIdx, true)}
+                            onMouseEnter={() => handleStageSelect(sIdx, false)}
                             onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
                           >
                             <span className="teamwall-row__idx">{stageNum}</span>
                             <div className="teamwall-row__title-wrap">
-                              {isActive && (
-                                <span className="teamwall-row__arrow" aria-hidden="true">
-                                  →
-                                </span>
-                              )}
-                              <span className="teamwall-row__title">{stage.title}</span>
+                              <AnimatePresence initial={false}>
+                                {isActive && (
+                                  <motion.span
+                                    className="teamwall-row__arrow"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -10 }}
+                                    transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                                    aria-hidden="true"
+                                  >
+                                    →
+                                  </motion.span>
+                                )}
+                              </AnimatePresence>
+                              <motion.span
+                                className="teamwall-row__title"
+                                animate={{
+                                  x: isActive ? 2 : 0,
+                                  color: isActive ? '#141414' : 'rgba(20, 20, 20, 0.45)'
+                                }}
+                                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                              >
+                                {stage.title}
+                              </motion.span>
                             </div>
                             <span className="teamwall-row__pill">
                               STAGE {stageNum}
@@ -315,37 +400,57 @@ export default function ServicesSection({
                   aria-labelledby={`${id}-stage-btn-${safeStageIndex}`}
                 >
                   <div className="teamwall-card">
+                    {/* Animated Progress Track */}
+                    <div className="teamwall-card__progress-track" aria-hidden="true">
+                      <motion.div
+                        className="teamwall-card__progress-bar"
+                        initial={false}
+                        animate={{ width: `${((safeStageIndex + 1) / stages.length) * 100}%` }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                      />
+                    </div>
+
                     <div className="teamwall-card__top">
                       <div className="teamwall-card__status">
                         <span className="teamwall-card__dot" aria-hidden="true" />
                         <span className="teamwall-card__stage-tag">
-                          STAGE {currentStage.number} // {String(stages.length).padStart(2, '0')}
+                          STAGE <RollingNumber value={currentStage.number} /> // {String(stages.length).padStart(2, '0')}
                         </span>
                       </div>
-                      <span className="teamwall-card__no">No. {currentStage.number}</span>
+                      <span className="teamwall-card__no">
+                        No. <RollingNumber value={currentStage.number} />
+                      </span>
                     </div>
 
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={`${activeDivision.id}-${currentStage.id || safeStageIndex}`}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                        initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -12, filter: 'blur(3px)' }}
+                        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                         className="teamwall-card__body"
                       >
+                        <div className="teamwall-card__watermark" aria-hidden="true">
+                          {currentStage.number}
+                        </div>
                         <h4 className="teamwall-card__title">{currentStage.title}</h4>
                         <p className="teamwall-card__desc">{currentStage.description}</p>
 
                         {currentStage.focus && (
-                          <div className="teamwall-card__focus-block">
+                          <motion.div
+                            className="teamwall-card__focus-block"
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                          >
                             <span className="teamwall-card__focus-label">
                               Core Outcome & Strategic Deliverable
                             </span>
                             <p className="teamwall-card__focus-text">
                               {currentStage.focus}
                             </p>
-                          </div>
+                          </motion.div>
                         )}
                       </motion.div>
                     </AnimatePresence>
@@ -353,7 +458,8 @@ export default function ServicesSection({
                     <div className="teamwall-card__footer">
                       <div className="teamwall-card__counter">
                         <span className="teamwall-card__counter-curr">
-                          {currentStage.number}
+                          <span className="sr-only">{currentStage.number}</span>
+                          <RollingNumber value={currentStage.number} />
                         </span>
                         <span className="teamwall-card__counter-sep">/</span>
                         <span className="teamwall-card__counter-total">

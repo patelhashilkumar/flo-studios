@@ -508,6 +508,7 @@
 /* ── Left Column: Architectural Numbered Roster matching Image 2 ── */
 .teamwall-roster {
   width: 100%;
+  scroll-behavior: smooth;
 }
 
 .teamwall-list {
@@ -520,11 +521,18 @@
 .teamwall-list__item {
   position: relative;
   border-bottom: 1px solid rgba(20, 20, 20, 0.12);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.25s ease;
 }
 
-.teamwall-list__item--active {
-  border-bottom: 1.5px solid #141414;
+.teamwall-list__active-line {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #141414;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .teamwall-row {
@@ -541,15 +549,19 @@
   grid-template-columns: 2.75rem minmax(0, 1fr) auto;
   align-items: baseline;
   column-gap: 1rem;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
   user-select: none;
   box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.teamwall-row:hover {
+  background-color: rgba(20, 20, 20, 0.025);
 }
 
 .teamwall-row:focus-visible {
   outline: 2px solid #141414;
   outline-offset: -2px;
-  border-radius: 4px;
 }
 
 .teamwall-row__idx {
@@ -560,7 +572,7 @@
   line-height: 1.4;
   color: rgba(20, 20, 20, 0.4);
   font-variant-numeric: tabular-nums;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .teamwall-row--active .teamwall-row__idx {
@@ -582,12 +594,6 @@
   line-height: 1;
   color: #141414;
   flex-shrink: 0;
-  animation: teamwall-arrow-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes teamwall-arrow-in {
-  from { opacity: 0; transform: translateX(-6px); }
-  to { opacity: 1; transform: translateX(0); }
 }
 
 .teamwall-row__title {
@@ -599,7 +605,7 @@
   color: rgba(20, 20, 20, 0.45);
   white-space: normal;
   word-break: break-word;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .teamwall-row:hover .teamwall-row__title {
@@ -619,7 +625,7 @@
   text-transform: uppercase;
   color: rgba(20, 20, 20, 0.35);
   flex-shrink: 0;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .teamwall-row--active .teamwall-row__pill {
@@ -643,6 +649,24 @@
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.teamwall-card__progress-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(20, 20, 20, 0.05);
+  overflow: hidden;
+}
+
+.teamwall-card__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #141414 0%, #52525b 100%);
+  will-change: width;
 }
 
 .teamwall-card__top {
@@ -677,6 +701,9 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #141414;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
 }
 
 .teamwall-card__no {
@@ -686,11 +713,29 @@
   letter-spacing: 0.04em;
   color: rgba(20, 20, 20, 0.45);
   font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
 }
 
 .teamwall-card__body {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.teamwall-card__watermark {
+  position: absolute;
+  top: -0.75rem;
+  right: 0;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: clamp(4.5rem, 7.5vw, 6.75rem);
+  font-weight: 900;
+  line-height: 0.85;
+  color: rgba(20, 20, 20, 0.035);
+  pointer-events: none;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
 }
 
 .teamwall-card__title {
@@ -701,6 +746,8 @@
   line-height: 1.22;
   color: #141414;
   margin: 0 0 1rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .teamwall-card__desc {
@@ -709,6 +756,8 @@
   line-height: 1.7;
   color: rgba(20, 20, 20, 0.75);
   margin: 0 0 1.5rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .teamwall-card__focus-block {
@@ -717,6 +766,8 @@
   border-radius: 12px;
   padding: 1.1rem 1.25rem;
   margin-bottom: 1.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 .teamwall-card__focus-label {
@@ -737,6 +788,43 @@
   line-height: 1.55;
   color: #141414;
   margin: 0;
+}
+
+/* ── Rolling Number Wheel Component ── */
+.rolling-number {
+  display: inline-flex;
+  align-items: baseline;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  overflow: hidden;
+  vertical-align: baseline;
+}
+
+.rolling-number__slot {
+  display: inline-block;
+  height: 1.1em;
+  line-height: 1.1em;
+  overflow: hidden;
+  position: relative;
+}
+
+.rolling-number__column {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.rolling-number__digit {
+  display: block;
+  height: 1.1em;
+  line-height: 1.1em;
+  text-align: center;
+}
+
+.rolling-number__char {
+  display: inline-block;
+  height: 1.1em;
+  line-height: 1.1em;
 }
 
 .teamwall-card__footer {
