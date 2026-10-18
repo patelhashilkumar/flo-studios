@@ -369,7 +369,6 @@ export default function ServicesSection({
                             onMouseLeave={() => setHoveredRowIdx(null)}
                             onKeyDown={(e) => handleStageKeyDown(e, sIdx)}
                           >
-                            <span className="teamwall-row__idx">{stageNum}</span>
                             <div className="teamwall-row__title-wrap">
                               <span
                                 className={`teamwall-row__arrow ${isActive ? 'teamwall-row__arrow--active' : ''}`}
