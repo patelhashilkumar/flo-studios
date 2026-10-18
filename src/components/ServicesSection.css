@@ -424,7 +424,7 @@
 /* ── The Stage-by-Stage Lifecycle Pipeline — Teamwall Interactive Architecture (Full Page Width) ── */
 .teamwall-container {
   width: 100%;
-  background: #f4f3ef;
+  background: var(--color-bg, #ffffff);
   border-radius: 0;
   padding: clamp(3.5rem, 6vw, 6.5rem) clamp(1.5rem, 5vw, 5rem);
   color: #141414;
