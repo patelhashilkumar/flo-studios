@@ -303,15 +303,44 @@
 
 .division-overview__insight-card {
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   padding: 1.25rem 1.4rem;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
 }
 
 .division-overview__insight-card:hover {
-  border-color: rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
+  border-color: rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.division-overview__insight-card--active.division-overview__insight-card--unified {
+  border-color: #0e0e12;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.division-overview__insight-card--active.division-overview__insight-card--fracture {
+  border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.08);
+  background: #fffcfc;
+}
+
+.division-overview__insight-card--active.division-overview__insight-card--fracture .division-overview__insight-num {
+  color: #dc2626;
+}
+
+.division-overview__insight-card--active.division-overview__insight-card--unified .division-overview__insight-num {
+  color: #0e0e12;
+}
+
+.division-overview__insight-card:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
 }
 
 .division-overview__insight-num {

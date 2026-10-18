@@ -1,0 +1,296 @@
+/* ═════════════════════════════════════════════════════════════════
+   LIFECYCLE MOTION GRAPHIC — ARCHITECTURAL LINE ART VISUALIZER
+   Strict Manrope typography. Zero emojis. 120 FPS CSS transforms.
+   ═════════════════════════════════════════════════════════════════ */
+
+.lmg-container {
+  width: 100%;
+  max-width: 520px;
+  background: #fbfbfd;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 1.15rem 1.25rem;
+  margin: 1.5rem 0 1.25rem;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+  overflow: hidden;
+}
+
+.lmg-container--unified {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: #fbfbfd;
+}
+
+.lmg-container--fracture {
+  border-color: rgba(220, 38, 38, 0.25);
+  background: #fffafa;
+}
+
+/* ── Top Header Controls ── */
+.lmg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.lmg-controls {
+  display: inline-flex;
+  align-items: center;
+  background: #efeff2;
+  padding: 3px;
+  border-radius: 9999px;
+  gap: 2px;
+}
+
+.lmg-pill {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #64748b;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lmg-pill:hover {
+  color: #0e0e12;
+}
+
+.lmg-pill--active-unified {
+  background: #0e0e12;
+  color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.lmg-pill--active-fracture {
+  background: #dc2626;
+  color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(220, 38, 38, 0.25);
+}
+
+.lmg-pill__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.lmg-pill__dot--unified {
+  background: #22c55e;
+}
+
+.lmg-pill--active-unified .lmg-pill__dot--unified {
+  background: #4ade80;
+}
+
+.lmg-pill__dot--fracture {
+  background: #ef4444;
+}
+
+.lmg-pill--active-fracture .lmg-pill__dot--fracture {
+  background: #ffffff;
+}
+
+.lmg-metric-tag {
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.lmg-container--fracture .lmg-metric-tag {
+  color: #dc2626;
+}
+
+/* ── SVG Schematic Canvas ── */
+.lmg-canvas-wrap {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.lmg-canvas {
+  width: 100%;
+  height: auto;
+  max-width: 440px;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Hardware-Accelerated Line Art Animation ── */
+.lmg-flowing-signal {
+  stroke-dasharray: 24 342;
+  animation: lmgLaserFlow 2.8s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes lmgLaserFlow {
+  0% {
+    stroke-dashoffset: 366;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.lmg-pulse-head {
+  animation: lmgDotTravel 2.8s linear infinite;
+  will-change: transform;
+}
+
+@keyframes lmgDotTravel {
+  0% {
+    cx: 40px;
+    cy: 56px;
+    opacity: 0;
+    r: 3px;
+  }
+  8% {
+    opacity: 1;
+    r: 4.5px;
+  }
+  92% {
+    opacity: 1;
+    r: 4.5px;
+  }
+  100% {
+    cx: 382px;
+    cy: 56px;
+    opacity: 0;
+    r: 3px;
+  }
+}
+
+/* ── Fracture Badge in Gap ── */
+.lmg-fracture-badge-bg {
+  animation: lmgBadgePulse 2s ease-in-out infinite;
+}
+
+@keyframes lmgBadgePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 rgba(220, 38, 38, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 6px rgba(220, 38, 38, 0.3));
+  }
+}
+
+/* ── Milestone Nodes ── */
+.lmg-node-num {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  fill: #9ca3af;
+}
+
+.lmg-node-ring {
+  fill: #ffffff;
+  stroke: #0e0e12;
+  stroke-width: 1.75px;
+  transition: stroke 0.2s ease, fill 0.2s ease;
+}
+
+.lmg-node-ring--fracture {
+  stroke: #dc2626;
+}
+
+.lmg-node-core {
+  fill: #0e0e12;
+  transition: fill 0.2s ease;
+}
+
+.lmg-node-core--fracture {
+  fill: #dc2626;
+}
+
+.lmg-node-title {
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  fill: #374151;
+  transition: fill 0.2s ease;
+}
+
+.lmg-node-title--fracture {
+  fill: #dc2626;
+}
+
+/* ── Status Strip ── */
+.lmg-status-strip {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.lmg-status-text {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.lmg-status-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  position: relative;
+  top: -1px;
+}
+
+.lmg-status-text--unified {
+  color: #374151;
+}
+
+.lmg-status-text--unified .lmg-status-bullet {
+  background: #16a34a;
+}
+
+.lmg-status-text--fracture {
+  color: #991b1b;
+}
+
+.lmg-status-text--fracture .lmg-status-bullet {
+  background: #dc2626;
+}
+
+/* ── Accessibility & Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .lmg-flowing-signal,
+  .lmg-pulse-head,
+  .lmg-fracture-badge-bg {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .lmg-container {
+    padding: 1rem;
+    margin: 1.25rem 0 1rem;
+  }
+
+  .lmg-pill {
+    padding: 4px 9px;
+    font-size: 0.6875rem;
+  }
+}

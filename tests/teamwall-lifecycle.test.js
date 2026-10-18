@@ -254,3 +254,41 @@ test('11. ServicesSection renders division intro statement and clean text-only d
   assert.ok(cssContent.includes('.services-switcher__indicator'), 'CSS must define .services-switcher__indicator')
 })
 
+test('12. ServicesSection integrates LifecycleMotionGraphic with interactive unified and fractured line-art modes', () => {
+  const lmgJsxPath = path.join(rootDir, 'src', 'components', 'LifecycleMotionGraphic.jsx')
+  const lmgCssPath = path.join(rootDir, 'src', 'components', 'LifecycleMotionGraphic.css')
+  const servicesJsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
+  const servicesCssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
+
+  assert.ok(fs.existsSync(lmgJsxPath), 'LifecycleMotionGraphic.jsx must exist')
+  assert.ok(fs.existsSync(lmgCssPath), 'LifecycleMotionGraphic.css must exist')
+
+  const lmgJsx = fs.readFileSync(lmgJsxPath, 'utf8')
+  const lmgCss = fs.readFileSync(lmgCssPath, 'utf8')
+  const servicesJsx = fs.readFileSync(servicesJsxPath, 'utf8')
+  const servicesCss = fs.readFileSync(servicesCssPath, 'utf8')
+
+  // Zero emojis
+  const emojiRegex = /[\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u
+  assert.ok(!emojiRegex.test(lmgJsx), 'LifecycleMotionGraphic.jsx must not contain emojis')
+  assert.ok(!emojiRegex.test(lmgCss), 'LifecycleMotionGraphic.css must not contain emojis')
+
+  // SVG Line Art & Motion Graphics Architecture
+  assert.ok(lmgJsx.includes('lmg-canvas'), 'JSX must render lmg-canvas SVG')
+  assert.ok(lmgJsx.includes('lmg-flowing-signal'), 'JSX must render animated flowing signal line')
+  assert.ok(lmgJsx.includes('lmg-pulse-head'), 'JSX must render pulse head dot')
+  assert.ok(lmgJsx.includes('lmg-controls'), 'JSX must provide interactive mode switcher pills')
+
+  // CSS Hardware Acceleration & Keyframe Animations
+  assert.ok(lmgCss.includes('@keyframes lmgLaserFlow'), 'CSS must define lmgLaserFlow keyframes')
+  assert.ok(lmgCss.includes('@keyframes lmgDotTravel'), 'CSS must define lmgDotTravel keyframes')
+  assert.ok(lmgCss.includes('prefers-reduced-motion'), 'CSS must respect prefers-reduced-motion')
+
+  // ServicesSection Mounting & Card Interactions
+  assert.ok(servicesJsx.includes('import LifecycleMotionGraphic'), 'ServicesSection must import LifecycleMotionGraphic')
+  assert.ok(servicesJsx.includes('<LifecycleMotionGraphic'), 'ServicesSection must mount LifecycleMotionGraphic')
+  assert.ok(servicesJsx.includes('overviewMode'), 'ServicesSection must maintain overviewMode state')
+  assert.ok(servicesCss.includes('.division-overview__insight-card--active'), 'CSS must style active insight card')
+})
+
+

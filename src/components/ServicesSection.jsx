@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DIVISIONS, getDivisionById } from '../data/divisionsData'
 import SlotText3D from './SlotText3D'
+import LifecycleMotionGraphic from './LifecycleMotionGraphic'
 import './ServicesSection.css'
 
 function RollingNumber({ value }) {
@@ -59,6 +60,7 @@ export default function ServicesSection({
   const [activeStageIndex, setActiveStageIndex] = useState(0)
   const [hoveredRowIdx, setHoveredRowIdx] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [overviewMode, setOverviewMode] = useState('unified')
   const rosterRef = useRef(null)
   const shouldScrollRosterRef = useRef(false)
 
@@ -67,6 +69,7 @@ export default function ServicesSection({
     setActiveStageIndex(0)
     setHoveredRowIdx(null)
     setSelectedCategory('All')
+    setOverviewMode('unified')
   }
 
   const stages = activeDivision.stages || []
@@ -278,6 +281,14 @@ export default function ServicesSection({
                   <h3 className="division-overview__thesis">
                     {activeDivision.coreDifferentiator.quote.replace(/^[“"]|[”"]$/g, '')}
                   </h3>
+
+                  {/* Architectural Lifecycle Motion Graphic & Line Art */}
+                  <LifecycleMotionGraphic
+                    divisionId={activeDivision.id}
+                    mode={overviewMode}
+                    onModeChange={setOverviewMode}
+                  />
+
                   <div className="division-overview__caption">
                     <span className="division-overview__caption-line" aria-hidden="true" />
                     <span className="division-overview__caption-text">
@@ -294,8 +305,32 @@ export default function ServicesSection({
                       const labels = activeDivision.id === 'development'
                         ? ['01 / THE FRACTURE', '02 / THE FLO STANDARD']
                         : ['01 / STAGE DIAGNOSIS', '02 / SCALED SYSTEM']
+                      const isCardFracture = pIdx === 0
+                      const isCardActive =
+                        (isCardFracture && overviewMode === 'fracture') ||
+                        (!isCardFracture && overviewMode === 'unified')
                       return (
-                        <div key={pIdx} className="division-overview__insight-card">
+                        <div
+                          key={pIdx}
+                          className={`division-overview__insight-card ${
+                            isCardActive ? 'division-overview__insight-card--active' : ''
+                          } ${
+                            isCardFracture
+                              ? 'division-overview__insight-card--fracture'
+                              : 'division-overview__insight-card--unified'
+                          }`}
+                          onMouseEnter={() => setOverviewMode(isCardFracture ? 'fracture' : 'unified')}
+                          onClick={() => setOverviewMode(isCardFracture ? 'fracture' : 'unified')}
+                          tabIndex={0}
+                          role="button"
+                          aria-label={`View ${labels[pIdx] || 'insight'}`}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              setOverviewMode(isCardFracture ? 'fracture' : 'unified')
+                            }
+                          }}
+                        >
                           <span className="division-overview__insight-num">
                             {labels[pIdx] || `0${pIdx + 1} / INSIGHT`}
                           </span>
