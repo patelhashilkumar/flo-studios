@@ -247,9 +247,7 @@ export default function ServicesSection({
                     aria-selected={isActive}
                     aria-controls={`${id}-panel-${pill.id}`}
                     tabIndex={isActive ? 0 : -1}
-                    className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''} ${
-                      pill.id === 'creator' ? 'services-switcher__tab--creator' : ''
-                    }`}
+                    className={`services-switcher__tab ${isActive ? 'services-switcher__tab--active' : ''}`}
                     onClick={() => handleSelectDivision(pill.id)}
                     onKeyDown={(e) => handleTabKeyDown(e, idx)}
                   >
@@ -260,18 +258,7 @@ export default function ServicesSection({
                         transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                       />
                     )}
-                    {pill.id === 'creator' ? (
-                      <span className="services-switcher__label services-switcher__label--creator">
-                        <img
-                          src="/images/creator-division.png"
-                          alt="Creator Division"
-                          className="services-switcher__creator-img"
-                        />
-                        <span className="sr-only">{pill.label}</span>
-                      </span>
-                    ) : (
-                      <span className="services-switcher__label">{pill.label}</span>
-                    )}
+                    <span className="services-switcher__label">{pill.label}</span>
                   </button>
                 )
               })}

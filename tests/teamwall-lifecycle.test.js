@@ -224,7 +224,7 @@ test('10. ServicesSection renders inverted differentiator quote callout with Get
   assert.ok(!pageContent.includes('services-page__cta-section'), 'ServicesPage must not render redundant cta-section')
 })
 
-test('11. ServicesSection renders division intro statement and creator logo matching mockup', () => {
+test('11. ServicesSection renders division intro statement and clean text-only division toggle button', () => {
   const jsxPath = path.join(rootDir, 'src', 'components', 'ServicesSection.jsx')
   const cssPath = path.join(rootDir, 'src', 'components', 'ServicesSection.css')
 
@@ -246,10 +246,12 @@ test('11. ServicesSection renders division intro statement and creator logo matc
   assert.ok(creatorDivision.introStatement, 'Creator division must define introStatement')
 
   assert.ok(jsxContent.includes('services-hero__intro'), 'JSX must render services-hero__intro')
-  assert.ok(jsxContent.includes('services-switcher__creator-img'), 'JSX must render services-switcher__creator-img')
-  assert.ok(jsxContent.includes('creator-division.png'), 'JSX must link to creator-division.png asset')
+  assert.ok(jsxContent.includes('services-switcher'), 'JSX must render services-switcher')
+  assert.ok(!jsxContent.includes('services-switcher__creator-img'), 'JSX must NOT render creator image in switcher')
+  assert.ok(!jsxContent.includes('creator-division.png'), 'JSX must NOT link to creator image in switcher')
 
   assert.ok(cssContent.includes('.services-hero__intro'), 'CSS must define .services-hero__intro')
-  assert.ok(cssContent.includes('.services-switcher__creator-img'), 'CSS must define .services-switcher__creator-img')
+  assert.ok(cssContent.includes('.services-switcher'), 'CSS must define .services-switcher')
+  assert.ok(cssContent.includes('.services-switcher__indicator'), 'CSS must define .services-switcher__indicator')
 })
 
