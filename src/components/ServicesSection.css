@@ -24,14 +24,14 @@
   width: 100%;
   background-color: var(--color-bg, #ffffff);
   color: var(--color-text, #141414);
-  padding: clamp(6.5rem, 11vw, 9.5rem) 0 clamp(4.5rem, 8vw, 6.5rem);
+  padding: clamp(8rem, 13vw, 12rem) 0 clamp(5.5rem, 9vw, 8rem);
   margin-bottom: clamp(2.5rem, 4.5vw, 4rem);
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .services-hero__container {
-  max-width: 1280px;
+  max-width: 1480px;
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 4vw, 2.5rem);
   display: flex;
@@ -44,22 +44,22 @@
 .services-hero__eyebrow {
   font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
   font-style: italic;
-  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
   font-weight: 400;
   color: #666668;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
   letter-spacing: -0.01em;
 }
 
 .services-hero__title {
   font-family: var(--font-serif, 'Instrument Serif', Georgia, serif);
-  font-size: clamp(2.1rem, 3.8vw, 3.9rem);
+  font-size: clamp(2.5rem, 4.8vw, 5.15rem);
   font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: -0.015em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: #0e0e12;
-  margin: 0 auto clamp(1.75rem, 3vw, 2.5rem);
-  max-width: 1280px;
+  margin: 0 auto clamp(2rem, 3.5vw, 3rem);
+  max-width: 1480px;
   text-align: center;
 }
 
@@ -78,19 +78,19 @@
 }
 
 .services-hero__cta-wrap {
-  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  margin-bottom: clamp(4rem, 6.5vw, 6rem);
 }
 
 .services-hero__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 30px;
+  padding: 16px 38px;
   border-radius: 9999px;
   background: #000000;
   color: #ffffff;
   font-family: var(--font-manrope), 'Manrope', sans-serif;
-  font-size: 0.9375rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
