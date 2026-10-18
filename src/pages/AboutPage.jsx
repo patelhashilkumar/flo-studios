@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import SEO from '../components/SEO'
 import FloLogo from '../components/FloLogo'
 import './AboutPage.css'
@@ -27,6 +27,48 @@ const LEADERS = [
     image: '/images/founders/mohit.jpg'
   }
 ]
+
+const CONSTELLATION_CENTER = {
+  img: 'https://a-us.storyblok.com/f/1004432/1282x1604/a9337ef144/laurel-burton.png/m/',
+  alt: 'Studio Lead'
+}
+
+const CONSTELLATION_AVATARS = [
+  { id: 1, x: 26, y: 16, size: 28, img: 'https://a-us.storyblok.com/f/1004432/1282x1604/179f8beb3a/jackdecaluwe_insrument_cco_about_page.png/m/', alt: 'Creative Direction' },
+  { id: 2, x: 50, y: 11, size: 26, img: '/images/founders/aman.jpg', alt: 'Aman Pal' },
+  { id: 3, x: 72, y: 14, size: 30, img: 'https://a-us.storyblok.com/f/1004432/1282x1604/f7881acef8/coryna-sorin-2.png/m/', alt: 'Operations' },
+  { id: 4, x: 38, y: 22, size: 22, img: '/images/founders/mohit.jpg', alt: 'Mohit Ninama' },
+  { id: 5, x: 60, y: 24, size: 28, img: 'https://a-us.storyblok.com/f/1004432/1282x1604/e5ec3755bd/tessa-baston.png/m/', alt: 'People & Culture' },
+  { id: 6, x: 84, y: 18, size: 22, img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', alt: 'Strategy Lead' },
+  { id: 7, x: 16, y: 22, size: 24, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80', alt: 'Design Engineer' },
+  { id: 8, x: 90, y: 12, size: 20, img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80', alt: 'Product Designer' },
+  { id: 9, x: 10, y: 36, size: 26, img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80', alt: 'Creative Technologist' },
+  { id: 10, x: 28, y: 34, size: 22, img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', alt: 'Technical Architect' },
+  { id: 11, x: 74, y: 30, size: 26, img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&auto=format&fit=crop&q=80', alt: 'Brand Strategist' },
+  { id: 12, x: 88, y: 38, size: 24, img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80', alt: 'Full-Stack Engineer' },
+  { id: 13, x: 36, y: 40, size: 20, img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', alt: 'Motion Designer' },
+  { id: 14, x: 64, y: 42, size: 24, img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100&auto=format&fit=crop&q=80', alt: 'UI Designer' },
+  { id: 15, x: 18, y: 52, size: 26, img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80', alt: '3D Artist' },
+  { id: 16, x: 30, y: 56, size: 22, img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80', alt: 'Systems Architect' },
+  { id: 17, x: 68, y: 58, size: 24, img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop&q=80', alt: 'Design Technologist' },
+  { id: 18, x: 82, y: 54, size: 28, img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80', alt: 'Product Lead' },
+  { id: 19, x: 92, y: 60, size: 22, img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80', alt: 'Engineer' },
+  { id: 20, x: 14, y: 68, size: 24, img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&auto=format&fit=crop&q=80', alt: 'Visual Designer' },
+  { id: 21, x: 26, y: 72, size: 26, img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&auto=format&fit=crop&q=80', alt: 'Frontend Engineer' },
+  { id: 22, x: 40, y: 70, size: 24, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80', alt: 'Strategy Director' },
+  { id: 23, x: 58, y: 72, size: 26, img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', alt: 'Copywriter' },
+  { id: 24, x: 74, y: 68, size: 24, img: '/images/founders/aman.jpg', alt: 'Aman Pal' },
+  { id: 25, x: 86, y: 76, size: 22, img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80', alt: 'Designer' },
+  { id: 26, x: 94, y: 74, size: 20, img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80', alt: 'Developer' },
+  { id: 27, x: 34, y: 84, size: 24, img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80', alt: 'Creative Director' },
+  { id: 28, x: 48, y: 88, size: 26, img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', alt: 'QA Lead' },
+  { id: 29, x: 66, y: 86, size: 28, img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', alt: 'Product Strategist' },
+  { id: 30, x: 78, y: 86, size: 22, img: '/images/founders/mohit.jpg', alt: 'Mohit Ninama' },
+  { id: 31, x: 22, y: 86, size: 20, img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&auto=format&fit=crop&q=80', alt: 'Brand Designer' },
+  { id: 32, x: 90, y: 88, size: 22, img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80', alt: 'Motion Technologist' }
+]
+
+const BUILD_WEEK_GRAPHIC = 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/'
 
 const IMAGES = [
   { src: 'https://a-us.storyblok.com/f/1004432/1348x1006/3d7c5fd107/about_page_image2.png/m/', alt: 'Flo Studios collaborative design exploration and creative strategy session' },
@@ -123,6 +165,27 @@ const PAINTERS = {
 
 export default function AboutPage() {
   const rootRef = useRef(null)
+  const [constellationPaused, setConstellationPaused] = useState(false)
+  const [collagePaused, setCollagePaused] = useState(false)
+  const [collageStep, setCollageStep] = useState(0)
+  const [buildWeekPaused, setBuildWeekPaused] = useState(false)
+  const [buildWeekStep, setBuildWeekStep] = useState(0)
+
+  useEffect(() => {
+    if (collagePaused) return
+    const id = setInterval(() => {
+      setCollageStep((prev) => (prev + 1) % 5)
+    }, 3200)
+    return () => clearInterval(id)
+  }, [collagePaused])
+
+  useEffect(() => {
+    if (buildWeekPaused) return
+    const id = setInterval(() => {
+      setBuildWeekStep((prev) => (prev + 1) % 8)
+    }, 2800)
+    return () => clearInterval(id)
+  }, [buildWeekPaused])
 
   useEffect(() => {
     const root = rootRef.current
@@ -385,6 +448,268 @@ export default function AboutPage() {
                 </div>
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 1: Who We Are (Image 1) ── */}
+      <section className="about-split about__who-v2" data-theme="light">
+        <div className="container about-split__container">
+          <div className="about-split__content about__reveal">
+            <h2 className="about-split__title">Who we are</h2>
+            <p className="about-split__text">
+              We're nerds with taste. Strategy geeks.<br />
+              Design freaks. Deep thinkers. Fast makers.
+            </p>
+            <p className="about-split__text">
+              Curious, detail-obsessed, and opinionated—<br />
+              all working to make work people remember.
+            </p>
+            <div className="about-split__cta">
+              <Link to="/services" className="about-split__btn">
+                <span>See our services</span>
+                <span className="about-split__arrow" aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="about-split__visual about__reveal">
+            <div
+              className={`about-constellation-card ${constellationPaused ? 'is-paused' : ''}`}
+              aria-label="Flo Studios collective team constellation"
+            >
+              {/* Central Primary Portrait */}
+              <div className="about-constellation__center">
+                <img
+                  src={CONSTELLATION_CENTER.img}
+                  alt={CONSTELLATION_CENTER.alt}
+                  className="about-constellation__center-img"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Scattered Surrounding Avatars */}
+              {CONSTELLATION_AVATARS.map((avatar, idx) => (
+                <div
+                  key={avatar.id}
+                  className="about-constellation__node"
+                  style={{
+                    left: `${avatar.x}%`,
+                    top: `${avatar.y}%`,
+                    width: `${avatar.size}px`,
+                    height: `${avatar.size}px`,
+                    animationDelay: `${(idx * 0.18) % 3.6}s`,
+                    animationDuration: `${3.8 + ((idx % 5) * 0.6)}s`
+                  }}
+                  title={avatar.alt}
+                >
+                  <img src={avatar.img} alt={avatar.alt} loading="lazy" />
+                </div>
+              ))}
+
+              {/* Pause/Play Controller */}
+              <button
+                type="button"
+                className="about-card-ctrl"
+                onClick={() => setConstellationPaused(!constellationPaused)}
+                aria-label={constellationPaused ? 'Play constellation animation' : 'Pause constellation animation'}
+              >
+                {constellationPaused ? '▶' : '❚❚'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 2: How We Work (Image 2) ── */}
+      <section className="about-split about-split--reverse about__how-v2" data-theme="light">
+        <div className="container about-split__container">
+          <div className="about-split__visual about__reveal">
+            <div
+              className={`about-collage-card ${collagePaused ? 'is-paused' : ''}`}
+              aria-label="Studio collaborative process collage"
+            >
+              <div className="about-collage__grid">
+                {/* Yellow Sticky Miro Board */}
+                <div className="about-collage__item about-collage__item--notes">
+                  <div className="about-collage__notes-header">I wonder...</div>
+                  <div className="about-collage__notes-grid">
+                    <span className="about-collage__sticky">Designers who code</span>
+                    <span className="about-collage__sticky">Zero handoffs</span>
+                    <span className="about-collage__sticky">Strategy + Craft</span>
+                    <span className="about-collage__sticky">Built for scale</span>
+                  </div>
+                </div>
+
+                {/* Wireframe Flow */}
+                <div className="about-collage__item about-collage__item--wireframe">
+                  <div className="about-collage__wireframe-bar" />
+                  <div className="about-collage__wireframe-lines">
+                    <div className="about-collage__line about-collage__line--pill" />
+                    <div className="about-collage__line" />
+                    <div className="about-collage__line about-collage__line--short" />
+                  </div>
+                  <div className="about-collage__wireframe-btn">Confirm Flow</div>
+                </div>
+
+                {/* Studio Floor Photo */}
+                <div className="about-collage__item about-collage__item--photo-floor">
+                  <img
+                    src="https://a-us.storyblok.com/f/1004432/2353x1568/6518a18c78/about_page_image1.png/m/"
+                    alt="Designers and technologists on the studio floor"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Dark UI Mobile Mockup */}
+                <div className="about-collage__item about-collage__item--dark-ui">
+                  <div className="about-collage__dark-dot" />
+                  <div className="about-collage__dark-graph" />
+                  <div className="about-collage__dark-row" />
+                </div>
+
+                {/* Studio Timber Table Meeting */}
+                <div className="about-collage__item about-collage__item--photo-table">
+                  <img
+                    src="https://a-us.storyblok.com/f/1004432/1348x1006/3d7c5fd107/about_page_image2.png/m/"
+                    alt="Studio cross-functional collaborative meeting"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Whiteboard / Architecture Sprint Board */}
+                <div className="about-collage__item about-collage__item--board">
+                  <img
+                    src="https://a-us.storyblok.com/f/1004432/3840x2160/eb1d22feae/build-week-high-level.png/m/"
+                    alt="Technical architecture whiteboard roadmap"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Bottom Carousel Controls */}
+              <div className="about-card-footer">
+                <button
+                  type="button"
+                  className="about-card-ctrl about-card-ctrl--relative"
+                  onClick={() => setCollagePaused(!collagePaused)}
+                  aria-label={collagePaused ? 'Play collage rotation' : 'Pause collage rotation'}
+                >
+                  {collagePaused ? '▶' : '❚❚'}
+                </button>
+                <div className="about-card-dashes" role="tablist" aria-label="Process slides">
+                  {[0, 1, 2, 3, 4].map((step) => (
+                    <button
+                      key={step}
+                      type="button"
+                      className={`about-card-dash ${collageStep === step ? 'is-active' : ''}`}
+                      onClick={() => setCollageStep(step)}
+                      aria-label={`Go to slide ${step + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="about-split__content about__reveal">
+            <h2 className="about-split__title">How we work</h2>
+            <p className="about-split__lead">
+              Designers who code. Developers who design. Strategy and craft in the same room.
+            </p>
+            <p className="about-split__text">
+              Our teams are built to remove handoffs and keep the work connected so ideas don't get watered down from concept to execution. You can see it in the quality of the work and in how quickly it gets there.
+            </p>
+            <p className="about-split__text">
+              We hold a high bar, stay curious, and follow through. We care about the people behind the work and are always looking for ways to make the work better.
+            </p>
+            <p className="about-split__prompt">
+              Think you'd be a good addition to the team?
+            </p>
+            <div className="about-split__cta">
+              <Link to="/careers" className="about-split__btn">
+                <span>View open roles</span>
+                <span className="about-split__arrow" aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 3: Build Week at Flo Studios (Image 4) ── */}
+      <section className="about-split about__build-week" data-theme="light">
+        <div className="container about-split__container">
+          <div className="about-split__content about__reveal">
+            <h2 className="about-split__title">Build Week at Flo Studios</h2>
+            <p className="about-split__text">
+              Startups and small businesses don't always have access to the same resources as larger brands. Build Week was created to help close that gap.
+            </p>
+            <p className="about-split__text">
+              In partnership with Vanport Studio, we bring together teams across strategy, design, and technology to help underrepresented founders move their businesses forward through work like brand systems, packaging, digital experiences, product design.
+            </p>
+            <p className="about-split__text">
+              It's a chance to apply the way we work to something bigger than ourselves: moving quickly, collaborating deeply, and building things that make a tangible difference.
+            </p>
+            <div className="about-split__cta">
+              <Link to="/work/build-week" className="about-split__btn">
+                <span>About Build Week</span>
+                <span className="about-split__arrow" aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="about-split__visual about__reveal">
+            <div
+              className={`about-build-week-card ${buildWeekPaused ? 'is-paused' : ''}`}
+              aria-label="Build Week initiative card"
+            >
+              <div className="about-build-week__visual-wrap">
+                <img
+                  src={BUILD_WEEK_GRAPHIC}
+                  alt="BUILD 2026 WEEK"
+                  className="about-build-week__logo"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Bottom Carousel Controls */}
+              <div className="about-card-footer">
+                <button
+                  type="button"
+                  className="about-card-ctrl about-card-ctrl--relative"
+                  onClick={() => setBuildWeekPaused(!buildWeekPaused)}
+                  aria-label={buildWeekPaused ? 'Play build week slideshow' : 'Pause build week slideshow'}
+                >
+                  {buildWeekPaused ? '▶' : '❚❚'}
+                </button>
+                <div className="about-card-dashes" role="tablist" aria-label="Build week highlights">
+                  {[0, 1, 2, 3, 4, 5, 6, 7].map((step) => (
+                    <button
+                      key={step}
+                      type="button"
+                      className={`about-card-dash ${buildWeekStep === step ? 'is-active' : ''}`}
+                      onClick={() => setBuildWeekStep(step)}
+                      aria-label={`Highlight ${step + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 4: Team Addition Callout Banner (Image 3) ── */}
+      <section className="about-banner-section" data-theme="light">
+        <div className="container about-banner-section__container about__reveal">
+          <h2 className="about-banner-section__title">
+            Think you'd be a good addition to our team?
+          </h2>
+          <div className="about-banner-section__cta">
+            <Link to="/careers" className="about-banner-section__btn">
+              <span>Careers</span>
+              <span className="about-banner-section__arrow" aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
       </section>

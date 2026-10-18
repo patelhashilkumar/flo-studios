@@ -298,4 +298,552 @@
   .about__arc, .about__leader rect { stroke-dashoffset: 0; }
   .about__leader img { clip-path: none; transform: none; }
   .about__ruler { clip-path: inset(0 60% 0 0); }
+  .about-constellation__node { animation: none !important; }
+  .about-card-ctrl { display: none; }
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   INSTRUMENT-ALIGNED EDITORIAL SECTIONS (WHO WE ARE, HOW WE WORK, BUILD WEEK, CAREERS BANNER)
+   Strictly Manrope typography, zero emojis, high-fidelity responsive layouts.
+   ═════════════════════════════════════════════════════════════════ */
+
+.about-split {
+  padding: clamp(4.5rem, 8vw, 7.5rem) 0;
+  position: relative;
+  background: var(--about-bg, #ffffff);
+  color: var(--about-ink, #121214);
+}
+
+.about-split__container {
+  max-width: var(--container-max, 1400px);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 6vw, 6.5rem);
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.about-split--reverse .about-split__visual {
+  order: 1;
+}
+
+.about-split--reverse .about-split__content {
+  order: 2;
+}
+
+.about-split__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-split__title {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(2.3rem, 4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: inherit;
+  margin: 0 0 clamp(1.5rem, 2.5vw, 2.25rem);
+}
+
+.about-split__lead {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+  color: inherit;
+  margin: 0 0 1.25rem;
+}
+
+.about-split__text {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, currentColor 75%, transparent);
+  margin: 0 0 1.25rem;
+}
+
+.about-split__prompt {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: inherit;
+  margin: 1.5rem 0 1.25rem;
+}
+
+.about-split__cta {
+  margin-top: 1rem;
+}
+
+.about-split__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.about-split__btn:hover {
+  background: #222222;
+  transform: scale(1.03);
+}
+
+.about-split__arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.about-split__btn:hover .about-split__arrow {
+  transform: translateX(3px);
+}
+
+/* ── Card 1: Team Constellation Card (Image 1) ── */
+.about-constellation-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 480px;
+  border-radius: 28px;
+  background: #dcdce0;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.about-constellation__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(84px, 14vw, 114px);
+  aspect-ratio: 1 / 1.15;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  background: #ffffff;
+}
+
+.about-constellation__center-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-constellation__node {
+  position: absolute;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  transform: translate(-50%, -50%);
+  animation: about-float-avatar infinite ease-in-out alternate;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.25s;
+  cursor: pointer;
+}
+
+.about-constellation__node:hover {
+  transform: translate(-50%, -50%) scale(1.4);
+  z-index: 8;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24);
+}
+
+.about-constellation__node img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes about-float-avatar {
+  0% { transform: translate(-50%, -50%) translateY(0); }
+  100% { transform: translate(-50%, -50%) translateY(-6px); }
+}
+
+.about-constellation-card.is-paused .about-constellation__node {
+  animation-play-state: paused !important;
+}
+
+/* ── Card Controller & Footer Elements ── */
+.about-card-ctrl {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #111113;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s, background-color 0.2s;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.about-card-ctrl:hover {
+  background: #ffffff;
+  transform: scale(1.08);
+}
+
+.about-card-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  z-index: 10;
+}
+
+.about-card-ctrl--relative {
+  position: static;
+  flex-shrink: 0;
+}
+
+.about-card-dashes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  max-width: 320px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.about-card-dash {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.18);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.about-card-dash.is-active {
+  background: #000000;
+}
+
+/* ── Card 2: Process Collage Card (Image 2) ── */
+.about-collage-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 480px;
+  border-radius: 28px;
+  background: #eaebef;
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.about-collage__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 12px;
+  height: calc(100% - 44px);
+  width: 100%;
+}
+
+.about-collage__item {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-collage__item:hover {
+  transform: scale(1.02);
+  z-index: 3;
+}
+
+.about-collage__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-collage__item--notes {
+  grid-column: 1;
+  grid-row: 1;
+  background: #fffde6;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-manrope), sans-serif;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.about-collage__notes-header {
+  font-size: 11px;
+  font-weight: 700;
+  color: #444448;
+  margin-bottom: 6px;
+}
+
+.about-collage__notes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  flex: 1;
+}
+
+.about-collage__sticky {
+  background: #ffee55;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 8px;
+  font-weight: 600;
+  color: #222226;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.about-collage__item--wireframe {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  background: #ffffff;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.about-collage__wireframe-bar {
+  height: 8px;
+  width: 60%;
+  background: #111113;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.about-collage__wireframe-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.about-collage__line {
+  height: 6px;
+  width: 100%;
+  background: #e8e8ec;
+  border-radius: 3px;
+}
+
+.about-collage__line--pill {
+  width: 45%;
+  background: #2563eb;
+}
+
+.about-collage__line--short {
+  width: 75%;
+}
+
+.about-collage__wireframe-btn {
+  padding: 6px;
+  background: #000000;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.about-collage__item--photo-floor {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.about-collage__item--dark-ui {
+  grid-column: 1;
+  grid-row: 2;
+  background: #0e0e12;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.about-collage__dark-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  margin-bottom: 4px;
+}
+
+.about-collage__dark-graph {
+  height: 38px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  border-left: 2px solid #22c55e;
+}
+
+.about-collage__dark-row {
+  height: 6px;
+  width: 70%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.about-collage__item--photo-table {
+  grid-column: 1 / span 2;
+  grid-row: 3;
+}
+
+.about-collage__item--board {
+  grid-column: 3;
+  grid-row: 2 / span 2;
+}
+
+/* ── Card 3: Build Week Card (Image 4) ── */
+.about-build-week-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 480px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #e9f566 0%, #d8e552 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.about-build-week__visual-wrap {
+  width: 82%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-build-week__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.12));
+}
+
+/* ── Section 4: Team Addition Callout Banner (Image 3) ── */
+.about-banner-section {
+  padding: clamp(5.5rem, 9vw, 8.5rem) 0;
+  background: #f0f0f4;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.about-banner-section__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-banner-section__title {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: #111113;
+  margin: 0 0 clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.about-banner-section__cta {
+  display: flex;
+  justify-content: center;
+}
+
+.about-banner-section__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 14px 34px;
+  border-radius: 9999px;
+  background: #2b2b2e;
+  color: #ffffff;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.about-banner-section__btn:hover {
+  background: #000000;
+  transform: scale(1.03);
+}
+
+.about-banner-section__arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.about-banner-section__btn:hover .about-banner-section__arrow {
+  transform: translateX(3px);
+}
+
+/* ── Responsive Adaptations ── */
+@media (max-width: 900px) {
+  .about-split__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .about-split--reverse .about-split__visual {
+    order: 2;
+  }
+
+  .about-split--reverse .about-split__content {
+    order: 1;
+  }
+
+  .about-constellation-card,
+  .about-collage-card,
+  .about-build-week-card {
+    min-height: 380px;
+  }
 }
