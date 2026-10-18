@@ -121,17 +121,16 @@ test('6. SlotText3D implements 3D slot tumbling text animation and integrates in
   assert.ok(!emojiRegex.test(slotCss), 'SlotText3D.css must not contain emojis')
 
   // 3D Slot Architecture assertions
-  assert.ok(slotJsx.includes('useAnimationControls'), 'SlotText3D must use Framer Motion animation controls')
-  assert.ok(slotJsx.includes('rotateX: 90'), 'SlotText3D outgoing face must tumble 90 degrees around X axis')
-  assert.ok(slotJsx.includes('rotateX: -90'), 'SlotText3D incoming face must start at -90 degrees around X axis')
   assert.ok(slotJsx.includes('staggerDelay'), 'SlotText3D must support staggered character delay')
   assert.ok(slotJsx.includes('sr-only'), 'SlotText3D must provide screen reader text accessibility')
 
-  // CSS 3D specifications
+  // CSS 3D specifications & GPU Keyframes
   assert.ok(slotCss.includes('perspective: 1000px'), 'SlotText3D.css must define 3D perspective')
   assert.ok(slotCss.includes('transform-style: preserve-3d'), 'SlotText3D.css must preserve 3D nested transforms')
   assert.ok(slotCss.includes('transform-origin: 50% 50% -0.4em'), 'SlotText3D.css must set cylindrical transform origin')
   assert.ok(slotCss.includes('backface-visibility: hidden'), 'SlotText3D.css must hide backfaces')
+  assert.ok(slotCss.includes('@keyframes slotTumbleOut') && slotCss.includes('rotateX(90deg)'), 'SlotText3D outgoing face must tumble 90 degrees around X axis via GPU keyframes')
+  assert.ok(slotCss.includes('@keyframes slotTumbleIn') && slotCss.includes('rotateX(-90deg)'), 'SlotText3D incoming face must start at -90 degrees around X axis via GPU keyframes')
 
   // ServicesSection integration
   assert.ok(servicesJsx.includes("import SlotText3D from './SlotText3D'"), 'ServicesSection must import SlotText3D')

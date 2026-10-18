@@ -1,5 +1,3 @@
-import { useEffect, useRef, useCallback } from 'react'
-import { motion, useAnimationControls } from 'framer-motion'
 import './SlotText3D.css'
 
 export default function SlotText3D({
@@ -10,70 +8,6 @@ export default function SlotText3D({
   staggerDelay = 0.016,
   duration = 0.38,
 }) {
-  const controls = useAnimationControls()
-  const isAnimating = useRef(false)
-  const isFirstRender = useRef(true)
-
-  const playFlip = useCallback(async () => {
-    if (isAnimating.current) return
-    isAnimating.current = true
-    try {
-      await controls.set('initial')
-      await controls.start('animate')
-    } catch {
-      // Safely catch any unmount animation cancel
-    } finally {
-      isAnimating.current = false
-    }
-  }, [controls])
-
-  // Trigger 3D tumble when the row is hovered
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
-    if (isHovered) {
-      playFlip()
-    }
-  }, [isHovered, playFlip])
-
-  const outgoingVariants = {
-    initial: {
-      y: '0em',
-      rotateX: 0,
-      opacity: 1,
-    },
-    animate: (i) => ({
-      y: '-0.22em',
-      rotateX: 90,
-      opacity: 0,
-      transition: {
-        duration,
-        ease: [0.16, 1, 0.3, 1],
-        delay: i * staggerDelay,
-      },
-    }),
-  }
-
-  const incomingVariants = {
-    initial: {
-      y: '0.22em',
-      rotateX: -90,
-      opacity: 0,
-    },
-    animate: (i) => ({
-      y: '0em',
-      rotateX: 0,
-      opacity: 1,
-      transition: {
-        duration,
-        ease: [0.16, 1, 0.3, 1],
-        delay: i * staggerDelay,
-      },
-    }),
-  }
-
   // Running character counter for smooth staggered cascade across words
   let globalCharIdx = 0
 
@@ -81,9 +15,16 @@ export default function SlotText3D({
     <span
       className={`slot-3d-text ${isActive ? 'slot-3d-text--active' : ''} ${className}`}
       aria-label={text}
+      style={{
+        '--stagger-delay': `${staggerDelay}s`,
+        '--duration': `${duration}s`,
+      }}
     >
       <span className="sr-only">{text}</span>
-      <span className="slot-3d-text__visual" aria-hidden="true">
+      <span
+        className={`slot-3d-text__visual ${isHovered ? 'slot-3d-text__visual--animating' : ''}`}
+        aria-hidden="true"
+      >
         {text.split(/(\s+)/).map((token, tIdx) => {
           if (!token) return null
           const isWhitespace = /^\s+$/.test(token)
@@ -100,28 +41,20 @@ export default function SlotText3D({
               {token.split('').map((char, cIdx) => {
                 const charIndex = globalCharIdx++
                 return (
-                  <span key={`char-${tIdx}-${cIdx}`} className="slot-3d-text__char-slot">
-                    {/* Outgoing face */}
-                    <motion.span
-                      className="slot-3d-text__face slot-3d-text__face--outgoing"
-                      custom={charIndex}
-                      variants={outgoingVariants}
-                      initial="initial"
-                      animate={controls}
-                    >
+                  <span
+                    key={`char-${tIdx}-${cIdx}`}
+                    className="slot-3d-text__char-slot"
+                    style={{ '--char-i': charIndex }}
+                  >
+                    {/* Outgoing face: tumbles out 90deg on X axis via GPU CSS keyframe */}
+                    <span className="slot-3d-text__face slot-3d-text__face--outgoing">
                       {char}
-                    </motion.span>
+                    </span>
 
-                    {/* Incoming face */}
-                    <motion.span
-                      className="slot-3d-text__face slot-3d-text__face--incoming"
-                      custom={charIndex}
-                      variants={incomingVariants}
-                      initial="initial"
-                      animate={controls}
-                    >
+                    {/* Incoming face: tumbles in from -90deg on X axis via GPU CSS keyframe */}
+                    <span className="slot-3d-text__face slot-3d-text__face--incoming">
                       {char}
-                    </motion.span>
+                    </span>
                   </span>
                 )
               })}
