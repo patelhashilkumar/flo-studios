@@ -174,8 +174,7 @@ export default function ServicesSection({
           <h1 className="services-hero__title">
             <span className="services-hero__title-line services-hero__title-line--nowrap">
               From idea to design to deployment to distribution,
-            </span>{' '}
-            <br className="services-hero__br" />
+            </span>
             <span className="services-hero__title-line">
               we take your vision all the way to market.
             </span>
@@ -305,6 +304,7 @@ export default function ServicesSection({
               <div className="schematic-pipeline-zone">
                 <LifecycleMotionGraphic
                   divisionId={activeDivision.id}
+                  stages={activeDivision.stages}
                   mode={overviewMode}
                   onModeChange={setOverviewMode}
                 />

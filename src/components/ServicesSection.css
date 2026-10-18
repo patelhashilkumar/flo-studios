@@ -53,28 +53,31 @@
 
 .services-hero__title {
   font-family: var(--font-serif, 'Instrument Serif', Georgia, serif);
-  font-size: clamp(2.5rem, 4.8vw, 5.15rem);
+  font-size: clamp(2.35rem, 4.4vw, 4.65rem);
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.02em;
   color: #0e0e12;
-  margin: 0 auto clamp(2rem, 3.5vw, 3rem);
-  max-width: 1480px;
+  margin: clamp(2.25rem, 3.8vw, 3.5rem) auto clamp(2.75rem, 4.8vw, 4.25rem);
+  max-width: 1540px;
+  width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .services-hero__title-line {
-  display: inline;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 @media (min-width: 820px) {
   .services-hero__title-line--nowrap {
     white-space: nowrap;
   }
-}
-
-.services-hero__br {
-  display: inline;
 }
 
 .services-hero__cta-wrap {
