@@ -413,15 +413,6 @@ export default function ServicesSection({
                         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                         className="teamwall-quote-card"
                       >
-                        <div className="teamwall-quote-card__top">
-                          <span className="teamwall-quote-card__tag">
-                            {currentStage.discipline || activeDivision.shortName}
-                          </span>
-                          <span className="teamwall-quote-card__no">
-                            No. <RollingNumber value={currentStage.number} />
-                          </span>
-                        </div>
-
                         <div className="teamwall-quote-card__body">
                           <p className="teamwall-quote-card__desc">
                             {`"${(currentStage.description || currentStage.desc || '').toUpperCase()}"`}
