@@ -5,7 +5,6 @@ import Hero from '../components/Hero'
 import WorkSection from '../components/WorkSection'
 import HomeServicesSpotlight from '../components/HomeServicesSpotlight'
 import CapabilitiesSection from '../components/CapabilitiesSection'
-import PurposeSection from '../components/PurposeSection'
 import NewsSection from '../components/NewsSection'
 
 // Lazy-load the heavy 3D canvas (Three.js / React Three Fiber) below the fold
@@ -32,7 +31,6 @@ export default function HomePage() {
       <Suspense fallback={<div style={{ minHeight: '380px', background: '#ffffff' }} />}>
         <WorkflowSection />
       </Suspense>
-      <PurposeSection />
       <NewsSection />
     </motion.main>
   )
