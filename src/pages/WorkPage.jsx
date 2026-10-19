@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SEO from '../components/SEO'
@@ -8,6 +9,14 @@ import './Pages.css'
 gsap.registerPlugin(ScrollTrigger)
 
 const FEATURED_PROJECTS = [
+  {
+    title: 'ABSTRUCT — Brand Identity',
+    desc: 'Monogram-led identity, visual system, and applications for a construction and infrastructure brand.',
+    tags: ['brand'],
+    image: '/work/abstruct/web/moodboard.jpg',
+    slug: 'abstruct',
+    href: '/work/abstruct',
+  },
   {
     title: 'Apple Product Motion',
     desc: 'Product visualization and dynamic 3D motion graphics.',
@@ -46,6 +55,7 @@ const FEATURED_PROJECTS = [
 ]
 
 const ALL_PROJECTS = [
+  { title: 'ABSTRUCT', tags: ['brand'], image: '/work/abstruct/web/billboard.jpg', href: '/work/abstruct' },
   { title: 'Apple Product Motion', tags: ['motion', 'product'], image: '/videos/apple-thumb.webp' },
   { title: 'Blitzit 2.0 Interface', tags: ['motion', 'product'], image: '/videos/blitzit-thumb.webp' },
   { title: 'SV Studio Showreel', tags: ['motion', 'brand'], image: '/videos/sv-thumb.webp' },
@@ -130,18 +140,20 @@ export default function WorkPage() {
       {/* Featured projects */}
       <section className="work-page__featured container">
         {FEATURED_PROJECTS.map((proj) => (
-          <div className="work-page__featured-card" key={proj.slug}>
+          <Link to={proj.href || '/work'} className="work-page__featured-card" key={proj.slug} style={{ color: 'inherit' }}>
             <div className="work-page__featured-media">
               <img src={proj.image} alt={`${proj.title} — Flo Studios case study`} loading="lazy" />
             </div>
             <div className="work-page__featured-info">
+              {proj.href && <p className="work-page__featured-kicker">Case study</p>}
               <h2 className="work-page__featured-title">{proj.title}</h2>
               <p className="work-page__featured-desc">{proj.desc}</p>
               <div className="work-page__featured-tags">
                 {(proj.tags || []).map((t) => <span key={t}>{t}</span>)}
               </div>
+              {proj.href && <span className="work-page__featured-cta">View case study →</span>}
             </div>
-          </div>
+          </Link>
         ))}
       </section>
 
@@ -149,7 +161,7 @@ export default function WorkPage() {
       <section className="work-page__grid-section container">
         <div className={`work-page__project-grid ${view === 'grid' ? 'work-page__project-grid--compact' : ''}`}>
           {filtered.map((proj, i) => (
-            <div className="work-page__project-card" key={i}>
+            <Link to={proj.href || '/work'} className="work-page__project-card" key={i} style={{ color: 'inherit' }}>
               <div className="work-page__project-media">
                 <img src={proj.image} alt={`${proj.title} — Flo Studios project`} loading="lazy" />
               </div>
@@ -157,7 +169,7 @@ export default function WorkPage() {
               <div className="work-page__project-tags">
                 {(proj.tags || []).map((t) => <span key={t}>{t}</span>)}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
