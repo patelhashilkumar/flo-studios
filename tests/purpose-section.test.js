@@ -33,7 +33,7 @@ test('1. PurposeSection JSX renders verbatim copy from prompt and image', () => 
   assert.match(jsx, /splitChars/, 'Should implement character splitting function for reveal animation')
 })
 
-test('2. PurposeSection CSS enforces Instrument.com styling, grey overline, and Manrope typography', () => {
+test('2. PurposeSection CSS enforces Instrument.com styling, grey overline, grey titles, and typography trio', () => {
   const css = fs.readFileSync(purposeCssPath, 'utf8')
 
   // Check grey overline styling
@@ -44,11 +44,19 @@ test('2. PurposeSection CSS enforces Instrument.com styling, grey overline, and 
   // Check hairline top border
   assert.match(css, /border-top:\s*1px solid/, 'Should include hairline border-top')
 
-  // Check font family is strictly Manrope and NEVER Panchang
-  assert.ok(!css.toLowerCase().includes('panchang'), 'CSS must never contain Panchang font')
-  assert.match(css, /var\(--font-manrope\)/, 'Should use Manrope typography')
+  // Check title color is grey matching image 2
+  assert.match(css, /color:\s*#b0b0b4/, 'Giant title text color should be grey (#b0b0b4)')
 
-  // Check 12-column grid layout for desktop
+  // Check font family trio: Instrument Serif (normal), Manrope (sans), Instrument Serif (italic)
+  assert.match(css, /\.purpose__title1[\s\S]*?Instrument Serif/, 'Title 1 should use Instrument Serif')
+  assert.match(css, /\.purpose__title2[\s\S]*?var\(--font-manrope\)/, 'Title 2 should use Manrope sans-serif')
+  assert.match(css, /\.purpose__title3[\s\S]*?Instrument Serif/, 'Title 3 should use Instrument Serif')
+  assert.match(css, /\.purpose__title3[\s\S]*?font-style:\s*italic/, 'Title 3 should be italic')
+
+  // Check CSS must never contain Panchang font
+  assert.ok(!css.toLowerCase().includes('panchang'), 'CSS must never contain Panchang font')
+
+  // Check 12-column grid layout for desktop matching Image 2
   assert.match(css, /grid-template-columns:\s*repeat\(12,\s*1fr\)/, 'Should implement 12-column grid')
   assert.match(css, /\.purpose__text1/, 'Should style .purpose__text1')
   assert.match(css, /\.purpose__text2/, 'Should style .purpose__text2')

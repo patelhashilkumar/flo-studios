@@ -37,15 +37,15 @@ export default function PurposeSection() {
     }
 
     const ctx = gsap.context(() => {
-      // Reveal each character in the massive title lines
+      // Reveal each character in the massive grey title lines
       gsap.fromTo(
         '.purpose__char',
-        { y: 22, opacity: 0.2 },
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.55,
-          stagger: 0.025,
+          duration: 0.6,
+          stagger: 0.02,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -58,14 +58,14 @@ export default function PurposeSection() {
       // Fade & slide in the editorial paragraphs and CTA button
       gsap.fromTo(
         '.purpose__reveal',
-        { y: 28, opacity: 0 },
+        { y: 24, opacity: 0 },
         {
           y: 0,
           opacity: 1,
           duration: 0.7,
-          stagger: 0.14,
+          stagger: 0.15,
           ease: 'power3.out',
-          delay: 0.15,
+          delay: 0.1,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 70%',
@@ -92,12 +92,12 @@ export default function PurposeSection() {
           Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We’re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World — And Keeps Refining Once It’s Out There.
         </p>
 
-        {/* Title 1: "Idea" (Row 1 right on desktop) */}
+        {/* Title 1: "Idea" (Instrument Serif, grey, Row 1 right on desktop) */}
         <div className="purpose__title purpose__title1" aria-label={LINE_1}>
           {splitChars(LINE_1)}
         </div>
 
-        {/* Title 2: "To" (Row 2 on desktop) */}
+        {/* Title 2: "To" (Manrope sans-serif, grey, Row 2 left on desktop) */}
         <div className="purpose__title purpose__title2" aria-label={LINE_2}>
           {splitChars(LINE_2)}
         </div>
@@ -120,7 +120,7 @@ export default function PurposeSection() {
           </div>
         </div>
 
-        {/* Title 3: "Outcome." (Row 3 right on desktop) */}
+        {/* Title 3: "Outcome." (Instrument Serif Italic, grey, Row 3 right on desktop) */}
         <div className="purpose__title purpose__title3" aria-label={LINE_3}>
           {splitChars(LINE_3)}
         </div>
