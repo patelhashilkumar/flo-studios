@@ -157,13 +157,14 @@
     align-items: start;
   }
 
-  /* Row 1: First paragraph (cols 1-5) and "Idea" (cols 6-12, right aligned) */
+  /* Row 1: First paragraph shifted a little right and "Idea" (cols 6-12, right aligned) */
   .purpose__text1 {
-    grid-column: 1 / span 5;
+    grid-column: 2 / span 5;
     grid-row: 1;
     align-self: start;
     max-width: 440px;
     padding-top: 0.5rem;
+    margin-left: clamp(1rem, 2vw, 2.5rem);
   }
 
   .purpose__title1 {
@@ -220,6 +221,10 @@
 
   .purpose__text {
     max-width: 580px;
+  }
+
+  .purpose__text1 {
+    margin-left: clamp(1.5rem, 4vw, 3rem);
   }
 }
 

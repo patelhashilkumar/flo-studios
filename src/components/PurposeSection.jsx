@@ -88,7 +88,7 @@ export default function PurposeSection() {
 
         {/* First editorial paragraph (Row 1 left on desktop) */}
         <p className="purpose__text purpose__text1 purpose__reveal">
-          Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We’re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World — And Keeps Refining Once It’s Out There.
+          Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We’re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World.
         </p>
 
         {/* Title 1: "Idea" (Instrument Serif, grey, Row 1 right on desktop) */}

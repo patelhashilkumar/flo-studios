@@ -17,9 +17,9 @@ test('1. PurposeSection JSX renders verbatim copy from prompt and image', () => 
   assert.match(jsx, /const LINE_2 = 'To'/, 'Should define Line 2 as To')
   assert.match(jsx, /const LINE_3 = 'Outcome\.'/, 'Should define Line 3 as Outcome.')
 
-  // Check First Paragraph verbatim copy
-  const firstPara = 'Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We’re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World — And Keeps Refining Once It’s Out There.'
-  assert.ok(jsx.includes(firstPara), 'Should contain exact First Paragraph verbatim copy')
+  // Check First Paragraph copy (trimmed per user request)
+  const firstPara = 'Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We’re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World.'
+  assert.ok(jsx.includes(firstPara), 'Should contain exact First Paragraph copy')
 
   // Check Second Paragraph verbatim copy
   const secondPara = 'That Means Owning Every Stage With The Same Team: The Instinct For What Holds Attention, The Clarity For Where You Actually Stand, The Craft To Execute Across Disciplines, And The Ownership To Stay Until It Performs. We Measure Success By What Ships And What Grows, Not By What Gets Delivered And Left Behind.'
