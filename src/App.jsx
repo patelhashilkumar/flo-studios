@@ -36,6 +36,7 @@ function lazyWithRetry(componentImport) {
 
 const WorkPage = lazyWithRetry(() => import('./pages/WorkPage'))
 const AboutPage = lazyWithRetry(() => import('./pages/AboutPage'))
+const AbstructCaseStudy = lazyWithRetry(() => import('./pages/AbstructCaseStudy'))
 const ServicesPage = lazyWithRetry(() => import('./pages/ServicesPage'))
 const LatestPage = lazyWithRetry(() => import('./pages/LatestPage'))
 const ContactPage = lazyWithRetry(() => import('./pages/ContactPage'))
@@ -66,6 +67,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/work" element={<WorkPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/work/abstruct" element={<AbstructCaseStudy />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/latest" element={<LatestPage />} />
               <Route path="/careers" element={<CareersPage />} />
