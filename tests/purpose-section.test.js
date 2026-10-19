@@ -31,6 +31,9 @@ test('1. PurposeSection JSX renders verbatim copy from prompt and image', () => 
 
   // Check character splitting for GSAP ScrollTrigger reveal
   assert.match(jsx, /splitChars/, 'Should implement character splitting function for reveal animation')
+
+  // Check redundant h3 is not rendered
+  assert.ok(!jsx.includes('visually-hidden'), 'Should not render redundant unstyled h3')
 })
 
 test('2. PurposeSection CSS enforces Instrument.com styling, grey overline, grey titles, and typography trio', () => {

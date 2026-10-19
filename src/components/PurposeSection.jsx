@@ -85,7 +85,6 @@ export default function PurposeSection() {
       </div>
 
       <div className="purpose">
-        <h3 className="visually-hidden">Idea To Outcome.</h3>
 
         {/* First editorial paragraph (Row 1 left on desktop) */}
         <p className="purpose__text purpose__text1 purpose__reveal">
