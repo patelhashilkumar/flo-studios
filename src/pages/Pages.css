@@ -787,3 +787,6 @@
   .work-page__project-grid--compact { grid-template-columns: 1fr; }
   .latest-page__grid { grid-template-columns: 1fr; }
 }
+
+.work-page__featured-kicker { margin: 0 0 0.75rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; }
+.work-page__featured-cta { display: inline-block; margin-top: 1.25rem; font-size: 0.85rem; font-weight: 600; }

@@ -8,6 +8,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 const WORK_ITEMS = [
   {
+    title: 'ABSTRUCT',
+    slug: 'abstruct',
+    href: '/work/abstruct',
+    tags: ['brand'],
+    image: '/work/abstruct/web/moodboard.jpg',
+    metric: 'Construction Identity',
+  },
+  {
     title: 'Apple Product Motion',
     slug: 'apple-motion',
     tags: ['motion', 'product'],
@@ -134,7 +142,7 @@ function WorkCard({ item }) {
 
   return (
     <Link
-      to="/work"
+      to={item.href || '/work'}
       className="work-card"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
