@@ -1,58 +1,226 @@
+/* ==========================================
+   OUR PURPOSE SECTION — REPLICATING INSTRUMENT.COM
+   ========================================== */
+
+.purpose-wrapper {
+  position: relative;
+  width: 100%;
+  background: var(--color-bg, #ffffff);
+  padding: 0 0 clamp(4rem, 8vw, 8rem) 0;
+  overflow: hidden;
+}
+
+/* Grey Overline Header with Top Hairline Border */
+.purpose__header {
+  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+  border-bottom: none;
+  padding-top: 12px;
+  margin: 0 auto clamp(2.5rem, 5vw, 4.5rem);
+  max-width: var(--container-max, 1400px);
+  padding-left: var(--container-padding, clamp(1.25rem, 4vw, 3rem));
+  padding-right: var(--container-padding, clamp(1.25rem, 4vw, 3rem));
+  box-sizing: border-box;
+}
+
+.purpose__header .t-overline-1 {
+  color: #76767a;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Inner 12-Column Asymmetrical Grid Container */
 .purpose {
-  padding: var(--space-section) 0;
-}
-
-.purpose__giant {
+  max-width: var(--container-max, 1400px);
+  margin: 0 auto;
+  padding-left: var(--container-padding, clamp(1.25rem, 4vw, 3rem));
+  padding-right: var(--container-padding, clamp(1.25rem, 4vw, 3rem));
+  box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0 0.25em;
-  margin-bottom: 3rem;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.purpose__giant-word {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 9vw, 8rem);
+/* Giant Display Titles */
+.purpose__title {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(3rem, 8.5vw, 8.5rem);
   font-weight: 500;
   letter-spacing: -0.04em;
-  line-height: 1.05;
-  color: var(--color-text);
+  line-height: 0.88;
+  color: var(--color-text, #000000);
+  margin: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.purpose__char {
+  display: inline-block;
   will-change: transform, opacity;
+  opacity: 0.2;
 }
 
-.purpose__body {
-  max-width: 600px;
-  margin-left: auto;
+/* Editorial Body Text */
+.purpose__text {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1rem, 1.15vw, 1.18rem);
+  line-height: 1.65;
+  color: #444448;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
-.purpose__body p {
-  font-size: var(--fs-body-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: 1.25rem;
+.purpose__text2 p {
+  margin: 0 0 1.75rem 0;
 }
 
-.purpose__cta {
+/* Pill CTA Button (Instrument.com Style) */
+.purpose__cta-wrapper {
+  display: block;
+  margin-top: 1.75rem;
+}
+
+.purpose__cta-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: var(--fs-small);
-  font-weight: 500;
-  color: var(--color-text);
-  margin-top: 0.75rem;
-  padding: 12px 24px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  gap: 12px;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   background: transparent;
-  transition: all 0.35s var(--ease-out);
+  color: #000000;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
-.purpose__cta:hover {
+.purpose__cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.purpose__cta-btn:hover {
   background: #000000;
   color: #ffffff;
   border-color: #000000;
-  opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .purpose__body { margin-left: 0; max-width: 100%; }
+.purpose__cta-btn:hover .purpose__cta-icon {
+  transform: translateX(4px);
+}
+
+/* ==========================================
+   DESKTOP ASYMMETRICAL 12-COLUMN GRID (>= 1024px)
+   ========================================== */
+@media (min-width: 1024px) {
+  .purpose {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: clamp(1.5rem, 2.5vw, 3rem);
+    row-gap: clamp(2.5rem, 4vw, 4.5rem);
+    align-items: end;
+  }
+
+  /* Row 1: Text 1 (left) + Title 1 "Idea" (right) */
+  .purpose__text1 {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+    align-self: start;
+    max-width: 460px;
+    padding-top: 0.5rem;
+  }
+
+  .purpose__title1 {
+    grid-column: 6 / span 7;
+    grid-row: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  /* Row 2: Title 2 "To" (left/center) */
+  .purpose__title2 {
+    grid-column: 1 / span 12;
+    grid-row: 2;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  /* Row 3: Text 2 + CTA (left) + Title 3 "Outcome." (right) */
+  .purpose__text2 {
+    grid-column: 1 / span 5;
+    grid-row: 3;
+    align-self: end;
+    max-width: 480px;
+    padding-bottom: 0.5rem;
+  }
+
+  .purpose__title3 {
+    grid-column: 6 / span 7;
+    grid-row: 3;
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+/* Tablet Layout (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .purpose {
+    gap: 2.25rem;
+  }
+
+  .purpose__title1 {
+    text-align: right;
+  }
+
+  .purpose__title2 {
+    text-align: left;
+  }
+
+  .purpose__title3 {
+    text-align: right;
+  }
+
+  .purpose__text {
+    max-width: 600px;
+  }
+}
+
+/* Mobile Layout (< 768px) */
+@media (max-width: 767px) {
+  .purpose {
+    gap: 1.5rem;
+  }
+
+  .purpose__title {
+    font-size: clamp(2.8rem, 13vw, 4.5rem);
+    line-height: 0.95;
+    white-space: normal;
+  }
+
+  .purpose__title1,
+  .purpose__title2,
+  .purpose__title3 {
+    text-align: left;
+  }
+
+  .purpose__text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .purpose__cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

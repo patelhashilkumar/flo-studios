@@ -6,55 +6,123 @@ import './PurposeSection.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const BIG_WORDS = ['Idea', 'To', 'Outcome.']
+const LINE_1 = 'Idea'
+const LINE_2 = 'To'
+const LINE_3 = 'Outcome.'
+
+const splitChars = (text) =>
+  text.split('').map((char, index) => (
+    <span
+      key={`${char}-${index}`}
+      className="purpose__char"
+      aria-hidden="true"
+    >
+      {char === ' ' ? '\u00A0' : char}
+    </span>
+  ))
 
 export default function PurposeSection() {
   const sectionRef = useRef(null)
 
   useEffect(() => {
+    if (!sectionRef.current) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      gsap.set(sectionRef.current.querySelectorAll('.purpose__char, .purpose__reveal'), {
+        opacity: 1,
+        y: 0,
+      })
+      return
+    }
+
     const ctx = gsap.context(() => {
-      // Giant text parallax
+      // Reveal each character in the massive title lines
       gsap.fromTo(
-        '.purpose__giant-word',
-        { y: 60, opacity: 0 },
+        '.purpose__char',
+        { y: 22, opacity: 0.2 },
         {
-          y: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power3.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          stagger: 0.025,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+            once: true,
+          },
         }
       )
 
-      // Body text
+      // Fade & slide in the editorial paragraphs and CTA button
       gsap.fromTo(
-        '.purpose__body',
-        { y: 40, opacity: 0 },
+        '.purpose__reveal',
+        { y: 28, opacity: 0 },
         {
-          y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.3,
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.14,
+          ease: 'power3.out',
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 70%',
+            once: true,
+          },
         }
       )
     }, sectionRef)
+
     return () => ctx.revert()
   }, [])
 
   return (
-    <section className="purpose" id="about-us" ref={sectionRef} aria-label="About Flo Studios">
-      <div className="container">
-        <div className="purpose__giant">
-          {BIG_WORDS.map((word, i) => (
-            <span key={i} className="purpose__giant-word">{word}</span>
-          ))}
+    <section className="purpose-wrapper" id="about-us" ref={sectionRef} aria-label="Our Purpose">
+      <div className="section-header section-header--below purpose__header">
+        <h2 className="t-overline-1">Our Purpose</h2>
+      </div>
+
+      <div className="purpose">
+        <h3 className="visually-hidden">Idea To Outcome.</h3>
+
+        {/* First editorial paragraph (Row 1 left on desktop) */}
+        <p className="purpose__text purpose__text1 purpose__reveal">
+          Most Good Ideas Die In The Space Between Vision And Execution. We Built Flo To Close That Gap. Whether We’re Growing A Channel Or Building A Product, The Same Team Stays With The Work From The First Idea To The Moment It Lives In The World — And Keeps Refining Once It’s Out There.
+        </p>
+
+        {/* Title 1: "Idea" (Row 1 right on desktop) */}
+        <div className="purpose__title purpose__title1" aria-label={LINE_1}>
+          {splitChars(LINE_1)}
         </div>
 
-        <div className="purpose__body">
+        {/* Title 2: "To" (Row 2 on desktop) */}
+        <div className="purpose__title purpose__title2" aria-label={LINE_2}>
+          {splitChars(LINE_2)}
+        </div>
+
+        {/* Second editorial paragraph + CTA (Row 3 left on desktop) */}
+        <div className="purpose__text purpose__text2 purpose__reveal">
           <p>
-            Great ideas fail in the space between vision and execution. We built Flo Studios to close that gap—helping venture-backed founders and creators translate vision into execution, carrying every product and media engine from initial concept to market scale without single-stage handoffs.
+            That Means Owning Every Stage With The Same Team: The Instinct For What Holds Attention, The Clarity For Where You Actually Stand, The Craft To Execute Across Disciplines, And The Ownership To Stay Until It Performs. We Measure Success By What Ships And What Grows, Not By What Gets Delivered And Left Behind.
           </p>
-          <Link to="/about" className="purpose__cta" aria-label="Learn more about Flo Studios">
-            Learn more about our studio
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </Link>
+          <div className="purpose__cta-wrapper">
+            <Link to="/about" className="purpose__cta-btn" aria-label="Learn more about our studio">
+              <span className="purpose__cta-label">Learn more about our studio</span>
+              <span className="purpose__cta-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Title 3: "Outcome." (Row 3 right on desktop) */}
+        <div className="purpose__title purpose__title3" aria-label={LINE_3}>
+          {splitChars(LINE_3)}
         </div>
       </div>
     </section>
