@@ -1,14 +1,17 @@
 /**
  * ═════════════════════════════════════════════════════════════════
- * FLO STUDIOS — EDITORIAL DISPATCHES & ARTICLES DATA MODULE
- * Structured blog articles and press dispatches matching Instrument.com
+ * FLO STUDIOS — EDITORIAL DISPATCHES & ESSAYS DATA MODULE
+ * Authentic studio blogs with pure internal editorial styling (zero external Instrument images)
  * ═════════════════════════════════════════════════════════════════
  */
 
 export const BLOG_POSTS = [
   {
     id: 'blog-1',
+    number: '01',
+    orderNumber: 1,
     slug: 'every-handoff-is-a-leak',
+    aliases: ['blog-1', 'the-handoff-trap'],
     title: 'Every Handoff Is a Leak: Why the Transaction Model Dilutes Great Ideas',
     displayTitle: 'Every Handoff Is a Leak',
     titleLead: 'Every Handoff Is',
@@ -18,8 +21,6 @@ export const BLOG_POSTS = [
     category: 'Product Strategy & Philosophy',
     author: 'Flo Studios Editorial',
     publishedDate: 'October 2026',
-    coverImage: 'https://a-us.storyblok.com/f/1004432/1080x1080/4951b14198/thumb_instrument_beyondthebrief.jpg/m/',
-    heroImage: 'https://a-us.storyblok.com/f/1004432/1920x1080/890e3114b9/instrument_taste-is-the-new-advantage_2.jpg/m/',
     excerpt:
       "There is a particular kind of frustration that every founder and creator knows intimately: the product ships and something feels hollow. Why fragmented work quietly kills vision at every seam.",
     summaryQuote:
@@ -117,6 +118,79 @@ export const BLOG_POSTS = [
           '“A project doesn’t fail at the handoff. It fails at every small moment where the person holding it didn’t have the full picture, and had no way of getting it.”'
       }
     ]
+  },
+  {
+    id: 'blog-2',
+    number: '02',
+    orderNumber: 2,
+    slug: 'taste-is-the-new-skill',
+    aliases: ['blog-2', 'taste-new-skill'],
+    title: 'Taste is the New Skill',
+    displayTitle: 'Taste is the New Skill',
+    titleLead: 'Taste is the',
+    titleHighlight: 'New Skill.',
+    type: 'article',
+    readTime: '5 minutes',
+    category: 'Design & Engineering Craft',
+    author: 'Flo Studios Editorial',
+    publishedDate: 'October 2026',
+    excerpt:
+      "When the cost of producing something drops to near zero, the market gets flooded with adequate work. In a world of automated output, perspective and discernment become the greatest differentiators.",
+    summaryQuote:
+      '“Taste has always mattered. It just wasn\'t the bottleneck. Now it is.”',
+    content: [
+      {
+        type: 'intro',
+        paragraphs: [
+          "In times where an individual thinks about a product within an hour and makes the final build with just a few sentences the following day, informs us that execution isn’t the golden standard anymore. The barriers that are being broken down with the help of AI, around building products that too in a very short period of time is disregarding the value that “unfiltered output” upholds, but at the same time what has become dramatically valuable is the ability to have a reliable judgment when you need to make a decision, and knowing why it is reliable.",
+          "And that leads us to the break point that the most meager resource in a process of building something now is nothing else but the perspective with which you approach the build."
+        ]
+      },
+      {
+        type: 'section',
+        heading: 'How Taste became so essential',
+        paragraphs: [
+          "This reality has given rise to the tech industry’s new favorite buzzword: taste. But unlike most buzzwords, this one actually points at something real. Taste isn’t about having an eye for aesthetics or knowing which fonts pair well together. It is the ability to sit in front of something — a product, a piece of content, a pitch — and know almost immediately whether it is honest to what it is trying to be. It is pattern recognition built from years of consuming deeply and producing critically. And crucially, it is the thing that tells you not just what to build next, but what to stop building right now.",
+          "The reason it has become so essential is straightforward: when the cost of producing something drops to near zero, the market gets flooded. Not with bad work but with adequate work which can be replicated all the time. These products are technically sound, reasonably polished, and also completely indistinct. And in a sea of adequate, the only thing that cuts through is something that has a genuine point of view baked into every decision that shaped it. That point of view is taste in action."
+        ],
+        pullQuote:
+          '“Taste is not what you add. It is what you remove — knowing what to cut, when to stop, and what the work actually needs versus what it could theoretically tolerate.” — Nuwadan, Designer @Flo'
+      },
+      {
+        type: 'section',
+        heading: 'How Flo practices taste in their work',
+        paragraphs: [
+          "Taste for us isn’t a value we put on a deck, it is the standard we hold every piece of work to before it leaves our hands. Across both our Creator and Development divisions, it shows up in a few consistent ways."
+        ]
+      },
+      {
+        type: 'section',
+        heading: 'Being innovative in what we create',
+        paragraphs: [
+          "Discernment begins before we make anything. Every brief, every concept, every creative direction starts with the same pressure: is this actually original, or is this just the most obvious version of the answer? Because the most obvious version is exactly what AI will give you without being asked. Our job is to reach past that.",
+          "Whether we’re building a content strategy for a creator or architecting the experience of a new digital product, we’re looking for the idea that a competitor can’t easily reverse-engineer, the one that comes from a specific understanding of the audience, the brand, the moment, and as well as have a reason behind it. Nobody remembers the generic version of anything. It takes a genuine creative conviction to build something that feels specific, surprising, and entirely its own."
+        ]
+      },
+      {
+        type: 'section',
+        heading: 'Holding the standard under pressure',
+        paragraphs: [
+          "Speed is a real constraint. Clients have deadlines, creators have posting schedules, and development cycles have milestones. Taste gets tested hardest in those moments when the adequate version is ready and the right version needs one more pass. What we’ve learned is that the teams who consistently produce work that stands out are the ones who treat that final judgment not as a luxury but as a nonnegotiable step in the process.",
+          "The question is never just “is it done?” It’s “does it actually deserve to exist?”"
+        ]
+      },
+      {
+        type: 'section',
+        heading: 'The uncomfortable truth about building taste',
+        paragraphs: [
+          "It doesn’t come fast, and it doesn’t come from tools. It comes from the discipline of paying close attention to the work you admire, to the work you make, and especially to the gap between the two. It requires you to articulate why something works, not just that it does. It requires honest feedback, from people who care enough to tell you when something isn’t there yet. And it requires the willingness to slow down at the exact moment when everything around you is optimizing for speed.",
+          "That last part is what makes it rare. In an environment that rewards output, developing taste asks you to occasionally prioritize judgment over momentum. Most people won’t do it. The ones who do are building something that becomes genuinely difficult to compete with — because you can copy a workflow, you can copy a format, but you cannot copy the years of calibrated attention that produced someone’s instinct for what is worth making.",
+          "The professionals who will define the next decade of media and technology are not the ones who can use the most tools. They are the ones who have the clearest sense of what's worth making and the conviction to pursue it, even when the path of least resistance goes somewhere else."
+        ],
+        pullQuote:
+          '“Taste has always mattered. It just wasn\'t the bottleneck. Now it is.”'
+      }
+    ]
   }
 ]
 
@@ -126,9 +200,21 @@ export function getAllBlogs() {
 
 export function getBlogBySlug(slug) {
   if (!slug) return null
-  return BLOG_POSTS.find((b) => b.slug.toLowerCase() === slug.toLowerCase()) || null
+  const clean = slug.toLowerCase()
+  return (
+    BLOG_POSTS.find(
+      (b) =>
+        b.slug.toLowerCase() === clean ||
+        b.id.toLowerCase() === clean ||
+        (b.aliases && b.aliases.some((a) => a.toLowerCase() === clean))
+    ) || null
+  )
 }
 
 export function getRelatedBlogs(currentSlug, limit = 3) {
-  return BLOG_POSTS.filter((b) => b.slug.toLowerCase() !== (currentSlug || '').toLowerCase()).slice(0, limit)
+  const current = getBlogBySlug(currentSlug)
+  const currentId = current ? current.id : currentSlug
+  return BLOG_POSTS.filter(
+    (b) => b.id !== currentId && b.slug !== currentSlug
+  ).slice(0, limit)
 }

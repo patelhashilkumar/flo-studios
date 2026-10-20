@@ -16,11 +16,10 @@ export default function ArticlePage() {
   const post = useMemo(() => getBlogBySlug(slug), [slug])
   const related = useMemo(() => {
     const list = getRelatedBlogs(slug, 3)
-    if (list.length >= 3) return list
-    // Fallback if not enough blogs yet: show other known items
+    if (list.length > 0) return list
     const all = getAllBlogs()
-    return all.filter((b) => b.slug !== slug).slice(0, 3)
-  }, [slug])
+    return all.filter((b) => b.slug !== slug && b.id !== post?.id).slice(0, 3)
+  }, [slug, post])
 
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -43,7 +42,6 @@ export default function ArticlePage() {
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    image: post.coverImage,
     datePublished: '2026-10-15T00:00:00Z',
     author: {
       '@type': 'Organization',
@@ -73,7 +71,6 @@ export default function ArticlePage() {
         title={`${post.title} — Flo Studios`}
         description={post.excerpt}
         canonicalUrl={`https://www.flostudio.co/latest/${post.slug}`}
-        ogImage={post.coverImage}
         structuredData={articleSchema}
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
@@ -99,9 +96,14 @@ export default function ArticlePage() {
 
         {/* Article Header */}
         <header className="article-page__header">
-          {post.category && (
-            <span className="article-page__category-badge">{post.category}</span>
-          )}
+          <div className="article-page__header-topline">
+            {post.number && (
+              <span className="article-page__number-pill">BLOG {post.number}</span>
+            )}
+            {post.category && (
+              <span className="article-page__category-badge">{post.category}</span>
+            )}
+          </div>
 
           <h1 className="article-page__title">
             {post.titleLead ? (
@@ -130,17 +132,6 @@ export default function ArticlePage() {
             )}
           </div>
         </header>
-
-        {/* Hero Cover Media */}
-        {post.heroImage && (
-          <div className="article-page__hero-media">
-            <img
-              src={post.heroImage}
-              alt={post.title}
-              loading="eager"
-            />
-          </div>
-        )}
 
         {/* Editorial Body Content */}
         <div className="article-page__reading-container">
@@ -237,7 +228,7 @@ export default function ArticlePage() {
         {related.length > 0 && (
           <section className="article-page__related">
             <div className="article-page__related-header">
-              <h2 className="article-page__related-title">Related Dispatches</h2>
+              <h2 className="article-page__related-title">More Dispatches</h2>
               <Link to="/latest" className="article-page__related-all-link">
                 View all articles →
               </Link>
@@ -249,8 +240,13 @@ export default function ArticlePage() {
                   to={`/latest/${item.slug}`}
                   className="article-page__related-card"
                 >
-                  <div className="article-page__related-card-media">
-                    <img src={item.coverImage} alt={item.title} loading="lazy" />
+                  <div className="article-page__related-card-tile">
+                    <span className="article-page__related-card-num">
+                      {item.number ? `BLOG ${item.number}` : 'DISPATCH'}
+                    </span>
+                    <span className="article-page__related-card-brand">
+                      FLO STUDIOS
+                    </span>
                   </div>
                   <div className="article-page__related-card-meta">
                     <span>{item.type}</span>
