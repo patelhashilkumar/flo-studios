@@ -106,3 +106,15 @@ test('3. LatestPage and NewsSection enforce 4-column desktop layout (4 cards per
   const newsCss = fs.readFileSync(path.resolve('src/components/NewsSection.css'), 'utf8')
   assert.match(newsCss, /\.news-section__grid\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*1fr\)/s, 'NewsSection.css must declare 4-column grid for .news-section__grid')
 })
+
+test('4. All 8 blogs define concise cardTitle, cardCategory, and cardExcerpt for clean card rendering', () => {
+  const blogs = getAllBlogs()
+  assert.equal(blogs.length, 8)
+  for (const b of blogs) {
+    assert.ok(b.cardTitle, `Blog ${b.number} must have cardTitle`)
+    assert.ok(b.cardCategory, `Blog ${b.number} must have cardCategory`)
+    assert.ok(b.cardExcerpt, `Blog ${b.number} must have cardExcerpt`)
+    assert.ok(b.cardTitle.length <= 40, `Blog ${b.number} cardTitle should be concise (<= 40 chars)`)
+    assert.ok(b.cardExcerpt.length <= 80, `Blog ${b.number} cardExcerpt should be concise (<= 80 chars)`)
+  }
+})

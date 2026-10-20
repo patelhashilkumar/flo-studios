@@ -84,7 +84,7 @@ export default function NewsSection() {
                   <span className="news-card__time">{item.readTime}</span>
                 )}
               </div>
-              <h3 className="news-card__title">{item.title}</h3>
+              <h3 className="news-card__title">{item.cardTitle || item.displayTitle || item.title}</h3>
             </Link>
           ))}
         </div>
