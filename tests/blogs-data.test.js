@@ -7,7 +7,7 @@ import { getAllBlogs, getBlogBySlug } from '../src/data/blogsData.js'
 test('1. blogsData exports structured editorial articles', () => {
   const blogs = getAllBlogs()
   assert.ok(Array.isArray(blogs), 'getAllBlogs should return an array')
-  assert.ok(blogs.length >= 3, 'Should contain at least 3 blogs')
+  assert.ok(blogs.length >= 4, 'Should contain at least 4 blogs')
 
   // Blog 1 checks: Nobody Owns the Outcome
   const blog1 = getBlogBySlug('nobody-owns-the-outcome')
@@ -40,6 +40,14 @@ test('1. blogsData exports structured editorial articles', () => {
   assert.equal(blog3.number, '03')
   assert.match(blog3.title, /The Smarter the Tool/)
   assert.match(blog3.summaryQuote, /The cost of vagueness has always been real/)
+
+  // Blog 4 checks: Why Most Products Die in the Gap Between Launch and Traction
+  const blog4 = getBlogBySlug('why-most-products-die-between-launch-and-traction')
+  assert.ok(blog4, 'Should find blog-4 by slug')
+  assert.equal(blog4.number, '04')
+  assert.equal(blog4.title, 'Why Most Products Die in the Gap Between Launch and Traction')
+  assert.match(blog4.excerpt, /most dangerous phase of any digital product/)
+  assert.match(blog4.summaryQuote, /Launch is an event\. Traction is an ongoing calibration/)
 
   // Verify zero external Storyblok images in blogsData.js
   const blogsDataRaw = fs.readFileSync(path.resolve('src/data/blogsData.js'), 'utf8')
