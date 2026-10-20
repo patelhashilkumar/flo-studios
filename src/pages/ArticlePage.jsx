@@ -83,54 +83,26 @@ export default function ArticlePage() {
       <motion.div className="article-progress-bar" style={{ scaleX }} />
 
       <article className="article-page__container">
-        {/* Breadcrumb Navigation */}
-        <nav className="article-page__breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">Home</Link>
-          <span className="article-page__breadcrumb-separator">/</span>
-          <Link to="/latest">Latest</Link>
-          <span className="article-page__breadcrumb-separator">/</span>
-          <span className="article-page__breadcrumb-current" aria-current="page">
-            {post.displayTitle || post.title}
-          </span>
-        </nav>
-
-        {/* Article Header */}
+        {/* Article Header (matches Instrument.com editorial hero) */}
         <header className="article-page__header">
-          <div className="article-page__header-topline">
-            {post.number && (
-              <span className="article-page__number-pill">BLOG {post.number}</span>
-            )}
-            {post.category && (
-              <span className="article-page__category-badge">{post.category}</span>
-            )}
-          </div>
-
           <h1 className="article-page__title">
-            {post.titleLead ? (
-              <>
-                {post.titleLead} <em>{post.titleHighlight}</em>
-              </>
-            ) : (
-              post.title
-            )}
+            {post.displayTitle || post.title}
           </h1>
 
           {post.subtitle && (
             <p className="article-page__subtitle">{post.subtitle}</p>
           )}
 
-          {/* Metadata Row */}
-          <div className="article-page__meta">
-            <span className="article-page__meta-author">Written by {post.author}</span>
-            <span className="article-page__meta-divider" />
-            <span className="article-page__meta-item">{post.readTime}</span>
-            {post.publishedDate && (
-              <>
-                <span className="article-page__meta-divider" />
-                <span className="article-page__meta-item">{post.publishedDate}</span>
-              </>
-            )}
-          </div>
+          {/* Breadcrumb Navigation below Title & Subtitle */}
+          <nav className="article-page__breadcrumb" aria-label="Breadcrumb">
+            <Link to="/">HOME</Link>
+            <span className="article-page__breadcrumb-separator">/</span>
+            <Link to="/latest">LATEST</Link>
+            <span className="article-page__breadcrumb-separator">/</span>
+            <span className="article-page__breadcrumb-current" aria-current="page">
+              {(post.cardTitle || post.displayTitle || post.title).toUpperCase()}
+            </span>
+          </nav>
         </header>
 
         {/* Editorial Body Content */}
