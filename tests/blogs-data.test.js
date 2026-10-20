@@ -7,7 +7,7 @@ import { getAllBlogs, getBlogBySlug } from '../src/data/blogsData.js'
 test('1. blogsData exports structured editorial articles', () => {
   const blogs = getAllBlogs()
   assert.ok(Array.isArray(blogs), 'getAllBlogs should return an array')
-  assert.ok(blogs.length >= 7, 'Should contain at least 7 blogs')
+  assert.equal(blogs.length, 8, 'Should contain exactly 8 blogs')
 
   // Blog 1 checks: Nobody Owns the Outcome
   const blog1 = getBlogBySlug('nobody-owns-the-outcome')
@@ -73,6 +73,14 @@ test('1. blogsData exports structured editorial articles', () => {
   assert.match(blog7.excerpt, /mistaking frequency for perspective leads to burnout/)
   assert.match(blog7.summaryQuote, /Audiences don’t subscribe to a publishing schedule/)
 
+  // Blog 8 checks: The Dual Engine: Why Modern Software Must Tell a Story and Media Must Be Engineered
+  const blog8 = getBlogBySlug('the-dual-engine-thesis')
+  assert.ok(blog8, 'Should find blog-8 by slug')
+  assert.equal(blog8.number, '08')
+  assert.match(blog8.title, /The Dual Engine/)
+  assert.match(blog8.excerpt, /software engineered as an architectural artifact, powered by media/)
+  assert.match(blog8.summaryQuote, /A great product without a point of view is an invisible utility/)
+
   // Verify zero external Storyblok images in blogsData.js
   const blogsDataRaw = fs.readFileSync(path.resolve('src/data/blogsData.js'), 'utf8')
   assert.ok(!blogsDataRaw.includes('storyblok.com'), 'blogsData must not contain storyblok.com URLs')
@@ -89,4 +97,12 @@ test('2. ArticlePage and route wiring exist in App.jsx and LatestPage.jsx', () =
 
   // Verify LatestPage contains zero Storyblok URLs
   assert.ok(!latestJsx.includes('storyblok.com'), 'LatestPage must not contain storyblok.com URLs')
+})
+
+test('3. LatestPage and NewsSection enforce 4-column desktop layout (4 cards per row for 8 total)', () => {
+  const pagesCss = fs.readFileSync(path.resolve('src/pages/Pages.css'), 'utf8')
+  assert.match(pagesCss, /\.latest-page__grid\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*1fr\)/s, 'Pages.css must declare 4-column grid for .latest-page__grid')
+
+  const newsCss = fs.readFileSync(path.resolve('src/components/NewsSection.css'), 'utf8')
+  assert.match(newsCss, /\.news-section__grid\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*1fr\)/s, 'NewsSection.css must declare 4-column grid for .news-section__grid')
 })

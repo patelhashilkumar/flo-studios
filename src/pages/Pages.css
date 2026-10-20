@@ -262,8 +262,8 @@
 
 .latest-page__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem 1.5rem;
 }
 
 .latest-page__card {
@@ -282,11 +282,11 @@
   border-radius: var(--radius-md, 4px);
   background-color: #f5f5f7;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 1.75rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
 
@@ -303,7 +303,7 @@
 
 .latest-page__card-num {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #000000;
   letter-spacing: -0.01em;
@@ -353,7 +353,7 @@
 
 .latest-page__card-title {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-size: clamp(1.25rem, 1.5vw, 1.55rem);
   font-weight: 400;
   color: #000000;
   line-height: 1.25;
@@ -368,7 +368,7 @@
 
 .latest-page__card-excerpt {
   font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: #55555a;
   line-height: 1.6;
   margin: 0;
@@ -832,7 +832,7 @@
   .work-page__featured-card:nth-child(even) { direction: ltr; }
   .work-page__project-grid { grid-template-columns: repeat(2, 1fr); }
   .work-page__project-grid--compact { grid-template-columns: repeat(3, 1fr); }
-  .latest-page__grid { grid-template-columns: repeat(3, 1fr); }
+  .latest-page__grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.25rem; }
   .services-page__offering-cases { grid-template-columns: 1fr; }
 }
 
