@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import SEO from '../components/SEO'
+import { getAllBlogs } from '../data/blogsData'
 
 const pageV = {
   initial: { opacity: 0 },
@@ -9,7 +11,7 @@ const pageV = {
   exit: { opacity: 0, transition: { duration: 0.3 } },
 }
 
-const ARTICLES = [
+const PRESS_AND_ARCHIVE = [
   { type: 'press', title: 'Fast Company Innovation by Design Finalist', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/0ab7345c9d/fastco_ibd_2026_experimental_design.png/m/' },
   { type: 'press', title: 'Flo Studios Co-Founders on the Dual-Engine Studio Model', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/' },
   { type: 'article', time: '5 min', title: 'Building Without a Brief: Making with Pure Curiosity', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/4951b14198/thumb_instrument_beyondthebrief.jpg/m/' },
@@ -27,18 +29,43 @@ const ARTICLES = [
 export default function LatestPage() {
   const heroRef = useRef(null)
 
+  const editorialBlogs = getAllBlogs().map((b) => ({
+    id: b.id,
+    slug: b.slug,
+    title: b.title,
+    type: b.type,
+    time: b.readTime,
+    image: b.coverImage,
+    isInternal: true,
+  }))
+
+  const allArticles = [...editorialBlogs, ...PRESS_AND_ARCHIVE]
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.latest-page__hero-word', { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.05, duration: 0.7, ease: 'power3.out', delay: 0.2 })
-      gsap.fromTo('.latest-page__card', { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.06, duration: 0.6, ease: 'power3.out', delay: 0.5 })
+      gsap.fromTo(
+        '.latest-page__hero-word',
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.7, ease: 'power3.out', delay: 0.2 }
+      )
+      gsap.fromTo(
+        '.latest-page__card',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.06, duration: 0.6, ease: 'power3.out', delay: 0.5 }
+      )
     }, heroRef)
     return () => ctx.revert()
   }, [])
 
   return (
-    <motion.main className="latest-page" variants={pageV} initial="initial" animate="animate" exit="exit" ref={heroRef}>
+    <motion.main
+      className="latest-page"
+      variants={pageV}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      ref={heroRef}
+    >
       <SEO
         title="Latest Dispatches & Insights — Flo Studios"
         description="Perspectives, engineering research, and studio dispatches from Flo Studios on digital product architecture and creator media engines."
@@ -51,10 +78,15 @@ export default function LatestPage() {
 
       <section className="latest-page__hero">
         <div className="container">
-          <h1 className="latest-page__title" aria-label="Flo Studios Latest Dispatches: Perspectives, research, and studio dispatches.">
+          <h1
+            className="latest-page__title"
+            aria-label="Flo Studios Latest Dispatches: Perspectives, research, and studio dispatches."
+          >
             <span className="sr-only">Flo Studios Latest Dispatches — </span>
             {'Perspectives, research, and studio dispatches.'.split(' ').map((w, i) => (
-              <span key={i} className="latest-page__hero-word">{w}</span>
+              <span key={i} className="latest-page__hero-word">
+                {w}
+              </span>
             ))}
           </h1>
         </div>
@@ -64,18 +96,58 @@ export default function LatestPage() {
         <div className="container">
           <h2 className="sr-only">Articles & Studio Dispatches</h2>
           <div className="latest-page__grid">
-            {(ARTICLES || []).map((item, i) => (
-              <div className="latest-page__card" key={i}>
-                <div className="latest-page__card-media">
-                  <img src={item.image} alt={`${item.title} — Flo Studios dispatch`} loading="lazy" />
+            {allArticles.map((item, i) => {
+              const cardInner = (
+                <>
+                  <div className="latest-page__card-media">
+                    <img
+                      src={item.image}
+                      alt={`${item.title} — Flo Studios dispatch`}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="latest-page__card-meta">
+                    <span className="latest-page__card-type">{item.type}</span>
+                    {item.time && (
+                      <span className="latest-page__card-time">{item.time}</span>
+                    )}
+                  </div>
+                  <h3 className="latest-page__card-title">{item.title}</h3>
+                </>
+              )
+
+              if (item.isInternal && item.slug) {
+                return (
+                  <Link
+                    to={`/latest/${item.slug}`}
+                    className="latest-page__card"
+                    key={item.slug || i}
+                  >
+                    {cardInner}
+                  </Link>
+                )
+              }
+
+              if (item.href) {
+                return (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="latest-page__card"
+                    key={item.href || i}
+                  >
+                    {cardInner}
+                  </a>
+                )
+              }
+
+              return (
+                <div className="latest-page__card" key={i}>
+                  {cardInner}
                 </div>
-                <div className="latest-page__card-meta">
-                  <span className="latest-page__card-type">{item.type}</span>
-                  {item.time && <span className="latest-page__card-time">{item.time}</span>}
-                </div>
-                <h3 className="latest-page__card-title">{item.title}</h3>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

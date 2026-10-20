@@ -1,0 +1,440 @@
+/* =====================================================================
+   FLO STUDIOS — EDITORIAL ARTICLE PAGE STYLES
+   Inspired by Instrument.com's high-craft editorial typography & layout
+   ===================================================================== */
+
+.article-page {
+  position: relative;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  min-height: 100vh;
+  padding-top: calc(52px + clamp(2.5rem, 5vw, 4.5rem));
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+/* Reading Progress Bar */
+.article-progress-bar {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #000000;
+  transform-origin: 0%;
+  z-index: 1002;
+}
+
+/* Container */
+.article-page__container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-left: clamp(1.25rem, 4vw, 3rem);
+  padding-right: clamp(1.25rem, 4vw, 3rem);
+}
+
+.article-page__reading-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Breadcrumb */
+.article-page__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #76767a;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: -0.01em;
+}
+
+.article-page__breadcrumb a {
+  color: #76767a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.article-page__breadcrumb a:hover {
+  color: #000000;
+}
+
+.article-page__breadcrumb-separator {
+  color: #b0b0b4;
+  font-size: 0.75rem;
+}
+
+.article-page__breadcrumb-current {
+  color: #000000;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+/* Header & Titles */
+.article-page__header {
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.article-page__category-badge {
+  display: inline-block;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #76767a;
+  margin-bottom: 1rem;
+}
+
+.article-page__title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(2.5rem, 5.5vw, 4.75rem);
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: #000000;
+  margin: 0 0 clamp(1.25rem, 2.5vw, 2rem) 0;
+}
+
+.article-page__title em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.article-page__subtitle {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(1.125rem, 2vw, 1.4375rem);
+  line-height: 1.5;
+  font-weight: 400;
+  color: #55555a;
+  letter-spacing: -0.015em;
+  margin: 0 0 clamp(1.75rem, 3.5vw, 2.75rem) 0;
+  max-width: 900px;
+}
+
+/* Meta Bar */
+.article-page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.8125rem;
+  color: #76767a;
+}
+
+.article-page__meta-author {
+  font-weight: 600;
+  color: #000000;
+}
+
+.article-page__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.article-page__meta-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #b0b0b4;
+}
+
+/* Hero Media */
+.article-page__hero-media {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #f3f3f4;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.article-page__hero-media img {
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Body Content */
+.article-page__body {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
+  line-height: 1.75;
+  color: #262629;
+  letter-spacing: -0.01em;
+}
+
+.article-page__paragraph {
+  margin-bottom: 1.75rem;
+}
+
+.article-page__intro-lead {
+  font-size: clamp(1.2rem, 1.6vw, 1.375rem);
+  line-height: 1.65;
+  color: #000000;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+/* Section Headings */
+.article-page__section-heading {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: 1.15;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: -0.02em;
+  margin-top: clamp(3.5rem, 6vw, 4.5rem);
+  margin-bottom: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Pull Quotes */
+.article-page__pullquote {
+  margin: clamp(2.5rem, 5vw, 3.5rem) 0;
+  padding: 1.75rem 0 1.75rem 2rem;
+  border-left: 2px solid #000000;
+  background: transparent;
+}
+
+.article-page__pullquote blockquote {
+  margin: 0;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.5rem, 2.75vw, 2.125rem);
+  line-height: 1.25;
+  font-style: italic;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: -0.015em;
+}
+
+/* Stages List */
+.article-page__stages-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2.5rem 0 2rem 0;
+}
+
+.article-page__stage-card {
+  padding: 1.5rem;
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.article-page__stage-card:hover {
+  border-color: rgba(0, 0, 0, 0.16);
+  background-color: #f7f7f8;
+}
+
+.article-page__stage-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-page__stage-num {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #76767a;
+  letter-spacing: 0.04em;
+}
+
+.article-page__stage-title {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.article-page__stage-desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #55555a;
+  margin: 0;
+}
+
+/* Studio Callout CTA */
+.article-page__cta-box {
+  margin-top: clamp(4rem, 7vw, 5.5rem);
+  padding: clamp(2.5rem, 5vw, 3.5rem);
+  background-color: #0a0a0a;
+  color: #ffffff;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.article-page__cta-eyebrow {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem;
+}
+
+.article-page__cta-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+}
+
+.article-page__cta-desc {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 520px;
+  margin: 0 auto 2rem auto;
+}
+
+.article-page__cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+}
+
+.article-page__cta-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* Related Reading Section */
+.article-page__related {
+  margin-top: clamp(4.5rem, 8vw, 6.5rem);
+  padding-top: clamp(3rem, 5vw, 4rem);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.article-page__related-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2.5rem;
+}
+
+.article-page__related-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+}
+
+.article-page__related-all-link {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #76767a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.article-page__related-all-link:hover {
+  color: #000000;
+}
+
+.article-page__related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.article-page__related-card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-page__related-card-media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #f3f3f4;
+  margin-bottom: 1rem;
+}
+
+.article-page__related-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.article-page__related-card:hover .article-page__related-card-media img {
+  transform: scale(1.04);
+}
+
+.article-page__related-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #76767a;
+  margin-bottom: 0.5rem;
+}
+
+.article-page__related-card-title {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.article-page__related-card:hover .article-page__related-card-title {
+  color: #55555a;
+}
+
+@media (max-width: 900px) {
+  .article-page__related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .article-page__related-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
