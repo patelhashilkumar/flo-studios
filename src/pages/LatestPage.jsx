@@ -82,7 +82,7 @@ export default function LatestPage() {
                     <span className="latest-page__card-brand">FLO STUDIOS</span>
                   </div>
                   <div className="latest-page__card-tile-bottom">
-                    <span className="latest-page__card-category">{item.category}</span>
+                    <span className="latest-page__card-category">{item.cardCategory || item.category}</span>
                   </div>
                 </div>
 
@@ -92,8 +92,8 @@ export default function LatestPage() {
                   <span className="latest-page__card-time">{item.readTime}</span>
                 </div>
 
-                <h3 className="latest-page__card-title">{item.title}</h3>
-                <p className="latest-page__card-excerpt">{item.excerpt}</p>
+                <h3 className="latest-page__card-title">{item.cardTitle || item.displayTitle || item.title}</h3>
+                <p className="latest-page__card-excerpt">{item.cardExcerpt || item.excerpt}</p>
               </Link>
             ))}
           </div>
