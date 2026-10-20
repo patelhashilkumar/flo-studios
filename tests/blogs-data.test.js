@@ -7,13 +7,13 @@ import { getAllBlogs, getBlogBySlug } from '../src/data/blogsData.js'
 test('1. blogsData exports structured editorial articles', () => {
   const blogs = getAllBlogs()
   assert.ok(Array.isArray(blogs), 'getAllBlogs should return an array')
-  assert.ok(blogs.length >= 2, 'Should contain at least 2 blogs')
+  assert.ok(blogs.length >= 3, 'Should contain at least 3 blogs')
 
-  // Blog 1 checks
-  const blog1 = getBlogBySlug('every-handoff-is-a-leak')
+  // Blog 1 checks: Nobody Owns the Outcome
+  const blog1 = getBlogBySlug('nobody-owns-the-outcome')
   assert.ok(blog1, 'Should find blog-1 by slug')
+  assert.equal(blog1.title, 'Nobody Owns the Outcome: What gets lost every time a project changes hands')
   assert.equal(blog1.type, 'article')
-  assert.equal(blog1.author, 'Flo Studios Editorial')
   assert.match(blog1.summaryQuote, /A project doesn’t fail at the handoff/)
 
   // Verify the 8 stages exist in blog-1
@@ -23,7 +23,7 @@ test('1. blogsData exports structured editorial articles', () => {
   assert.equal(stageSection.stages[0].name, 'Product Planning')
   assert.equal(stageSection.stages[7].name, 'Post-launch Support & Maintenance')
 
-  // Blog 2 checks: "Taste is the New Skill"
+  // Blog 2 checks: Taste is the New Skill
   const blog2 = getBlogBySlug('taste-is-the-new-skill')
   assert.ok(blog2, 'Should find blog-2 by slug')
   assert.equal(blog2.title, 'Taste is the New Skill')
@@ -33,6 +33,13 @@ test('1. blogsData exports structured editorial articles', () => {
   // Verify Nuwadan quote exists in blog-2
   const pullQuoteSection = blog2.content.find((b) => b.pullQuote && b.pullQuote.includes('Nuwadan'))
   assert.ok(pullQuoteSection, 'Should contain designer quote from Nuwadan')
+
+  // Blog 3 checks: The Smarter the Tool, the More Expensive Your Vagueness Gets
+  const blog3 = getBlogBySlug('the-clarity-tax')
+  assert.ok(blog3, 'Should find blog-3 by slug')
+  assert.equal(blog3.number, '03')
+  assert.match(blog3.title, /The Smarter the Tool/)
+  assert.match(blog3.summaryQuote, /The cost of vagueness has always been real/)
 
   // Verify zero external Storyblok images in blogsData.js
   const blogsDataRaw = fs.readFileSync(path.resolve('src/data/blogsData.js'), 'utf8')
