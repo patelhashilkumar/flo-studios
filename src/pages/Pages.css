@@ -267,6 +267,10 @@
 }
 
 .latest-page__card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.4s var(--ease-out);
   cursor: pointer;
 }

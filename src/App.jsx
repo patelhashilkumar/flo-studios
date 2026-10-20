@@ -39,6 +39,7 @@ const AboutPage = lazyWithRetry(() => import('./pages/AboutPage'))
 const AbstructCaseStudy = lazyWithRetry(() => import('./pages/AbstructCaseStudy'))
 const ServicesPage = lazyWithRetry(() => import('./pages/ServicesPage'))
 const LatestPage = lazyWithRetry(() => import('./pages/LatestPage'))
+const ArticlePage = lazyWithRetry(() => import('./pages/ArticlePage'))
 const ContactPage = lazyWithRetry(() => import('./pages/ContactPage'))
 const CareersPage = lazyWithRetry(() => import('./pages/CareersPage'))
 const AdminPage = lazyWithRetry(() => import('./pages/AdminPage'))
@@ -70,6 +71,7 @@ export default function App() {
               <Route path="/work/abstruct" element={<AbstructCaseStudy />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/latest" element={<LatestPage />} />
+              <Route path="/latest/:slug" element={<ArticlePage />} />
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/admin" element={<AdminPage />} />
