@@ -262,8 +262,8 @@
 
 .latest-page__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
 }
 
 .latest-page__card {
@@ -277,25 +277,60 @@
 
 .latest-page__card:hover { transform: translateY(-4px); }
 
-.latest-page__card-media {
-  aspect-ratio: 1 / 1;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--color-bg-card);
-  margin-bottom: 0.75rem;
+.latest-page__card-tile {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md, 4px);
+  background-color: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
 
-.latest-page__card-media img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.5s var(--ease-out);
+.latest-page__card:hover .latest-page__card-tile {
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: #f0f0f2;
 }
 
-.latest-page__card:hover .latest-page__card-media img { transform: scale(1.04); }
+.latest-page__card-tile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.latest-page__card-num {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: -0.01em;
+}
+
+.latest-page__card-brand {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #76767a;
+}
+
+.latest-page__card-category {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #55555a;
+}
 
 .latest-page__card-meta {
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 0.4rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .latest-page__card-type {
@@ -303,7 +338,12 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-text-tertiary);
-  font-weight: 500;
+  font-weight: 600;
+}
+
+.latest-page__card-bullet {
+  font-size: var(--fs-xs);
+  color: #b0b0b4;
 }
 
 .latest-page__card-time {
@@ -312,10 +352,26 @@
 }
 
 .latest-page__card-title {
-  font-size: var(--fs-small);
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
   font-weight: 400;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
+  color: #000000;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.75rem 0;
+  transition: color 0.2s ease;
+}
+
+.latest-page__card:hover .latest-page__card-title {
+  color: #55555a;
+}
+
+.latest-page__card-excerpt {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.9375rem;
+  color: #55555a;
+  line-height: 1.6;
+  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

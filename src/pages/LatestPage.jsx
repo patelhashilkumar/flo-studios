@@ -11,35 +11,9 @@ const pageV = {
   exit: { opacity: 0, transition: { duration: 0.3 } },
 }
 
-const PRESS_AND_ARCHIVE = [
-  { type: 'press', title: 'Fast Company Innovation by Design Finalist', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/0ab7345c9d/fastco_ibd_2026_experimental_design.png/m/' },
-  { type: 'press', title: 'Flo Studios Co-Founders on the Dual-Engine Studio Model', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/80c987174f/instrument_cco_jackdecaluwe_littleblackbook_aug242026.png/m/' },
-  { type: 'article', time: '5 min', title: 'Building Without a Brief: Making with Pure Curiosity', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/4951b14198/thumb_instrument_beyondthebrief.jpg/m/' },
-  { type: 'article', time: '3 min', title: 'Taste as a Competitive Advantage in Digital Design', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/dbe87799c5/taste_thumb_instrument.png/m/' },
-  { type: 'press', title: 'Digiday: Rapid Brand Launch Case Study', image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/' },
-  { type: 'article', time: '5 min', title: 'Mentorship and the Next Generation of Designers', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/182321901f/emerging-talent-square-thumbnail-teaser.png/m/' },
-  { type: 'press', title: 'The Drum: Creative Direction Beyond Automation', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/d5014e4bd6/instrument_thedrum_cannes_hottake_2026.png/m/' },
-  { type: 'article', time: '5 min', title: 'The Next Frontier for AI is Human Trust', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/11e2a67206/ai_adoption_challenge_teaser.png/m/' },
-  { type: 'article', time: '5 min', title: 'The Agent Bottleneck in Modern Creative Workflows', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/abfa3181da/ai-agent-paradox-teaser-thumbnail.png/m/' },
-  { type: 'article', time: '5 min', title: 'Design to Code: Engineering High-Fidelity Interfaces', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/7fecf913ae/thumb1.png/m/' },
-  { type: 'article', time: '5 min', title: 'Dynamic Brand Systems Beyond Static Guidelines', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/425625caa0/thumb_mordernbrands.png/m/' },
-  { type: 'article', time: '5 min', title: 'Annual Studio Impact & Operations Report', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/94d63e40ef/2025treport_thumb.png/m/' },
-]
-
 export default function LatestPage() {
   const heroRef = useRef(null)
-
-  const editorialBlogs = getAllBlogs().map((b) => ({
-    id: b.id,
-    slug: b.slug,
-    title: b.title,
-    type: b.type,
-    time: b.readTime,
-    image: b.coverImage,
-    isInternal: true,
-  }))
-
-  const allArticles = [...editorialBlogs, ...PRESS_AND_ARCHIVE]
+  const blogs = getAllBlogs()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -51,7 +25,7 @@ export default function LatestPage() {
       gsap.fromTo(
         '.latest-page__card',
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.06, duration: 0.6, ease: 'power3.out', delay: 0.5 }
+        { y: 0, opacity: 1, stagger: 0.08, duration: 0.6, ease: 'power3.out', delay: 0.4 }
       )
     }, heroRef)
     return () => ctx.revert()
@@ -67,8 +41,8 @@ export default function LatestPage() {
       ref={heroRef}
     >
       <SEO
-        title="Latest Dispatches & Insights — Flo Studios"
-        description="Perspectives, engineering research, and studio dispatches from Flo Studios on digital product architecture and creator media engines."
+        title="Latest Dispatches & Essays — Flo Studios"
+        description="Perspectives, engineering research, and studio dispatches from Flo Studios on digital product architecture, craft, and creator media engines."
         canonicalUrl="https://www.flostudio.co/latest"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
@@ -96,58 +70,32 @@ export default function LatestPage() {
         <div className="container">
           <h2 className="sr-only">Articles & Studio Dispatches</h2>
           <div className="latest-page__grid">
-            {allArticles.map((item, i) => {
-              const cardInner = (
-                <>
-                  <div className="latest-page__card-media">
-                    <img
-                      src={item.image}
-                      alt={`${item.title} — Flo Studios dispatch`}
-                      loading="lazy"
-                    />
+            {blogs.map((item) => (
+              <Link
+                to={`/latest/${item.slug}`}
+                className="latest-page__card"
+                key={item.id || item.slug}
+              >
+                <div className="latest-page__card-tile">
+                  <div className="latest-page__card-tile-top">
+                    <span className="latest-page__card-num">BLOG {item.number}</span>
+                    <span className="latest-page__card-brand">FLO STUDIOS</span>
                   </div>
-                  <div className="latest-page__card-meta">
-                    <span className="latest-page__card-type">{item.type}</span>
-                    {item.time && (
-                      <span className="latest-page__card-time">{item.time}</span>
-                    )}
+                  <div className="latest-page__card-tile-bottom">
+                    <span className="latest-page__card-category">{item.category}</span>
                   </div>
-                  <h3 className="latest-page__card-title">{item.title}</h3>
-                </>
-              )
-
-              if (item.isInternal && item.slug) {
-                return (
-                  <Link
-                    to={`/latest/${item.slug}`}
-                    className="latest-page__card"
-                    key={item.slug || i}
-                  >
-                    {cardInner}
-                  </Link>
-                )
-              }
-
-              if (item.href) {
-                return (
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="latest-page__card"
-                    key={item.href || i}
-                  >
-                    {cardInner}
-                  </a>
-                )
-              }
-
-              return (
-                <div className="latest-page__card" key={i}>
-                  {cardInner}
                 </div>
-              )
-            })}
+
+                <div className="latest-page__card-meta">
+                  <span className="latest-page__card-type">{item.type}</span>
+                  <span className="latest-page__card-bullet">•</span>
+                  <span className="latest-page__card-time">{item.readTime}</span>
+                </div>
+
+                <h3 className="latest-page__card-title">{item.title}</h3>
+                <p className="latest-page__card-excerpt">{item.excerpt}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

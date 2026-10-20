@@ -1,6 +1,6 @@
 /* =====================================================================
    FLO STUDIOS — EDITORIAL ARTICLE PAGE STYLES
-   Inspired by Instrument.com's high-craft editorial typography & layout
+   Pure Flo Studios editorial typography & layout (zero third-party assets)
    ===================================================================== */
 
 .article-page {
@@ -76,7 +76,28 @@
 
 /* Header & Titles */
 .article-page__header {
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.article-page__header-topline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.article-page__number-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 999px;
 }
 
 .article-page__category-badge {
@@ -87,7 +108,6 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #76767a;
-  margin-bottom: 1rem;
 }
 
 .article-page__title {
@@ -147,24 +167,6 @@
   height: 3px;
   border-radius: 50%;
   background-color: #b0b0b4;
-}
-
-/* Hero Media */
-.article-page__hero-media {
-  margin-top: clamp(2rem, 4vw, 3rem);
-  margin-bottom: clamp(3rem, 6vw, 4.5rem);
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: #f3f3f4;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.article-page__hero-media img {
-  width: 100%;
-  height: auto;
-  max-height: 560px;
-  object-fit: cover;
-  display: block;
 }
 
 /* Body Content */
@@ -368,7 +370,7 @@
 
 .article-page__related-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -379,24 +381,39 @@
   flex-direction: column;
 }
 
-.article-page__related-card-media {
+.article-page__related-card-tile {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 10;
   border-radius: 4px;
-  overflow: hidden;
-  background-color: #f3f3f4;
+  background-color: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
   margin-bottom: 1rem;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
 
-.article-page__related-card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.article-page__related-card:hover .article-page__related-card-tile {
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: #f0f0f2;
 }
 
-.article-page__related-card:hover .article-page__related-card-media img {
-  transform: scale(1.04);
+.article-page__related-card-num {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1;
+}
+
+.article-page__related-card-brand {
+  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #76767a;
 }
 
 .article-page__related-card-meta {
@@ -413,7 +430,7 @@
 
 .article-page__related-card-title {
   font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.4;
   font-weight: 600;
   color: #000000;
@@ -423,18 +440,4 @@
 
 .article-page__related-card:hover .article-page__related-card-title {
   color: #55555a;
-}
-
-@media (max-width: 900px) {
-  .article-page__related-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .article-page__related-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
 }
