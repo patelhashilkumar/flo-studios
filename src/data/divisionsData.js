@@ -356,16 +356,6 @@ export const DIVISIONS = [
   }
 ]
 
-export const STUDIO_MANIFESTO = {
-  name: 'Flo Studios',
-  positioning: 'Progressive Dual-Engine Media & Development Hub',
-  tagline: 'Built to scale digital exposure and authority for high-impact creators and venture-backed startups/businesses.',
-  intersection: 'We operate at the intersection of creative storytelling and digital infrastructure, driving growth and exposure through two distinct, specialized verticals.',
-  primaryGoal: 'Our primary goal and core studio focus is the Development Division.',
-  crossEngineAdvantage: 'The insights we gather from creators, startups, and businesses allow us to develop high-impact strategies that accelerate growth, strengthen digital authority, improve operational efficiency, and unlock new opportunities for expansion.',
-  handoffGuarantee: 'We help our clients in each division throughout the build lifecycle of the product from the very start to the very end without doing handoffs in single stages.'
-}
-
 /**
  * Returns a division by ID ('development' or 'creator').
  * Falls back to the primary development division if not found.
@@ -386,15 +376,6 @@ export function getDivisionById(id) {
       )
     }) || DIVISIONS[0]
   )
-}
-
-/**
- * Returns all divisions.
- *
- * @returns {typeof DIVISIONS}
- */
-export function getAllDivisions() {
-  return DIVISIONS
 }
 
 export default DIVISIONS

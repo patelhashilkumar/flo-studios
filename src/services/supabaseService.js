@@ -26,7 +26,7 @@ function isClientReady() {
   return isSupabaseConfigured() && Boolean(supabase)
 }
 
-export const STUDIO_ADMIN_EMAILS = [
+const STUDIO_ADMIN_EMAILS = [
   'theflostudios0@gmail.com',
   'admin@flostudios.com',
   'hashilisbest@gmail.com'
@@ -762,32 +762,4 @@ export async function deleteJobPosting(id) {
   return true
 }
 
-/**
- * Admin: Restore default job listings in Supabase
- */
-export async function resetJobPostings() {
-  const client = getClient()
-  if (!isClientReady() || !client) return false
-
-  try {
-    await requireAuthorizedAdmin()
-  } catch {
-    return false
-  }
-
-  // Delete all
-  await client.from('job_postings').delete().neq('id', '___none___')
-
-  // Re-insert initial SDR job
-  const sdrDb = mapJobToDB(INITIAL_JOB_POSTINGS[0], 1)
-  const { error } = await client
-    .from('job_postings')
-    .insert([sdrDb])
-
-  if (error) {
-    console.error('Error resetting job postings:', error)
-    return false
-  }
-  return true
-}
 
