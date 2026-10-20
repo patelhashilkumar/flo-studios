@@ -7,7 +7,7 @@ import { getAllBlogs, getBlogBySlug } from '../src/data/blogsData.js'
 test('1. blogsData exports structured editorial articles', () => {
   const blogs = getAllBlogs()
   assert.ok(Array.isArray(blogs), 'getAllBlogs should return an array')
-  assert.ok(blogs.length >= 5, 'Should contain at least 5 blogs')
+  assert.ok(blogs.length >= 7, 'Should contain at least 7 blogs')
 
   // Blog 1 checks: Nobody Owns the Outcome
   const blog1 = getBlogBySlug('nobody-owns-the-outcome')
@@ -56,6 +56,22 @@ test('1. blogsData exports structured editorial articles', () => {
   assert.equal(blog5.title, 'The Brief Is the Product')
   assert.match(blog5.excerpt, /brief either captures real intent or approximates it/)
   assert.match(blog5.summaryQuote, /Execution does not create clarity; it exposes the lack of it/)
+
+  // Blog 6 checks: Why Most Tech Products Look the Same Now
+  const blog6 = getBlogBySlug('why-most-tech-products-look-the-same-now')
+  assert.ok(blog6, 'Should find blog-6 by slug')
+  assert.equal(blog6.number, '06')
+  assert.equal(blog6.title, 'Why Most Tech Products Look the Same Now')
+  assert.match(blog6.excerpt, /homogenisation of digital product design/)
+  assert.match(blog6.summaryQuote, /an industry of interchangeable mirrors/)
+
+  // Blog 7 checks: Why Consistency Is the Most Misunderstood Word in the Creator Space
+  const blog7 = getBlogBySlug('why-consistency-is-misunderstood-in-creator-space')
+  assert.ok(blog7, 'Should find blog-7 by slug')
+  assert.equal(blog7.number, '07')
+  assert.equal(blog7.title, 'Why Consistency Is the Most Misunderstood Word in the Creator Space')
+  assert.match(blog7.excerpt, /mistaking frequency for perspective leads to burnout/)
+  assert.match(blog7.summaryQuote, /Audiences don’t subscribe to a publishing schedule/)
 
   // Verify zero external Storyblok images in blogsData.js
   const blogsDataRaw = fs.readFileSync(path.resolve('src/data/blogsData.js'), 'utf8')
