@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SEO from '../components/SEO'
+import { MOTION_REELS } from '../data/motionReels'
 import './Pages.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -21,21 +22,21 @@ const FEATURED_PROJECTS = [
     title: 'Apple Product Motion',
     desc: 'Product visualization and dynamic 3D motion graphics.',
     tags: ['motion', 'product'],
-    image: '/videos/apple-thumb.webp',
+    image: MOTION_REELS.apple.poster,
     slug: 'apple-motion',
   },
   {
     title: 'Blitzit 2.0 Interface Motion',
     desc: 'Fluid micro-interactions and productivity interface design.',
     tags: ['motion', 'product'],
-    image: '/videos/blitzit-thumb.webp',
+    image: MOTION_REELS.blitzit.poster,
     slug: 'blitzit-motion',
   },
   {
     title: 'SV Studio Showreel',
     desc: 'Creative direction, kinetic typography, and studio showcase.',
     tags: ['motion', 'brand'],
-    image: '/videos/sv-thumb.webp',
+    image: MOTION_REELS.sv.poster,
     slug: 'sv-showreel',
   },
   {
@@ -56,9 +57,9 @@ const FEATURED_PROJECTS = [
 
 const ALL_PROJECTS = [
   { title: 'ABSTRUCT', tags: ['brand'], image: '/work/abstruct/web/billboard.jpg', href: '/work/abstruct' },
-  { title: 'Apple Product Motion', tags: ['motion', 'product'], image: '/videos/apple-thumb.webp' },
-  { title: 'Blitzit 2.0 Interface', tags: ['motion', 'product'], image: '/videos/blitzit-thumb.webp' },
-  { title: 'SV Studio Showreel', tags: ['motion', 'brand'], image: '/videos/sv-thumb.webp' },
+  { title: 'Apple Product Motion', tags: ['motion', 'product'], image: MOTION_REELS.apple.poster },
+  { title: 'Blitzit 2.0 Interface', tags: ['motion', 'product'], image: MOTION_REELS.blitzit.poster },
+  { title: 'SV Studio Showreel', tags: ['motion', 'brand'], image: MOTION_REELS.sv.poster },
   { title: 'Deadstock Coffee', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
   { title: 'Instrument Playspace', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
   { title: 'Feeld', tags: ['product'], image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },

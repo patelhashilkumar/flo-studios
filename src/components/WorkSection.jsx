@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MOTION_REELS } from '../data/motionReels'
 import './WorkSection.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -19,27 +20,27 @@ const WORK_ITEMS = [
     title: 'Apple Product Motion',
     slug: 'apple-motion',
     tags: ['motion', 'product'],
-    image: '/videos/apple-thumb.webp',
-    videoWebm: '/videos/apple.webm',
-    videoMp4: '/videos/apple.mp4',
+    image: MOTION_REELS.apple.poster,
+    videoWebm: MOTION_REELS.apple.webm,
+    videoMp4: MOTION_REELS.apple.mp4,
     metric: 'CGI & 3D Motion',
   },
   {
     title: 'Blitzit 2.0 Interface',
     slug: 'blitzit-motion',
     tags: ['motion', 'product'],
-    image: '/videos/blitzit-thumb.webp',
-    videoWebm: '/videos/blitzit2.webm',
-    videoMp4: '/videos/blitzit2.mp4',
+    image: MOTION_REELS.blitzit.poster,
+    videoWebm: MOTION_REELS.blitzit.webm,
+    videoMp4: MOTION_REELS.blitzit.mp4,
     metric: 'App & Micro-Interactions',
   },
   {
     title: 'SV Studio Showreel',
     slug: 'sv-showreel',
     tags: ['motion', 'brand'],
-    image: '/videos/sv-thumb.webp',
-    videoWebm: '/videos/sv-final.webm',
-    videoMp4: '/videos/sv-final.mp4',
+    image: MOTION_REELS.sv.poster,
+    videoWebm: MOTION_REELS.sv.webm,
+    videoMp4: MOTION_REELS.sv.mp4,
     metric: 'Direction & Animation',
   },
   {

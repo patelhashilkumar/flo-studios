@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
+import { MOTION_REELS } from '../data/motionReels'
 import './Hero.css'
 
 const STATEMENT_WORDS = [
@@ -12,25 +13,25 @@ const HERO_REELS = [
     id: 'apple',
     name: 'Apple',
     badge: 'APPLE MOTION',
-    webmSrc: '/videos/apple.webm',
-    mp4Src: '/videos/apple.mp4',
-    posterSrc: '/videos/apple-thumb.webp',
+    webmSrc: MOTION_REELS.apple.webm,
+    mp4Src: MOTION_REELS.apple.mp4,
+    posterSrc: MOTION_REELS.apple.poster,
   },
   {
     id: 'blitzit',
     name: 'Blitzit',
     badge: 'BLITZIT 2.0',
-    webmSrc: '/videos/blitzit2.webm',
-    mp4Src: '/videos/blitzit2.mp4',
-    posterSrc: '/videos/blitzit-thumb.webp',
+    webmSrc: MOTION_REELS.blitzit.webm,
+    mp4Src: MOTION_REELS.blitzit.mp4,
+    posterSrc: MOTION_REELS.blitzit.poster,
   },
   {
     id: 'sv',
     name: 'SV',
     badge: 'SV SHOWCASE',
-    webmSrc: '/videos/sv-final.webm',
-    mp4Src: '/videos/sv-final.mp4',
-    posterSrc: '/videos/sv-thumb.webp',
+    webmSrc: MOTION_REELS.sv.webm,
+    mp4Src: MOTION_REELS.sv.mp4,
+    posterSrc: MOTION_REELS.sv.poster,
   },
 ]
 

@@ -22,7 +22,6 @@ import {
   fetchJobPostings,
   upsertJobPosting,
   deleteJobPosting,
-  resetJobPostings,
   getResumeSignedUrl,
   INQUIRY_STATUSES,
   JOB_APPLICATION_STATUSES,
@@ -41,8 +40,6 @@ export {
 export const STORAGE_KEY = 'FLO_STUDIOS_SUBMISSIONS_V1'
 export const JOBS_STORAGE_KEY = 'FLO_STUDIOS_JOBS_V1'
 export const AUTH_KEY = 'FLO_STUDIOS_ADMIN_AUTH_V1'
-
-export const DEFAULT_SEEDS = []
 
 /**
  * Helper to safely access localStorage in browser/test environments
@@ -388,8 +385,6 @@ export function seedSampleData() {
   }
 }
 
-export const clearAllSubmissions = seedSampleData
-
 /**
  * Export all submissions as CSV download using Blob & createObjectURL
  */
@@ -720,28 +715,6 @@ export async function deleteJob(id) {
     return true
   } catch (err) {
     console.error('Failed deleting job from storage:', err)
-    return false
-  }
-}
-
-/**
- * Reset job listings back to factory defaults.
- */
-export async function resetJobs() {
-  const storage = getStorage()
-  if (!storage) return false
-  try {
-    storage.setItem(JOBS_STORAGE_KEY, JSON.stringify(INITIAL_JOB_POSTINGS))
-    emitChange()
-
-    // Sync to Supabase
-    if (isSupabaseConfigured()) {
-      await resetJobPostings()
-    }
-
-    return true
-  } catch (err) {
-    console.error('Failed resetting jobs in storage:', err)
     return false
   }
 }
