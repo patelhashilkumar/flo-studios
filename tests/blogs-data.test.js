@@ -151,3 +151,13 @@ test('6. FooterWave and Footer implement dark background and inverted white line
   const footerCss = fs.readFileSync(path.resolve('src/components/Footer.css'), 'utf8')
   assert.match(footerCss, /\.footer--dark\s*\{[^}]*background-color:\s*#000000/s, 'Footer.css must style .footer--dark with #000000')
 })
+
+test('7. NewsSection limits homepage display to 4 featured blogs with View More link to /latest', () => {
+  const newsJsx = fs.readFileSync(path.resolve('src/components/NewsSection.jsx'), 'utf8')
+  assert.match(newsJsx, /allBlogs\.slice\(0,\s*4\)/, 'NewsSection must slice exactly first 4 blogs for homepage')
+  assert.match(newsJsx, /to="\/latest"/, 'NewsSection must link to /latest')
+  assert.match(newsJsx, /View More Dispatches/, 'NewsSection must render View More Dispatches action')
+
+  const newsCss = fs.readFileSync(path.resolve('src/components/NewsSection.css'), 'utf8')
+  assert.match(newsCss, /\.news-section__view-more/, 'NewsSection.css must define .news-section__view-more styles')
+})
