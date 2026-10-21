@@ -118,3 +118,20 @@ test('4. All 8 blogs define concise cardTitle, cardCategory, and cardExcerpt for
     assert.ok(b.cardExcerpt.length <= 80, `Blog ${b.number} cardExcerpt should be concise (<= 80 chars)`)
   }
 })
+
+test('5. LatestPage implements Instrument.com dark visual architecture (wordmark, breadcrumb, headline, dark navbar)', () => {
+  const latestJsx = fs.readFileSync(path.resolve('src/pages/LatestPage.jsx'), 'utf8')
+  assert.match(latestJsx, /FLO STUDIOS/, 'LatestPage must render edge-to-edge FLO STUDIOS wordmark')
+  assert.match(latestJsx, /latest-page__breadcrumb/, 'LatestPage must render breadcrumb navigation')
+  assert.match(latestJsx, /Breaking news, insights, and articles\./, 'LatestPage headline must be Breaking news, insights, and articles.')
+
+  const pagesCss = fs.readFileSync(path.resolve('src/pages/Pages.css'), 'utf8')
+  assert.match(pagesCss, /\.latest-page\s*\{[^}]*background-color:\s*#000000/s, 'Pages.css must enforce #000000 dark background on .latest-page')
+  assert.match(pagesCss, /\.latest-page__wordmark\s*\{[^}]*font-family:\s*var\(--font-panchang\)/s, 'Pages.css must style wordmark with Panchang')
+
+  const navJsx = fs.readFileSync(path.resolve('src/components/FocusLensNavbar.jsx'), 'utf8')
+  assert.match(navJsx, /isDarkNav \? 'global-header--dark' : ''/, 'FocusLensNavbar must apply dark modifier on /latest')
+
+  const navCss = fs.readFileSync(path.resolve('src/components/FocusLensNavbar.css'), 'utf8')
+  assert.match(navCss, /\.global-header--dark\s*\{[^}]*background-color:\s*#000000/s, 'FocusLensNavbar.css must style .global-header--dark')
+})

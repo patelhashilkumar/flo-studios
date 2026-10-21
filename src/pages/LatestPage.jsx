@@ -42,22 +42,35 @@ export default function LatestPage() {
     >
       <SEO
         title="Latest Dispatches & Essays — Flo Studios"
-        description="Perspectives, engineering research, and studio dispatches from Flo Studios on digital product architecture, craft, and creator media engines."
+        description="Breaking news, insights, and articles from Flo Studios on digital product architecture, craft, and creator media engines."
         canonicalUrl="https://www.flostudio.co/latest"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
-          { name: 'Latest Dispatches', item: 'https://www.flostudio.co/latest', url: 'https://www.flostudio.co/latest' },
+          { name: 'Latest', item: 'https://www.flostudio.co/latest', url: 'https://www.flostudio.co/latest' },
         ]}
       />
 
+      {/* Giant Edge-to-Edge Brand Wordmark (matching Instrument.com /latest/) */}
+      <div className="latest-page__wordmark-wrap">
+        <Link to="/" className="latest-page__wordmark-link" aria-label="Flo Studios Home">
+          <span className="latest-page__wordmark">FLO STUDIOS</span>
+        </Link>
+      </div>
+
       <section className="latest-page__hero">
         <div className="container">
+          {/* Breadcrumb Navigation: HOME / LATEST */}
+          <nav className="latest-page__breadcrumb" aria-label="Breadcrumb">
+            <Link to="/" className="latest-page__breadcrumb-home">HOME</Link>
+            <span className="latest-page__breadcrumb-separator">/</span>
+            <span className="latest-page__breadcrumb-current">LATEST</span>
+          </nav>
+
           <h1
             className="latest-page__title"
-            aria-label="Flo Studios Latest Dispatches: Perspectives, research, and studio dispatches."
+            aria-label="Breaking news, insights, and articles."
           >
-            <span className="sr-only">Flo Studios Latest Dispatches — </span>
-            {'Perspectives, research, and studio dispatches.'.split(' ').map((w, i) => (
+            {'Breaking news, insights, and articles.'.split(' ').map((w, i) => (
               <span key={i} className="latest-page__hero-word">
                 {w}
               </span>
