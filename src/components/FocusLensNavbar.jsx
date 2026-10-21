@@ -127,10 +127,12 @@ export default function FocusLensNavbar() {
   }
 
   const isHomePage = location.pathname === '/'
+  const isLatestPage = location.pathname === '/latest'
+  const isDarkNav = isLatestPage
 
   const isMarqueeHovered = hoveredId === ANNOUNCEMENT.id
   const isLogoHovered = hoveredId === 'center-logo'
-  const isCenterHovered = isHomePage ? isMarqueeHovered : isLogoHovered
+  const isCenterHovered = (isHomePage || isLatestPage) ? isMarqueeHovered : isLogoHovered
   const isOtherHovered = hoveredId !== null && !isCenterHovered
 
   const centerMotion = isCenterHovered
@@ -143,7 +145,7 @@ export default function FocusLensNavbar() {
 
   return (
     <>
-      <header className={`global-header ${shouldHide ? 'global-header--hidden' : ''}`}>
+      <header className={`global-header ${isDarkNav ? 'global-header--dark' : ''} ${shouldHide ? 'global-header--hidden' : ''}`}>
         <nav className="global-nav">
           <div className="global-nav-large">
             {/* ── 1. Left Primary Navigation Group (Work, Services, About) ── */}
@@ -154,7 +156,7 @@ export default function FocusLensNavbar() {
             </div>
 
             {/* ── 2. Center Slot: Announcement on Home, Flo Studio Logo on all other pages ── */}
-            {isHomePage ? (
+            {(isHomePage || isLatestPage) ? (
               <motion.div
                 className="marquee"
                 animate={centerMotion}
@@ -195,7 +197,7 @@ export default function FocusLensNavbar() {
                   onFocus={() => setHoveredId('center-logo')}
                   onBlur={() => setHoveredId(null)}
                 >
-                  <FloLogo height="16px" color="#000000" />
+                  <FloLogo height="16px" color={isDarkNav ? "#ffffff" : "#000000"} />
                   <span className="global-nav-center-logo-text">FLO STUDIOS</span>
                 </Link>
               </motion.div>
@@ -212,7 +214,7 @@ export default function FocusLensNavbar() {
           {/* ── 4. Mobile Header Bar (< 980px) ── */}
           <div className="global-nav-mobile">
             <Link to="/" className="global-nav-mobile-logo" aria-label="Flo Studios Home">
-              <FloLogo height="16px" color="#000000" />
+              <FloLogo height="16px" color={isDarkNav ? "#ffffff" : "#000000"} />
               <span className="global-nav-mobile-logo-text">FLO STUDIOS</span>
             </Link>
 

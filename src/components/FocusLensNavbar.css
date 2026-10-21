@@ -348,3 +348,78 @@
     display: flex;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   DARK HEADER STYLING (MATCHING INSTRUMENT.COM /LATEST/)
+   ═══════════════════════════════════════════════════ */
+.global-header--dark {
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.global-header--dark .button-small.button-abacus {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.global-header--dark .button-abacus .label {
+  color: #ffffff;
+}
+
+.global-header--dark .abacus .bead {
+  background-color: #ffffff;
+}
+
+.global-header--dark .button-abacus--hover .label {
+  color: #000000 !important;
+}
+
+.global-header--dark .button-small.button-abacus.button-abacus--active {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.global-header--dark .button-small.button-abacus.button-abacus--active .label {
+  color: #000000 !important;
+  font-weight: 500;
+}
+
+.global-header--dark .marquee p {
+  color: #ffffff;
+}
+
+.global-header--dark .marquee .link {
+  color: #ffffff;
+}
+
+.global-header--dark .marquee .link svg path {
+  stroke: #ffffff;
+}
+
+.global-header--dark .global-nav-center-logo-text {
+  color: #ffffff;
+}
+
+.global-header--dark .global-nav-mobile-logo-text {
+  color: #ffffff;
+}
+
+.global-header--dark .menu-button-toggle {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.global-header--dark .global-nav-mobile-drawer {
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.global-header--dark .global-nav-mobile-marquee {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8e8e93;
+}
+
+.global-header--dark .global-nav-mobile-marquee .link {
+  color: #ffffff;
+}
