@@ -192,20 +192,11 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.news-section__view-more-count {
-  color: var(--color-text-secondary, rgba(0, 0, 0, 0.5));
-  font-weight: 500;
-}
-
 .news-section__view-more:hover {
   background-color: #000000;
   color: #ffffff;
   border-color: #000000;
   transform: translateY(-2px);
-}
-
-.news-section__view-more:hover .news-section__view-more-count {
-  color: rgba(255, 255, 255, 0.7);
 }
 
 .news-section__view-more svg {

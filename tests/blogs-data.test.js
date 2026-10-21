@@ -157,6 +157,7 @@ test('7. NewsSection limits homepage display to 4 featured blogs with View More 
   assert.match(newsJsx, /allBlogs\.slice\(0,\s*4\)/, 'NewsSection must slice exactly first 4 blogs for homepage')
   assert.match(newsJsx, /to="\/latest"/, 'NewsSection must link to /latest')
   assert.match(newsJsx, /View More Dispatches/, 'NewsSection must render View More Dispatches action')
+  assert.ok(!newsJsx.includes('news-section__view-more-count'), 'NewsSection must not display count number in View More button')
 
   const newsCss = fs.readFileSync(path.resolve('src/components/NewsSection.css'), 'utf8')
   assert.match(newsCss, /\.news-section__view-more/, 'NewsSection.css must define .news-section__view-more styles')
