@@ -105,10 +105,9 @@ export default function NewsSection() {
           <Link
             to="/latest"
             className="news-section__view-more"
-            aria-label={`View all ${allBlogs.length} Flo Studios dispatches`}
+            aria-label="View more Flo Studios dispatches"
           >
             View More Dispatches
-            <span className="news-section__view-more-count">({allBlogs.length})</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path
                 d="M3 8h10M9 4l4 4-4 4"
