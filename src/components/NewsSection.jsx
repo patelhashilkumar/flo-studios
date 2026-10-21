@@ -9,7 +9,8 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function NewsSection() {
   const sectionRef = useRef(null)
-  const blogs = getAllBlogs()
+  const allBlogs = getAllBlogs()
+  const featuredBlogs = allBlogs.slice(0, 4)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,6 +35,17 @@ export default function NewsSection() {
           stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+        }
+      )
+      gsap.fromTo(
+        '.news-section__footer',
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
         }
       )
     }, sectionRef)
@@ -66,7 +78,7 @@ export default function NewsSection() {
         </div>
 
         <div className="news-section__grid">
-          {blogs.map((item) => (
+          {featuredBlogs.map((item) => (
             <Link
               to={`/latest/${item.slug}`}
               className="news-card"
@@ -87,6 +99,26 @@ export default function NewsSection() {
               <h3 className="news-card__title">{item.cardTitle || item.displayTitle || item.title}</h3>
             </Link>
           ))}
+        </div>
+
+        <div className="news-section__footer">
+          <Link
+            to="/latest"
+            className="news-section__view-more"
+            aria-label={`View all ${allBlogs.length} Flo Studios dispatches`}
+          >
+            View More Dispatches
+            <span className="news-section__view-more-count">({allBlogs.length})</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
