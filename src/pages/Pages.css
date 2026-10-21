@@ -247,7 +247,7 @@
 .latest-page__wordmark-wrap {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 clamp(16px, 2.2vw, 32px);
+  padding: clamp(0.75rem, 1.8vw, 2rem) clamp(16px, 2.2vw, 32px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
   display: flex;
@@ -263,25 +263,23 @@
   color: inherit;
 }
 
+.latest-page__wordmark-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  transition: opacity 0.25s ease;
+}
+
+.latest-page__wordmark-link:hover .latest-page__wordmark-svg {
+  opacity: 0.85;
+}
+
 .latest-page__wordmark {
   font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(2.8rem, 11.2vw, 13.5rem);
-  line-height: 0.88;
-  letter-spacing: -0.01em;
   color: #f0f0f2;
-  -webkit-text-stroke: clamp(0.3px, 0.04vw, 0.8px) #f0f0f2;
-  paint-order: stroke fill;
-  width: 100%;
-  text-align: center;
-  white-space: nowrap;
-  user-select: none;
-  margin: 0;
-  padding: clamp(1rem, 2vw, 2.25rem) 0 clamp(1.2rem, 2.4vw, 2.75rem);
-  display: block;
-  transform: scaleY(1.34);
-  transform-origin: center center;
 }
 
 /* Hero Section */

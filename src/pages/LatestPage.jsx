@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import SEO from '../components/SEO'
+import FloWordmark from '../components/FloWordmark'
 import { getAllBlogs } from '../data/blogsData'
 
 const pageV = {
@@ -53,7 +54,8 @@ export default function LatestPage() {
       {/* Giant Edge-to-Edge Brand Wordmark (matching Instrument.com /latest/) */}
       <div className="latest-page__wordmark-wrap">
         <Link to="/" className="latest-page__wordmark-link" aria-label="Flo Studios Home">
-          <span className="latest-page__wordmark">FLO STUDIOS</span>
+          <span className="sr-only">FLO STUDIOS</span>
+          <FloWordmark className="latest-page__wordmark-svg" color="#f0f0f2" />
         </Link>
       </div>
 
