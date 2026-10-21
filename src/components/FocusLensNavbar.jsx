@@ -16,12 +16,6 @@ const RIGHT_NAV = [
   { id: 'contact', label: 'Contact', to: '/contact' },
 ]
 
-const ANNOUNCEMENT = {
-  id: 'announcement',
-  text: 'Campaign US Winners: Design Studio Agency of the Year 2026!',
-  cta: 'See More',
-  to: '/latest',
-}
 
 const SPRING = {
   type: 'spring',
@@ -126,16 +120,13 @@ export default function FocusLensNavbar() {
     )
   }
 
-  const isHomePage = location.pathname === '/'
   const isLatestPage = location.pathname === '/latest'
   const isDarkNav = isLatestPage
 
-  const isMarqueeHovered = hoveredId === ANNOUNCEMENT.id
   const isLogoHovered = hoveredId === 'center-logo'
-  const isCenterHovered = (isHomePage || isLatestPage) ? isMarqueeHovered : isLogoHovered
-  const isOtherHovered = hoveredId !== null && !isCenterHovered
+  const isOtherHovered = hoveredId !== null && !isLogoHovered
 
-  const centerMotion = isCenterHovered
+  const centerMotion = isLogoHovered
     ? { opacity: 1, filter: 'blur(0px)', scale: 1.01 }
     : isOtherHovered
     ? { opacity: 0.4, filter: 'blur(1.2px)', scale: 0.99 }
@@ -155,53 +146,25 @@ export default function FocusLensNavbar() {
               </ul>
             </div>
 
-            {/* ── 2. Center Slot: Announcement on Home, Flo Studio Logo on all other pages ── */}
-            {(isHomePage || isLatestPage) ? (
-              <motion.div
-                className="marquee"
-                animate={centerMotion}
-                transition={SPRING}
-                onMouseEnter={() => setHoveredId(ANNOUNCEMENT.id)}
-                onMouseLeave={() => setHoveredId(null)}
+            {/* ── 2. Center Slot: Flo Studios Brand Logo ── */}
+            <motion.div
+              className="global-nav-center-slot"
+              animate={centerMotion}
+              transition={SPRING}
+              onMouseEnter={() => setHoveredId('center-logo')}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              <Link
+                to="/"
+                className="global-nav-center-logo"
+                aria-label="Flo Studios Home"
+                onFocus={() => setHoveredId('center-logo')}
+                onBlur={() => setHoveredId(null)}
               >
-                <p>
-                  <span className="marquee-text">{ANNOUNCEMENT.text} </span>
-                  <Link
-                    to={ANNOUNCEMENT.to}
-                    className="link"
-                    onFocus={() => setHoveredId(ANNOUNCEMENT.id)}
-                    onBlur={() => setHoveredId(null)}
-                  >
-                    <span>{ANNOUNCEMENT.cta}</span>
-                    <span className="icon" aria-hidden="true">
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.33333 8H12.6667" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                  </Link>
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div
-                className="global-nav-center-slot"
-                animate={centerMotion}
-                transition={SPRING}
-                onMouseEnter={() => setHoveredId('center-logo')}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                <Link
-                  to="/"
-                  className="global-nav-center-logo"
-                  aria-label="Flo Studios Home"
-                  onFocus={() => setHoveredId('center-logo')}
-                  onBlur={() => setHoveredId(null)}
-                >
-                  <FloLogo height="16px" color={isDarkNav ? "#ffffff" : "#000000"} />
-                  <span className="global-nav-center-logo-text">FLO STUDIOS</span>
-                </Link>
-              </motion.div>
-            )}
+                <FloLogo height="16px" color={isDarkNav ? "#ffffff" : "#000000"} />
+                <span className="global-nav-center-logo-text">FLO STUDIOS</span>
+              </Link>
+            </motion.div>
 
             {/* ── 3. Right Secondary Navigation Group (Careers, Latest, Contact) ── */}
             <div className="global-nav-large__secondary abacus">
@@ -258,18 +221,7 @@ export default function FocusLensNavbar() {
                 })}
               </div>
 
-              <div className="global-nav-mobile-marquee">
-                <p>
-                  <span>{ANNOUNCEMENT.text} </span>
-                  <Link
-                    to={ANNOUNCEMENT.to}
-                    className="link"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <span>{ANNOUNCEMENT.cta} →</span>
-                  </Link>
-                </p>
-              </div>
+
             </motion.div>
           )}
         </AnimatePresence>
