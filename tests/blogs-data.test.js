@@ -135,3 +135,19 @@ test('5. LatestPage implements Instrument.com dark visual architecture (wordmark
   const navCss = fs.readFileSync(path.resolve('src/components/FocusLensNavbar.css'), 'utf8')
   assert.match(navCss, /\.global-header--dark\s*\{[^}]*background-color:\s*#000000/s, 'FocusLensNavbar.css must style .global-header--dark')
 })
+
+test('6. FooterWave and Footer implement dark background and inverted white lines on /latest', () => {
+  const footerJsx = fs.readFileSync(path.resolve('src/components/Footer.jsx'), 'utf8')
+  assert.match(footerJsx, /footer--dark/, 'Footer must apply footer--dark on dark pages')
+  assert.match(footerJsx, /<FooterWave dark=\{isDark\} \/>/, 'Footer must pass dark prop to FooterWave')
+
+  const waveJsx = fs.readFileSync(path.resolve('src/components/FooterWave.jsx'), 'utf8')
+  assert.match(waveJsx, /rgba\(255, 255, 255, 0\.96\)/, 'FooterWave must draw inverted white ribbons when dark')
+  assert.match(waveJsx, /footer__wave-wrap--dark/, 'FooterWave must support dark wrap class')
+
+  const waveCss = fs.readFileSync(path.resolve('src/components/FooterWave.css'), 'utf8')
+  assert.match(waveCss, /\.footer__wave-wrap--dark\s*\{[^}]*background-color:\s*#000000/s, 'FooterWave.css must style .footer__wave-wrap--dark with #000000')
+
+  const footerCss = fs.readFileSync(path.resolve('src/components/Footer.css'), 'utf8')
+  assert.match(footerCss, /\.footer--dark\s*\{[^}]*background-color:\s*#000000/s, 'Footer.css must style .footer--dark with #000000')
+})

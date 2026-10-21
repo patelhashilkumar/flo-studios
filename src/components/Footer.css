@@ -4,6 +4,7 @@
    ═══════════════════════════════════════════════════ */
 
 .footer {
+  transition: background-color 0.3s ease;
   position: relative;
   width: 100%;
   background: var(--color-bg);
@@ -447,4 +448,12 @@
     padding: 9px 14px;
     font-size: 11px;
   }
+}
+
+.footer--dark {
+  background-color: #000000;
+}
+
+.footer--dark .footer__wave-wrap {
+  background-color: #000000;
 }

@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import FloLogo from './FloLogo'
 import FooterWave from './FooterWave'
 import './Footer.css'
 
-export default function Footer() {
+export default function Footer({ dark: explicitDark }) {
+  const location = useLocation()
+  const isDark = explicitDark !== undefined ? explicitDark : location.pathname === '/latest'
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
 
@@ -18,9 +20,9 @@ export default function Footer() {
   }
 
   return (
-    <footer className="footer" id="site-footer">
+    <footer className={`footer ${isDark ? 'footer--dark' : ''}`} id="site-footer">
       {/* ── Flo Wave Ribbons Header ── */}
-      <FooterWave />
+      <FooterWave dark={isDark} />
 
       {/* ── Full-Bleed Grounded Liquid Glass Footer ── */}
       <div className="liquid-glass-footer-rim">

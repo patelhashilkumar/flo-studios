@@ -1,8 +1,20 @@
 import { useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import './FooterWave.css'
 
-export default function FooterWave() {
+export default function FooterWave({ dark: explicitDark }) {
   const canvasRef = useRef(null)
+  const drawRef = useRef(null)
+  const location = useLocation()
+  const isDark = explicitDark !== undefined ? explicitDark : location.pathname === '/latest'
+  const darkRef = useRef(isDark)
+
+  useEffect(() => {
+    darkRef.current = isDark
+    if (drawRef.current) {
+      drawRef.current(performance.now())
+    }
+  }, [isDark])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -46,6 +58,7 @@ export default function FooterWave() {
 
       ctx.clearRect(0, 0, w, h)
       const t = now / 1000
+      const currentDark = darkRef.current
 
       // Three signature Flo wave ribbons: swell and taper, thickening under cursor
       for (let i = 0; i < 3; i++) {
@@ -62,11 +75,17 @@ export default function FooterWave() {
           bottom.push([px, mid + half])
         }
 
-        ctx.fillStyle = [
-          'rgba(14, 14, 18, 0.96)',
-          'rgba(14, 14, 18, 0.48)',
-          'rgba(14, 14, 18, 0.18)'
-        ][i]
+        ctx.fillStyle = currentDark
+          ? [
+              'rgba(255, 255, 255, 0.96)',
+              'rgba(255, 255, 255, 0.50)',
+              'rgba(255, 255, 255, 0.20)',
+            ][i]
+          : [
+              'rgba(14, 14, 18, 0.96)',
+              'rgba(14, 14, 18, 0.48)',
+              'rgba(14, 14, 18, 0.18)',
+            ][i]
 
         ctx.beginPath()
         top.forEach(([px, y], k) => (k ? ctx.lineTo(px, y) : ctx.moveTo(px, y)))
@@ -74,6 +93,8 @@ export default function FooterWave() {
         ctx.fill()
       }
     }
+
+    drawRef.current = draw
 
     let isVisible = true
     const io = new IntersectionObserver(([entry]) => {
@@ -92,6 +113,7 @@ export default function FooterWave() {
     }
 
     return () => {
+      drawRef.current = null
       if (raf) cancelAnimationFrame(raf)
       ro.disconnect()
       io.disconnect()
@@ -101,7 +123,7 @@ export default function FooterWave() {
   }, [])
 
   return (
-    <div className="footer__wave-wrap" aria-hidden="true">
+    <div className={`footer__wave-wrap ${isDark ? 'footer__wave-wrap--dark' : ''}`} aria-hidden="true">
       <canvas ref={canvasRef} className="footer__wave-canvas" />
     </div>
   )
