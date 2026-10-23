@@ -18,7 +18,7 @@ export const INITIAL_JOB_POSTINGS = [
       'Development Division',
       'Full-Cycle (Prospecting to Close)',
       '100% Commission (Uncapped)',
-      'Remote — North America & Europe Only',
+      'Remote, North America & Europe Only',
       'Contract'
     ],
     aboutCompany:

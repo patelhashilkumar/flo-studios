@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import SEO from '../components/SEO'
-import FloWordmark from '../components/FloWordmark'
+import BlogCardArt from '../components/BlogCardArt'
 import { getAllBlogs } from '../data/blogsData'
 
 const pageV = {
@@ -42,7 +42,7 @@ export default function LatestPage() {
       ref={heroRef}
     >
       <SEO
-        title="Latest Dispatches & Essays — Flo Studios"
+        title="Latest Dispatches & Essays | Flo Studios"
         description="Breaking news, insights, and articles from Flo Studios on digital product architecture, craft, and creator media engines."
         canonicalUrl="https://www.flostudio.co/latest"
         breadcrumbs={[
@@ -55,18 +55,12 @@ export default function LatestPage() {
       <div className="latest-page__wordmark-wrap">
         <Link to="/" className="latest-page__wordmark-link" aria-label="Flo Studios Home">
           <span className="sr-only">FLO STUDIOS</span>
-          <FloWordmark className="latest-page__wordmark-svg" color="#f0f0f2" />
+          <span className="latest-page__wordmark" aria-hidden="true">FLO STUDIOS</span>
         </Link>
       </div>
 
       <section className="latest-page__hero">
         <div className="container">
-          {/* Breadcrumb Navigation: HOME / LATEST */}
-          <nav className="latest-page__breadcrumb" aria-label="Breadcrumb">
-            <Link to="/" className="latest-page__breadcrumb-home">HOME</Link>
-            <span className="latest-page__breadcrumb-separator">/</span>
-            <span className="latest-page__breadcrumb-current">LATEST</span>
-          </nav>
 
           <h1
             className="latest-page__title"
@@ -92,10 +86,7 @@ export default function LatestPage() {
                 key={item.id || item.slug}
               >
                 <div className="latest-page__card-tile">
-                  <div className="latest-page__card-tile-top">
-                    <span className="latest-page__card-num">BLOG {item.number}</span>
-                    <span className="latest-page__card-brand">FLO STUDIOS</span>
-                  </div>
+                  <BlogCardArt slug={item.slug} />
                   <div className="latest-page__card-tile-bottom">
                     <span className="latest-page__card-category">{item.cardCategory || item.category}</span>
                   </div>

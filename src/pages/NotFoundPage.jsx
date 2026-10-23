@@ -13,7 +13,7 @@ export default function NotFoundPage() {
       transition={{ duration: 0.35, ease: 'easeOut' }}
     >
       <SEO
-        title="404 — Page Not Found — Flo Studios"
+        title="404 | Page Not Found | Flo Studios"
         description="The page you requested could not be found. Return to the Flo Studios homepage or explore our work and open careers."
         noindex={true}
       />

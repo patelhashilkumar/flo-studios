@@ -281,7 +281,7 @@ export default function AbstructCaseStudy() {
   return (
     <motion.main className="abs" ref={rootRef} variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="ABSTRUCT — Construction Brand Identity | Flo Studios"
+        title="ABSTRUCT | Construction Brand Identity | Flo Studios"
         description="Flo Studios built a monogram-led identity for ABSTRUCT Construction in ivory, charcoal and signal red, applied from site hoardings to hard hats and digital."
         canonicalUrl="https://www.flostudio.co/work/abstruct"
       />

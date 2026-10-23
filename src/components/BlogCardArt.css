@@ -1,0 +1,145 @@
+/* Animated line illustration layer used inside blog card tiles */
+.blog-card-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 66%;
+  height: 62%;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  pointer-events: none;
+  --bca-dim: rgba(255, 255, 255, 0.28);
+  --bca-main: rgba(255, 255, 255, 0.62);
+  --bca-hi: #ffffff;
+  --bca-glow: rgba(255, 255, 255, 0.55);
+  --bca-halo: rgba(255, 255, 255, 0.22);
+  --bca-hover-main: rgba(255, 255, 255, 0.95);
+  --bca-hover-dim: rgba(255, 255, 255, 0.5);
+  --bca-cut: #000000;
+  opacity: 0;
+  transition: opacity 0.6s ease, filter 0.5s ease;
+}
+
+.blog-card-art.is-in { opacity: 1; }
+
+.blog-card-art path,
+.blog-card-art circle,
+.blog-card-art rect {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* stroke weights */
+.blog-card-art .s-dim  { stroke: var(--bca-dim); stroke-width: 1; }
+.blog-card-art .s-main { stroke: var(--bca-main); stroke-width: 1.3; }
+.blog-card-art .s-hi   { stroke: var(--bca-hi); stroke-width: 1.5; }
+.blog-card-art .fill-hi   { fill: var(--bca-hi); stroke: none; }
+.blog-card-art .fill-wave { fill: var(--bca-hi); stroke: none; opacity: 0; }
+
+.blog-card-art .glow {
+  filter: drop-shadow(0 0 2.5px var(--bca-glow));
+}
+
+/* draw-in on first view */
+.blog-card-art .dr {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.blog-card-art.is-in .dr {
+  animation: bca-draw 1.3s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
+}
+
+@keyframes bca-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* dashed guides that slowly crawl */
+.blog-card-art .dash { stroke-dasharray: 3 4; }
+
+.blog-card-art .flow { animation: bca-flow 1.4s linear infinite; }
+.blog-card-art .flow.rev { animation-direction: reverse; }
+
+@keyframes bca-flow {
+  to { stroke-dashoffset: -14; }
+}
+
+/* sparkle */
+.blog-card-art .twinkle {
+  transform-box: view-box;
+  animation: bca-twinkle 2.6s ease-in-out infinite;
+}
+
+@keyframes bca-twinkle {
+  0%, 100% { transform: scale(0.6) rotate(0deg); opacity: 0.4; }
+  50%      { transform: scale(1.15) rotate(45deg); opacity: 1; }
+}
+
+/* the line that traces the post-launch curve */
+.blog-card-art .trace {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: bca-trace 6s linear infinite;
+}
+
+@keyframes bca-trace {
+  0%        { stroke-dashoffset: 1; opacity: 1; }
+  62%       { stroke-dashoffset: 0; opacity: 1; }
+  88%       { stroke-dashoffset: 0; opacity: 1; }
+  100%      { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* a bright pulse running along the decaying wave */
+.blog-card-art .pulse-run {
+  stroke-dasharray: 0.12 1;
+  stroke-dashoffset: 0.12;
+  animation: bca-pulse 3.2s linear infinite;
+}
+
+@keyframes bca-pulse {
+  to { stroke-dashoffset: -1; }
+}
+
+/* off screen: freeze CSS loops too */
+.blog-card-art.is-paused .flow,
+.blog-card-art.is-paused .twinkle,
+.blog-card-art.is-paused .trace,
+.blog-card-art.is-paused .pulse-run { animation-play-state: paused; }
+
+/* light tiles (home, related): dark ink */
+.blog-card-art--light {
+  --bca-dim: rgba(10, 10, 12, 0.26);
+  --bca-main: rgba(10, 10, 12, 0.6);
+  --bca-hi: #0a0a0c;
+  --bca-glow: rgba(10, 10, 12, 0.22);
+  --bca-halo: rgba(10, 10, 12, 0.1);
+  --bca-hover-main: rgba(10, 10, 12, 0.95);
+  --bca-hover-dim: rgba(10, 10, 12, 0.5);
+  --bca-cut: #ffffff;
+}
+
+.blog-card-art .cut { fill: var(--bca-cut); stroke: none; }
+
+/* hover: stronger ink, soft halo */
+.latest-page__card:hover .blog-card-art,
+.news-card:hover .blog-card-art,
+.article-page__related-card:hover .blog-card-art {
+  filter: drop-shadow(0 0 10px var(--bca-halo));
+}
+
+.latest-page__card:hover .blog-card-art .s-main,
+.news-card:hover .blog-card-art .s-main,
+.article-page__related-card:hover .blog-card-art .s-main { stroke: var(--bca-hover-main); }
+
+.latest-page__card:hover .blog-card-art .s-dim,
+.news-card:hover .blog-card-art .s-dim,
+.article-page__related-card:hover .blog-card-art .s-dim { stroke: var(--bca-hover-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-card-art .flow,
+  .blog-card-art .twinkle,
+  .blog-card-art .trace,
+  .blog-card-art .pulse-run { animation: none; }
+  .blog-card-art .trace { stroke-dashoffset: 0; }
+  .blog-card-art .pulse-run { stroke-dasharray: none; }
+}

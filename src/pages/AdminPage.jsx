@@ -381,7 +381,7 @@ export default function AdminPage() {
   if (!unlocked) {
     return (
       <main className="admin-lock-page">
-        <SEO title="Studio Portal — Flo Studios" description="Restricted studio administrative portal." noindex={true} />
+        <SEO title="Studio Portal, Flo Studios" description="Restricted studio administrative portal." noindex={true} />
         <div className="admin-lock-card">
           <h1 className="admin-lock-title">Flo Studios Admin</h1>
           <p className="admin-lock-sub">
@@ -468,7 +468,7 @@ export default function AdminPage() {
      ═══════════════════════════════════════════════════ */
   return (
     <main className="admin-page">
-      <SEO title="Studio Admin — Flo Studios" description="Restricted studio administrative portal." noindex={true} />
+      <SEO title="Studio Admin, Flo Studios" description="Restricted studio administrative portal." noindex={true} />
       <div className="container">
         {/* Top Header Bar */}
         <header className="admin-header">

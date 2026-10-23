@@ -1,7 +1,8 @@
 import { useMemo, useEffect } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { motion, useScroll, useSpring } from 'framer-motion'
+import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
+import BlogCardArt from '../components/BlogCardArt'
 import { getBlogBySlug, getRelatedBlogs, getAllBlogs } from '../data/blogsData'
 import './ArticlePage.css'
 
@@ -20,13 +21,6 @@ export default function ArticlePage() {
     const all = getAllBlogs()
     return all.filter((b) => b.slug !== slug && b.id !== post?.id).slice(0, 3)
   }, [slug, post])
-
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    restDelta: 0.001,
-  })
 
   // Ensure scroll is restored to top on mount
   useEffect(() => {
@@ -68,7 +62,7 @@ export default function ArticlePage() {
       exit="exit"
     >
       <SEO
-        title={`${post.title} — Flo Studios`}
+        title={`${post.title} | Flo Studios`}
         description={post.excerpt}
         canonicalUrl={`https://www.flostudio.co/latest/${post.slug}`}
         structuredData={articleSchema}
@@ -78,9 +72,6 @@ export default function ArticlePage() {
           { name: post.displayTitle || post.title, item: `https://www.flostudio.co/latest/${post.slug}`, url: `https://www.flostudio.co/latest/${post.slug}` },
         ]}
       />
-
-      {/* Reading Progress Indicator */}
-      <motion.div className="article-progress-bar" style={{ scaleX }} />
 
       <article className="article-page__container">
         {/* Article Header (matches Instrument.com editorial hero) */}
@@ -92,17 +83,6 @@ export default function ArticlePage() {
           {post.subtitle && (
             <p className="article-page__subtitle">{post.subtitle}</p>
           )}
-
-          {/* Breadcrumb Navigation below Title & Subtitle */}
-          <nav className="article-page__breadcrumb" aria-label="Breadcrumb">
-            <Link to="/">HOME</Link>
-            <span className="article-page__breadcrumb-separator">/</span>
-            <Link to="/latest">LATEST</Link>
-            <span className="article-page__breadcrumb-separator">/</span>
-            <span className="article-page__breadcrumb-current" aria-current="page">
-              {(post.cardTitle || post.displayTitle || post.title).toUpperCase()}
-            </span>
-          </nav>
         </header>
 
         {/* Editorial Body Content */}
@@ -213,12 +193,7 @@ export default function ArticlePage() {
                   className="article-page__related-card"
                 >
                   <div className="article-page__related-card-tile">
-                    <span className="article-page__related-card-num">
-                      {item.number ? `BLOG ${item.number}` : 'DISPATCH'}
-                    </span>
-                    <span className="article-page__related-card-brand">
-                      FLO STUDIOS
-                    </span>
+                    <BlogCardArt slug={item.slug} light />
                   </div>
                   <div className="article-page__related-card-meta">
                     <span>{item.type}</span>

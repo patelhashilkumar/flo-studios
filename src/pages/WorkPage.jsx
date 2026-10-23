@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const FEATURED_PROJECTS = [
   {
-    title: 'ABSTRUCT — Brand Identity',
+    title: 'ABSTRUCT: Brand Identity',
     desc: 'Monogram-led identity, visual system, and applications for a construction and infrastructure brand.',
     tags: ['brand'],
     image: '/work/abstruct/web/moodboard.jpg',
@@ -101,7 +101,7 @@ export default function WorkPage() {
   return (
     <motion.main className="work-page" variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="Work & Case Studies — Flo Studios"
+        title="Work & Case Studies | Flo Studios"
         description="Browse selected digital products, engineering architecture, and creator media productions engineered by Flo Studios across our Development and Creator divisions."
         canonicalUrl="https://www.flostudio.co/work"
         breadcrumbs={[
@@ -130,7 +130,7 @@ export default function WorkPage() {
           </div>
 
           <h1 className="work-page__tagline" aria-label="Flo Studios Work & Case Studies: Work engineered for attention, clarity, and enduring impact.">
-            <span className="sr-only">Flo Studios Work & Case Studies — </span>
+            <span className="sr-only">Flo Studios Work & Case Studies | </span>
             {'Work engineered for attention, clarity, and enduring impact.'.split(' ').map((w, i) => (
               <span key={i} className="work-page__hero-word">{w}</span>
             ))}
@@ -143,7 +143,7 @@ export default function WorkPage() {
         {FEATURED_PROJECTS.map((proj) => (
           <Link to={proj.href || '/work'} className="work-page__featured-card" key={proj.slug} style={{ color: 'inherit' }}>
             <div className="work-page__featured-media">
-              <img src={proj.image} alt={`${proj.title} — Flo Studios case study`} loading="lazy" />
+              <img src={proj.image} alt={`${proj.title} | Flo Studios case study`} loading="lazy" />
             </div>
             <div className="work-page__featured-info">
               {proj.href && <p className="work-page__featured-kicker">Case study</p>}
@@ -164,7 +164,7 @@ export default function WorkPage() {
           {filtered.map((proj, i) => (
             <Link to={proj.href || '/work'} className="work-page__project-card" key={i} style={{ color: 'inherit' }}>
               <div className="work-page__project-media">
-                <img src={proj.image} alt={`${proj.title} — Flo Studios project`} loading="lazy" />
+                <img src={proj.image} alt={`${proj.title} | Flo Studios project`} loading="lazy" />
               </div>
               <h3 className="work-page__project-title">{proj.title}</h3>
               <div className="work-page__project-tags">

@@ -352,7 +352,7 @@ export default function CareersPage() {
       ref={heroRef}
     >
       <SEO
-        title={`Careers at Flo Studios — ${activeJob.title || 'Open Roles'}`}
+        title={`Careers at Flo Studios | ${activeJob.title || 'Open Roles'}`}
         description={`Explore career opportunities at Flo Studios. Currently hiring: ${activeJob.title || 'Creative and engineering roles'}. Join a studio pairing taste with engineering.`}
         canonicalUrl="https://www.flostudio.co/careers"
         breadcrumbs={[
@@ -393,7 +393,7 @@ export default function CareersPage() {
         {/* ── Header ── */}
         <header className="careers-header">
           <h1 className="careers-header__title" aria-label={`Careers at Flo Studios: ${activeJob.title || 'Career Opening'}`}>
-            <span className="sr-only">Careers at Flo Studios — </span>
+            <span className="sr-only">Careers at Flo Studios | </span>
             {(activeJob.title || 'Career Opening').split(' ').map((word, idx) => (
               <span key={idx} className="careers-header__title-word">
                 {word}
@@ -487,7 +487,7 @@ export default function CareersPage() {
                   <ul className="careers-checklist">
                     {(activeJob.minimumQualifications || []).map((item, idx) => (
                       <li key={idx} className="careers-checklist__item">
-                        <span className="careers-checklist__bullet" aria-hidden="true">—</span>
+                        <span className="careers-checklist__bullet" aria-hidden="true">•</span>
                         <span className="careers-checklist__text">{item}</span>
                       </li>
                     ))}
@@ -502,7 +502,7 @@ export default function CareersPage() {
                   <ul className="careers-checklist">
                     {(activeJob.preferredQualifications || []).map((item, idx) => (
                       <li key={idx} className="careers-checklist__item">
-                        <span className="careers-checklist__bullet" aria-hidden="true">—</span>
+                        <span className="careers-checklist__bullet" aria-hidden="true">•</span>
                         <span className="careers-checklist__text">{item}</span>
                       </li>
                     ))}
@@ -529,7 +529,7 @@ export default function CareersPage() {
               <ul className="careers-checklist">
                 {(activeJob.thrivePoints || []).map((item, idx) => (
                   <li key={idx} className="careers-checklist__item">
-                    <span className="careers-checklist__bullet" aria-hidden="true">—</span>
+                    <span className="careers-checklist__bullet" aria-hidden="true">•</span>
                     <span className="careers-checklist__text">{item}</span>
                   </li>
                 ))}

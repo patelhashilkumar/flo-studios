@@ -23,7 +23,7 @@ export const DIVISIONS = [
       problem:
         "Founders and venture-backed businesses rarely have a single partner who can translate their vision into creative direction across product strategy, design, development, launch, and go-to-market distribution. They're forced to stitch together disconnected vendors with no one owning the outcome.",
       solution:
-        "Our Development Division partners with venture-backed founders and businesses from the earliest stages throughout the entire lifecycle of the product. We translate the founder's vision into creative direction across product strategy, UI/UX design, full-stack engineering, production launch, and a go-to-market distribution strategy that drives user acquisition—helping companies bridge the gap between vision and execution while building products positioned for scale. We help companies from the very start—ideation and market research all the way through development and deployment at the end—with zero single-stage handoffs.",
+        "Our Development Division partners with venture-backed founders and businesses from the earliest stages throughout the entire lifecycle of the product. We translate the founder's vision into creative direction across product strategy, UI/UX design, full-stack engineering, production launch, and a go-to-market distribution strategy that drives user acquisition, helping companies bridge the gap between vision and execution while building products positioned for scale. We help companies from the very start, ideation and market research all the way through development and deployment at the end, with zero single-stage handoffs.",
       philosophy:
         "We don't sell disconnected deliverables. We build products positioned for scale and carry them all the way to market."
     },
@@ -196,7 +196,7 @@ export const DIVISIONS = [
       }
     ],
     oneLineSummary:
-      "Our Development Division partners with venture-backed founders and businesses from the earliest stages throughout the entire product lifecycle—translating vision into creative direction across strategy, design, engineering, launch, and go-to-market user acquisition with zero broken handoffs.",
+      "Our Development Division partners with venture-backed founders and businesses from the earliest stages throughout the entire product lifecycle, translating vision into creative direction across strategy, design, engineering, launch, and go-to-market user acquisition with zero broken handoffs.",
     cta: {
       text: 'Start a Project with Development',
       label: 'Start a Project with Development',
@@ -212,15 +212,15 @@ export const DIVISIONS = [
     label: 'Creator Division',
     tag: 'Integrated Growth Pipeline',
     introStatement: [
-      "In our Creator Division, we build end-to-end growth systems for high-impact creators—managing the entire lifecycle of content from ideation and scripting to production, packaging, and distribution. Every stage is calibrated to the creator's current audience size and growth trajectory.",
+      "In our Creator Division, we build end-to-end growth systems for high-impact creators, managing the entire lifecycle of content from ideation and scripting to production, packaging, and distribution. Every stage is calibrated to the creator's current audience size and growth trajectory.",
       "In select engagements, we also direct the multi-platform distribution that transforms attention into long-term business assets. One specialist-led pipeline, from start to finish."
     ],
     whatWeDo: {
       heading: 'What We Do',
       problem:
-        'Creators trying to grow are forced to piece together their content process from disconnected freelancers and tools—an editor here, a scriptwriter there, a thumbnail designer somewhere else—with no one thinking about the channel as a long-term business asset.',
+        'Creators trying to grow are forced to piece together their content process from disconnected freelancers and tools, an editor here, a scriptwriter there, a thumbnail designer somewhere else, with no one thinking about the channel as a long-term business asset.',
       solution:
-        "Our Creator Division builds end-to-end growth systems for high-impact creators—from ideation, scripting, and production through distribution, analytics, and high-impact digital strategies crafted from research aggregated across every engagement. We take a creator's idea for a video or series and help them throughout the entire process of creating, packaging, and distributing that content, helping creators transform attention into long-term business assets that travel far in the long run."
+        "Our Creator Division builds end-to-end growth systems for high-impact creators, from ideation, scripting, and production through distribution, analytics, and high-impact digital strategies crafted from research aggregated across every engagement. We take a creator's idea for a video or series and help them throughout the entire process of creating, packaging, and distributing that content, helping creators transform attention into long-term business assets that travel far in the long run."
     },
     coreDifferentiator: {
       label: 'Core Differentiator: Stage-Specialized Execution',
@@ -347,7 +347,7 @@ export const DIVISIONS = [
       }
     ],
     oneLineSummary:
-      "Our Creator Division builds end-to-end growth systems for high-impact creators—taking initial video ideas through scripting, production, packaging, distribution, and analytics to transform attention into long-term business assets that travel far in the long run.",
+      "Our Creator Division builds end-to-end growth systems for high-impact creators, taking initial video ideas through scripting, production, packaging, distribution, and analytics to transform attention into long-term business assets that travel far in the long run.",
     cta: {
       text: 'Start a Project with Creator Division',
       label: 'Start a Project with Creator Division',
