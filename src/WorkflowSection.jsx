@@ -580,16 +580,19 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
                 >
                   <div className="milestone-card milestone-card--active">
                     <div className="milestone-card__glass">
-                      <div className="milestone-card__phase">
-                        PHASE {step.num} — {step.tag}
+                      <div className="milestone-card__top">
+                        <div className="milestone-card__phase">
+                          PHASE {step.num}: {step.tag}
+                        </div>
+                        <span className="milestone-card__count">{i + 1} / {WORKFLOW_STEPS.length}</span>
                       </div>
 
                       <h3 className="milestone-card__title">{step.title}</h3>
                       <p className="milestone-card__desc">{step.desc}</p>
 
                       <div className="milestone-card__deliverable">
-                        <span className="milestone-card__deliverable-dot" />
-                        <span>Deliverable: {step.deliverable}</span>
+                        <span className="milestone-card__deliverable-label">Deliverable</span>
+                        <span className="milestone-card__deliverable-text">{step.deliverable}</span>
                       </div>
                     </div>
                   </div>
@@ -668,7 +671,7 @@ export default function WorkflowSection() {
                     exit={{ opacity: 0, y: -3 }}
                     transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    PHASE {activeStep.num} — {activeStep.tag}
+                    PHASE {activeStep.num}: {activeStep.tag}
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -680,6 +683,7 @@ export default function WorkflowSection() {
                     className={`workflow-mobile-dot ${dotIdx === activeIndex ? 'workflow-mobile-dot--active' : ''}`}
                   />
                 ))}
+                <span className="milestone-card__count">{activeIndex + 1} / {WORKFLOW_STEPS.length}</span>
               </div>
             </div>
 
@@ -697,8 +701,8 @@ export default function WorkflowSection() {
                   <p className="milestone-card__desc">{activeStep.desc}</p>
 
                   <div className="milestone-card__deliverable">
-                    <span className="milestone-card__deliverable-dot" />
-                    <span>Deliverable: {activeStep.deliverable}</span>
+                    <span className="milestone-card__deliverable-label">Deliverable</span>
+                    <span className="milestone-card__deliverable-text">{activeStep.deliverable}</span>
                   </div>
                 </motion.div>
               </AnimatePresence>

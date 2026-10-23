@@ -12,18 +12,6 @@
   padding-bottom: clamp(4rem, 8vw, 7rem);
 }
 
-/* Reading Progress Bar */
-.article-progress-bar {
-  position: fixed;
-  top: 52px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #000000;
-  transform-origin: 0%;
-  z-index: 1002;
-}
-
 /* Container */
 .article-page__container {
   max-width: 1240px;
@@ -65,48 +53,6 @@
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-}
-
-/* Breadcrumb Navigation positioned below Title & Subtitle */
-.article-page__breadcrumb {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #76767a;
-  margin-top: clamp(4.5rem, 9vw, 8rem);
-  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
-  text-align: left;
-}
-
-.article-page__breadcrumb a {
-  color: #76767a;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.article-page__breadcrumb a:hover {
-  color: #000000;
-}
-
-.article-page__breadcrumb-separator {
-  color: #b0b0b4;
-  font-size: 0.6875rem;
-  font-weight: 400;
-}
-
-.article-page__breadcrumb-current {
-  color: #76767a;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 520px;
 }
 
 /* Meta Bar */
@@ -179,21 +125,25 @@
 
 /* Pull Quotes */
 .article-page__pullquote {
-  margin: clamp(2.5rem, 5vw, 3.5rem) 0;
-  padding: 1.75rem 0 1.75rem 2rem;
-  border-left: 2px solid #000000;
+  margin-top: clamp(3.5rem, 6vw, 4.5rem);
+  margin-bottom: 0;
+  padding: clamp(6rem, 13vw, 10.5rem) 0;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   background: transparent;
+  text-align: center;
 }
 
 .article-page__pullquote blockquote {
   margin: 0;
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: clamp(1.5rem, 2.75vw, 2.125rem);
-  line-height: 1.25;
-  font-style: italic;
-  font-weight: 400;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: 1.15;
+  font-style: normal;
+  font-weight: 700;
   color: #000000;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 /* Stages List */
@@ -371,22 +321,6 @@
 .article-page__related-card:hover .article-page__related-card-tile {
   border-color: rgba(0, 0, 0, 0.3);
   background-color: #f0f0f2;
-}
-
-.article-page__related-card-num {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: #000000;
-  line-height: 1;
-}
-
-.article-page__related-card-brand {
-  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #76767a;
 }
 
 .article-page__related-card-meta {

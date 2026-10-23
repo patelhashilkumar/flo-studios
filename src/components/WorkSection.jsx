@@ -151,7 +151,7 @@ function WorkCard({ item }) {
       <div className="work-card__media">
         <img
           src={item.image}
-          alt={`${item.title} — Flo Studios case study`}
+          alt={`${item.title} | Flo Studios case study`}
           loading="lazy"
           decoding="async"
           className={`work-card__img ${isHovered && hasVideo ? 'work-card__img--hidden' : ''}`}

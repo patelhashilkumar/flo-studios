@@ -37,7 +37,7 @@ export default function ContactPage() {
   return (
     <motion.main className="contact-page" variants={pageV} initial="initial" animate="animate" exit="exit" ref={heroRef}>
       <SEO
-        title="Contact Flo Studios — Start a Project"
+        title="Contact Flo Studios | Start a Project"
         description="Partner with Flo Studios founders. Direct 15-minute discovery calls or structured project briefs for our Development Division and Creator Division."
         canonicalUrl="https://www.flostudio.co/contact"
         breadcrumbs={[
@@ -52,7 +52,7 @@ export default function ContactPage() {
           <div className="contact-hero__header">
             <div className="contact-hero__row">
               <h1 className="contact-page__title" aria-label="Contact Flo Studios">
-                <span className="sr-only">Flo Studios — </span>
+                <span className="sr-only">Flo Studios | </span>
                 <span className="contact-page__title-word">Contact</span>{' '}
                 <span className="contact-page__title-word">Flo</span>{' '}
                 <span className="contact-page__title-word">Studios</span>
@@ -114,8 +114,8 @@ export default function ContactPage() {
             <div className="contact-founder-card">
               <div className="contact-founder-header">
                 <div className="contact-founder-avatars">
-                  <img src="/images/founders/aman.jpg" alt="Aman Pal — Co-Founder" className="contact-founder-img" />
-                  <img src="/images/founders/mohit.jpg" alt="Mohit Ninama — Co-Founder" className="contact-founder-img contact-founder-img--overlap" />
+                  <img src="/images/founders/aman.jpg" alt="Aman Pal | Co-Founder" className="contact-founder-img" />
+                  <img src="/images/founders/mohit.jpg" alt="Mohit Ninama | Co-Founder" className="contact-founder-img contact-founder-img--overlap" />
                 </div>
                 <div className="contact-founder-meta">
                   <h2 className="contact-founder-names">Aman Pal & Mohit Ninama</h2>

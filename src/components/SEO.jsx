@@ -12,8 +12,8 @@ const DEFAULT_IMAGE = `${CANONICAL_DOMAIN}/og-image.jpg`
  * ══════════════════════════════════════════════════════════════════
  */
 export default function SEO({
-  title = 'Flo Studios — Development Division (Primary Flagship) & Creator Systems',
-  description = "Flo Studios' primary flagship is our Development Division: partnering with venture-backed founders across the full build lifecycle—from strategy, UI/UX, and engineering to launch with zero broken handoffs. Secondarily backed by our Creator Division.",
+  title = 'Flo Studios | Development Division (Primary Flagship) & Creator Systems',
+  description = "Flo Studios' primary flagship is our Development Division: partnering with venture-backed founders across the full build lifecycle, from strategy, UI/UX, and engineering to launch with zero broken handoffs. Secondarily backed by our Creator Division.",
   canonicalUrl,
   ogType = 'website',
   ogImage = DEFAULT_IMAGE,

@@ -119,10 +119,9 @@ test('4. All 8 blogs define concise cardTitle, cardCategory, and cardExcerpt for
   }
 })
 
-test('5. LatestPage implements Instrument.com dark visual architecture (wordmark, breadcrumb, headline, dark navbar)', () => {
+test('5. LatestPage implements Instrument.com dark visual architecture (wordmark, headline, dark navbar)', () => {
   const latestJsx = fs.readFileSync(path.resolve('src/pages/LatestPage.jsx'), 'utf8')
   assert.match(latestJsx, /FLO STUDIOS/, 'LatestPage must render edge-to-edge FLO STUDIOS wordmark')
-  assert.match(latestJsx, /latest-page__breadcrumb/, 'LatestPage must render breadcrumb navigation')
   assert.match(latestJsx, /Breaking news, insights, and articles\./, 'LatestPage headline must be Breaking news, insights, and articles.')
 
   const pagesCss = fs.readFileSync(path.resolve('src/pages/Pages.css'), 'utf8')

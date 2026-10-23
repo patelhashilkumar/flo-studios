@@ -9,7 +9,7 @@ const SPOTLIGHT_DATA = {
     pillLabel: 'Development Division',
     title: 'We translate founder vision into products positioned for scale.',
     description:
-      'We partner with venture-backed founders and businesses from the earliest stages throughout the entire product lifecycle—from ideation and research to design, engineering, launch, and go-to-market user acquisition. Zero single-stage handoffs.',
+      'We partner with venture-backed founders and businesses from the earliest stages throughout the entire product lifecycle, from ideation and research to design, engineering, launch, and go-to-market user acquisition. Zero single-stage handoffs.',
     ctaText: 'See our offerings →',
     ctaHref: '/services?division=development',
     tag: 'Primary Flagship',
@@ -172,7 +172,7 @@ export default function HomeServicesSpotlight() {
                         <div className="showcase-canvas__editorial">
                           <h3 className="showcase-canvas__title">Next-Gen Digital Platform</h3>
                           <p className="showcase-canvas__text">
-                            We carry your product through all 11 stages — from technical research and UI/UX design to full-stack cloud deployment and customer acquisition.
+                            We carry your product through all 11 stages, from technical research and UI/UX design to full-stack cloud deployment and customer acquisition.
                           </p>
                           <div className="showcase-canvas__metric-row">
                             <span className="sc-metric-tag">+148% Conversion</span>

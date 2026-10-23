@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { getAllBlogs } from '../data/blogsData'
+import BlogCardArt from './BlogCardArt'
 import './NewsSection.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -86,8 +87,7 @@ export default function NewsSection() {
             >
               <div className="news-card__media">
                 <div className="news-card__tile">
-                  <span className="news-card__num">BLOG {item.number}</span>
-                  <span className="news-card__brand">FLO STUDIOS</span>
+                  <BlogCardArt slug={item.slug} light />
                 </div>
               </div>
               <div className="news-card__meta">

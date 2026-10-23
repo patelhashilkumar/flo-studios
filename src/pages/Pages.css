@@ -247,12 +247,11 @@
 .latest-page__wordmark-wrap {
   width: 100%;
   box-sizing: border-box;
-  padding: clamp(0.75rem, 1.8vw, 2rem) clamp(16px, 2.2vw, 32px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  overflow: hidden;
+  padding: clamp(14px, 1.6vw, 22px) clamp(16px, 2.2vw, 32px);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
   background-color: #000000;
 }
 
@@ -263,61 +262,42 @@
   color: inherit;
 }
 
-.latest-page__wordmark-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  transition: opacity 0.25s ease;
-}
-
-.latest-page__wordmark-link:hover .latest-page__wordmark-svg {
-  opacity: 0.85;
-}
-
+/* Same wordmark as the home hero, colours inverted */
 .latest-page__wordmark {
   font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  color: #f0f0f2;
+  font-size: clamp(2.2rem, 8.8vw, 11rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  -webkit-text-stroke: clamp(0.3px, 0.04vw, 0.8px) #ffffff;
+  paint-order: stroke fill;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  display: block;
+  transform: scaleY(1.36);
+  transform-origin: center center;
+  transition: opacity 0.25s ease;
+}
+
+.latest-page__wordmark-link:hover .latest-page__wordmark {
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .latest-page__wordmark {
+    font-size: clamp(1.65rem, 8.8vw, 4rem);
+    letter-spacing: -0.02em;
+  }
 }
 
 /* Hero Section */
 .latest-page__hero {
   padding-top: clamp(2.5rem, 5vw, 4.5rem);
   padding-bottom: clamp(2.5rem, 5vw, 4rem);
-}
-
-/* Uppercase Breadcrumb (HOME / LATEST) */
-.latest-page__breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.latest-page__breadcrumb-home {
-  color: #8e8e93;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.latest-page__breadcrumb-home:hover {
-  color: #ffffff;
-}
-
-.latest-page__breadcrumb-separator {
-  color: #55555a;
-  font-size: 0.75rem;
-}
-
-.latest-page__breadcrumb-current {
-  color: #76767a;
 }
 
 /* Headline: "Breaking news, insights, and articles." in Instrument Serif */
@@ -371,7 +351,18 @@
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 0.85rem;
+  position: relative;
+  overflow: hidden;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 16px 16px;
   transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+.latest-page__card-tile-top,
+.latest-page__card-tile-bottom {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
 }
 
 .latest-page__card:hover .latest-page__card-tile {
@@ -383,22 +374,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.latest-page__card-num {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-}
-
-.latest-page__card-brand {
-  font-family: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #76767a;
 }
 
 .latest-page__card-category {

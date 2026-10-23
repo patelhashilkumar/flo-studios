@@ -56,20 +56,20 @@
   user-select: none;
 }
 
-/* Title 1: "Idea" — Instrument Serif (normal) */
+/* Title 1: "Idea" — Instrument Serif Italic */
 .purpose__title1 {
   font-family: var(--font-serif, 'Instrument Serif', Georgia, serif);
   font-weight: 400;
-  font-style: normal;
+  font-style: italic;
   letter-spacing: -0.03em;
 }
 
-/* Title 2: "To" — Clean Sans-Serif (Manrope) */
+/* Title 2: "To" — Instrument Serif Italic */
 .purpose__title2 {
-  font-family: var(--font-manrope), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-serif, 'Instrument Serif', Georgia, serif);
   font-weight: 400;
-  font-style: normal;
-  letter-spacing: -0.045em;
+  font-style: italic;
+  letter-spacing: -0.03em;
   font-size: clamp(4.5rem, 18vw, 18rem);
   margin-bottom: clamp(1.25rem, 2.5vw, 2.5rem);
 }
@@ -239,7 +239,15 @@
   .purpose__title2,
   .purpose__title3 {
     text-align: left;
+    margin: 0;
   }
+
+  /* Keep "Idea / To / Outcome." together as one block, then the closing copy */
+  .purpose__text1 { order: 1; }
+  .purpose__title1 { order: 2; }
+  .purpose__title2 { order: 3; margin-top: -0.5rem; }
+  .purpose__title3 { order: 4; margin-top: -0.5rem; }
+  .purpose__text2 { order: 5; }
 
   .purpose__text {
     font-size: 0.95rem;

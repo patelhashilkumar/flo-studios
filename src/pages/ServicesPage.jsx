@@ -81,8 +81,8 @@ export default function ServicesPage() {
   return (
     <motion.main className="services-page" variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="Services — Development Division (Primary Flagship) & Creator Systems | Flo Studios"
-        description="Flo Studios' primary flagship is our Development Division: partnering with venture-backed founders across the full 11-stage build lifecycle—from strategy, UI/UX, and engineering to launch with zero broken handoffs. Secondarily offering end-to-end Creator Division growth pipelines."
+        title="Services | Development Division (Primary Flagship) & Creator Systems | Flo Studios"
+        description="Flo Studios' primary flagship is our Development Division: partnering with venture-backed founders across the full 11-stage build lifecycle, from strategy, UI/UX, and engineering to launch with zero broken handoffs. Secondarily offering end-to-end Creator Division growth pipelines."
         canonicalUrl="https://www.flostudio.co/services"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },

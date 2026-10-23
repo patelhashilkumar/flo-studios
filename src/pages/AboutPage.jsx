@@ -292,8 +292,8 @@ export default function AboutPage() {
   return (
     <motion.main className="about" ref={rootRef} variants={pageV} initial="initial" animate="animate" exit="exit">
       <SEO
-        title="About Flo Studios — Development Division (Primary) & Creator Systems"
-        description="About Flo Studios: Our primary flagship is the Development Division—carrying products from idea to market as one accountable partner. Secondarily powering high-impact creator growth systems."
+        title="About Flo Studios | Development Division (Primary) & Creator Systems"
+        description="About Flo Studios: Our primary flagship is the Development Division, carrying products from idea to market as one accountable partner. Secondarily powering high-impact creator growth systems."
         canonicalUrl="https://www.flostudio.co/about"
         breadcrumbs={[
           { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
@@ -404,10 +404,10 @@ export default function AboutPage() {
                 className="about__leader about__reveal"
                 key={leader.name}
                 style={{ '--i': i }}
-                aria-label={`${leader.name} — ${leader.role} at Flo Studios (LinkedIn)`}
+                aria-label={`${leader.name} | ${leader.role} at Flo Studios (LinkedIn)`}
               >
                 {leader.image ? (
-                  <img src={leader.image} alt={`${leader.name} — ${leader.role} at Flo Studios`} loading="lazy" />
+                  <img src={leader.image} alt={`${leader.name} | ${leader.role} at Flo Studios`} loading="lazy" />
                 ) : (
                   <div className="about__leader-placeholder" aria-hidden="true">
                     <span className="about__leader-monogram">{leader.initials}</span>
@@ -446,7 +446,7 @@ export default function AboutPage() {
               Design freaks. Deep thinkers. Fast makers.
             </p>
             <p className="about-split__text">
-              Curious, detail-obsessed, and opinionated—<br />
+              Curious, detail-obsessed, and opinionated, <br />
               all working to make work people remember.
             </p>
             <div className="about-split__cta">
