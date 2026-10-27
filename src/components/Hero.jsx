@@ -39,6 +39,7 @@ export default function Hero() {
   const [activeReelIdx, setActiveReelIdx] = useState(0)
   const [isMuted, setIsMuted] = useState(true)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [isInView, setIsInView] = useState(true)
   const [preloadStrategy] = useState(() => {
     if (typeof navigator !== 'undefined' && 'connection' in navigator) {
       const conn = navigator.connection
@@ -88,6 +89,55 @@ export default function Hero() {
 
     return () => ctx.revert()
   }, [])
+
+  // Pause hero video when out of viewport or tab is inactive to preserve CPU/GPU
+  useEffect(() => {
+    const target = videoCardRef.current
+    if (!target) return
+
+    let isIntersecting = true
+    const updateVisibility = () => {
+      const isVisible = typeof document !== 'undefined' && !document.hidden && isIntersecting
+      setIsInView(isVisible)
+    }
+
+    let observer = null
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          isIntersecting = Boolean(entry?.isIntersecting)
+          updateVisibility()
+        },
+        { threshold: 0 }
+      )
+      observer.observe(target)
+    }
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', updateVisibility)
+    }
+
+    return () => {
+      if (observer) observer.disconnect()
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('visibilitychange', updateVisibility)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const video = cardVideoRef.current
+    if (!video) return
+
+    if (isInView) {
+      const playPromise = video.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {})
+      }
+    } else {
+      video.pause()
+    }
+  }, [isInView, activeReelIdx])
 
   const handleSelectReel = (idx) => {
     if (idx === activeReelIdx) return
@@ -142,16 +192,19 @@ export default function Hero() {
             ref={cardVideoRef}
             key={currentReel?.id || 'default'}
             className="hero__video-media"
-            autoPlay
+            autoPlay={isInView}
             loop
             muted={isMuted}
             playsInline
             preload={preloadStrategy}
             onPlaying={() => setIsVideoPlaying(true)}
+            onPause={() => setIsVideoPlaying(false)}
             onLoadedData={(e) => {
-              const playPromise = e.target.play()
-              if (playPromise !== undefined) {
-                playPromise.then(() => setIsVideoPlaying(true)).catch(() => {})
+              if (isInView) {
+                const playPromise = e.target.play()
+                if (playPromise !== undefined) {
+                  playPromise.then(() => setIsVideoPlaying(true)).catch(() => {})
+                }
               }
             }}
           >

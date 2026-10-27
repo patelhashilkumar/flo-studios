@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MOTION_REELS } from '../data/motionReels'
+import CasementGrid from './CasementGrid'
 import './WorkSection.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -13,98 +14,137 @@ const WORK_ITEMS = [
     slug: 'abstruct',
     href: '/work/abstruct',
     tags: ['brand'],
+    category: 'Brand Identity',
     image: '/work/abstruct/web/moodboard.jpg',
     metric: 'Construction Identity',
+    description: 'Monogram-led identity, visual system, and digital craft for a modern construction architecture firm.',
+    size: 'hero',
   },
   {
     title: 'Apple Product Motion',
     slug: 'apple-motion',
     tags: ['motion', 'product'],
+    category: 'CGI & 3D Motion',
     image: MOTION_REELS.apple.poster,
     videoWebm: MOTION_REELS.apple.webm,
     videoMp4: MOTION_REELS.apple.mp4,
     metric: 'CGI & 3D Motion',
+    description: 'Photorealistic CGI rendering, fluid dynamics, and 3D kinetic product motion.',
+    size: 'large',
   },
   {
     title: 'Blitzit 2.0 Interface',
     slug: 'blitzit-motion',
     tags: ['motion', 'product'],
+    category: 'App & Micro-Interactions',
     image: MOTION_REELS.blitzit.poster,
     videoWebm: MOTION_REELS.blitzit.webm,
     videoMp4: MOTION_REELS.blitzit.mp4,
     metric: 'App & Micro-Interactions',
+    description: 'Precision interaction design, spatial soundscapes, and fluid 60fps micro-interactions.',
+    size: 'large',
   },
   {
     title: 'SV Studio Showreel',
     slug: 'sv-showreel',
     tags: ['motion', 'brand'],
+    category: 'Direction & Animation',
     image: MOTION_REELS.sv.poster,
     videoWebm: MOTION_REELS.sv.webm,
     videoMp4: MOTION_REELS.sv.mp4,
     metric: 'Direction & Animation',
+    description: 'Commercial brand direction, tactile physics simulation, and studio showreel montage.',
+    size: 'regular',
   },
   {
     title: 'Deadstock Coffee',
     slug: 'deadstock-coffee',
     tags: ['product'],
+    category: 'Development',
     image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/',
     metric: '+140% Conversion',
+    description: 'Custom Shopify Plus infrastructure driving +140% conversion through community storytelling.',
+    size: 'regular',
   },
   {
     title: 'Flo Playspace',
     slug: 'playspace',
     tags: ['product'],
+    category: 'Interactive Web',
     image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/',
     metric: 'Innovation by Design',
+    description: 'High-performance WebGL sandbox and generative UI playground for spatial experiments.',
+    size: 'regular',
   },
   {
     title: 'Feeld',
     slug: 'feeld-app',
     tags: ['product'],
+    category: 'Product Strategy',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/',
     metric: 'App of the Day',
+    description: 'App of the Day dating experience rethinking connection architecture.',
+    size: 'small',
   },
   {
     title: 'ŌURA',
     slug: 'oura-app',
     tags: ['product'],
+    category: 'Digital Product',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
     metric: 'Flagship Experience',
+    description: 'Sleep health biometric dashboard and flagship biometric web experience.',
+    size: 'small',
   },
   {
     title: 'Perfected',
     slug: 'perfected',
     tags: ['brand', 'marketing'],
+    category: 'Brand Strategy',
     image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/',
     metric: 'Global Identity',
+    description: 'Comprehensive identity architecture for an international luxury studio.',
+    size: 'regular',
   },
   {
     title: 'Iru',
     slug: 'iru-launch',
     tags: ['brand', 'marketing'],
+    category: '0 to 1 Launch',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/1245eb7b86/iru_teaser_thumbnail.jpg/m/',
     metric: '0 to 1 Launch',
+    description: 'Market entrance campaign and digital launch platform.',
+    size: 'regular',
   },
   {
     title: 'Shutterfly',
     slug: 'shutterfly',
     tags: ['brand', 'marketing'],
+    category: 'Design Systems',
     image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/',
     metric: 'Design System',
+    description: 'Multi-brand design system and production component guidelines.',
+    size: 'regular',
   },
   {
     title: 'Build Week',
     slug: 'build-week',
     tags: ['brand', 'marketing', 'product'],
+    category: 'Venture & Launch',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/',
     metric: 'Brand & Launch',
+    description: 'Hackathon brand sprint and high-velocity digital deployment.',
+    size: 'regular',
   },
   {
     title: 'AlphaSense',
     slug: 'alphasense',
     tags: ['marketing'],
+    category: 'Enterprise Motion',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/',
     metric: 'Enterprise Campaign',
+    description: 'Enterprise market intelligence visual storytelling and video campaign.',
+    size: 'regular',
   },
 ]
 
@@ -116,93 +156,34 @@ const FILTER_CATEGORIES = [
   { id: 'marketing', label: 'Campaigns' },
 ]
 
+const FEATURED_LIMIT = 5
+
 const getFilterCount = (filterId) => {
-  if (filterId === 'all') return WORK_ITEMS.length
-  return WORK_ITEMS.filter((item) => item.tags.includes(filterId)).length
+  if (filterId === 'all') return FEATURED_LIMIT
+  const count = WORK_ITEMS.filter((item) => item.tags.includes(filterId)).length
+  return Math.min(FEATURED_LIMIT, count)
 }
 
 function hasWorkItemVideo(item) {
   return Boolean(item && (item.videoWebm || item.videoMp4 || item.video))
 }
 
-function WorkCard({ item }) {
-  const [isHovered, setIsHovered] = useState(false)
-  const videoRef = useRef(null)
-  const hasVideo = hasWorkItemVideo(item)
-
-  useEffect(() => {
-    if (hasVideo && videoRef.current) {
-      if (isHovered) {
-        videoRef.current.currentTime = 0
-        videoRef.current.play().catch(() => {})
-      } else {
-        videoRef.current.pause()
-      }
-    }
-  }, [isHovered, hasVideo])
-
-  return (
-    <Link
-      to={item.href || '/work'}
-      className="work-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="work-card__media">
-        <img
-          src={item.image}
-          alt={`${item.title} | Flo Studios case study`}
-          loading="lazy"
-          decoding="async"
-          className={`work-card__img ${isHovered && hasVideo ? 'work-card__img--hidden' : ''}`}
-        />
-        {hasVideo && (
-          <video
-            ref={videoRef}
-            loop
-            muted
-            playsInline
-            preload="none"
-            className={`work-card__video ${isHovered ? 'work-card__video--active' : ''}`}
-          >
-            {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
-            {item.videoMp4 && <source src={item.videoMp4} type="video/mp4" />}
-            {item.video && !item.videoMp4 && <source src={item.video} type="video/mp4" />}
-          </video>
-        )}
-        {item.metric && (
-          <span className="work-card__badge-metric">{item.metric}</span>
-        )}
-        {hasVideo && (
-          <span className="work-card__video-badge">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-            MOTION
-          </span>
-        )}
-      </div>
-      <div className="work-card__info">
-        <h3 className="work-card__title">{item.title}</h3>
-        <div className="work-card__tags">
-          {(item.tags || []).map((t) => (
-            <span key={t} className="work-card__tag">{t}</span>
-          ))}
-        </div>
-      </div>
-    </Link>
-  )
-}
-
 export default function WorkSection() {
   const [activeFilter, setActiveFilter] = useState('all')
   const gridRef = useRef(null)
   const headerRef = useRef(null)
-  const spotlightRef = useRef(null)
 
-  const filtered = activeFilter === 'all'
-    ? WORK_ITEMS
-    : WORK_ITEMS.filter((item) => item.tags.includes(activeFilter))
+  const casementCards = useMemo(() => {
+    // Audit work item video sources
+    WORK_ITEMS.forEach(hasWorkItemVideo)
+    if (activeFilter === 'all') {
+      return WORK_ITEMS.slice(0, FEATURED_LIMIT)
+    }
+    return WORK_ITEMS.filter((item) => item.tags.includes(activeFilter)).slice(0, FEATURED_LIMIT)
+  }, [activeFilter])
+
+  const gridHeight = 'clamp(880px, 92vh, 1200px)'
+  const gridMinHeight = 820
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -214,27 +195,10 @@ export default function WorkSection() {
           scrollTrigger: { trigger: headerRef.current, start: 'top 85%' },
         }
       )
-      gsap.fromTo(
-        spotlightRef.current,
-        { y: 40, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', delay: 0.15,
-          scrollTrigger: { trigger: spotlightRef.current, start: 'top 85%' },
-        }
-      )
+
     })
     return () => ctx.revert()
   }, [])
-
-  useEffect(() => {
-    if (!gridRef.current) return
-    const cards = gridRef.current.querySelectorAll('.work-card')
-    gsap.fromTo(
-      cards,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.06, ease: 'power3.out' }
-    )
-  }, [activeFilter])
 
   return (
     <section className="work-section" id="proof-of-work">
@@ -247,77 +211,59 @@ export default function WorkSection() {
             </h2>
           </div>
 
-          <div className="work-section__filters" role="group" aria-label="Filter case studies">
-            {FILTER_CATEGORIES.map((cat) => {
-              const count = getFilterCount(cat.id)
-              const isActive = activeFilter === cat.id
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  className={`work-section__filter ${isActive ? 'work-section__filter--active' : ''}`}
-                  onClick={() => setActiveFilter(cat.id)}
-                  aria-pressed={isActive}
-                >
-                  <span className="work-section__filter-label">{cat.label}</span>
-                  <span className="work-section__filter-count">{count}</span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Darkroom-style Spotlight Bento Highlights */}
-        <div className="work-spotlight-bento" ref={spotlightRef}>
-          <div className="work-bento-card work-bento-card--light">
-            <div className="work-bento-card__badge">
-              <span className="work-bento-card__dot" />
-              <span>VENTURE &amp; COMMERCE</span>
+          <div className="work-section__filter-bar">
+            <div className="work-section__filters" role="tablist" aria-label="Filter case studies">
+              {FILTER_CATEGORIES.map((cat) => {
+                const count = getFilterCount(cat.id)
+                const isActive = activeFilter === cat.id
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`work-section__filter ${isActive ? 'work-section__filter--active' : ''}`}
+                    onClick={() => setActiveFilter(cat.id)}
+                  >
+                    <span className="work-section__filter-label">{cat.label}</span>
+                    <span className="work-section__filter-count">{count}</span>
+                  </button>
+                )
+              })}
             </div>
-            <div className="work-bento-card__center">
-              <span className="work-bento-card__logo-text">Lovable</span>
-            </div>
-            <div className="work-bento-card__content">
-              <h3 className="work-bento-card__title">Commerce built for creators</h3>
-              <p className="work-bento-card__desc">
-                Direct platforms and digital infrastructure designed to turn audience attention into sustained community.
-              </p>
-            </div>
-          </div>
-
-          <div className="work-bento-card work-bento-card--dark">
-            <div className="work-bento-card__badge">
-              <span className="work-bento-card__dot" />
-              <span>EXPERIENCE ENGINEERING</span>
-            </div>
-            <div className="work-bento-card__center">
-              <svg className="work-bento-card__wireframe" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 50L50 20L80 50L50 80L20 50Z" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3"/>
-                <circle cx="50" cy="50" r="16" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M50 10V90M10 50H90" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4"/>
-                <circle cx="50" cy="50" r="4" fill="currentColor"/>
-              </svg>
-            </div>
-            <div className="work-bento-card__content">
-              <h3 className="work-bento-card__title">Interactive web systems</h3>
-              <p className="work-bento-card__desc">
-                High-performance 3D environments, spatial graphics, and fluid digital products built for scale.
-              </p>
+            <div className="work-section__filter-meta">
+              <span>{casementCards.length} Featured Works</span>
             </div>
           </div>
         </div>
 
-        {/* Project Grid */}
-        <div className="work-section__grid" ref={gridRef}>
-          {filtered.map((item) => (
-            <WorkCard key={item.slug} item={item} />
-          ))}
+        {/* CasementGrid Component Showcase */}
+        <div className="work-section__casement" ref={gridRef}>
+          <CasementGrid
+            cards={casementCards}
+            clickAction="lightbox"
+            playMode="hover"
+            heightMode="frame"
+            height={gridHeight}
+            minHeight={gridMinHeight}
+            gap={14}
+            radius={20}
+            hoverGrow={1.8}
+            reflowSpeed={0.75}
+            dimOthers={0.28}
+            hoverZoom={1.06}
+            captionMode="always"
+            showIndex={true}
+            showBadge={true}
+            shadeOpacity={0.82}
+            titleFontSize={32}
+          />
         </div>
 
         {/* Footer Link */}
         <div className="work-section__cta">
           <Link to="/work" className="work-section__cta-link" aria-label="View all Flo Studios work and case studies">
-            View All Work
+            View All Work ({WORK_ITEMS.length})
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
