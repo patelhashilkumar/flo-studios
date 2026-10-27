@@ -4,7 +4,7 @@
   width: 100%;
   box-sizing: border-box;
   font-family: var(--font-manrope), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .casement-root--vh {
