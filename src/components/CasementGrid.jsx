@@ -79,6 +79,7 @@ function useQuery(query, fallback) {
 /* ------------------------------------------------------------------ */
 function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label }) {
   const ref = useRef(null)
+  const playPromiseRef = useRef(null)
 
   useEffect(() => {
     const v = ref.current
@@ -86,13 +87,26 @@ function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label
     v.muted = true
     v.defaultMuted = true
     if (playing) {
-      v.currentTime = 0
+      if (v.ended) {
+        v.currentTime = 0
+      }
       const attempt = v.play()
-      if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {})
+      playPromiseRef.current = attempt
+      if (attempt && typeof attempt.catch === 'function') {
+        attempt.catch(() => {})
+      }
     } else {
-      v.pause()
+      if (playPromiseRef.current) {
+        playPromiseRef.current
+          .then(() => {
+            if (!v.paused) v.pause()
+          })
+          .catch(() => {})
+      } else {
+        v.pause()
+      }
     }
-  }, [playing, src])
+  }, [playing])
 
   useEffect(() => {
     const v = ref.current
@@ -101,19 +115,16 @@ function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label
     }
   }, [])
 
-  const directSrc = videoMp4 || videoWebm || src
-
   return (
     <video
       ref={ref}
       className={className}
-      src={directSrc || undefined}
       poster={poster}
       muted
       loop
       playsInline
       disablePictureInPicture
-      preload="metadata"
+      preload="auto"
       aria-label={label}
     >
       {videoWebm && <source src={videoWebm} type="video/webm" />}
@@ -545,14 +556,14 @@ export default function CasementGrid({
   gap = 12,
   radius = 16,
   mirror = false,
-  hoverGrow = 1.75,
+  hoverGrow = 1.3,
   dimOthers = 0.28,
-  reflowSpeed = 0.75,
+  reflowSpeed = 0.35,
   hoverZoom = 1.05,
   playMode = 'hover',
   captionMode = 'always',
-  showIndex = true,
-  showBadge = true,
+  showIndex = false,
+  showBadge = false,
   tileColor = '#111215',
   textColor = '#ffffff',
   shadeColor = '#000000',
@@ -605,6 +616,21 @@ export default function CasementGrid({
   const fieldH = frame ? frame.h : REST_FRAME.h
 
   const tree = useMemo(() => planBento(count, restWeights, fieldW, fieldH), [count, restWeights, fieldW, fieldH])
+  const restBoxes = useMemo(() => boxesFor(tree, count, restWeights, mirror), [tree, count, restWeights, mirror])
+
+  const litRafRef = useRef(null)
+  const setLitThrottled = useCallback((nextIndex) => {
+    if (litRafRef.current) cancelAnimationFrame(litRafRef.current)
+    litRafRef.current = requestAnimationFrame(() => {
+      setLit(nextIndex)
+    })
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (litRafRef.current) cancelAnimationFrame(litRafRef.current)
+    }
+  }, [])
 
   const grows = hoverGrow > 1.001 && !still && fieldW >= 480
   const liveWeights = useMemo(() => {
@@ -619,6 +645,7 @@ export default function CasementGrid({
   const boxOpen = clickAction === 'lightbox' && openAt >= 0 && openAt < count
 
   const openCard = useCallback((i) => {
+    if (litRafRef.current) cancelAnimationFrame(litRafRef.current)
     setOpenAt(i)
     setLit(-1)
   }, [])
@@ -674,12 +701,13 @@ export default function CasementGrid({
         ref={fieldRef}
         className="casement-field"
         style={{ inset: `${inset}px` }}
-        onPointerLeave={() => setLit(-1)}
+        onPointerLeave={() => setLitThrottled(-1)}
       >
         {cards.map((card, i) => {
           const b = boxes[i]
           if (!b) return null
-          const fit = textFit(b.w * fieldW - gap, b.h * fieldH - gap, titleFontSize)
+          const restB = restBoxes[i] || b
+          const fit = textFit(restB.w * fieldW - gap, restB.h * fieldH - gap, titleFontSize)
           const playing = card.kind === 'video' && inView && !boxOpen && (playHover ? lit === i : !still)
 
           return (
@@ -700,7 +728,7 @@ export default function CasementGrid({
               showIndex={showIndex}
               showBadge={showBadge}
               clickAction={clickAction}
-              onLight={setLit}
+              onLight={setLitThrottled}
               onOpen={openCard}
               bindRef={(node) => {
                 tileRefs.current[i] = node

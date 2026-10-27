@@ -15,6 +15,7 @@
 .casement-field {
   position: absolute;
   inset: 0;
+  contain: layout;
 }
 
 .casement-tile {
@@ -35,14 +36,17 @@
   -webkit-tap-highlight-color: transparent;
   opacity: 0;
   contain: layout paint;
-  will-change: left, top, width, height;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
   transition:
-    left var(--cg-flow, 0.75s) cubic-bezier(0.22, 0.9, 0.12, 1),
-    top var(--cg-flow, 0.75s) cubic-bezier(0.22, 0.9, 0.12, 1),
-    width var(--cg-flow, 0.75s) cubic-bezier(0.22, 0.9, 0.12, 1),
-    height var(--cg-flow, 0.75s) cubic-bezier(0.22, 0.9, 0.12, 1),
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.3s ease,
+    left var(--cg-flow, 0.35s) cubic-bezier(0.16, 1, 0.3, 1),
+    top var(--cg-flow, 0.35s) cubic-bezier(0.16, 1, 0.3, 1),
+    width var(--cg-flow, 0.35s) cubic-bezier(0.16, 1, 0.3, 1),
+    height var(--cg-flow, 0.35s) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .casement-go {
@@ -51,9 +55,10 @@
 
 .casement-tile:hover,
 .casement-tile.casement-lit {
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  border-color: rgba(255, 255, 255, 0.38);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  transform: translate3d(0, -5px, 0);
+  z-index: 10;
 }
 
 .casement-shown .casement-tile {
@@ -74,14 +79,16 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  transform: scale(1.001);
-  transition: transform 1.2s cubic-bezier(0.22, 0.9, 0.12, 1);
+  transform: translate3d(0, 0, 0) scale(1.001);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .casement-tile:hover .casement-media,
 .casement-tile:focus-visible .casement-media,
 .casement-tile.casement-lit .casement-media {
-  transform: scale(var(--cg-hover-zoom, 1.06));
+  transform: translate3d(0, 0, 0) scale(var(--cg-hover-zoom, 1.05));
 }
 
 .casement-blank {
@@ -173,9 +180,7 @@
   left: 14px;
   padding: 5px 12px;
   border-radius: 999px;
-  background: rgba(14, 15, 18, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(14, 15, 18, 0.88);
   color: #ffffff;
   font-size: 11.5px;
   font-weight: 700;
@@ -190,8 +195,8 @@
 
 .casement-tile:hover .casement-chip,
 .casement-tile.casement-lit .casement-chip {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .casement-badge {
@@ -206,9 +211,7 @@
   justify-content: center;
   color: #ffffff;
   pointer-events: none;
-  background: rgba(14, 15, 18, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(14, 15, 18, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   transition: background 0.3s ease, border-color 0.3s ease;
@@ -217,8 +220,8 @@
 
 .casement-tile:hover .casement-badge,
 .casement-tile.casement-lit .casement-badge {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .casement-badge--label {

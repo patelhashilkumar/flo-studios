@@ -248,13 +248,13 @@ export default function WorkSection() {
             minHeight={gridMinHeight}
             gap={14}
             radius={20}
-            hoverGrow={1.8}
-            reflowSpeed={0.75}
+            hoverGrow={1.3}
+            reflowSpeed={0.35}
             dimOthers={0.28}
             hoverZoom={1.06}
             captionMode="always"
-            showIndex={true}
-            showBadge={true}
+            showIndex={false}
+            showBadge={false}
             shadeOpacity={0.82}
             titleFontSize={32}
           />
