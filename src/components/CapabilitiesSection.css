@@ -126,7 +126,7 @@
 
 .capabilities-item__content {
   padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  padding-left: clamp(2.75rem, 5vw, 4.5rem);
+  padding-left: 0;
   max-width: 820px;
 }
 

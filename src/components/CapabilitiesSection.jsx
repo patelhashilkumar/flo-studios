@@ -111,7 +111,6 @@ export default function CapabilitiesSection() {
                   id={`capability-header-${item.id}`}
                 >
                   <div className="capabilities-item__left">
-                    <span className="capabilities-item__num">{item.num}</span>
                     <span className="capabilities-item__name">{item.title}</span>
                   </div>
 

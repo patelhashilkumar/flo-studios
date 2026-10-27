@@ -13,7 +13,7 @@ const WORK_ITEMS = [
     title: 'ABSTRUCT',
     slug: 'abstruct',
     href: '/work/abstruct',
-    tags: ['brand'],
+    tags: ['creator', 'brand'],
     category: 'Brand Identity',
     image: '/work/abstruct/web/moodboard.jpg',
     metric: 'Construction Identity',
@@ -23,7 +23,7 @@ const WORK_ITEMS = [
   {
     title: 'Apple Product Motion',
     slug: 'apple-motion',
-    tags: ['motion', 'product'],
+    tags: ['creator', 'development', 'motion', 'product'],
     category: 'CGI & 3D Motion',
     image: MOTION_REELS.apple.poster,
     videoWebm: MOTION_REELS.apple.webm,
@@ -35,7 +35,7 @@ const WORK_ITEMS = [
   {
     title: 'Blitzit 2.0 Interface',
     slug: 'blitzit-motion',
-    tags: ['motion', 'product'],
+    tags: ['development', 'creator', 'motion', 'product'],
     category: 'App & Micro-Interactions',
     image: MOTION_REELS.blitzit.poster,
     videoWebm: MOTION_REELS.blitzit.webm,
@@ -47,7 +47,7 @@ const WORK_ITEMS = [
   {
     title: 'SV Studio Showreel',
     slug: 'sv-showreel',
-    tags: ['motion', 'brand'],
+    tags: ['creator', 'motion', 'brand'],
     category: 'Direction & Animation',
     image: MOTION_REELS.sv.poster,
     videoWebm: MOTION_REELS.sv.webm,
@@ -59,7 +59,7 @@ const WORK_ITEMS = [
   {
     title: 'Deadstock Coffee',
     slug: 'deadstock-coffee',
-    tags: ['product'],
+    tags: ['development', 'product'],
     category: 'Development',
     image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/',
     metric: '+140% Conversion',
@@ -69,7 +69,7 @@ const WORK_ITEMS = [
   {
     title: 'Flo Playspace',
     slug: 'playspace',
-    tags: ['product'],
+    tags: ['development', 'product'],
     category: 'Interactive Web',
     image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/',
     metric: 'Innovation by Design',
@@ -79,7 +79,7 @@ const WORK_ITEMS = [
   {
     title: 'Feeld',
     slug: 'feeld-app',
-    tags: ['product'],
+    tags: ['development', 'product'],
     category: 'Product Strategy',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/',
     metric: 'App of the Day',
@@ -89,7 +89,7 @@ const WORK_ITEMS = [
   {
     title: 'ŌURA',
     slug: 'oura-app',
-    tags: ['product'],
+    tags: ['development', 'product'],
     category: 'Digital Product',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
     metric: 'Flagship Experience',
@@ -99,7 +99,7 @@ const WORK_ITEMS = [
   {
     title: 'Perfected',
     slug: 'perfected',
-    tags: ['brand', 'marketing'],
+    tags: ['creator', 'brand', 'marketing'],
     category: 'Brand Strategy',
     image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/',
     metric: 'Global Identity',
@@ -109,7 +109,7 @@ const WORK_ITEMS = [
   {
     title: 'Iru',
     slug: 'iru-launch',
-    tags: ['brand', 'marketing'],
+    tags: ['creator', 'brand', 'marketing'],
     category: '0 to 1 Launch',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/1245eb7b86/iru_teaser_thumbnail.jpg/m/',
     metric: '0 to 1 Launch',
@@ -119,7 +119,7 @@ const WORK_ITEMS = [
   {
     title: 'Shutterfly',
     slug: 'shutterfly',
-    tags: ['brand', 'marketing'],
+    tags: ['development', 'creator', 'brand', 'marketing'],
     category: 'Design Systems',
     image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/',
     metric: 'Design System',
@@ -129,7 +129,7 @@ const WORK_ITEMS = [
   {
     title: 'Build Week',
     slug: 'build-week',
-    tags: ['brand', 'marketing', 'product'],
+    tags: ['development', 'creator', 'brand', 'marketing', 'product'],
     category: 'Venture & Launch',
     image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/',
     metric: 'Brand & Launch',
@@ -139,7 +139,7 @@ const WORK_ITEMS = [
   {
     title: 'AlphaSense',
     slug: 'alphasense',
-    tags: ['marketing'],
+    tags: ['creator', 'marketing'],
     category: 'Enterprise Motion',
     image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/',
     metric: 'Enterprise Campaign',
@@ -150,10 +150,8 @@ const WORK_ITEMS = [
 
 const FILTER_CATEGORIES = [
   { id: 'all', label: 'All' },
-  { id: 'product', label: 'Development' },
-  { id: 'motion', label: 'Motion & 3D' },
-  { id: 'brand', label: 'Brand Identity' },
-  { id: 'marketing', label: 'Campaigns' },
+  { id: 'development', label: 'Development' },
+  { id: 'creator', label: 'Creator' },
 ]
 
 const FEATURED_LIMIT = 5
