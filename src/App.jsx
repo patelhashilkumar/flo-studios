@@ -43,6 +43,8 @@ const ArticlePage = lazyWithRetry(() => import('./pages/ArticlePage'))
 const ContactPage = lazyWithRetry(() => import('./pages/ContactPage'))
 const CareersPage = lazyWithRetry(() => import('./pages/CareersPage'))
 const AdminPage = lazyWithRetry(() => import('./pages/AdminPage'))
+const PrivacyPage = lazyWithRetry(() => import('./pages/PrivacyPage'))
+const TermsPage = lazyWithRetry(() => import('./pages/TermsPage'))
 const NotFoundPage = lazyWithRetry(() => import('./pages/NotFoundPage'))
 
 function RouteFallback() {
@@ -75,6 +77,10 @@ export default function App() {
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/terms-of-use" element={<Navigate to="/terms" replace />} />
 
               {/* Common Alias Redirects */}
               <Route path="/career" element={<Navigate to="/careers" replace />} />

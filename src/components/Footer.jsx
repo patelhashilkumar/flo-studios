@@ -105,8 +105,8 @@ export default function Footer({ dark: explicitDark }) {
                 © {new Date().getFullYear()} Flo Studios. All rights reserved.
               </p>
               <div className="lg-footer__legal">
-                <Link to="/" className="lg-footer__legal-link">Privacy Policy</Link>
-                <Link to="/" className="lg-footer__legal-link">Terms of Use</Link>
+                <Link to="/privacy" className="lg-footer__legal-link">Privacy Policy</Link>
+                <Link to="/terms" className="lg-footer__legal-link">Terms of Use</Link>
               </div>
             </div>
 
