@@ -76,9 +76,6 @@ export default function Footer({ dark: explicitDark }) {
               <div className="lg-footer__nav-list">
                 <Link to="/services?division=development" className="lg-footer__link">Development Division</Link>
                 <Link to="/services?division=creator" className="lg-footer__link">Creator Division</Link>
-                <Link to="/services?division=development" className="lg-footer__link">Full Build Lifecycle</Link>
-                <Link to="/services?division=creator" className="lg-footer__link">Media Engine</Link>
-                <Link to="/work" className="lg-footer__link">Selected Work</Link>
               </div>
             </div>
 
