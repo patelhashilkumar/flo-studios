@@ -195,7 +195,7 @@ export default function ContactPage() {
 
               <div className="contact-channels-direct">
                 <span>Direct inquiries: </span>
-                <a href="mailto:hello@flostudio.co" className="contact-channels-email">hello@flostudio.co</a>
+                <a href="mailto:theflostudios0@gmail.com" className="contact-channels-email">theflostudios0@gmail.com</a>
               </div>
             </div>
           </div>
@@ -227,9 +227,9 @@ export default function ContactPage() {
               <h3 className="contact-page__office-city">Worldwide / Remote</h3>
               <p className="contact-page__office-addr">
                 Partnering with creators & ambitious companies globally.<br/>
-                hello@flostudio.co
+                theflostudios0@gmail.com
               </p>
-              <a href="mailto:hello@flostudio.co" className="contact-page__office-link">
+              <a href="mailto:theflostudios0@gmail.com" className="contact-page__office-link">
                 Email Studio Directly →
               </a>
             </div>

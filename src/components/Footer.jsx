@@ -92,7 +92,7 @@ export default function Footer({ dark: explicitDark }) {
                 </div>
                 <div className="lg-footer__info-block">
                   <p className="lg-footer__info-primary">Global / Remote</p>
-                  <p className="lg-footer__info-secondary">Collaborating Worldwide<br />hello@flostudios.com</p>
+                  <p className="lg-footer__info-secondary">Collaborating Worldwide<br />theflostudios0@gmail.com</p>
                 </div>
               </div>
             </div>
