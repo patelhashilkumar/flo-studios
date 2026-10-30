@@ -157,6 +157,7 @@ function LiveLightbox({
   background = '#0a0b0e',
   textColor = '#ffffff',
   radius = 12,
+  showCategory = false,
 }) {
   const list = cards
   const total = list.length
@@ -387,7 +388,7 @@ function LiveLightbox({
           )}
 
           <div className="casement-lightbox-meta" onClick={stop}>
-            {card.category && <span className="casement-lightbox-category">{card.category}</span>}
+            {showCategory && card.category && <span className="casement-lightbox-category">{card.category}</span>}
             {card.title && <h3 className="casement-lightbox-title">{card.title}</h3>}
             {card.description && <p className="casement-lightbox-desc">{card.description}</p>}
             {card.link && (
@@ -426,6 +427,7 @@ function LiveTile({
   captionMode,
   showIndex,
   showBadge,
+  showCategory,
   clickAction,
   onLight,
   onOpen,
@@ -437,7 +439,7 @@ function LiveTile({
 
   const asLink = clickAction === 'link' && Boolean(card.link)
   const asButton = clickAction === 'lightbox'
-  const withText = captionMode !== 'hidden' && fit.title && Boolean(card.title || card.category)
+  const withText = captionMode !== 'hidden' && fit.title && Boolean(card.title || (showCategory && card.category))
 
   const handleClick = () => {
     if (asButton) {
@@ -529,7 +531,7 @@ function LiveTile({
           className={`casement-cap ${captionMode === 'hover' ? 'casement-cap--hover' : ''}`}
           style={{ padding: fit.pad }}
         >
-          {fit.category && card.category && <span className="casement-category">{card.category}</span>}
+          {showCategory && fit.category && card.category && <span className="casement-category">{card.category}</span>}
           {card.title && (
             <span className="casement-title" style={{ fontSize: `${fit.size}px` }}>
               {card.title}
@@ -564,6 +566,7 @@ export default function CasementGrid({
   captionMode = 'always',
   showIndex = false,
   showBadge = false,
+  showCategory = false,
   tileColor = '#111215',
   textColor = '#ffffff',
   shadeColor = '#000000',
@@ -727,6 +730,7 @@ export default function CasementGrid({
               captionMode={captionMode}
               showIndex={showIndex}
               showBadge={showBadge}
+              showCategory={showCategory}
               clickAction={clickAction}
               onLight={setLitThrottled}
               onOpen={openCard}
@@ -749,6 +753,7 @@ export default function CasementGrid({
             background="#0a0b0e"
             textColor={textColor}
             radius={radius}
+            showCategory={showCategory}
           />
         )}
       </AnimatePresence>

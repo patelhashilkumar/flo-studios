@@ -253,6 +253,7 @@ export default function WorkSection() {
             captionMode="always"
             showIndex={false}
             showBadge={false}
+            showCategory={false}
             shadeOpacity={0.82}
             titleFontSize={32}
           />
