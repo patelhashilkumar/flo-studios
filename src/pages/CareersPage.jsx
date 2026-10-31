@@ -79,9 +79,9 @@ export default function CareersPage() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        '.careers-header__title-word',
-        { y: 35, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.06, duration: 0.6, ease: 'power3.out', delay: 0.1 }
+        '.careers-header__title',
+        { y: 12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, ease: 'power2.out', delay: 0.05 }
       )
     }, heroRef)
     return () => ctx.revert()
@@ -392,13 +392,10 @@ export default function CareersPage() {
 
         {/* ── Header ── */}
         <header className="careers-header">
+          <p className="careers-header__eyebrow">Open Position</p>
           <h1 className="careers-header__title" aria-label={`Careers at Flo Studios: ${activeJob.title || 'Career Opening'}`}>
             <span className="sr-only">Careers at Flo Studios | </span>
-            {(activeJob.title || 'Career Opening').split(' ').map((word, idx) => (
-              <span key={idx} className="careers-header__title-word">
-                {word}
-              </span>
-            ))}
+            {activeJob.title || 'Career Opening'}
           </h1>
 
           <div className="careers-meta-badges">
@@ -409,8 +406,8 @@ export default function CareersPage() {
             ))}
           </div>
 
-          <a href="#application-form" onClick={handleApplyScroll} className="page-cta-btn careers-header__cta">
-            Apply for this role ↓
+          <a href="#application-form" onClick={handleApplyScroll} className="careers-header__cta">
+            Apply for this role →
           </a>
         </header>
 

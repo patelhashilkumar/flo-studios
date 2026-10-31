@@ -36,6 +36,142 @@ function getSafeExternalUrl(url) {
   return null
 }
 
+// ── Crisp SVG Line Icons (No Emojis) ──
+function IconRefresh() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+    </svg>
+  )
+}
+
+function IconDownload() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+    </svg>
+  )
+}
+
+function IconTrash() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    </svg>
+  )
+}
+
+function IconLock() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  )
+}
+
+function IconBriefcase() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
+  )
+}
+
+function IconMail() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+  )
+}
+
+function IconUsers() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  )
+}
+
+function IconList() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="8" y1="6" x2="21" y2="6" />
+      <line x1="8" y1="12" x2="21" y2="12" />
+      <line x1="8" y1="18" x2="21" y2="18" />
+      <line x1="3" y1="6" x2="3.01" y2="6" />
+      <line x1="3" y1="12" x2="3.01" y2="12" />
+      <line x1="3" y1="18" x2="3.01" y2="18" />
+    </svg>
+  )
+}
+
+function IconEdit() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+    </svg>
+  )
+}
+
+function IconStar({ filled }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill={filled ? '#f59e0b' : 'none'} stroke={filled ? '#f59e0b' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  )
+}
+
+function IconFile() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+    </svg>
+  )
+}
+
+function IconGrid() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+    </svg>
+  )
+}
+
+function IconTable() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <line x1="3" y1="9" x2="21" y2="9" />
+      <line x1="3" y1="15" x2="21" y2="15" />
+      <line x1="9" y1="3" x2="9" y2="21" />
+    </svg>
+  )
+}
+
+function IconInbox() {
+  return (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+      <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+    </svg>
+  )
+}
+
 export default function AdminPage() {
   const [unlocked, setUnlocked] = useState(false)
   const [adminEmail, setAdminEmail] = useState('')
@@ -49,6 +185,7 @@ export default function AdminPage() {
   const [submissions, setSubmissions] = useState([])
   const [jobs, setJobs] = useState([])
   const [activeTab, setActiveTab] = useState('all') // 'all' | 'message' | 'job' | 'starred' | 'cms'
+  const [viewMode, setViewMode] = useState('cards') // 'cards' | 'table'
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
 
@@ -327,7 +464,7 @@ export default function AdminPage() {
     if (success) {
       setIsJobModalOpen(false)
       setJobs(getJobs())
-      setCmsNotice(editingJobId ? '✓ Job updated in Supabase cloud' : '✓ New job created and published')
+      setCmsNotice(editingJobId ? 'Job updated in Supabase cloud' : 'New job created and published')
       setTimeout(() => setCmsNotice(''), 4000)
     }
   }
@@ -336,7 +473,7 @@ export default function AdminPage() {
     if (window.confirm(`Are you sure you want to delete the job listing "${title}"? This will remove it from the database and Careers page.`)) {
       await deleteJob(id)
       setJobs(getJobs())
-      setCmsNotice(`✓ Deleted job "${title}"`)
+      setCmsNotice(`Deleted job "${title}"`)
       setTimeout(() => setCmsNotice(''), 4000)
     }
   }
@@ -493,19 +630,22 @@ export default function AdminPage() {
                 const [s, j] = await Promise.all([loadSubmissionsFromCloud(), loadJobsFromCloud()])
                 setSubmissions(s)
                 setJobs(j)
-                setCmsNotice(`✓ Cloud sync complete: ${s.length} submission${s.length === 1 ? '' : 's'}, ${j.length} job opening${j.length === 1 ? '' : 's'}`)
+                setCmsNotice(`Cloud sync complete: ${s.length} submission${s.length === 1 ? '' : 's'}, ${j.length} job opening${j.length === 1 ? '' : 's'}`)
                 setTimeout(() => setCmsNotice(''), 4000)
               }}
               className="admin-action-pill"
               title="Refresh latest data from Supabase Cloud"
             >
-              🔄 Refresh Cloud
+              <IconRefresh />
+              <span>Refresh Cloud</span>
             </button>
             <button type="button" onClick={exportToCSV} className="admin-action-pill" title="Export as CSV">
-              📥 Export CSV
+              <IconDownload />
+              <span>Export CSV</span>
             </button>
             <button type="button" onClick={exportToJSON} className="admin-action-pill" title="Export as JSON">
-              📦 Export JSON
+              <IconDownload />
+              <span>Export JSON</span>
             </button>
             <button
               type="button"
@@ -514,7 +654,8 @@ export default function AdminPage() {
               className="admin-action-pill admin-action-pill--danger"
               title="Clear all stored submissions"
             >
-              🧹 Clear Data
+              <IconTrash />
+              <span>Clear Data</span>
             </button>
             <button
               type="button"
@@ -522,7 +663,8 @@ export default function AdminPage() {
               className="admin-action-pill admin-action-pill--subtle"
               title="Lock Admin Portal"
             >
-              🔒 Sign Out {adminUser?.email ? `(${adminUser.email})` : ''}
+              <IconLock />
+              <span>Sign Out {adminUser?.email ? `(${adminUser.email})` : ''}</span>
             </button>
           </div>
         </header>
@@ -608,7 +750,8 @@ export default function AdminPage() {
               className={`admin-tab admin-tab--cms ${activeTab === 'cms' ? 'admin-tab--active' : ''}`}
               onClick={() => setActiveTab('cms')}
             >
-              💼 Manage Jobs (CMS) <span className="admin-tab__count">{jobs.length}</span>
+              <IconBriefcase />
+              <span>Manage Jobs</span> <span className="admin-tab__count">{jobs.length}</span>
             </button>
           </div>
 
@@ -628,8 +771,12 @@ export default function AdminPage() {
                     onClick={() => setSearchQuery('')}
                     className="admin-search-clear"
                     title="Clear search"
+                    aria-label="Clear search"
                   >
-                    ✕
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
                   </button>
                 )}
               </div>
@@ -657,6 +804,29 @@ export default function AdminPage() {
                 )}
                 <option value="archived">Archived</option>
               </select>
+
+              <div className="admin-view-toggle" role="group" aria-label="View format">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('cards')}
+                  className={`admin-view-toggle__btn ${viewMode === 'cards' ? 'admin-view-toggle__btn--active' : ''}`}
+                  title="Detailed cards view"
+                  aria-pressed={viewMode === 'cards'}
+                >
+                  <IconGrid />
+                  <span>Cards</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('table')}
+                  className={`admin-view-toggle__btn ${viewMode === 'table' ? 'admin-view-toggle__btn--active' : ''}`}
+                  title="Dense table view"
+                  aria-pressed={viewMode === 'table'}
+                >
+                  <IconTable />
+                  <span>Table</span>
+                </button>
+              </div>
             </div>
           )}
         </section>
@@ -721,8 +891,8 @@ export default function AdminPage() {
                     </p>
 
                     <div className="admin-job-card__kpi">
-                      <span>👥 {jobCandidateCount} Applicant{jobCandidateCount === 1 ? '' : 's'}</span>
-                      <span>📋 {(job.responsibilities || []).length} Responsibilities</span>
+                      <span><IconUsers /> {jobCandidateCount} Applicant{jobCandidateCount === 1 ? '' : 's'}</span>
+                      <span><IconList /> {(job.responsibilities || []).length} Responsibilities</span>
                     </div>
 
                     <div className="admin-job-card__actions">
@@ -731,21 +901,23 @@ export default function AdminPage() {
                         onClick={() => handleOpenEditJob(job)}
                         className="admin-action-pill"
                       >
-                        ✏️ Edit Job
+                        <IconEdit />
+                        <span>Edit Job</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDeleteJob(job.id, job.title)}
                         className="admin-action-pill admin-action-pill--danger"
                       >
-                        🗑️ Delete
+                        <IconTrash />
+                        <span>Delete</span>
                       </button>
                       <Link
                         to="/careers"
                         target="_blank"
                         className="admin-action-pill admin-action-pill--subtle"
                       >
-                        ↗ View Live
+                        <span>View Live ↗</span>
                       </Link>
                     </div>
                   </div>
@@ -758,7 +930,7 @@ export default function AdminPage() {
           <section className="admin-feed">
             {filteredSubmissions.length === 0 ? (
               <div className="admin-empty">
-                <span className="admin-empty__icon">📭</span>
+                <span className="admin-empty__icon"><IconInbox /></span>
                 <h3 className="admin-empty__title">No Submissions Found</h3>
                 <p className="admin-empty__desc">
                   {searchQuery
@@ -779,6 +951,134 @@ export default function AdminPage() {
                   </button>
                 )}
               </div>
+            ) : viewMode === 'table' ? (
+              <div className="admin-table-wrap">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: 44 }} aria-label="Starred status"></th>
+                      <th style={{ width: 140 }}>Type</th>
+                      <th>Sender</th>
+                      <th>Role / Scope</th>
+                      <th style={{ width: 130 }}>Date</th>
+                      <th style={{ width: 140 }}>Status</th>
+                      <th style={{ width: 110, textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredSubmissions.map((item) => (
+                      <tr key={item.id}>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => handleToggleStar(item.id)}
+                            className={`admin-card__star ${item.starred ? 'admin-card__star--active' : ''}`}
+                            title={item.starred ? 'Unstar' : 'Star for follow up'}
+                            aria-label={item.starred ? 'Unstar' : 'Star'}
+                          >
+                            <IconStar filled={item.starred} />
+                          </button>
+                        </td>
+                        <td>
+                          <span
+                            className={`admin-card__type-pill ${
+                              item.type === 'job'
+                                ? 'admin-card__type-pill--job'
+                                : 'admin-card__type-pill--message'
+                            }`}
+                          >
+                            {item.type === 'job' ? <IconBriefcase /> : <IconMail />}
+                            <span>{item.type === 'job' ? 'Application' : 'Inquiry'}</span>
+                          </span>
+                        </td>
+                        <td>
+                          <div className="admin-table__name">{item.name}</div>
+                          <div className="admin-table__meta">
+                            <a href={`mailto:${item.email}`}>{item.email}</a>
+                            {item.phone && <span> • {item.phone}</span>}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="admin-table__name">
+                            {item.type === 'job' ? (item.role || 'Career Opening') : (item.service || 'Client Scope')}
+                          </div>
+                          {item.resumePath ? (
+                            <button
+                              type="button"
+                              onClick={() => handleViewResume(item.resumePath, item.resumeName, item.id)}
+                              className="admin-table__resume-btn"
+                              title="Open candidate resume"
+                              disabled={resumeLoadingId === item.id}
+                            >
+                              <IconLock />
+                              <span>{resumeLoadingId === item.id ? 'Loading...' : (item.resumeName || 'View Resume')}</span>
+                            </button>
+                          ) : item.portfolioUrl ? (
+                            <div className="admin-table__meta">
+                              <a href={getSafeExternalUrl(item.portfolioUrl) || '#'} target="_blank" rel="noopener noreferrer">
+                                Portfolio ↗
+                              </a>
+                            </div>
+                          ) : null}
+                        </td>
+                        <td className="admin-table__meta">
+                          {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'Recent'}
+                        </td>
+                        <td>
+                          <select
+                            value={item.status}
+                            onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                            className={`admin-card__status-pill admin-card__status-pill--${item.status}`}
+                          >
+                            {item.type === 'job' ? (
+                              <>
+                                <option value="new">New</option>
+                                <option value="reviewing">Reviewing</option>
+                                <option value="interviewing">Interviewing</option>
+                                <option value="offer">Offer</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="archived">Archived</option>
+                              </>
+                            ) : (
+                              <>
+                                <option value="new">New</option>
+                                <option value="reviewed">Reviewed</option>
+                                <option value="contacted">Contacted</option>
+                                <option value="archived">Archived</option>
+                              </>
+                            )}
+                          </select>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <div className="admin-table__actions">
+                            <a
+                              href={`mailto:${encodeURIComponent(item.email)}?subject=${encodeURIComponent(
+                                item.type === 'job'
+                                  ? `Flo Studios Application - ${item.role}`
+                                  : `Flo Studios Inquiry - Project Scope`
+                              )}`}
+                              className="admin-action-pill admin-action-pill--subtle"
+                              title="Reply via email"
+                              aria-label="Reply via email"
+                            >
+                              <IconMail />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => handleDelete(item.id, item.name)}
+                              className="admin-action-pill admin-action-pill--danger"
+                              title="Delete submission"
+                              aria-label="Delete submission"
+                            >
+                              <IconTrash />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <div className="admin-list">
                 {filteredSubmissions.map((item) => (
@@ -796,8 +1096,9 @@ export default function AdminPage() {
                           onClick={() => handleToggleStar(item.id)}
                           className={`admin-card__star ${item.starred ? 'admin-card__star--active' : ''}`}
                           title={item.starred ? 'Unstar' : 'Star for follow up'}
+                          aria-label={item.starred ? 'Unstar' : 'Star for follow up'}
                         >
-                          {item.starred ? '★' : '☆'}
+                          <IconStar filled={item.starred} />
                         </button>
 
                         <span
@@ -807,7 +1108,8 @@ export default function AdminPage() {
                               : 'admin-card__type-pill--message'
                           }`}
                         >
-                          {item.type === 'job' ? '💼 Job Application' : '✉️ Client Inquiry'}
+                          {item.type === 'job' ? <IconBriefcase /> : <IconMail />}
+                          <span>{item.type === 'job' ? 'Job Application' : 'Client Inquiry'}</span>
                         </span>
 
                         <span className="admin-card__date">
@@ -919,12 +1221,15 @@ export default function AdminPage() {
                           title="Open private candidate resume from Supabase Storage"
                           disabled={resumeLoadingId === item.id}
                         >
-                          <span aria-hidden="true">🔒</span>{' '}
-                          {resumeLoadingId === item.id ? 'Generating Secure Link...' : `View Private Resume (${item.resumeName || 'Document'})`}
+                          <IconLock />
+                          <span>
+                            {resumeLoadingId === item.id ? 'Generating Secure Link...' : `View Private Resume (${item.resumeName || 'Document'})`}
+                          </span>
                         </button>
                       ) : item.resumeName ? (
                         <span className="admin-resume-warning" title="Document metadata saved">
-                          📄 {item.resumeName}
+                          <IconFile />
+                          <span>{item.resumeName}</span>
                         </span>
                       ) : null}
 
@@ -937,14 +1242,16 @@ export default function AdminPage() {
                           )}`}
                           className="admin-card__action-btn"
                         >
-                          ✉️ Reply
+                          <IconMail />
+                          <span>Reply</span>
                         </a>
                         <button
                           type="button"
                           onClick={() => handleDelete(item.id, item.name)}
                           className="admin-card__action-btn admin-card__action-btn--delete"
                         >
-                          🗑️ Delete
+                          <IconTrash />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </div>
@@ -977,8 +1284,12 @@ export default function AdminPage() {
                   type="button"
                   onClick={() => setIsJobModalOpen(false)}
                   className="admin-modal-close"
+                  aria-label="Close dialog"
                 >
-                  ✕
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </button>
               </div>
 

@@ -686,14 +686,95 @@ export default function AboutPage() {
       {/* ── Section 4: Team Addition Callout Banner (Image 3) ── */}
       <section className="about-banner-section" data-theme="light">
         <div className="container about-banner-section__container about__reveal">
-          <h2 className="about-banner-section__title">
-            Think you'd be a good addition to our team?
-          </h2>
-          <div className="about-banner-section__cta">
-            <Link to="/careers" className="about-banner-section__btn">
-              <span>Careers</span>
-              <span className="about-banner-section__arrow" aria-hidden="true">→</span>
-            </Link>
+          <div className="about-banner-card">
+            {/* Background matrix of soft rounded squares / tiles */}
+            <svg
+              className="about-banner-card__tiles"
+              viewBox="0 0 1020 280"
+              fill="none"
+              preserveAspectRatio="xMidYMid slice"
+              aria-hidden="true"
+            >
+              {/* Row 0 */}
+              <rect x="20" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="88" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="156" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="224" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="292" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="360" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="428" y="16" width="56" height="56" rx="12" fill="#e2e2e6" />
+              <rect x="496" y="16" width="56" height="56" rx="12" fill="#eaebee" />
+              <rect x="564" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="632" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="700" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="768" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="836" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="904" y="16" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+
+              {/* Row 1 */}
+              <rect x="20" y="84" width="56" height="56" rx="12" fill="#f2f2f5" />
+              <rect x="88" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="156" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="224" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="292" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="360" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="428" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="496" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="564" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="632" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="700" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="768" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="836" y="84" width="56" height="56" rx="12" fill="#f2f2f5" />
+              <rect x="904" y="84" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+
+              {/* Row 2 */}
+              <rect x="20" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="88" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="156" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="224" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="292" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="360" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="428" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="496" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="564" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="632" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="700" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="768" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="836" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="904" y="152" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+
+              {/* Row 3 */}
+              <rect x="20" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="88" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="156" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="224" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="292" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="360" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="428" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="496" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="564" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="632" y="220" width="56" height="56" rx="12" fill="#e9eaed" />
+              <rect x="700" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="768" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="836" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+              <rect x="904" y="220" width="56" height="56" rx="12" fill="#fafafb" stroke="rgba(0,0,0,0.03)" />
+            </svg>
+
+            <div className="about-banner-card__content">
+              <h2 className="about-banner-card__title">
+                Think you'd be a good<br />addition to our team?
+              </h2>
+            </div>
+
+            <div className="about-banner-card__cta">
+              <Link to="/careers" className="about-banner-card__circle" aria-label="Careers at Flo Studios">
+                <div className="about-banner-card__dashed-ring" aria-hidden="true" />
+                <div className="about-banner-card__circle-inner">
+                  <span className="about-banner-card__circle-text">Careers</span>
+                  <span className="about-banner-card__circle-arrow" aria-hidden="true">→</span>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
