@@ -10,9 +10,9 @@
   --about-ink-2: color-mix(in srgb, var(--about-ink) 65%, transparent);
   --about-ink-3: color-mix(in srgb, var(--about-ink) 40%, transparent);
   --about-line: color-mix(in srgb, var(--about-ink) 12%, transparent);
-  --about-band: color-mix(in srgb, var(--about-ink) 4%, var(--about-bg));
+  --about-band: #ffffff;
   --about-radius: 20px;
-  background: var(--about-bg);
+  background: #ffffff;
   color: var(--about-ink);
   transition: --about-ink 0.5s, --about-bg 0.5s;
   overflow: hidden;
@@ -103,14 +103,14 @@
 
 .about__strip-track { display: flex; gap: 1.5rem; width: max-content; animation: about-marquee 40s linear infinite; }
 .about__strip:hover .about__strip-track { animation-play-state: paused; }
-.about__strip-card { flex: none; width: clamp(280px, 42vw, 620px); aspect-ratio: 4 / 3; border-radius: var(--about-radius); overflow: hidden; background: var(--about-band); }
+.about__strip-card { flex: none; width: clamp(280px, 42vw, 620px); aspect-ratio: 4 / 3; border-radius: var(--about-radius); overflow: hidden; background: var(--about-band); border: 1px solid var(--about-line); }
 .about__strip-card img { width: 100%; height: 100%; object-fit: cover; }
 @keyframes about-marquee { to { transform: translateX(calc(-50% - 0.75rem)); } }
 
 /* Who we are: bento of cards on a tinted band */
 .about .about__who { background: var(--about-band); }
 .about__bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.about__card { background: var(--about-bg); border-radius: var(--about-radius); padding: 2rem; }
+.about__card { background: var(--about-bg); border-radius: var(--about-radius); padding: 2rem; border: 1px solid var(--about-line); }
 .about__card:nth-child(2) { transition-delay: 0.1s; }
 .about__card:nth-child(3) { transition-delay: 0.2s; }
 .about__num { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1; display: block; }
@@ -310,7 +310,7 @@
 .about-split {
   padding: clamp(4.5rem, 8vw, 7.5rem) 0;
   position: relative;
-  background: #eaeaea;
+  background: #ffffff;
   color: #121214;
 }
 
@@ -765,7 +765,7 @@
 /* ── Section 4: Team Addition Callout Banner (Image 3) ── */
 .about-banner-section {
   padding: clamp(3.5rem, 6vw, 6rem) 0 clamp(5rem, 8vw, 8rem);
-  background: transparent;
+  background: #ffffff;
   border-top: none;
 }
 

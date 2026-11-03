@@ -332,7 +332,7 @@ export default function AboutPage() {
       </section>
 
       {/* The Studio: Stats & Pillars */}
-      <section className="about__who" data-theme="dark">
+      <section className="about__who" data-theme="light">
         <div className="container">
           <div className="about__head about__reveal">
             <h2 className="about__h2">The Studio</h2>
@@ -389,7 +389,7 @@ export default function AboutPage() {
       </section>
 
       {/* Co-Founders */}
-      <section className="about__leadership" data-theme="dark">
+      <section className="about__leadership" data-theme="light">
         <div className="container">
           <div className="about__head about__reveal">
             <h2 className="about__h2">Co-Founders</h2>
@@ -442,12 +442,10 @@ export default function AboutPage() {
           <div className="about-split__content about__reveal">
             <h2 className="about-split__title">Who we are</h2>
             <p className="about-split__text">
-              We're nerds with taste. Strategy geeks.<br />
-              Design freaks. Deep thinkers. Fast makers.
+              We’re a team of strategists, designers, developers, and creators who got tired of watching good ideas get diluted from one handoff to the next. So we built a studio where the people who shape the idea are the same people who see it through to launch.
             </p>
             <p className="about-split__text">
-              Curious, detail-obsessed, and opinionated, <br />
-              all working to make work people remember.
+              Curious, detail-obsessed, and opinionated about the work, all of us accountable for what it becomes.
             </p>
             <div className="about-split__cta">
               <Link to="/services" className="about-split__btn">
@@ -599,13 +597,13 @@ export default function AboutPage() {
           <div className="about-split__content about__reveal">
             <h2 className="about-split__title">How we work</h2>
             <p className="about-split__lead">
-              Designers who code. Developers who design. Strategy and craft in the same room.
+              A specialist for every stage, and one pipeline connecting all of them.
             </p>
             <p className="about-split__text">
-              Our teams are built to remove handoffs and keep the work connected so ideas don't get watered down from concept to execution. You can see it in the quality of the work and in how quickly it gets there.
+              Most founders end up stitching together a strategy agency, a freelance designer, and an offshore dev team, with nobody owning the whole thing. We run all 11 stages of our pipeline, with a specialist leading each one and the full context carried forward.
             </p>
             <p className="about-split__text">
-              We hold a high bar, stay curious, and follow through. We care about the people behind the work and are always looking for ways to make the work better.
+              That way the intent behind the product travels with it from the first conversation to launch and beyond, which you can see in the quality of the work and in how quickly it gets there. We hold a high bar, stay curious, and own the outcome.
             </p>
             <p className="about-split__prompt">
               Think you'd be a good addition to the team?
@@ -620,23 +618,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Section 3: Build Week at Flo Studios (Image 4) ── */}
+      {/* ── Section 3: Flo Winter 2027 Startup Directory (Image 4) ── */}
       <section className="about-split about__build-week" data-theme="light">
         <div className="container about-split__container">
           <div className="about-split__content about__reveal">
-            <h2 className="about-split__title">Build Week at Flo Studios</h2>
+            <h2 className="about-split__title">Flo Winter 2027 Startup Directory</h2>
             <p className="about-split__text">
-              Startups and small businesses don't always have access to the same resources as larger brands. Build Week was created to help close that gap.
+              We don’t take on every project, and that’s deliberate. Each season we choose a small group of founders whose products we believe in and build alongside them from the first conversation to launch.
             </p>
             <p className="about-split__text">
-              In partnership with Vanport Studio, we bring together teams across strategy, design, and technology to help underrepresented founders move their businesses forward through work like brand systems, packaging, digital experiences, product design.
+              For Winter 2027, we’re open to inquiries from founders with a product they want to bring to life. Apply through our contact page and tell us about your idea, the stage you’re at, and what you’re hoping to build.
             </p>
             <p className="about-split__text">
-              It's a chance to apply the way we work to something bigger than ourselves: moving quickly, collaborating deeply, and building things that make a tangible difference.
+              Founders we shortlist are carried through our full pipeline, from requirements and market research to design, development, QA, and launch, with a specialist leading every stage and one studio accountable for the whole build.
             </p>
             <div className="about-split__cta">
-              <Link to="/work/build-week" className="about-split__btn">
-                <span>About Build Week</span>
+              <Link to="/contact" className="about-split__btn">
+                <span>Apply via Contact</span>
                 <span className="about-split__arrow" aria-hidden="true">→</span>
               </Link>
             </div>
@@ -645,12 +643,12 @@ export default function AboutPage() {
           <div className="about-split__visual about__reveal">
             <div
               className={`about-build-week-card ${buildWeekPaused ? 'is-paused' : ''}`}
-              aria-label="Build Week initiative card"
+              aria-label="Flo Winter 2027 Startup Directory card"
             >
               <div className="about-build-week__visual-wrap">
                 <img
                   src={BUILD_WEEK_GRAPHIC}
-                  alt="BUILD 2026 WEEK"
+                  alt="Flo Winter 2027 Startup Directory"
                   className="about-build-week__logo"
                   loading="lazy"
                 />
