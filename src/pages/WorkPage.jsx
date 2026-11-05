@@ -145,9 +145,6 @@ export default function WorkPage() {
           <div className="work-page__filter-list" role="tablist" aria-label="Filter projects by discipline">
             {FILTER_OPTIONS.map((f) => {
               const isActive = filter === f.id
-              const count = f.id === 'all'
-                ? ALL_PROJECTS.length
-                : ALL_PROJECTS.filter(p => p.category === f.id || (p.tags && p.tags.some(t => t.toLowerCase().includes(f.id)))).length
 
               return (
                 <button
@@ -159,7 +156,6 @@ export default function WorkPage() {
                   onClick={() => setFilter(f.id)}
                 >
                   <span>{f.label}</span>
-                  <span className="work-page__filter-count">{count}</span>
                 </button>
               )
             })}

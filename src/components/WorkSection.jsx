@@ -212,7 +212,6 @@ export default function WorkSection() {
           <div className="work-section__filter-bar">
             <div className="work-section__filters" role="tablist" aria-label="Filter case studies">
               {FILTER_CATEGORIES.map((cat) => {
-                const count = getFilterCount(cat.id)
                 const isActive = activeFilter === cat.id
                 return (
                   <button
@@ -224,7 +223,6 @@ export default function WorkSection() {
                     onClick={() => setActiveFilter(cat.id)}
                   >
                     <span className="work-section__filter-label">{cat.label}</span>
-                    <span className="work-section__filter-count">{count}</span>
                   </button>
                 )
               })}

@@ -106,21 +106,6 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.work-section__filter-count {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.06);
-  color: #64646e;
-  line-height: 1.2;
-}
-
-.work-section__filter--active .work-section__filter-count {
-  background: rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-}
-
 @media (max-width: 768px) {
   .work-section__filter-meta {
     display: none;

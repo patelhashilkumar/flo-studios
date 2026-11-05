@@ -710,12 +710,6 @@
   color: #ffffff;
 }
 
-.teamwall-filter-pill__count {
-  font-size: 0.72em;
-  vertical-align: super;
-  opacity: 0.85;
-}
-
 /* ── Teamwall Layout (Split Columns) ── */
 .teamwall-layout {
   display: flex;

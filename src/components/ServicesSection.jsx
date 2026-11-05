@@ -549,7 +549,6 @@ export default function ServicesSection({
                   <div className="teamwall-filters" role="tablist" aria-label="Filter stages by phase">
                     {categories.map((cat) => {
                       const isCatActive = selectedCategory === cat
-                      const count = cat === 'All' ? stages.length : stages.filter((s) => s.category === cat).length
                       return (
                         <button
                           key={cat}
@@ -563,7 +562,6 @@ export default function ServicesSection({
                           }}
                         >
                           <span className="teamwall-filter-pill__label">{cat}</span>
-                          <span className="teamwall-filter-pill__count">{count}</span>
                         </button>
                       )
                     })}

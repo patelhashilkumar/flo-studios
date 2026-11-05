@@ -97,12 +97,6 @@
   border-color: var(--work-ink) !important;
 }
 
-.work-page__filter-count {
-  font-size: 0.6875rem;
-  opacity: 0.7;
-  font-feature-settings: "tnum" 1;
-}
-
 /* Segmented View Switcher */
 .work-page__view-switcher {
   display: inline-flex;
