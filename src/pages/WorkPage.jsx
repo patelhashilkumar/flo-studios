@@ -129,7 +129,6 @@ export default function WorkPage() {
       <section className="work-page__hero">
         <div className="container">
           <div className="work-page__header">
-            <p className="work-page__eyebrow">Selected Works & Case Studies</p>
             <h1 className="work-page__title">
               Engineered for attention, clarity, and enduring impact.
             </h1>

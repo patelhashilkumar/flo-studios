@@ -70,6 +70,7 @@ export default function ContactPage() {
                     className={`contact-mode-tab ${contactMode === 'call' ? 'contact-mode-tab--active' : ''}`}
                     onClick={() => setContactMode('call')}
                   >
+                    <span className="contact-mode-tab__pulse" aria-hidden="true" />
                     <span>Book 15-Min Call</span>
                     <span className="contact-mode-tab__pill">Fastest</span>
                   </button>

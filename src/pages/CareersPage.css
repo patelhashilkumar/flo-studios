@@ -108,19 +108,6 @@
   padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.careers-header__eyebrow {
-  font-family: var(--font-manrope), sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--careers-ink-muted);
-  text-transform: uppercase;
-  margin: 0 0 1rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .careers-header__title {
   font-family: var(--font-display), var(--font-manrope), sans-serif;
   font-size: clamp(2.25rem, 5vw, 3.75rem);

@@ -392,7 +392,6 @@ export default function CareersPage() {
 
         {/* ── Header ── */}
         <header className="careers-header">
-          <p className="careers-header__eyebrow">Open Position</p>
           <h1 className="careers-header__title" aria-label={`Careers at Flo Studios: ${activeJob.title || 'Career Opening'}`}>
             <span className="sr-only">Careers at Flo Studios | </span>
             {activeJob.title || 'Career Opening'}
