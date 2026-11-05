@@ -212,9 +212,9 @@ export default function ShowcaseMotionArt({ division = 'development' }) {
     <div className="showcase-motion-card">
       <div className="showcase-motion-card__top">
         <div className="showcase-motion-card__dots">
-          <span className="sc-dot red" />
-          <span className="sc-dot yellow" />
-          <span className="sc-dot green" />
+          <span className="sc-dot" />
+          <span className="sc-dot" />
+          <span className="sc-dot" />
           <span className="showcase-motion-card__route">
             {isDev ? 'flostudios.co/platform' : 'flostudios.co/studio'}
           </span>

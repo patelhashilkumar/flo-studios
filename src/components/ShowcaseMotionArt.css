@@ -45,11 +45,8 @@
   width: 6.5px;
   height: 6.5px;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
 }
-
-.showcase-motion-card__dots .sc-dot.red { background: #ef4444; }
-.showcase-motion-card__dots .sc-dot.yellow { background: #f59e0b; }
-.showcase-motion-card__dots .sc-dot.green { background: #10b981; }
 
 .showcase-motion-card__route {
   font-family: monospace, sans-serif;

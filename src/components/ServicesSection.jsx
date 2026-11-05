@@ -462,10 +462,9 @@ export default function ServicesSection({
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       {/* Top Status Pill */}
-                      <g transform="translate(130, 18)">
-                        <rect width="120" height="20" rx="10" fill="#f0fdf4" stroke="#bbf7d0" strokeWidth="1" />
-                        <circle cx="12" cy="10" r="3" fill="#16a34a" />
-                        <text x="65" y="13.5" textAnchor="middle" fill="#15803d" fontSize="7.5" fontWeight="800" fontFamily="var(--font-manrope), sans-serif">
+                      <g transform="translate(132, 18)">
+                        <rect width="116" height="20" rx="10" fill="rgba(14, 14, 18, 0.05)" stroke="rgba(14, 14, 18, 0.12)" strokeWidth="1" />
+                        <text x="58" y="13.5" textAnchor="middle" fill="#0e0e12" fontSize="7.5" fontWeight="800" fontFamily="var(--font-manrope), sans-serif">
                           UNBROKEN PIPELINE
                         </text>
                       </g>
@@ -483,7 +482,7 @@ export default function ServicesSection({
                       <path
                         d="M 40 95 C 100 95, 120 62, 190 62 C 260 62, 280 95, 340 95"
                         className="schematic-panel__laser"
-                        stroke="#16a34a"
+                        stroke="#0e0e12"
                         strokeWidth="3.5"
                         strokeLinecap="round"
                         fill="none"

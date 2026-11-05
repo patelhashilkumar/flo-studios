@@ -107,7 +107,6 @@ function LifecycleMotionGraphicComponent({
             onClick={() => onModeChange && onModeChange('unified')}
             aria-pressed={isUnified}
           >
-            <span className="lmg-pill__dot lmg-pill__dot--unified" aria-hidden="true" />
             <span>Flo Unified Pipeline</span>
           </button>
           <button
@@ -116,7 +115,6 @@ function LifecycleMotionGraphicComponent({
             onClick={() => onModeChange && onModeChange('fracture')}
             aria-pressed={!isUnified}
           >
-            <span className="lmg-pill__dot lmg-pill__dot--fracture" aria-hidden="true" />
             <span>Multi-Vendor Handoffs</span>
           </button>
         </div>
@@ -450,14 +448,12 @@ function LifecycleMotionGraphicComponent({
       <div className="lmg-status-strip">
         {isUnified ? (
           <p className="lmg-status-text lmg-status-text--unified">
-            <span className="lmg-status-bullet" aria-hidden="true" />
             <span>
               <strong>Single Accountability:</strong> Same team carries initial product PRD through engineering to live launch.
             </span>
           </p>
         ) : (
           <p className="lmg-status-text lmg-status-text--fracture">
-            <span className="lmg-status-bullet lmg-status-bullet--alert" aria-hidden="true" />
             <span>
               <strong>Broken Handoffs:</strong> Freelancer chain drops technical context, stalls timeline, and forces rebuilds.
             </span>

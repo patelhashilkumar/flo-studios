@@ -611,7 +611,6 @@ export default function AdminPage() {
         <header className="admin-header">
           <div className="admin-header__brand">
             <div className="admin-header__logo">
-              <span className="admin-header__dot" />
               <span className="admin-header__title">FLO STUDIOS INTAKE</span>
             </div>
             <span
@@ -619,7 +618,7 @@ export default function AdminPage() {
                 isSupabaseConfigured() ? 'admin-header__status--cloud' : 'admin-header__status--local'
               }`}
             >
-              {isSupabaseConfigured() ? '● SUPABASE CLOUD SYNC' : '● LOCAL PREVIEW MODE'}
+              {isSupabaseConfigured() ? 'SUPABASE CLOUD SYNC' : 'LOCAL PREVIEW MODE'}
             </span>
           </div>
 

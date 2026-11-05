@@ -257,13 +257,6 @@
   gap: 8px;
 }
 
-.admin-header__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #16a34a;
-}
-
 .admin-header__title {
   font-family: var(--font-display), var(--font-manrope), sans-serif;
   font-size: 1.125rem;
@@ -285,9 +278,9 @@
 }
 
 .admin-header__status--cloud {
-  color: #16a34a;
-  background: rgba(22, 163, 74, 0.08);
-  border: 1px solid rgba(22, 163, 74, 0.18);
+  color: var(--admin-ink-muted);
+  background: var(--admin-subtle);
+  border: 1px solid var(--admin-border);
 }
 
 .admin-header__status--local {

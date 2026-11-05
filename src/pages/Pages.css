@@ -369,20 +369,12 @@
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
 }
 
-.contact-mode-tab__pulse {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-}
-
 .contact-mode-tab__pill {
   font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: #10b981;
+  background: #0e0e12;
   color: #ffffff;
   padding: 3px 8px;
   border-radius: 9999px;
@@ -504,8 +496,8 @@
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.09);
+  color: #0e0e12;
+  background: rgba(0, 0, 0, 0.06);
   padding: 3px 7px;
   border-radius: 6px;
   line-height: 1.2;
@@ -603,7 +595,7 @@
   font-family: var(--font-manrope), 'Manrope', sans-serif;
   font-size: 0.625rem;
   font-weight: 800;
-  background: #10b981;
+  background: #0e0e12;
   color: #ffffff;
   padding: 2px 7px;
   border-radius: 9999px;
@@ -689,7 +681,7 @@
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.1em;
-  color: #10b981;
+  color: rgba(14, 14, 18, 0.55);
   display: block;
   margin-bottom: 0.75rem;
   text-transform: uppercase;

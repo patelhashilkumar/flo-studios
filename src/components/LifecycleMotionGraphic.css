@@ -81,29 +81,6 @@
   box-shadow: 0 1px 3px rgba(220, 38, 38, 0.25);
 }
 
-.lmg-pill__dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.lmg-pill__dot--unified {
-  background: #22c55e;
-}
-
-.lmg-pill--active-unified .lmg-pill__dot--unified {
-  background: #4ade80;
-}
-
-.lmg-pill__dot--fracture {
-  background: #ef4444;
-}
-
-.lmg-pill--active-fracture .lmg-pill__dot--fracture {
-  background: #ffffff;
-}
-
 .lmg-meta-status {
   display: flex;
   align-items: center;
@@ -288,18 +265,6 @@
 .lmg-status-text strong {
   color: #0e0e12;
   font-weight: 700;
-}
-
-.lmg-status-bullet {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #16a34a;
-  flex-shrink: 0;
-}
-
-.lmg-status-bullet--alert {
-  background: #dc2626;
 }
 
 /* ── Reduced Motion Accessibility ── */
