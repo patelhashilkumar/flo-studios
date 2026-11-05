@@ -13,7 +13,7 @@ const FEATURED_PROJECTS = [
     desc: 'Monogram-led identity, visual system, and physical applications for a progressive construction and infrastructure brand.',
     tags: ['Brand Identity'],
     category: 'brand',
-    image: '/work/abstruct/web/moodboard.jpg',
+    image: '/work/abstruct/web/abstruct-thumb.png',
     slug: 'abstruct',
     href: '/work/abstruct',
   },
@@ -70,7 +70,7 @@ const FEATURED_PROJECTS = [
 ]
 
 const ALL_PROJECTS = [
-  { title: 'ABSTRUCT', category: 'brand', tags: ['Brand Identity'], image: '/work/abstruct/web/billboard.jpg', href: '/work/abstruct' },
+  { title: 'ABSTRUCT', category: 'brand', tags: ['Brand Identity'], image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
   { title: 'Apple Product Motion', category: 'motion', tags: ['Motion Systems', 'Digital Product'], image: MOTION_REELS.apple.poster },
   { title: 'Blitzit 2.0 Interface', category: 'motion', tags: ['Motion Systems', 'Digital Product'], image: MOTION_REELS.blitzit.poster },
   { title: 'SV Studio Showreel', category: 'motion', tags: ['Motion Systems', 'Brand Identity'], image: MOTION_REELS.sv.poster },
