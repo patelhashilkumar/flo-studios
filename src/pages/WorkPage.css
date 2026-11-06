@@ -273,7 +273,9 @@
   background-color: var(--work-card-bg);
 }
 
-.media-box img {
+.media-box img,
+.media-box video,
+.media-box .media-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -281,7 +283,8 @@
   transition: transform 0.65s var(--work-ease);
 }
 
-.work-card-featured__media-link:hover .media-box img {
+.work-card-featured__media-link:hover .media-box img,
+.work-card-featured__media-link:hover .media-box video {
   transform: scale(1.025);
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
 import { MOTION_REELS } from '../data/motionReels'
 import './WorkPage.css'
@@ -17,27 +17,28 @@ const DISPLAY_MODES = [
   { id: 'grid', label: 'GRID' },
 ]
 
-// Asymmetric featured duo rows matching Instrument.com (Row 1: 65/35, Row 2: 35/65, Row 3: 65/35)
+// Asymmetric featured duo rows matching Instrument.com (65/35, 35/65 rhythm)
 const FEATURED_DUO_PAIRS = [
   {
     id: 'row-1',
     layout: 'wide-narrow',
     left: {
-      client: 'Electronic Arts',
-      title: 'The evolution of EA: from gaming legacy to entertainment leader.',
+      client: 'ABSTRUCT Infrastructure',
+      title: 'Monogram-led identity, visual system, and physical applications for a progressive infrastructure brand.',
       category: 'brand',
       tag: '#BRAND',
-      image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
+      image: '/work/abstruct/web/abstruct-thumb.png',
       href: '/work/abstruct',
       aspectRatio: '16 / 9',
     },
     right: {
-      client: 'Oura',
-      title: 'Transforming the way people discover and embrace the Oura Smart Ring.',
+      client: 'Multi-Drone 3D Path Optimizer',
+      title: 'Real-time UAV path planning simulation platform powered by 3D RRT* and B-Spline trajectory smoothing.',
       category: 'product',
       tag: '#PRODUCT',
-      image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
-      href: '/work',
+      image: '/work/drone-sim/dashboard.png',
+      href: 'https://drone-sim-901y.onrender.com',
+      external: true,
       aspectRatio: '4 / 3',
     },
   },
@@ -45,21 +46,23 @@ const FEATURED_DUO_PAIRS = [
     id: 'row-2',
     layout: 'narrow-wide',
     left: {
-      client: 'ServiceNow',
-      title: 'Reimagining ServiceNow with a bold system that turned ambiguity into action.',
-      category: 'brand',
-      tag: '#BRAND',
-      image: MOTION_REELS.blitzit.poster,
+      client: 'Apple Product Motion',
+      title: 'Spatial product visualization, kinematic camera choreography, and dynamic real-time 3D motion graphics.',
+      category: 'product',
+      tag: '#PRODUCT',
+      video: MOTION_REELS.apple.mp4,
+      image: MOTION_REELS.apple.poster,
       href: '/work',
       aspectRatio: '4 / 3',
     },
     right: {
-      client: 'Nike Digital Design System',
-      title: 'Building a flexible, scalable digital design system for Nike to stand the test of time.',
-      category: 'product',
+      client: 'Peak Club Snowboarding',
+      title: 'Dynamic apparel identity, brand visual system, mobile app mockups, and winter campaign branding.',
+      category: 'brand',
       tag: '#BRAND  #PRODUCT',
-      image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/',
-      href: '/work',
+      image: '/work/peak-club/peak-head.png',
+      href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL',
+      external: true,
       aspectRatio: '16 / 9',
       isFrame: true,
     },
@@ -68,21 +71,71 @@ const FEATURED_DUO_PAIRS = [
     id: 'row-3',
     layout: 'wide-narrow',
     left: {
-      client: 'Uber For Business',
-      title: 'Launching a bold campaign that speaks to business travelers everywhere.',
-      category: 'marketing',
+      client: 'Ember & Salt',
+      title: 'Seasonal open-fire dining experience inspired by land, sea, and flame — bespoke brand identity and digital booking architecture.',
+      category: 'brand',
       tag: '#BRAND  #MARKETING',
-      image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
+      image: '/work/ember-salt/ember-fire.jpg',
+      href: 'https://ember-salt-bento.lovable.app/',
+      external: true,
+      aspectRatio: '16 / 9',
+    },
+    right: {
+      client: 'Blitzit 2.0 Interface',
+      title: 'Fluid micro-interactions, gesture response curves, and state architecture for next-generation productivity.',
+      category: 'product',
+      tag: '#PRODUCT',
+      video: MOTION_REELS.blitzit.mp4,
+      image: MOTION_REELS.blitzit.poster,
+      href: '/work',
+      aspectRatio: '4 / 3',
+    },
+  },
+  {
+    id: 'row-4',
+    layout: 'narrow-wide',
+    left: {
+      client: 'C4Future — Carbon Intelligence',
+      title: 'Estimate, explain, and compare product lifecycle emissions before production with XGBoost and TreeSHAP attribution.',
+      category: 'product',
+      tag: '#PRODUCT',
+      image: '/work/c4future/carbon-thumb.png',
+      href: 'https://ad074890-c4future.hf.space/',
+      external: true,
+      aspectRatio: '4 / 3',
+    },
+    right: {
+      client: 'Relay Collaboration Platform',
+      title: 'Team chat with a teammate built in — unified channel architecture, live huddles, and autonomous workflows.',
+      category: 'product',
+      tag: '#PRODUCT',
+      image: '/work/relay/relay-thumb.png',
+      href: 'https://slack-reverse.vercel.app/',
+      external: true,
+      aspectRatio: '16 / 9',
+    },
+  },
+  {
+    id: 'row-5',
+    layout: 'wide-narrow',
+    left: {
+      client: 'SV Studio Showreel',
+      title: 'Creative direction, kinetic typographic systems, and high-fidelity studio production reel.',
+      category: 'marketing',
+      tag: '#MARKETING  #BRAND',
+      video: MOTION_REELS.sv.mp4,
+      image: MOTION_REELS.sv.poster,
       href: '/work',
       aspectRatio: '16 / 9',
     },
     right: {
-      client: 'Microsoft',
-      title: 'Showcasing Microsoft tech through generative AI–driven storytelling.',
-      category: 'marketing',
-      tag: '#BRAND  #MARKETING',
-      image: MOTION_REELS.sv.poster,
-      href: '/work',
+      client: 'Peak Club Mobile System',
+      title: 'Biometric telemetry tracking, member community roster, and mountain resort discovery experience.',
+      category: 'product',
+      tag: '#PRODUCT',
+      image: '/work/peak-club/peak-mockup.png',
+      href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL',
+      external: true,
       aspectRatio: '4 / 3',
     },
   },
@@ -90,30 +143,30 @@ const FEATURED_DUO_PAIRS = [
 
 // 6-column catalog archive matching Instrument.com lower grid
 const CATALOG_ITEMS = [
+  { title: 'Drone 3D Optimizer', tag: '#PRODUCT', category: 'product', image: '/work/drone-sim/dashboard.png', href: 'https://drone-sim-901y.onrender.com', external: true },
+  { title: 'C4Future Carbon AI', tag: '#PRODUCT', category: 'product', image: '/work/c4future/carbon-thumb.png', href: 'https://ad074890-c4future.hf.space/', external: true },
+  { title: 'Ember & Salt', tag: '#BRAND  #MARKETING', category: 'brand', image: '/work/ember-salt/ember-fire.jpg', href: 'https://ember-salt-bento.lovable.app/', external: true },
+  { title: 'Relay Team Chat', tag: '#PRODUCT', category: 'product', image: '/work/relay/relay-thumb.png', href: 'https://slack-reverse.vercel.app/', external: true },
+  { title: 'Peak Club Snowboarding', tag: '#BRAND  #PRODUCT', category: 'brand', image: '/work/peak-club/peak-head.png', href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL', external: true },
+  { title: 'Peak Club Mobile App', tag: '#PRODUCT', category: 'product', image: '/work/peak-club/peak-app.png', href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL', external: true },
+  { title: 'ABSTRUCT Identity', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
+  { title: 'Apple Product Motion', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.apple.poster, href: '/work' },
+  { title: 'Blitzit 2.0 Interface', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.blitzit.poster, href: '/work' },
+  { title: 'SV Studio Showreel', tag: '#MARKETING', category: 'marketing', image: MOTION_REELS.sv.poster, href: '/work' },
   { title: 'Deadstock Coffee', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
   { title: 'Instrument Playspace', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
   { title: 'Feeld', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },
-  { title: 'ŌURA', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/' },
+  { title: 'ŌURA Smart Ring', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/' },
   { title: 'AlphaSense', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
   { title: 'Perfected', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/' },
   { title: 'Iru', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/1245eb7b86/iru_teaser_thumbnail.jpg/m/' },
   { title: 'Eventbrite', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/' },
   { title: 'Shutterfly', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/' },
-  { title: 'Microsoft Book', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
   { title: 'Build Week', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
   { title: 'Mercury', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/' },
-  { title: 'Procore', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/' },
-  { title: 'Google Shopping', tag: '#MARKETING', category: 'marketing', image: MOTION_REELS.apple.poster },
-  { title: 'PagerDuty', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
-  { title: 'Splice', tag: '#BRAND  #MARKETING', category: 'marketing', image: MOTION_REELS.blitzit.poster },
-  { title: 'Qatar Airways', tag: '#BRAND  #PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },
-  { title: 'Nike Year in Review', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
-  { title: 'ShiftKey', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/' },
+  { title: 'Nike Digital System', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
   { title: 'Google Design', tag: '#BRAND  #PRODUCT', category: 'product', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
-  { title: 'Google I/O', tag: '#MARKETING', category: 'marketing', image: MOTION_REELS.sv.poster },
   { title: 'Now in Android', tag: '#BRAND  #PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
-  { title: 'Nike Motherhood Ultrasound', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/' },
-  { title: 'Splice Sound', tag: '#BRAND', category: 'brand', image: MOTION_REELS.blitzit.poster },
 ]
 
 const springBead = {
@@ -121,6 +174,50 @@ const springBead = {
   stiffness: 440,
   damping: 34,
   mass: 0.5,
+}
+
+function ProjectLink({ href, external, children, className, ariaLabel }) {
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        aria-label={ariaLabel}
+      >
+        {children}
+      </a>
+    )
+  }
+  return (
+    <Link to={href || '/work'} className={className} aria-label={ariaLabel}>
+      {children}
+    </Link>
+  )
+}
+
+function CardMedia({ item }) {
+  return (
+    <div className={`media-box ${item.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: item.aspectRatio }}>
+      {item.video ? (
+        <video
+          src={item.video}
+          poster={item.image}
+          muted
+          loop
+          playsInline
+          autoPlay
+          className="media-video"
+        />
+      ) : (
+        <img src={item.image} alt={item.client} loading="lazy" />
+      )}
+      <div className="media-playback-btn" aria-hidden="true">
+        <span>{item.video ? '▶' : '||'}</span>
+      </div>
+    </div>
+  )
 }
 
 export default function WorkPage() {
@@ -285,7 +382,7 @@ export default function WorkPage() {
       <div className="work-display-container">
         {view === 'stack' ? (
           <>
-            {/* ── Asymmetric Duo Rows (Row 1: 65/35, Row 2: 35/65, Row 3: 65/35) ── */}
+            {/* ── Asymmetric Duo Rows (Stack Mode: 65/35 & 35/65 Asymmetric Pairs) ── */}
             <section className="work-duo-showcase" aria-label="Featured projects stack">
               {filteredDuoRows.map((row) => {
                 const showLeft = matchesFilter(row.left)
@@ -295,15 +392,14 @@ export default function WorkPage() {
                   <div key={row.id} className={`work-duo-row work-duo-row--${row.layout}`}>
                     {showLeft && (
                       <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--wide' : 'work-card--narrow'}`}>
-                        <Link to={row.left.href || '/work'} className="work-card-featured__media-link">
-                          <div className={`media-box ${row.left.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: row.left.aspectRatio }}>
-                            <img src={row.left.image} alt={row.left.client} loading="lazy" />
-                            {/* Play/Pause Round Indicator */}
-                            <div className="media-playback-btn" aria-hidden="true">
-                              <span>||</span>
-                            </div>
-                          </div>
-                        </Link>
+                        <ProjectLink
+                          href={row.left.href}
+                          external={row.left.external}
+                          className="work-card-featured__media-link"
+                          ariaLabel={`View ${row.left.client}`}
+                        >
+                          <CardMedia item={row.left} />
+                        </ProjectLink>
                         <div className="work-card-featured__meta">
                           <p className="client-name">{row.left.client}</p>
                           <h2 className="project-title">{row.left.title}</h2>
@@ -314,15 +410,14 @@ export default function WorkPage() {
 
                     {showRight && (
                       <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--narrow' : 'work-card--wide'}`}>
-                        <Link to={row.right.href || '/work'} className="work-card-featured__media-link">
-                          <div className={`media-box ${row.right.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: row.right.aspectRatio }}>
-                            <img src={row.right.image} alt={row.right.client} loading="lazy" />
-                            {/* Play/Pause Round Indicator */}
-                            <div className="media-playback-btn" aria-hidden="true">
-                              <span>||</span>
-                            </div>
-                          </div>
-                        </Link>
+                        <ProjectLink
+                          href={row.right.href}
+                          external={row.right.external}
+                          className="work-card-featured__media-link"
+                          ariaLabel={`View ${row.right.client}`}
+                        >
+                          <CardMedia item={row.right} />
+                        </ProjectLink>
                         <div className="work-card-featured__meta">
                           <p className="client-name">{row.right.client}</p>
                           <h2 className="project-title">{row.right.title}</h2>
@@ -340,11 +435,16 @@ export default function WorkPage() {
               <div className="catalog-grid">
                 {filteredCatalog.map((item, idx) => (
                   <article key={`${item.title}-${idx}`} className="catalog-card">
-                    <Link to={item.href || '/work'} className="catalog-card__link">
+                    <ProjectLink
+                      href={item.href}
+                      external={item.external}
+                      className="catalog-card__link"
+                      ariaLabel={item.title}
+                    >
                       <div className="catalog-card__media">
                         <img src={item.image} alt={item.title} loading="lazy" />
                       </div>
-                    </Link>
+                    </ProjectLink>
                     <h3 className="catalog-card__client">{item.title}</h3>
                     <p className="catalog-card__tag">{item.tag}</p>
                   </article>
@@ -358,11 +458,16 @@ export default function WorkPage() {
             <div className="catalog-grid catalog-grid--full">
               {filteredCatalog.map((item, idx) => (
                 <article key={`${item.title}-${idx}`} className="catalog-card">
-                  <Link to={item.href || '/work'} className="catalog-card__link">
+                  <ProjectLink
+                    href={item.href}
+                    external={item.external}
+                    className="catalog-card__link"
+                    ariaLabel={item.title}
+                  >
                     <div className="catalog-card__media">
                       <img src={item.image} alt={item.title} loading="lazy" />
                     </div>
-                  </Link>
+                  </ProjectLink>
                   <h3 className="catalog-card__client">{item.title}</h3>
                   <p className="catalog-card__tag">{item.tag}</p>
                 </article>
