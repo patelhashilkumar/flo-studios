@@ -141,7 +141,7 @@ const FEATURED_DUO_PAIRS = [
   },
 ]
 
-// 6-column catalog archive matching Instrument.com lower grid
+// Catalog archive strictly featuring Flo Studios client projects & internal ventures
 const CATALOG_ITEMS = [
   { title: 'Drone 3D Optimizer', tag: '#PRODUCT', category: 'product', image: '/work/drone-sim/dashboard.png', href: 'https://drone-sim-901y.onrender.com', external: true },
   { title: 'C4Future Carbon AI', tag: '#PRODUCT', category: 'product', image: '/work/c4future/carbon-thumb.png', href: 'https://ad074890-c4future.hf.space/', external: true },
@@ -149,24 +149,13 @@ const CATALOG_ITEMS = [
   { title: 'Relay Team Chat', tag: '#PRODUCT', category: 'product', image: '/work/relay/relay-thumb.png', href: 'https://slack-reverse.vercel.app/', external: true },
   { title: 'Peak Club Snowboarding', tag: '#BRAND  #PRODUCT', category: 'brand', image: '/work/peak-club/peak-head.png', href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL', external: true },
   { title: 'Peak Club Mobile App', tag: '#PRODUCT', category: 'product', image: '/work/peak-club/peak-app.png', href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL', external: true },
+  { title: 'Peak Club Winter System', tag: '#BRAND', category: 'brand', image: '/work/peak-club/peak-mockup.png', href: 'https://drive.google.com/drive/folders/177Brxs1FX737QdR_4e-o2uuIBsjKgzfL', external: true },
   { title: 'ABSTRUCT Identity', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
+  { title: 'ABSTRUCT Physical OOH', tag: '#BRAND  #MARKETING', category: 'brand', image: '/work/abstruct/web/billboard-night.jpg', href: '/work/abstruct' },
+  { title: 'ABSTRUCT Packaging', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/packaging.jpg', href: '/work/abstruct' },
   { title: 'Apple Product Motion', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.apple.poster, href: '/work' },
   { title: 'Blitzit 2.0 Interface', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.blitzit.poster, href: '/work' },
-  { title: 'SV Studio Showreel', tag: '#MARKETING', category: 'marketing', image: MOTION_REELS.sv.poster, href: '/work' },
-  { title: 'Deadstock Coffee', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
-  { title: 'Instrument Playspace', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
-  { title: 'Feeld', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },
-  { title: 'ŌURA Smart Ring', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/' },
-  { title: 'AlphaSense', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
-  { title: 'Perfected', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/' },
-  { title: 'Iru', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/1245eb7b86/iru_teaser_thumbnail.jpg/m/' },
-  { title: 'Eventbrite', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/' },
-  { title: 'Shutterfly', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/' },
-  { title: 'Build Week', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
-  { title: 'Mercury', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/' },
-  { title: 'Nike Digital System', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
-  { title: 'Google Design', tag: '#BRAND  #PRODUCT', category: 'product', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
-  { title: 'Now in Android', tag: '#BRAND  #PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
+  { title: 'SV Studio Showreel', tag: '#MARKETING  #BRAND', category: 'marketing', image: MOTION_REELS.sv.poster, href: '/work' },
 ]
 
 const springBead = {
