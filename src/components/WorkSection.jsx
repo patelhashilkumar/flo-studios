@@ -121,12 +121,6 @@ const FILTER_CATEGORIES = [
 
 const FEATURED_LIMIT = 5
 
-const getFilterCount = (filterId) => {
-  if (filterId === 'all') return FEATURED_LIMIT
-  const count = WORK_ITEMS.filter((item) => item.tags.includes(filterId)).length
-  return Math.min(FEATURED_LIMIT, count)
-}
-
 function hasWorkItemVideo(item) {
   return Boolean(item && (item.videoWebm || item.videoMp4 || item.video))
 }

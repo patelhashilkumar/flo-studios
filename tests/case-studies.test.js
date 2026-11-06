@@ -136,3 +136,13 @@ test('5. Projects do not repeat across duo showcase rows or catalog lists', () =
   assert.ok(!workSectionSrc.includes('perfected'), 'WorkSection must not contain perfected')
   assert.ok(!workSectionSrc.includes('iru-launch'), 'WorkSection must not contain iru')
 })
+
+test('6. Video performance optimizations pause offscreen videos in WorkPage and ProjectCaseStudy', () => {
+  const workPageSrc = fs.readFileSync(path.join(rootDir, 'src/pages/WorkPage.jsx'), 'utf-8')
+  assert.ok(workPageSrc.includes('IntersectionObserver'), 'WorkPage must use IntersectionObserver for offscreen media')
+  assert.ok(workPageSrc.includes('video.pause()'), 'WorkPage must pause offscreen video to conserve CPU/GPU')
+
+  const caseStudySrc = fs.readFileSync(path.join(rootDir, 'src/pages/ProjectCaseStudy.jsx'), 'utf-8')
+  assert.ok(caseStudySrc.includes('video.pause()'), 'ProjectCaseStudy must pause offscreen video')
+  assert.ok(caseStudySrc.includes('document.hidden'), 'ProjectCaseStudy must pause video on background tab')
+})

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
@@ -168,20 +168,42 @@ function ProjectLink({ href, external, children, className, ariaLabel }) {
 }
 
 function CardMedia({ item }) {
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.05 }
+    )
+
+    io.observe(video)
+    return () => io.disconnect()
+  }, [item.video])
+
   return (
     <div className={`media-box ${item.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: item.aspectRatio }}>
       {item.video ? (
         <video
+          ref={videoRef}
           src={item.video}
           poster={item.image}
           muted
           loop
           playsInline
-          autoPlay
           className="media-video"
+          preload="metadata"
         />
       ) : (
-        <img src={item.image} alt={item.client} loading="lazy" />
+        <img src={item.image} alt={item.client} loading="lazy" decoding="async" />
       )}
       <div className="media-playback-btn" aria-hidden="true">
         <span>{item.video ? '▶' : '||'}</span>

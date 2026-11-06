@@ -11,7 +11,7 @@ const pageV = {
   exit: { opacity: 0, transition: { duration: 0.3 } },
 }
 
-function DynamicPalette({ palette, accentColor }) {
+function DynamicPalette({ palette }) {
   const ref = useRef(null)
   const [active, setActive] = useState(1)
   const [on, setOn] = useState(false)
@@ -148,6 +148,39 @@ export default function ProjectCaseStudy() {
       document.body.classList.remove('pcs-page')
     }
   }, [project, slug, navigate])
+
+  // Optimize video performance: pause when offscreen or tab hidden
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.08 }
+    )
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        video.pause()
+      } else if (video.getBoundingClientRect().bottom > 0) {
+        video.play().catch(() => {})
+      }
+    }
+
+    io.observe(video)
+    document.addEventListener('visibilitychange', handleVisibility)
+
+    return () => {
+      io.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
+  }, [project])
 
   if (!project) return null
 
@@ -306,7 +339,7 @@ export default function ProjectCaseStudy() {
           {/* Palette Swatches */}
           <div className="pcs__id pcs__reveal">
             <p className="pcs__label">Color Palette &amp; Material Spectrum</p>
-            <DynamicPalette palette={project.palette} accentColor={project.accentColor} />
+            <DynamicPalette palette={project.palette} />
           </div>
 
           {/* System Feature Matrix */}
