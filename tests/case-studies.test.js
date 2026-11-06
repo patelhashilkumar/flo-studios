@@ -92,3 +92,47 @@ test('4. App.jsx registers /work/:slug and WorkPage links point to internal case
   assert.ok(workPageSrc.includes("href: '/work/blitzit-motion'"), 'WorkPage must link to /work/blitzit-motion')
   assert.ok(workPageSrc.includes("href: '/work/sv-showreel'"), 'WorkPage must link to /work/sv-showreel')
 })
+
+test('5. Projects do not repeat across duo showcase rows or catalog lists', () => {
+  const workPageSrc = fs.readFileSync(path.join(rootDir, 'src/pages/WorkPage.jsx'), 'utf-8')
+
+  // Extract FEATURED_DUO_PAIRS block
+  const duoBlockMatch = workPageSrc.match(/const FEATURED_DUO_PAIRS = \[([\s\S]*?)\]\n\n\/\/ Catalog/m)
+  assert.ok(duoBlockMatch, 'FEATURED_DUO_PAIRS block must exist')
+  const duoHrefs = [...duoBlockMatch[1].matchAll(/href:\s*'([^']+)'/g)].map((m) => m[1])
+  const uniqueDuoHrefs = new Set(duoHrefs)
+  assert.strictEqual(
+    uniqueDuoHrefs.size,
+    duoHrefs.length,
+    `Featured duo showcase has duplicate projects: ${duoHrefs.filter((e, i, a) => a.indexOf(e) !== i)}`
+  )
+  assert.strictEqual(duoHrefs.length, 9, 'All 9 unique projects must be in the featured duo rows')
+
+  // Extract CATALOG_ITEMS block
+  const catalogBlockMatch = workPageSrc.match(/const CATALOG_ITEMS = \[([\s\S]*?)\]/m)
+  assert.ok(catalogBlockMatch, 'CATALOG_ITEMS block must exist')
+  const catalogHrefs = [...catalogBlockMatch[1].matchAll(/href:\s*'([^']+)'/g)].map((m) => m[1])
+  const uniqueCatalogHrefs = new Set(catalogHrefs)
+  assert.strictEqual(
+    uniqueCatalogHrefs.size,
+    catalogHrefs.length,
+    `Catalog archive has duplicate projects: ${catalogHrefs.filter((e, i, a) => a.indexOf(e) !== i)}`
+  )
+  assert.strictEqual(catalogHrefs.length, 9, 'All 9 unique projects must be in the catalog items')
+
+  // Verify WorkSection has no duplicate slugs
+  const workSectionSrc = fs.readFileSync(path.join(rootDir, 'src/components/WorkSection.jsx'), 'utf-8')
+  const workSectionSlugs = [...workSectionSrc.matchAll(/slug:\s*'([^']+)'/g)].map((m) => m[1])
+  const uniqueSlugs = new Set(workSectionSlugs)
+  assert.strictEqual(
+    uniqueSlugs.size,
+    workSectionSlugs.length,
+    `WorkSection has duplicate project slugs: ${workSectionSlugs.filter((e, i, a) => a.indexOf(e) !== i)}`
+  )
+
+  // Verify no foreign placeholder projects remain
+  assert.ok(!workSectionSrc.includes('feeld-app'), 'WorkSection must not contain feeld')
+  assert.ok(!workSectionSrc.includes('oura-app'), 'WorkSection must not contain oura')
+  assert.ok(!workSectionSrc.includes('perfected'), 'WorkSection must not contain perfected')
+  assert.ok(!workSectionSrc.includes('iru-launch'), 'WorkSection must not contain iru')
+})

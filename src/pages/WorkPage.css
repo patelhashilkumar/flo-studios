@@ -252,6 +252,12 @@
   max-width: calc(65% - clamp(10px, 1.25vw, 18px));
 }
 
+/* Row 5: Full Width Single Featured Card */
+.work-duo-row--full .work-card--full {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
 /* Card Featured Styling */
 .work-card-featured {
   display: flex;

@@ -112,7 +112,7 @@ const FEATURED_DUO_PAIRS = [
   },
   {
     id: 'row-5',
-    layout: 'wide-narrow',
+    layout: 'full',
     left: {
       client: 'SV Studio Showreel',
       title: 'Creative direction, kinetic typographic systems, and high-fidelity studio production reel.',
@@ -123,32 +123,19 @@ const FEATURED_DUO_PAIRS = [
       href: '/work/sv-showreel',
       aspectRatio: '16 / 9',
     },
-    right: {
-      client: 'Peak Club Mobile System',
-      title: 'Biometric telemetry tracking, member community roster, and mountain resort discovery experience.',
-      category: 'product',
-      tag: '#PRODUCT',
-      image: '/work/peak-club/peak-mockup.png',
-      href: '/work/peak-club',
-      aspectRatio: '4 / 3',
-    },
   },
 ]
 
-// Catalog archive strictly featuring Flo Studios client projects & internal ventures
+// Catalog archive strictly featuring Flo Studios client projects (each project appears once)
 const CATALOG_ITEMS = [
-  { title: 'Drone 3D Optimizer', tag: '#PRODUCT', category: 'product', image: '/work/drone-sim/dashboard.png', href: '/work/drone-sim' },
-  { title: 'C4Future Carbon AI', tag: '#PRODUCT', category: 'product', image: '/work/c4future/carbon-thumb.png', href: '/work/c4future' },
-  { title: 'Ember & Salt', tag: '#BRAND  #MARKETING', category: 'brand', image: '/work/ember-salt/ember-fire.jpg', href: '/work/ember-salt' },
-  { title: 'Relay Team Chat', tag: '#PRODUCT', category: 'product', image: '/work/relay/relay-thumb.png', href: '/work/relay' },
-  { title: 'Peak Club Snowboarding', tag: '#BRAND  #PRODUCT', category: 'brand', image: '/work/peak-club/peak-head.png', href: '/work/peak-club' },
-  { title: 'Peak Club Mobile App', tag: '#PRODUCT', category: 'product', image: '/work/peak-club/peak-app.png', href: '/work/peak-club' },
-  { title: 'Peak Club Winter System', tag: '#BRAND', category: 'brand', image: '/work/peak-club/peak-mockup.png', href: '/work/peak-club' },
   { title: 'ABSTRUCT Identity', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
-  { title: 'ABSTRUCT Physical OOH', tag: '#BRAND  #MARKETING', category: 'brand', image: '/work/abstruct/web/billboard-night.jpg', href: '/work/abstruct' },
-  { title: 'ABSTRUCT Packaging', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/packaging.jpg', href: '/work/abstruct' },
+  { title: 'Drone 3D Optimizer', tag: '#PRODUCT', category: 'product', image: '/work/drone-sim/dashboard.png', href: '/work/drone-sim' },
   { title: 'Apple Product Motion', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.apple.poster, href: '/work/apple-motion' },
+  { title: 'Peak Club Snowboarding', tag: '#BRAND  #PRODUCT', category: 'brand', image: '/work/peak-club/peak-head.png', href: '/work/peak-club' },
+  { title: 'Ember & Salt', tag: '#BRAND  #MARKETING', category: 'brand', image: '/work/ember-salt/ember-fire.jpg', href: '/work/ember-salt' },
   { title: 'Blitzit 2.0 Interface', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.blitzit.poster, href: '/work/blitzit-motion' },
+  { title: 'C4Future Carbon AI', tag: '#PRODUCT', category: 'product', image: '/work/c4future/carbon-thumb.png', href: '/work/c4future' },
+  { title: 'Relay Team Chat', tag: '#PRODUCT', category: 'product', image: '/work/relay/relay-thumb.png', href: '/work/relay' },
   { title: 'SV Studio Showreel', tag: '#MARKETING  #BRAND', category: 'marketing', image: MOTION_REELS.sv.poster, href: '/work/sv-showreel' },
 ]
 
@@ -364,79 +351,80 @@ export default function WorkPage() {
       {/* ─── Main Content Container ─── */}
       <div className="work-display-container">
         {view === 'stack' ? (
-          <>
-            {/* ── Asymmetric Duo Rows (Stack Mode: 65/35 & 35/65 Asymmetric Pairs) ── */}
-            <section className="work-duo-showcase" aria-label="Featured projects stack">
-              {filteredDuoRows.map((row) => {
-                const showLeft = matchesFilter(row.left)
-                const showRight = matchesFilter(row.right)
+          /* ── Asymmetric Duo Rows (Stack Mode: Each Project Shown Once Without Repeating) ── */
+          <section className="work-duo-showcase" aria-label="Featured projects stack">
+            {filteredDuoRows.map((row) => {
+              const showLeft = matchesFilter(row.left)
+              const showRight = matchesFilter(row.right)
 
+              if (row.layout === 'full') {
+                if (!showLeft) return null
                 return (
-                  <div key={row.id} className={`work-duo-row work-duo-row--${row.layout}`}>
-                    {showLeft && (
-                      <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--wide' : 'work-card--narrow'}`}>
-                        <ProjectLink
-                          href={row.left.href}
-                          external={row.left.external}
-                          className="work-card-featured__media-link"
-                          ariaLabel={`View ${row.left.client}`}
-                        >
-                          <CardMedia item={row.left} />
-                        </ProjectLink>
-                        <div className="work-card-featured__meta">
-                          <p className="client-name">{row.left.client}</p>
-                          <h2 className="project-title">{row.left.title}</h2>
-                          <p className="project-tag">{row.left.tag}</p>
-                        </div>
-                      </article>
-                    )}
-
-                    {showRight && (
-                      <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--narrow' : 'work-card--wide'}`}>
-                        <ProjectLink
-                          href={row.right.href}
-                          external={row.right.external}
-                          className="work-card-featured__media-link"
-                          ariaLabel={`View ${row.right.client}`}
-                        >
-                          <CardMedia item={row.right} />
-                        </ProjectLink>
-                        <div className="work-card-featured__meta">
-                          <p className="client-name">{row.right.client}</p>
-                          <h2 className="project-title">{row.right.title}</h2>
-                          <p className="project-tag">{row.right.tag}</p>
-                        </div>
-                      </article>
-                    )}
+                  <div key={row.id} className="work-duo-row work-duo-row--full">
+                    <article className="work-card-featured work-card--full">
+                      <ProjectLink
+                        href={row.left.href}
+                        external={row.left.external}
+                        className="work-card-featured__media-link"
+                        ariaLabel={`View ${row.left.client}`}
+                      >
+                        <CardMedia item={row.left} />
+                      </ProjectLink>
+                      <div className="work-card-featured__meta">
+                        <p className="client-name">{row.left.client}</p>
+                        <h2 className="project-title">{row.left.title}</h2>
+                        <p className="project-tag">{row.left.tag}</p>
+                      </div>
+                    </article>
                   </div>
                 )
-              })}
-            </section>
+              }
 
-            {/* ── 6-Column Archive Catalog (Exact Instrument.com Lower Grid) ── */}
-            <section className="catalog-section" aria-label="Complete project archive">
-              <div className="catalog-grid">
-                {filteredCatalog.map((item, idx) => (
-                  <article key={`${item.title}-${idx}`} className="catalog-card">
-                    <ProjectLink
-                      href={item.href}
-                      external={item.external}
-                      className="catalog-card__link"
-                      ariaLabel={item.title}
-                    >
-                      <div className="catalog-card__media">
-                        <img src={item.image} alt={item.title} loading="lazy" />
+              if (!showLeft && !showRight) return null
+
+              return (
+                <div key={row.id} className={`work-duo-row work-duo-row--${row.layout}`}>
+                  {showLeft && (
+                    <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--wide' : 'work-card--narrow'}`}>
+                      <ProjectLink
+                        href={row.left.href}
+                        external={row.left.external}
+                        className="work-card-featured__media-link"
+                        ariaLabel={`View ${row.left.client}`}
+                      >
+                        <CardMedia item={row.left} />
+                      </ProjectLink>
+                      <div className="work-card-featured__meta">
+                        <p className="client-name">{row.left.client}</p>
+                        <h2 className="project-title">{row.left.title}</h2>
+                        <p className="project-tag">{row.left.tag}</p>
                       </div>
-                    </ProjectLink>
-                    <h3 className="catalog-card__client">{item.title}</h3>
-                    <p className="catalog-card__tag">{item.tag}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-          </>
+                    </article>
+                  )}
+
+                  {showRight && (
+                    <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--narrow' : 'work-card--wide'}`}>
+                      <ProjectLink
+                        href={row.right.href}
+                        external={row.right.external}
+                        className="work-card-featured__media-link"
+                        ariaLabel={`View ${row.right.client}`}
+                      >
+                        <CardMedia item={row.right} />
+                      </ProjectLink>
+                      <div className="work-card-featured__meta">
+                        <p className="client-name">{row.right.client}</p>
+                        <h2 className="project-title">{row.right.title}</h2>
+                        <p className="project-tag">{row.right.tag}</p>
+                      </div>
+                    </article>
+                  )}
+                </div>
+              )
+            })}
+          </section>
         ) : (
-          /* ── Full Grid Mode: Comprehensive Multi-Column Grid ── */
+          /* ── Full Grid Mode: Comprehensive 6-Column Grid (Each Project Shown Once) ── */
           <section className="catalog-section" aria-label="Project grid catalog">
             <div className="catalog-grid catalog-grid--full">
               {filteredCatalog.map((item, idx) => (
