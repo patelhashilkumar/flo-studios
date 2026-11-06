@@ -1,7 +1,11 @@
 /* ══════════════════════════════════════════════════════════════════════
-   INSTRUMENT.COM /WORK AUTHENTIC EDITORIAL REPLICATION
-   Pure White Background, Abacus Sticky Toolbar, Offset Staggered Features,
-   4-Column Grid, and Closing Manifesto Section
+   AUTHENTIC INSTRUMENT.COM WORK PAGE REPLICATION
+   • Edge-to-Edge Wordmark Header
+   • Sticky #filter-nav (FILTER: ALL/BRAND/MARKETING/PRODUCT & DISPLAY: STACK/GRID)
+   • Instrument Serif Condensed Editorial Intro
+   • Asymmetric Duo Rows (Row 1: 65/35, Row 2: 35/65, Row 3: 65/35)
+   • 6-Column Archive Catalog of Square Project Tiles
+   • Bold Sans-Serif Outro Manifesto with "View our services →" Pill
    ══════════════════════════════════════════════════════════════════════ */
 
 .instrument-work-page {
@@ -9,19 +13,62 @@
   --work-ink: #070708;
   --work-ink-muted: #767680;
   --work-ink-subtle: #9999a0;
-  --work-border: rgba(0, 0, 0, 0.07);
+  --work-border: rgba(0, 0, 0, 0.08);
   --work-card-bg: #f2f2f3;
   --work-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   background-color: var(--work-bg);
   color: var(--work-ink);
   min-height: 100vh;
-  padding-top: 52px; /* Header clearance */
+  padding-top: 52px; /* Navbar clearance */
   overflow-x: hidden;
   box-sizing: border-box;
 }
 
-/* ── Sticky Top Filter Bar (#filter-nav) ── */
+/* ── 1. Giant Edge-to-Edge Wordmark Header (Instrument.com Top) ── */
+.work-page__wordmark-wrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: clamp(14px, 1.8vw, 24px) clamp(16px, 3.5vw, 48px) clamp(10px, 1.2vw, 16px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  background-color: #ffffff;
+}
+
+.work-page__wordmark-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.work-page__wordmark {
+  font-family: var(--font-panchang), 'Panchang', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.4rem, 9.8vw, 11rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: #000000;
+  -webkit-text-stroke: clamp(0.3px, 0.04vw, 0.8px) #000000;
+  paint-order: stroke fill;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  display: block;
+  transform: scaleY(1.36);
+  transform-origin: center center;
+  transition: opacity 0.25s ease;
+}
+
+.work-page__wordmark-link:hover .work-page__wordmark {
+  opacity: 0.85;
+}
+
+/* ── 2. Sticky Abacus Filter Bar (#filter-nav) ── */
 .filter-nav-wrapper {
   position: sticky;
   top: 52px;
@@ -37,7 +84,7 @@
 .filter-nav {
   max-width: 1720px;
   margin: 0 auto;
-  padding: 12px clamp(16px, 3.5vw, 48px);
+  padding: 10px clamp(16px, 3.5vw, 48px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,27 +115,31 @@
 }
 
 .filter-nav .nav__list .label {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--work-ink-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   margin-right: 4px;
   user-select: none;
 }
 
-/* ── Abacus Pills (Exact Instrument Button Style) ── */
+/* ── Abacus Pill Buttons (Instrument Button Architecture) ── */
 .filter-nav .button-small.button-abacus {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6.5px 16px;
+  padding: 6.5px 15px;
   border-radius: 9999px;
   background-color: #ededed;
   color: var(--work-ink);
   border: none;
-  font-family: inherit;
-  font-size: 12.5px;
-  font-weight: 500;
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
   outline: none;
@@ -130,33 +181,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
 }
 
-/* ── Page Intro Section (.page-intro) ── */
+/* ── 3. Page Intro Section (Instrument Serif High-Contrast Display) ── */
 .page-intro {
-  padding: clamp(3.5rem, 6.5vw, 6.5rem) clamp(16px, 3.5vw, 48px) clamp(3rem, 5.5vw, 5.5rem);
+  padding: clamp(3rem, 5.5vw, 5.5rem) clamp(16px, 3.5vw, 48px) clamp(2.5rem, 4.5vw, 4.5rem);
   max-width: 1720px;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 .page-intro__wrapper {
-  max-width: 1300px;
+  max-width: 1360px;
 }
 
 .page-intro__text {
-  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: clamp(2.35rem, 4.8vw, 4.25rem);
-  font-weight: 450;
-  letter-spacing: -0.035em;
-  line-height: 1.08;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(2.6rem, 5.5vw, 4.75rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
   color: var(--work-ink);
   margin: 0;
 }
 
-/* ── Display Container ── */
+/* ── Container for Main Content ── */
 .work-display-container {
   max-width: 1720px;
   margin: 0 auto;
@@ -164,51 +215,65 @@
   box-sizing: border-box;
 }
 
-/* ── Stack View (.work-features) ── */
-.work-features {
+/* ── 4. Asymmetric Duo Rows (Stack View: 65/35 & 35/65 Rhythm) ── */
+.work-duo-showcase {
   display: flex;
   flex-direction: column;
-  gap: clamp(5rem, 10vw, 9.5rem);
-  padding-bottom: clamp(4rem, 8vw, 8rem);
+  gap: clamp(3.5rem, 6.5vw, 6.5rem);
+  width: 100%;
 }
 
-.work-feature {
+.work-duo-row {
+  display: flex;
+  gap: clamp(20px, 2.5vw, 36px);
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Row 1 & 3: Wide Left (65%), Narrow Right (35%) */
+.work-duo-row--wide-narrow .work-card--wide {
+  flex: 0 0 calc(65% - clamp(10px, 1.25vw, 18px));
+  max-width: calc(65% - clamp(10px, 1.25vw, 18px));
+}
+
+.work-duo-row--wide-narrow .work-card--narrow {
+  flex: 0 0 calc(35% - clamp(10px, 1.25vw, 18px));
+  max-width: calc(35% - clamp(10px, 1.25vw, 18px));
+}
+
+/* Row 2: Narrow Left (35%), Wide Right (65%) */
+.work-duo-row--narrow-wide .work-card--narrow {
+  flex: 0 0 calc(35% - clamp(10px, 1.25vw, 18px));
+  max-width: calc(35% - clamp(10px, 1.25vw, 18px));
+}
+
+.work-duo-row--narrow-wide .work-card--wide {
+  flex: 0 0 calc(65% - clamp(10px, 1.25vw, 18px));
+  max-width: calc(65% - clamp(10px, 1.25vw, 18px));
+}
+
+/* Card Featured Styling */
+.work-card-featured {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-  width: 100%;
-  max-width: min(100%, 1160px);
-  margin-left: calc(var(--offset, 0%) * 0.38);
-  box-sizing: border-box;
-}
-
-/* Rounded Media Container */
-.work-feature .media {
   width: 100%;
 }
 
-.work-feature .media__content {
-  position: relative;
-  width: 100%;
-}
-
-.work-feature .media__link {
+.work-card-featured__media-link {
   display: block;
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
   text-decoration: none;
-  background-color: var(--work-card-bg);
   cursor: pointer;
 }
 
-.work-feature .media-large {
-  aspect-ratio: 16 / 9;
+.media-box {
+  position: relative;
   width: 100%;
+  border-radius: 20px;
   overflow: hidden;
+  background-color: var(--work-card-bg);
 }
 
-.work-feature .media-large img {
+.media-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -216,255 +281,156 @@
   transition: transform 0.65s var(--work-ease);
 }
 
-.work-feature .media__link:hover .media-large img {
+.work-card-featured__media-link:hover .media-box img {
   transform: scale(1.025);
 }
 
-/* Floating Hover Pill Button */
-.work-feature .hover-button {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  z-index: 3;
-  display: inline-flex;
+/* Nike Display System Framed Showcase */
+.media-box--frame {
+  background-color: #f2f2f3;
+  padding: clamp(16px, 2.5vw, 36px);
+  box-sizing: border-box;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8.5px 20px;
-  border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--work-ink);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, background-color 0.2s ease;
-  pointer-events: none;
 }
 
-.work-feature .hover-button .shape {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+.media-box--frame img {
+  border-radius: 12px;
 }
 
-.work-feature .media__link:hover .hover-button {
-  transform: translateY(-2px);
+/* Round Pause/Play Indicator (Exact Instrument Feature) */
+.media-playback-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   background-color: #ffffff;
-}
-
-/* Editorial Text Block */
-.work-feature .text {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.work-feature .title-tags {
-  flex: 1 1 540px;
-  min-width: 0;
-}
-
-/* Hashtag Tag List */
-.tag-list {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-  margin: 0 0 0.875rem 0;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.tag-list .tag {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 500;
   color: var(--work-ink);
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  transition: opacity 0.2s ease;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.tag-list .tag:hover {
-  opacity: 0.6;
+.work-card-featured__media-link:hover .media-playback-btn {
+  transform: scale(1.08);
 }
 
-.tag-list .tag__hashtag {
-  color: var(--work-ink-subtle);
-  margin-right: 1px;
+/* Metadata underneath Featured Cards */
+.work-card-featured__meta {
+  margin-top: 14px;
 }
 
-.work-feature .feature-text-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.work-feature .client {
+.work-card-featured__meta .client-name {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.0625rem;
-  font-weight: 500;
-  color: var(--work-ink-muted);
-  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--work-ink);
+  margin: 0 0 4px 0;
   letter-spacing: -0.01em;
 }
 
-.work-feature .title {
-  font-size: clamp(1.4rem, 2.5vw, 2.25rem);
-  font-weight: 450;
-  line-height: 1.18;
-  letter-spacing: -0.025em;
+.work-card-featured__meta .project-title {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
   color: var(--work-ink);
+  line-height: 1.4;
+  margin: 0 0 8px 0;
+}
+
+.work-card-featured__meta .project-tag {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--work-ink-subtle);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   margin: 0;
-  transition: color 0.2s ease;
 }
 
-.work-feature .feature-text-link:hover .title {
-  color: #000000;
-}
-
-.work-feature .inline-button {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: var(--work-ink);
-  padding: 6px 0;
-  border-bottom: 1.5px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.work-feature .inline-button .shape {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14.5px;
-  font-weight: 500;
-}
-
-.work-feature .inline-button .icon {
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.work-feature .inline-button:hover {
-  border-bottom-color: var(--work-ink);
-}
-
-.work-feature .inline-button:hover .icon {
-  transform: translateX(4px);
-}
-
-/* ── Grid View (.card-grid) ── */
-.card-grid {
+/* ── 5. 6-Column Archive Catalog (Exact Instrument.com Lower Grid) ── */
+.catalog-section {
   width: 100%;
-  padding-bottom: clamp(4rem, 8vw, 8rem);
+  margin-top: clamp(2rem, 4vw, 4rem);
+  padding-bottom: clamp(5rem, 9vw, 9rem);
 }
 
-.card-grid__cards {
+.catalog-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2.2vw, 32px);
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(14px, 1.8vw, 24px);
+  row-gap: clamp(28px, 3.5vw, 48px);
   width: 100%;
   box-sizing: border-box;
 }
 
-.card-grid__card-container {
-  width: 100%;
-}
-
-.work-card {
+.catalog-card {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.work-card__media {
-  border-radius: 14px;
+.catalog-card__link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.catalog-card__media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
   overflow: hidden;
   background-color: var(--work-card-bg);
   position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
 }
 
-.work-card__media a,
-.work-card__media .image-component {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.work-card__media img {
+.catalog-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s var(--work-ease);
+  transition: transform 0.45s ease;
 }
 
-.work-card:hover .work-card__media img {
+.catalog-card:hover .catalog-card__media img {
   transform: scale(1.045);
 }
 
-.work-card__text {
-  margin-top: 1rem;
-}
-
-.work-card__text a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.work-card__text .title {
-  font-size: 1.0625rem;
-  font-weight: 500;
+.catalog-card__client {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
   color: var(--work-ink);
-  margin: 0 0 0.375rem 0;
-  letter-spacing: -0.015em;
-  line-height: 1.25;
-  transition: color 0.2s ease;
+  margin: 8px 0 2px 0;
+  letter-spacing: -0.01em;
 }
 
-.work-card:hover .work-card__text .title {
-  color: #000000;
-}
-
-.work-card__tags {
-  margin-top: 0.25rem;
-}
-
-.work-card__tags .tag-list {
+.catalog-card__tag {
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--work-ink-subtle);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   margin: 0;
 }
 
-.work-card__tags .tag {
-  font-size: 12.5px;
-  color: var(--work-ink-muted);
+/* Full Grid Mode */
+.catalog-grid--full {
+  margin-top: 0;
 }
 
-/* Empty State */
-.work-empty-state {
-  text-align: center;
-  padding: 4rem 1rem;
-  color: var(--work-ink-muted);
-}
-
-.work-empty-state p {
-  font-size: 1.125rem;
-  margin-bottom: 1.5rem;
-}
-
-/* ── Bottom Outro Section (.text-tout) ── */
+/* ── 6. Outro Section (Bold Sans-Serif Manifesto & Pill Button) ── */
 .text-tout {
   border-top: 1px solid var(--work-border);
   padding: clamp(5.5rem, 11vw, 10rem) clamp(16px, 3.5vw, 48px) clamp(5rem, 9vw, 8rem);
@@ -475,16 +441,17 @@
 }
 
 .text-tout__wrapper {
-  max-width: 1200px;
+  max-width: 960px;
 }
 
 .text-tout__text {
-  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 1.25;
+  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   color: var(--work-ink);
-  margin: 0 0 2.75rem 0;
+  margin: 0 0 2.5rem 0;
 }
 
 .text-tout__cta {
@@ -528,19 +495,36 @@
   transform: translateX(4px);
 }
 
-/* ── Responsive Adaptations ── */
+/* ── Responsive Rules ── */
 @media (max-width: 1200px) {
-  .work-feature {
-    margin-left: 0 !important;
-    max-width: 100%;
+  .catalog-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  .card-grid__cards {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 900px) {
+  .catalog-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 768px) {
+  .work-duo-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .work-duo-row .work-card--wide,
+  .work-duo-row .work-card--narrow {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 24px;
+  }
+
   .filter-nav {
     flex-direction: column;
     align-items: flex-start;
@@ -558,19 +542,5 @@
   .filter-nav__primary::-webkit-scrollbar,
   .filter-nav__secondary::-webkit-scrollbar {
     display: none;
-  }
-
-  .work-features {
-    gap: clamp(3.5rem, 7vw, 5.5rem);
-  }
-
-  .work-feature .text {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.25rem;
-  }
-
-  .card-grid__cards {
-    grid-template-columns: 1fr;
   }
 }

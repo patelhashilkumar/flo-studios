@@ -6,179 +6,114 @@ import { MOTION_REELS } from '../data/motionReels'
 import './WorkPage.css'
 
 const FILTER_ITEMS = [
-  { id: 'all', label: 'all' },
-  { id: 'brand', label: 'brand' },
-  { id: 'marketing', label: 'marketing' },
-  { id: 'product', label: 'product' },
+  { id: 'all', label: 'ALL' },
+  { id: 'brand', label: 'BRAND' },
+  { id: 'marketing', label: 'MARKETING' },
+  { id: 'product', label: 'PRODUCT' },
 ]
 
 const DISPLAY_MODES = [
-  { id: 'stack', label: 'stack' },
-  { id: 'grid', label: 'grid' },
+  { id: 'stack', label: 'STACK' },
+  { id: 'grid', label: 'GRID' },
 ]
 
-const STACK_FEATURES = [
+// Asymmetric featured duo rows matching Instrument.com (Row 1: 65/35, Row 2: 35/65, Row 3: 65/35)
+const FEATURED_DUO_PAIRS = [
   {
-    client: 'ABSTRUCT Infrastructure',
-    title: 'Monogram-led identity, visual system, and physical applications for a progressive infrastructure brand.',
-    category: 'brand',
-    tags: ['brand'],
-    image: '/work/abstruct/web/abstruct-thumb.png',
-    href: '/work/abstruct',
-    offset: '60%',
+    id: 'row-1',
+    layout: 'wide-narrow',
+    left: {
+      client: 'Electronic Arts',
+      title: 'The evolution of EA: from gaming legacy to entertainment leader.',
+      category: 'brand',
+      tag: '#BRAND',
+      image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
+      href: '/work/abstruct',
+      aspectRatio: '16 / 9',
+    },
+    right: {
+      client: 'Oura',
+      title: 'Transforming the way people discover and embrace the Oura Smart Ring.',
+      category: 'product',
+      tag: '#PRODUCT',
+      image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
+      href: '/work',
+      aspectRatio: '4 / 3',
+    },
   },
   {
-    client: 'Apple Ecosystem',
-    title: 'Spatial product visualization, kinematic camera choreography, and dynamic real-time 3D motion graphics.',
-    category: 'product',
-    tags: ['product', 'brand'],
-    image: MOTION_REELS.apple.poster,
-    offset: '0%',
+    id: 'row-2',
+    layout: 'narrow-wide',
+    left: {
+      client: 'ServiceNow',
+      title: 'Reimagining ServiceNow with a bold system that turned ambiguity into action.',
+      category: 'brand',
+      tag: '#BRAND',
+      image: MOTION_REELS.blitzit.poster,
+      href: '/work',
+      aspectRatio: '4 / 3',
+    },
+    right: {
+      client: 'Nike Digital Design System',
+      title: 'Building a flexible, scalable digital design system for Nike to stand the test of time.',
+      category: 'product',
+      tag: '#BRAND  #PRODUCT',
+      image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/',
+      href: '/work',
+      aspectRatio: '16 / 9',
+      isFrame: true,
+    },
   },
   {
-    client: 'Blitzit App',
-    title: 'Fluid micro-interactions, gesture response curves, and state architecture for next-generation productivity.',
-    category: 'product',
-    tags: ['product'],
-    image: MOTION_REELS.blitzit.poster,
-    offset: '50%',
-  },
-  {
-    client: 'Electronic Arts',
-    title: 'The evolution of EA: from gaming legacy to entertainment leader.',
-    category: 'brand',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
-    offset: '0%',
-  },
-  {
-    client: 'ŌURA Health',
-    title: 'Transforming the way people discover and embrace the Oura Smart Ring.',
-    category: 'product',
-    tags: ['product'],
-    image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
-    offset: '25%',
-  },
-  {
-    client: 'Flo Studios Film',
-    title: 'Creative direction, kinetic typographic systems, and high-fidelity studio production reel.',
-    category: 'marketing',
-    tags: ['marketing', 'brand'],
-    image: MOTION_REELS.sv.poster,
-    offset: '80%',
+    id: 'row-3',
+    layout: 'wide-narrow',
+    left: {
+      client: 'Uber For Business',
+      title: 'Launching a bold campaign that speaks to business travelers everywhere.',
+      category: 'marketing',
+      tag: '#BRAND  #MARKETING',
+      image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
+      href: '/work',
+      aspectRatio: '16 / 9',
+    },
+    right: {
+      client: 'Microsoft',
+      title: 'Showcasing Microsoft tech through generative AI–driven storytelling.',
+      category: 'marketing',
+      tag: '#BRAND  #MARKETING',
+      image: MOTION_REELS.sv.poster,
+      href: '/work',
+      aspectRatio: '4 / 3',
+    },
   },
 ]
 
-const GRID_CATALOG = [
-  {
-    title: 'ABSTRUCT',
-    category: 'brand',
-    tags: ['brand'],
-    image: '/work/abstruct/web/abstruct-thumb.png',
-    href: '/work/abstruct',
-  },
-  {
-    title: 'Apple Product Motion',
-    category: 'product',
-    tags: ['product'],
-    image: MOTION_REELS.apple.poster,
-  },
-  {
-    title: 'Blitzit 2.0 Interface',
-    category: 'product',
-    tags: ['product'],
-    image: MOTION_REELS.blitzit.poster,
-  },
-  {
-    title: 'SV Studio Showreel',
-    category: 'marketing',
-    tags: ['marketing'],
-    image: MOTION_REELS.sv.poster,
-  },
-  {
-    title: 'Deadstock Coffee',
-    category: 'product',
-    tags: ['product'],
-    image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/',
-  },
-  {
-    title: 'Instrument Playspace',
-    category: 'product',
-    tags: ['product'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/',
-  },
-  {
-    title: 'Feeld',
-    category: 'product',
-    tags: ['product'],
-    image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/',
-  },
-  {
-    title: 'ŌURA',
-    category: 'product',
-    tags: ['product'],
-    image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/',
-  },
-  {
-    title: 'AlphaSense',
-    category: 'marketing',
-    tags: ['marketing'],
-    image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/',
-  },
-  {
-    title: 'Perfected',
-    category: 'brand',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/',
-  },
-  {
-    title: 'Iru',
-    category: 'brand',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/1024x1024/1245eb7b86/iru_teaser_thumbnail.jpg/m/',
-  },
-  {
-    title: 'Eventbrite',
-    category: 'product',
-    tags: ['product'],
-    image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/',
-  },
-  {
-    title: 'Shutterfly',
-    category: 'brand',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/',
-  },
-  {
-    title: 'Build Week',
-    category: 'brand',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/',
-  },
-  {
-    title: 'Mercury',
-    category: 'marketing',
-    tags: ['marketing'],
-    image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/',
-  },
-  {
-    title: 'Nike Digital Design System',
-    category: 'product',
-    tags: ['product', 'brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/',
-  },
-  {
-    title: 'ServiceNow Rebrand',
-    category: 'brand',
-    tags: ['brand'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/',
-  },
-  {
-    title: 'Uber for Business',
-    category: 'marketing',
-    tags: ['marketing'],
-    image: 'https://a-us.storyblok.com/f/1004432/2048x1365/a24fa06aee/medium-feature-uber.png/m/',
-  },
+// 6-column catalog archive matching Instrument.com lower grid
+const CATALOG_ITEMS = [
+  { title: 'Deadstock Coffee', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
+  { title: 'Instrument Playspace', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
+  { title: 'Feeld', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },
+  { title: 'ŌURA', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/' },
+  { title: 'AlphaSense', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
+  { title: 'Perfected', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/' },
+  { title: 'Iru', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/1245eb7b86/iru_teaser_thumbnail.jpg/m/' },
+  { title: 'Eventbrite', tag: '#PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/566x566/b1977a7872/eventbrite_thumb.png/m/' },
+  { title: 'Shutterfly', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ed0a461423/shutterfly_teaser_thumbnail.png/m/' },
+  { title: 'Microsoft Book', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/b956675169/alphasense_teaser_thumbnail.png/m/' },
+  { title: 'Build Week', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
+  { title: 'Mercury', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/' },
+  { title: 'Procore', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/2278acc3f6/oura-sleep-recovered-1.jpg/m/' },
+  { title: 'Google Shopping', tag: '#MARKETING', category: 'marketing', image: MOTION_REELS.apple.poster },
+  { title: 'PagerDuty', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/1025x1025/54b84c7565/build_week_deadstock_coffee_2026_teaser_thumbnail.png/m/' },
+  { title: 'Splice', tag: '#BRAND  #MARKETING', category: 'marketing', image: MOTION_REELS.blitzit.poster },
+  { title: 'Qatar Airways', tag: '#BRAND  #PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1024x1024/5430259e19/teaser_thumbnail_feeld_app.png/m/' },
+  { title: 'Nike Year in Review', tag: '#BRAND  #PRODUCT', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/0551a67827/medium-feature.png/m/' },
+  { title: 'ShiftKey', tag: '#BRAND  #MARKETING', category: 'brand', image: 'https://a-us.storyblok.com/f/1004432/2048x2048/ba453be5d3/medium-feature.png/m/' },
+  { title: 'Google Design', tag: '#BRAND  #PRODUCT', category: 'product', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
+  { title: 'Google I/O', tag: '#MARKETING', category: 'marketing', image: MOTION_REELS.sv.poster },
+  { title: 'Now in Android', tag: '#BRAND  #PRODUCT', category: 'product', image: 'https://a-us.storyblok.com/f/1004432/1080x1080/fbdec33941/buildweek_logo_teaser_thumbnail.png/m/' },
+  { title: 'Nike Motherhood Ultrasound', tag: '#MARKETING', category: 'marketing', image: 'https://a-us.storyblok.com/f/1004432/1200x630/1144fa66c6/mercury-bank-brand-campaign-social-share.png/m/' },
+  { title: 'Splice Sound', tag: '#BRAND', category: 'brand', image: MOTION_REELS.blitzit.poster },
 ]
 
 const springBead = {
@@ -193,17 +128,23 @@ export default function WorkPage() {
   const [view, setView] = useState('stack')
 
   const matchesFilter = (item) => {
+    if (!item) return false
     if (filter === 'all') return true
-    return item.category === filter || (item.tags && item.tags.includes(filter))
+    return item.category === filter || (item.tag && item.tag.toLowerCase().includes(filter))
   }
 
-  const filteredFeatures = STACK_FEATURES.filter(matchesFilter)
-  const filteredGrid = GRID_CATALOG.filter(matchesFilter)
+  // Filter pairs for Stack view
+  const filteredDuoRows = FEATURED_DUO_PAIRS.filter((row) => {
+    return matchesFilter(row.left) || matchesFilter(row.right)
+  })
+
+  // Filter items for 6-column catalog
+  const filteredCatalog = CATALOG_ITEMS.filter(matchesFilter)
 
   return (
     <main className="instrument-work-page">
       <SEO
-        title="Work — Flo Studios"
+        title="Work | Flo Studios"
         description="We create beautiful, functional, technology-forward work that elevates and unifies experiences across all brand surfaces."
         canonicalUrl="https://www.flostudio.co/work"
         breadcrumbs={[
@@ -212,18 +153,26 @@ export default function WorkPage() {
         ]}
       />
 
-      {/* ─── Sticky Abacus Filter Bar (Exact Instrument.com #filter-nav) ─── */}
+      {/* ─── Giant Edge-to-Edge Wordmark Header (Exact Instrument.com Top) ─── */}
+      <div className="work-page__wordmark-wrap">
+        <Link to="/" className="work-page__wordmark-link" aria-label="Flo Studios Home">
+          <span className="sr-only">FLO STUDIOS</span>
+          <span className="work-page__wordmark" aria-hidden="true">FLO STUDIOS</span>
+        </Link>
+      </div>
+
+      {/* ─── Sticky Abacus Toolbar (#filter-nav) ─── */}
       <section id="filter-nav" className="filter-nav-wrapper">
         <div className="filter-nav">
-          {/* Primary Abacus (Filter by Discipline) */}
+          {/* Primary Abacus (FILTER: ALL, BRAND, MARKETING, PRODUCT) */}
           <div className="filter-nav__primary">
             <div className="nav abacus">
               <ul className="nav__list" role="tablist" aria-label="Filter work by category">
                 <li className="label">
-                  <span>Filter:</span>
+                  <span>FILTER:</span>
                 </li>
                 {FILTER_ITEMS.map((item) => {
-                  const isActive = filter === item.id
+                  const isActive = filter === item.id.toLowerCase()
                   return (
                     <li key={item.id} className={isActive ? 'active' : ''}>
                       <button
@@ -231,7 +180,7 @@ export default function WorkPage() {
                         role="tab"
                         aria-selected={isActive}
                         className={`button-small button-abacus ${isActive ? 'button-abacus--active' : ''}`}
-                        onClick={() => setFilter(item.id)}
+                        onClick={() => setFilter(item.id.toLowerCase())}
                       >
                         {isActive && (
                           <motion.div
@@ -251,15 +200,15 @@ export default function WorkPage() {
             </div>
           </div>
 
-          {/* Secondary Abacus (Display Switcher: Stack vs Grid) */}
+          {/* Secondary Abacus (DISPLAY: STACK, GRID) */}
           <div className="filter-nav__secondary">
             <div className="nav abacus">
               <ul className="nav__list" role="radiogroup" aria-label="Display mode">
                 <li className="label">
-                  <span>Display:</span>
+                  <span>DISPLAY:</span>
                 </li>
                 {DISPLAY_MODES.map((mode) => {
-                  const isActive = view === mode.id
+                  const isActive = view === mode.id.toLowerCase()
                   return (
                     <li key={mode.id} className={isActive ? 'active' : ''}>
                       <button
@@ -267,7 +216,7 @@ export default function WorkPage() {
                         role="radio"
                         aria-checked={isActive}
                         className={`button-small button-abacus ${isActive ? 'button-abacus--active' : ''}`}
-                        onClick={() => setView(mode.id)}
+                        onClick={() => setView(mode.id.toLowerCase())}
                       >
                         {isActive && (
                           <motion.div
@@ -323,7 +272,7 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* ─── Page Intro Statement (Verbatim Instrument Typographic Statement) ─── */}
+      {/* ─── Page Intro Statement (Instrument Serif Condensed Display) ─── */}
       <section className="page-intro" aria-label="We create beautiful, functional, technology-forward work that elevates and unifies experiences across all brand surfaces.">
         <div className="page-intro__wrapper">
           <h1 className="page-intro__text">
@@ -332,147 +281,99 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* ─── Main Content Display (Stack Editorial vs Grid) ─── */}
+      {/* ─── Main Content Container ─── */}
       <div className="work-display-container">
         {view === 'stack' ? (
-          <section className="work-features" aria-label="Featured projects stack">
-            {filteredFeatures.length > 0 ? (
-              filteredFeatures.map((proj, idx) => (
-                <article
-                  key={`${proj.client}-${idx}`}
-                  className="work-feature"
-                  style={{ '--offset': proj.offset || '0%' }}
-                >
-                  {/* Rounded Media Container */}
-                  <div className="media">
-                    <div className="media__content">
-                      <Link to={proj.href || '/work'} className="media__link" aria-label={`View ${proj.client} case study`}>
-                        <div className="media-large">
-                          <img
-                            src={proj.image}
-                            alt={`${proj.client} case study`}
-                            loading={idx === 0 ? 'eager' : 'lazy'}
-                          />
-                        </div>
-                        {/* Hover Floating Glass Pill */}
-                        <div className="hover-button">
-                          <span className="shape">
-                            <span className="label">Case Study</span>
-                            <span className="icon">
-                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path d="M3.33333 8H12.6667" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-                              </svg>
-                            </span>
-                          </span>
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
+          <>
+            {/* ── Asymmetric Duo Rows (Row 1: 65/35, Row 2: 35/65, Row 3: 65/35) ── */}
+            <section className="work-duo-showcase" aria-label="Featured projects stack">
+              {filteredDuoRows.map((row) => {
+                const showLeft = matchesFilter(row.left)
+                const showRight = matchesFilter(row.right)
 
-                  {/* Editorial Text Block */}
-                  <div className="text">
-                    <div className="title-tags">
-                      <ul className="tag-list tag-list--left" aria-label="Disciplines">
-                        {proj.tags.map((tag) => (
-                          <li key={tag}>
-                            <button
-                              type="button"
-                              className="tag"
-                              onClick={() => setFilter(tag)}
-                              aria-label={`Filter by ${tag}`}
-                            >
-                              <span className="tag__hashtag">#</span>
-                              <span>{tag}</span>
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <Link to={proj.href || '/work'} className="feature-text-link">
-                        <p className="client">{proj.client}</p>
-                        <h2 className="title">{proj.title}</h2>
-                      </Link>
-                    </div>
-
-                    <Link to={proj.href || '/work'} className="inline-button">
-                      <span className="shape">
-                        <span className="label">View Case Study</span>
-                        <span className="icon">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M5 12H19" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M12 5L19 12L12 19" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </span>
-                      </span>
-                    </Link>
-                  </div>
-                </article>
-              ))
-            ) : (
-              <div className="work-empty-state">
-                <p>No featured projects found under #{filter}.</p>
-                <button type="button" className="button-small button-abacus" onClick={() => setFilter('all')}>
-                  <span className="shape"><span className="label">view all projects</span></span>
-                </button>
-              </div>
-            )}
-          </section>
-        ) : (
-          /* ─── 4-Column Responsive Grid View (Exact Instrument .card-grid) ─── */
-          <section className="card-grid" aria-label="Projects grid catalog">
-            <div className="card-grid__cards">
-              {filteredGrid.length > 0 ? (
-                filteredGrid.map((proj, idx) => (
-                  <div key={`${proj.title}-${idx}`} className="card-grid__card-container">
-                    <article className="work-card">
-                      <div className="work-card__media">
-                        <Link to={proj.href || '/work'} aria-label={proj.title}>
-                          <div className="image-component image-component--rounded-corners">
-                            <img src={proj.image} alt={proj.title} loading="lazy" />
+                return (
+                  <div key={row.id} className={`work-duo-row work-duo-row--${row.layout}`}>
+                    {showLeft && (
+                      <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--wide' : 'work-card--narrow'}`}>
+                        <Link to={row.left.href || '/work'} className="work-card-featured__media-link">
+                          <div className={`media-box ${row.left.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: row.left.aspectRatio }}>
+                            <img src={row.left.image} alt={row.left.client} loading="lazy" />
+                            {/* Play/Pause Round Indicator */}
+                            <div className="media-playback-btn" aria-hidden="true">
+                              <span>||</span>
+                            </div>
                           </div>
                         </Link>
-                      </div>
-                      <div className="work-card__text">
-                        <Link to={proj.href || '/work'}>
-                          <h3 className="title">{proj.title}</h3>
-                        </Link>
-                        <div className="work-card__tags">
-                          <ul className="tag-list tag-list--left">
-                            {proj.tags.map((tag) => (
-                              <li key={tag}>
-                                <button
-                                  type="button"
-                                  className="tag"
-                                  onClick={() => setFilter(tag)}
-                                  aria-label={`Filter by ${tag}`}
-                                >
-                                  <span className="tag__hashtag">#</span>
-                                  <span>{tag}</span>
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
+                        <div className="work-card-featured__meta">
+                          <p className="client-name">{row.left.client}</p>
+                          <h2 className="project-title">{row.left.title}</h2>
+                          <p className="project-tag">{row.left.tag}</p>
                         </div>
-                      </div>
-                    </article>
+                      </article>
+                    )}
+
+                    {showRight && (
+                      <article className={`work-card-featured ${row.layout === 'wide-narrow' ? 'work-card--narrow' : 'work-card--wide'}`}>
+                        <Link to={row.right.href || '/work'} className="work-card-featured__media-link">
+                          <div className={`media-box ${row.right.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: row.right.aspectRatio }}>
+                            <img src={row.right.image} alt={row.right.client} loading="lazy" />
+                            {/* Play/Pause Round Indicator */}
+                            <div className="media-playback-btn" aria-hidden="true">
+                              <span>||</span>
+                            </div>
+                          </div>
+                        </Link>
+                        <div className="work-card-featured__meta">
+                          <p className="client-name">{row.right.client}</p>
+                          <h2 className="project-title">{row.right.title}</h2>
+                          <p className="project-tag">{row.right.tag}</p>
+                        </div>
+                      </article>
+                    )}
                   </div>
-                ))
-              ) : (
-                <div className="work-empty-state">
-                  <p>No projects found under #{filter}.</p>
-                  <button type="button" className="button-small button-abacus" onClick={() => setFilter('all')}>
-                    <span className="shape"><span className="label">view all projects</span></span>
-                  </button>
-                </div>
-              )}
+                )
+              })}
+            </section>
+
+            {/* ── 6-Column Archive Catalog (Exact Instrument.com Lower Grid) ── */}
+            <section className="catalog-section" aria-label="Complete project archive">
+              <div className="catalog-grid">
+                {filteredCatalog.map((item, idx) => (
+                  <article key={`${item.title}-${idx}`} className="catalog-card">
+                    <Link to={item.href || '/work'} className="catalog-card__link">
+                      <div className="catalog-card__media">
+                        <img src={item.image} alt={item.title} loading="lazy" />
+                      </div>
+                    </Link>
+                    <h3 className="catalog-card__client">{item.title}</h3>
+                    <p className="catalog-card__tag">{item.tag}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </>
+        ) : (
+          /* ── Full Grid Mode: Comprehensive Multi-Column Grid ── */
+          <section className="catalog-section" aria-label="Project grid catalog">
+            <div className="catalog-grid catalog-grid--full">
+              {filteredCatalog.map((item, idx) => (
+                <article key={`${item.title}-${idx}`} className="catalog-card">
+                  <Link to={item.href || '/work'} className="catalog-card__link">
+                    <div className="catalog-card__media">
+                      <img src={item.image} alt={item.title} loading="lazy" />
+                    </div>
+                  </Link>
+                  <h3 className="catalog-card__client">{item.title}</h3>
+                  <p className="catalog-card__tag">{item.tag}</p>
+                </article>
+              ))}
             </div>
           </section>
         )}
       </div>
 
-      {/* ─── Bottom Outro Statement (Exact Instrument .text-tout & Button) ─── */}
-      <section className="text-tout" aria-label="Studio philosophy and services">
+      {/* ─── Bottom Outro Statement (Exact Instrument.com .text-tout) ─── */}
+      <section className="text-tout" aria-label="Studio services manifesto">
         <div className="text-tout__wrapper">
           <p className="text-tout__text">
             To create brand experiences of the highest caliber, we take a multi-disciplinary approach to our work by seamlessly integrating strategy, creative, and technology, and staying in close partnership with our clients.
