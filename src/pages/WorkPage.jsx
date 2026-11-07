@@ -30,6 +30,7 @@ const FEATURED_DUO_PAIRS = [
       image: '/work/abstruct/web/abstruct-thumb.png',
       href: '/work/abstruct',
       aspectRatio: '16 / 9',
+      bgColor: '#c31c18',
     },
     right: {
       client: 'Multi-Drone 3D Path Optimizer',
@@ -128,7 +129,7 @@ const FEATURED_DUO_PAIRS = [
 
 // Catalog archive strictly featuring Flo Studios client projects (each project appears once)
 const CATALOG_ITEMS = [
-  { title: 'ABSTRUCT Identity', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct' },
+  { title: 'ABSTRUCT Identity', tag: '#BRAND', category: 'brand', image: '/work/abstruct/web/abstruct-thumb.png', href: '/work/abstruct', bgColor: '#c31c18' },
   { title: 'Drone 3D Optimizer', tag: '#PRODUCT', category: 'product', image: '/work/drone-sim/dashboard.png', href: '/work/drone-sim' },
   { title: 'Apple Product Motion', tag: '#PRODUCT', category: 'product', image: MOTION_REELS.apple.poster, href: '/work/apple-motion' },
   { title: 'Peak Club Snowboarding', tag: '#BRAND  #PRODUCT', category: 'brand', image: '/work/peak-club/peak-head.png', href: '/work/peak-club' },
@@ -190,7 +191,13 @@ function CardMedia({ item }) {
   }, [item.video])
 
   return (
-    <div className={`media-box ${item.isFrame ? 'media-box--frame' : ''}`} style={{ aspectRatio: item.aspectRatio }}>
+    <div
+      className={`media-box ${item.isFrame ? 'media-box--frame' : ''}`}
+      style={{
+        aspectRatio: item.aspectRatio,
+        backgroundColor: item.bgColor || undefined,
+      }}
+    >
       {item.video ? (
         <video
           ref={videoRef}
@@ -203,7 +210,13 @@ function CardMedia({ item }) {
           preload="metadata"
         />
       ) : (
-        <img src={item.image} alt={item.client} loading="lazy" decoding="async" />
+        <img
+          src={item.image}
+          alt={item.client}
+          loading="lazy"
+          decoding="async"
+          style={item.bgColor ? { backgroundColor: item.bgColor } : undefined}
+        />
       )}
       <div className="media-playback-btn" aria-hidden="true">
         <span>{item.video ? '▶' : '||'}</span>
@@ -457,8 +470,16 @@ export default function WorkPage() {
                     className="catalog-card__link"
                     ariaLabel={item.title}
                   >
-                    <div className="catalog-card__media">
-                      <img src={item.image} alt={item.title} loading="lazy" />
+                    <div
+                      className="catalog-card__media"
+                      style={item.bgColor ? { backgroundColor: item.bgColor } : undefined}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        style={item.bgColor ? { backgroundColor: item.bgColor } : undefined}
+                      />
                     </div>
                   </ProjectLink>
                   <h3 className="catalog-card__client">{item.title}</h3>

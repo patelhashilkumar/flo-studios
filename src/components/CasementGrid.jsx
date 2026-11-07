@@ -505,6 +505,7 @@ function LiveTile({
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
           draggable={false}
+          style={card.bgColor ? { backgroundColor: card.bgColor } : undefined}
           onError={() => setBrokenSrc(card.still)}
         />
       )}

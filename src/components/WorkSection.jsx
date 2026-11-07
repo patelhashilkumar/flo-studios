@@ -16,6 +16,7 @@ const WORK_ITEMS = [
     tags: ['creator', 'brand'],
     category: 'Brand Identity',
     image: '/work/abstruct/web/abstruct-thumb.png',
+    bgColor: '#c31c18',
     metric: 'Construction Identity',
     description: 'Monogram-led identity, visual system, and digital craft for a modern construction architecture firm.',
     size: 'hero',

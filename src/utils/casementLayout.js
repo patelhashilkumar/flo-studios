@@ -68,6 +68,7 @@ export function readCards(list) {
       description: str(raw.description),
       link: str(raw.link || raw.href),
       size: str(raw.size) || 'auto',
+      bgColor: str(raw.bgColor),
       weight: 1,
     })
   })
