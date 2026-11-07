@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import FloLogo from './FloLogo'
@@ -30,10 +30,12 @@ export default function FocusLensNavbar() {
   const [isVisible, setIsVisible] = useState(true)
   const location = useLocation()
   const mobileOpen = mobileOpenPath === location.pathname
-  const setMobileOpen = (next) => {
-    const isOpen = typeof next === 'function' ? next(mobileOpen) : Boolean(next)
-    setMobileOpenPath(isOpen ? location.pathname : null)
-  }
+  const setMobileOpen = useCallback((next) => {
+    setMobileOpenPath((prev) => {
+      const isOpen = typeof next === 'function' ? next(prev === location.pathname) : Boolean(next)
+      return isOpen ? location.pathname : null
+    })
+  }, [location.pathname])
 
   const isItemActive = (to) =>
     location.pathname === to || (to !== '/' && location.pathname.startsWith(`${to}/`))
@@ -61,7 +63,7 @@ export default function FocusLensNavbar() {
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('resize', handleResize)
     }
-  }, [mobileOpen])
+  }, [mobileOpen, setMobileOpen])
 
   // Ensure navbar is visible when navigating to any new page
   const [prevPath, setPrevPath] = useState(location.pathname)

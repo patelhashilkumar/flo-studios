@@ -16,15 +16,19 @@ export default function ContactPage() {
   const [searchParams] = useSearchParams()
   const divisionParam = searchParams.get('division')
   const initialMode = searchParams.get('mode') || (divisionParam ? 'message' : 'call')
-  const [contactMode, setContactMode] = useState(initialMode)
-  const [activeSubject, setActiveSubject] = useState('Start a Project')
-  const heroRef = useRef(null)
+  const [userModeOverride, setUserModeOverride] = useState(null)
+  const [prevInitialMode, setPrevInitialMode] = useState(initialMode)
 
   // Keep contactMode synchronized when user navigates via URL search parameters
-  useEffect(() => {
-    const nextMode = searchParams.get('mode') || (searchParams.get('division') ? 'message' : 'call')
-    setContactMode(nextMode)
-  }, [searchParams])
+  if (initialMode !== prevInitialMode) {
+    setPrevInitialMode(initialMode)
+    setUserModeOverride(null)
+  }
+
+  const contactMode = userModeOverride ?? initialMode
+  const setContactMode = setUserModeOverride
+  const [activeSubject, setActiveSubject] = useState('Start a Project')
+  const heroRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {

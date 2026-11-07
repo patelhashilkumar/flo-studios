@@ -101,11 +101,8 @@ export default function ProjectCaseStudy() {
 
   const project = CASE_STUDIES[slug]
 
-  if (!project) {
-    return <Navigate to="/work" replace />
-  }
-
   useEffect(() => {
+    if (!project) return
     const root = rootRef.current
     if (!root) return
 
@@ -149,6 +146,7 @@ export default function ProjectCaseStudy() {
 
   // Optimize video performance: pause when offscreen or tab hidden
   useEffect(() => {
+    if (!project) return
     const video = videoRef.current
     if (!video) return
 
@@ -179,6 +177,10 @@ export default function ProjectCaseStudy() {
       document.removeEventListener('visibilitychange', handleVisibility)
     }
   }, [project])
+
+  if (!project) {
+    return <Navigate to="/work" replace />
+  }
 
   const isMultiItemShowcase = project.showcase?.items && project.showcase.items.length >= 3
 
