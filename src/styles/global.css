@@ -3,15 +3,14 @@
    ========================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=panchang@200,300,400,500,600,700,800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=panchang@200,300,400,500,600,700,800&f[]=gambarino@400&display=swap');
 
-/* Linden (Tall Serif Display Font) */
+/* Gambarino (Display Serif) */
 @font-face {
-  font-family: 'Linden';
-  src: url('/fonts/LindenRegular.woff2') format('woff2'),
-       url('/fonts/LindenRegular.woff') format('woff'),
-       url('/fonts/Linden.otf') format('opentype'),
-       url('/fonts/LindenRegular.ttf') format('truetype');
+  font-family: 'Gambarino';
+  src: url('/fonts/Gambarino-Regular.woff2') format('woff2'),
+       url('/fonts/Gambarino-Regular.woff') format('woff'),
+       url('https://cdn.fontshare.com/wf/ZINX7PW4XMYISLZAZKYY4QHYYHYNPKAV/Z54IGKTR4PBLA5KTYL3IDQZHFQPJJVNZ/6KBHT5NXCZVM6GHTPKGIR6DXZLQAYIFK.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -68,7 +67,7 @@
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-manrope: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Linden', 'Instrument Serif', Georgia, serif;
+  --font-serif: 'Gambarino', 'Instrument Serif', Georgia, serif;
   --font-panchang: 'Panchang', sans-serif;
   --font-brand: var(--font-manrope);
 

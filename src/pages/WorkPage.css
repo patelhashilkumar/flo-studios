@@ -219,7 +219,7 @@
 }
 
 .page-intro__text {
-  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
   font-size: clamp(2.6rem, 5.5vw, 4.75rem);
   font-weight: 400;
   letter-spacing: -0.015em;
@@ -387,7 +387,7 @@
   margin: 0;
 }
 
-/* ── 5. 6-Column Archive Catalog (Exact Instrument.com Lower Grid) ── */
+/* ── 5. 3x3 Archive Catalog Grid (Balanced 3-Column Studio Showcase) ── */
 .catalog-section {
   width: 100%;
   margin-top: clamp(2rem, 4vw, 4rem);
@@ -396,9 +396,9 @@
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: clamp(14px, 1.8vw, 24px);
-  row-gap: clamp(28px, 3.5vw, 48px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2.4vw, 36px);
+  row-gap: clamp(32px, 4vw, 56px);
   width: 100%;
   box-sizing: border-box;
 }
@@ -418,7 +418,7 @@
 .catalog-card__media {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 16px;
+  border-radius: clamp(16px, 1.8vw, 24px);
   overflow: hidden;
   background-color: var(--work-card-bg);
   position: relative;
@@ -433,21 +433,22 @@
 }
 
 .catalog-card:hover .catalog-card__media img {
-  transform: scale(1.045);
+  transform: scale(1.035);
 }
 
 .catalog-card__client {
   font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.9375rem;
+  font-size: clamp(1.05rem, 1.25vw, 1.35rem);
   font-weight: 600;
   color: var(--work-ink);
-  margin: 8px 0 2px 0;
-  letter-spacing: -0.01em;
+  margin: 14px 0 4px 0;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
 }
 
 .catalog-card__tag {
   font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--work-ink-subtle);
   letter-spacing: 0.05em;
@@ -526,18 +527,6 @@
 }
 
 /* ── Responsive Rules ── */
-@media (max-width: 1200px) {
-  .catalog-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .catalog-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media (max-width: 768px) {
   .work-duo-row {
     flex-direction: column;
@@ -553,6 +542,7 @@
   .catalog-grid {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 24px;
+    gap: 16px;
   }
 
   .filter-nav {

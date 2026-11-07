@@ -71,8 +71,8 @@ test('3. WorkPage CSS implements pure white background, Instrument Serif font, a
   assert.ok(css.includes('position: sticky;'), 'Filter nav is sticky')
   assert.ok(css.includes('.filter-nav-wrapper'), 'Filter nav wrapper exists')
 
-  // Serif typography (Linden / Instrument Serif fallback)
-  assert.ok(css.includes('var(--font-serif') || css.includes("'Linden'"), 'Uses authentic serif typography')
+  // Serif typography (Gambarino / Instrument Serif fallback)
+  assert.ok(css.includes('var(--font-serif') || css.includes("'Gambarino'"), 'Uses authentic serif typography')
 
   // Asymmetric duo row flex percentages (65% / 35%)
   assert.ok(css.includes('flex: 0 0 calc(65%'), 'Asymmetric wide card has 65% width')
@@ -81,6 +81,6 @@ test('3. WorkPage CSS implements pure white background, Instrument Serif font, a
   // Media rounded corners
   assert.ok(css.includes('border-radius: 20px;'), 'Media container uses 20px rounded corners')
 
-  // 6-column catalog grid
-  assert.ok(css.includes('grid-template-columns: repeat(6, 1fr);'), 'Lower archive catalog uses 6-column desktop grid')
+  // 3-column catalog grid (3x3 grid for 9 studio projects)
+  assert.ok(css.includes('grid-template-columns: repeat(3, 1fr);'), 'Lower archive catalog uses 3-column desktop grid for 3x3 layout')
 })

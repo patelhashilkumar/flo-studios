@@ -32,7 +32,7 @@
 }
 
 .article-page__title {
-  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
   font-size: clamp(4.25rem, 12vw, 11rem);
   line-height: 0.94;
   font-weight: 400;
@@ -111,7 +111,7 @@
 
 /* Section Headings */
 .article-page__section-heading {
-  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   line-height: 1.15;
   font-weight: 400;
@@ -136,7 +136,7 @@
 
 .article-page__pullquote blockquote {
   margin: 0;
-  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   line-height: 1.15;
   font-style: normal;
@@ -219,7 +219,7 @@
 }
 
 .article-page__cta-title {
-  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.15;
   font-weight: 400;
@@ -271,7 +271,7 @@
 }
 
 .article-page__related-title {
-  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 400;
   color: #000000;
