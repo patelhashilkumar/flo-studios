@@ -206,26 +206,32 @@
   height: 16px;
 }
 
-/* ── 3. Page Intro Section (Instrument Serif High-Contrast Display) ── */
+/* ── 3. Page Intro Section (Centered Serif Statement) ── */
 .page-intro {
   padding: clamp(3rem, 5.5vw, 5.5rem) clamp(16px, 3.5vw, 48px) clamp(2.5rem, 4.5vw, 4.5rem);
   max-width: 1720px;
   margin: 0 auto;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
 }
 
 .page-intro__wrapper {
-  max-width: 1360px;
+  max-width: 1180px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .page-intro__text {
   font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
-  font-size: clamp(2.6rem, 5.5vw, 4.75rem);
+  font-size: clamp(1.9rem, 3.5vw, 3.25rem);
   font-weight: 400;
   letter-spacing: -0.015em;
-  line-height: 1.05;
+  line-height: 1.12;
   color: var(--work-ink);
-  margin: 0;
+  margin: 0 auto;
+  text-align: center;
+  text-wrap: balance;
 }
 
 /* ── Container for Main Content ── */
