@@ -22,8 +22,11 @@ export default function ArticlePage() {
     return all.filter((b) => b.slug !== slug && b.id !== post?.id).slice(0, 3)
   }, [slug, post])
 
-  // Ensure scroll is restored to top on mount
+  // Ensure scroll is restored to top on mount and slug change
   useEffect(() => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true })
+    }
     window.scrollTo(0, 0)
   }, [slug])
 

@@ -24,7 +24,7 @@ const WORK_ITEMS = [
   {
     title: 'Apple Product Motion',
     slug: 'apple-motion',
-    tags: ['creator', 'development', 'motion', 'product'],
+    tags: ['creator', 'motion', 'product'],
     category: 'CGI & 3D Motion',
     image: MOTION_REELS.apple.poster,
     videoWebm: MOTION_REELS.apple.webm,
@@ -36,7 +36,7 @@ const WORK_ITEMS = [
   {
     title: 'Blitzit 2.0 Interface',
     slug: 'blitzit-motion',
-    tags: ['development', 'creator', 'motion', 'product'],
+    tags: ['creator', 'motion', 'product'],
     category: 'App & Micro-Interactions',
     image: MOTION_REELS.blitzit.poster,
     videoWebm: MOTION_REELS.blitzit.webm,

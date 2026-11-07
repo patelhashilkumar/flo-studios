@@ -108,7 +108,11 @@ export default function CareersPage() {
     e.preventDefault()
     const formElement = document.getElementById('application-form')
     if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' })
+      if (window.__lenis) {
+        window.__lenis.scrollTo(formElement, { offset: -70 })
+      } else {
+        formElement.scrollIntoView({ behavior: 'smooth' })
+      }
     }
   }
 

@@ -8,12 +8,24 @@ export default function ScrollToTop() {
     const resetScroll = () => {
       if (hash) {
         const id = hash.replace(/^#/, '')
-        const el = document.getElementById(id) || document.querySelector(hash)
+        let el = document.getElementById(id)
+        if (!el) {
+          try {
+            el = document.querySelector(hash)
+          } catch {
+            el = null
+          }
+        }
         if (el) {
           if (window.__lenis) {
-            window.__lenis.scrollTo(el, { immediate: true })
+            window.__lenis.scrollTo(el, { immediate: true, offset: -60 })
           } else {
-            el.scrollIntoView()
+            const rect = el.getBoundingClientRect()
+            window.scrollTo({
+              top: window.scrollY + rect.top - 60,
+              left: 0,
+              behavior: 'instant',
+            })
           }
           return
         }

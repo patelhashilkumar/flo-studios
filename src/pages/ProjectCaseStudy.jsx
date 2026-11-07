@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
 import { CASE_STUDIES } from '../data/caseStudiesData'
@@ -96,18 +96,16 @@ function DynamicPalette({ palette }) {
 
 export default function ProjectCaseStudy() {
   const { slug } = useParams()
-  const navigate = useNavigate()
   const rootRef = useRef(null)
   const videoRef = useRef(null)
 
   const project = CASE_STUDIES[slug]
 
-  useEffect(() => {
-    if (!project) {
-      navigate('/work', { replace: true })
-      return
-    }
+  if (!project) {
+    return <Navigate to="/work" replace />
+  }
 
+  useEffect(() => {
     const root = rootRef.current
     if (!root) return
 
@@ -147,7 +145,7 @@ export default function ProjectCaseStudy() {
       window.removeEventListener('scroll', onScroll)
       document.body.classList.remove('pcs-page')
     }
-  }, [project, slug, navigate])
+  }, [project, slug])
 
   // Optimize video performance: pause when offscreen or tab hidden
   useEffect(() => {
@@ -181,8 +179,6 @@ export default function ProjectCaseStudy() {
       document.removeEventListener('visibilitychange', handleVisibility)
     }
   }, [project])
-
-  if (!project) return null
 
   const isMultiItemShowcase = project.showcase?.items && project.showcase.items.length >= 3
 

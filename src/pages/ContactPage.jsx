@@ -20,6 +20,12 @@ export default function ContactPage() {
   const [activeSubject, setActiveSubject] = useState('Start a Project')
   const heroRef = useRef(null)
 
+  // Keep contactMode synchronized when user navigates via URL search parameters
+  useEffect(() => {
+    const nextMode = searchParams.get('mode') || (searchParams.get('division') ? 'message' : 'call')
+    setContactMode(nextMode)
+  }, [searchParams])
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.contact-page__title-word', { y: 50, opacity: 0 },

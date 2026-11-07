@@ -89,6 +89,13 @@ export default function App() {
               <Route path="/jobs" element={<Navigate to="/careers" replace />} />
               <Route path="/job" element={<Navigate to="/careers" replace />} />
               <Route path="/apply" element={<Navigate to="/careers" replace />} />
+              <Route path="/projects" element={<Navigate to="/work" replace />} />
+              <Route path="/case-studies" element={<Navigate to="/work" replace />} />
+              <Route path="/service" element={<Navigate to="/services" replace />} />
+              <Route path="/news" element={<Navigate to="/latest" replace />} />
+              <Route path="/blog" element={<Navigate to="/latest" replace />} />
+              <Route path="/articles" element={<Navigate to="/latest" replace />} />
+              <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
 
               {/* 404 Catch-All Route */}
               <Route path="*" element={<NotFoundPage />} />

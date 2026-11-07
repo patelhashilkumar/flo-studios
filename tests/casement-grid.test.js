@@ -129,3 +129,20 @@ test('5. WorkSection embeds CasementGrid and provides activeFilter integration',
     'WorkSection must retain hasWorkItemVideo for regression safety'
   )
 })
+
+test('6. Motion reels (Apple Product Motion, Blitzit 2.0 Interface) are categorized under Creator and excluded from Development', () => {
+  const workSectionCode = fs.readFileSync(
+    path.join(repoRoot, 'src/components/WorkSection.jsx'),
+    'utf8'
+  )
+
+  const appleMatch = workSectionCode.match(/title:\s*'Apple Product Motion'[\s\S]*?tags:\s*\[([^\]]+)\]/)
+  assert.ok(appleMatch, 'Apple Product Motion item must exist in WORK_ITEMS')
+  assert.ok(!appleMatch[1].includes("'development'"), 'Apple Product Motion must not have development tag')
+  assert.ok(appleMatch[1].includes("'creator'"), 'Apple Product Motion must have creator tag')
+
+  const blitzitMatch = workSectionCode.match(/title:\s*'Blitzit 2\.0 Interface'[\s\S]*?tags:\s*\[([^\]]+)\]/)
+  assert.ok(blitzitMatch, 'Blitzit 2.0 Interface item must exist in WORK_ITEMS')
+  assert.ok(!blitzitMatch[1].includes("'development'"), 'Blitzit 2.0 Interface must not have development tag')
+  assert.ok(blitzitMatch[1].includes("'creator'"), 'Blitzit 2.0 Interface must have creator tag')
+})

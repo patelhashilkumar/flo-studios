@@ -35,6 +35,34 @@ export default function FocusLensNavbar() {
     setMobileOpenPath(isOpen ? location.pathname : null)
   }
 
+  const isItemActive = (to) =>
+    location.pathname === to || (to !== '/' && location.pathname.startsWith(`${to}/`))
+
+  // Close mobile drawer on Escape key or window expand to desktop, and lock background scroll
+  useEffect(() => {
+    if (!mobileOpen) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileOpen(false)
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth >= 980) setMobileOpen(false)
+    }
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [mobileOpen])
+
   // Ensure navbar is visible when navigating to any new page
   const [prevPath, setPrevPath] = useState(location.pathname)
   if (prevPath !== location.pathname) {
@@ -78,7 +106,7 @@ export default function FocusLensNavbar() {
   const renderNavItem = (item, groupKey) => {
     const isHovered = hoveredId === item.id
     const isAnyHovered = hoveredId !== null
-    const isActive = location.pathname === item.to
+    const isActive = isItemActive(item.to)
 
     // Depth-of-field focus animation physics
     const motionStyle = isHovered
@@ -193,36 +221,47 @@ export default function FocusLensNavbar() {
           </div>
         </nav>
 
-        {/* ── 5. Mobile Drawer ── */}
+        {/* ── 5. Mobile Drawer & Backdrop ── */}
         <AnimatePresence>
           {mobileOpen && (
-            <motion.div
-              className="global-nav-mobile-drawer"
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="global-nav-mobile-pills">
-                {[...LEFT_NAV, ...RIGHT_NAV].map((item) => {
-                  const isActive = location.pathname === item.to
-                  return (
-                    <Link
-                      key={item.id}
-                      to={item.to}
-                      className={`button-small button-abacus ${isActive ? 'button-abacus--active' : ''}`}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      <span className="shape">
-                        <span className="label">{item.label}</span>
-                      </span>
-                    </Link>
-                  )
-                })}
-              </div>
-
-
-            </motion.div>
+            <>
+              <motion.div
+                key="nav-backdrop"
+                className="global-nav-mobile-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setMobileOpen(false)}
+                aria-hidden="true"
+              />
+              <motion.div
+                key="nav-drawer"
+                className="global-nav-mobile-drawer"
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="global-nav-mobile-pills">
+                  {[...LEFT_NAV, ...RIGHT_NAV].map((item) => {
+                    const isActive = isItemActive(item.to)
+                    return (
+                      <Link
+                        key={item.id}
+                        to={item.to}
+                        className={`button-small button-abacus ${isActive ? 'button-abacus--active' : ''}`}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <span className="shape">
+                          <span className="label">{item.label}</span>
+                        </span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </header>
