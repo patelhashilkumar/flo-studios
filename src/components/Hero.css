@@ -211,11 +211,11 @@
 }
 
 .hero__statement {
-  font-family: var(--font-primary);
-  font-size: clamp(2.25rem, 5.2vw, 5.25rem);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
+  font-size: clamp(2.35rem, 5.5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
   color: #000000;
   margin-top: 0;
   margin-bottom: 2.5rem;
