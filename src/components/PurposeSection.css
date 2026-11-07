@@ -56,17 +56,17 @@
   user-select: none;
 }
 
-/* Title 1: "Idea" — Gambarino Serif Italic */
+/* Title 1: "Idea" — Libre Caslon Condensed Italic */
 .purpose__title1 {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-weight: 400;
   font-style: italic;
   letter-spacing: -0.03em;
 }
 
-/* Title 2: "To" — Gambarino Serif Italic */
+/* Title 2: "To" — Libre Caslon Condensed Italic */
 .purpose__title2 {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-weight: 400;
   font-style: italic;
   letter-spacing: -0.03em;
@@ -74,9 +74,9 @@
   margin-bottom: clamp(1.25rem, 2.5vw, 2.5rem);
 }
 
-/* Title 3: "Outcome." — Gambarino Serif Italic */
+/* Title 3: "Outcome." — Libre Caslon Condensed Italic */
 .purpose__title3 {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-weight: 400;
   font-style: italic;
   letter-spacing: -0.03em;

@@ -135,7 +135,7 @@
 
 /* Headline: "Breaking news, insights, and articles." in Instrument Serif */
 .latest-page__title {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-size: clamp(2.75rem, 6.2vw, 5.25rem);
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -247,7 +247,7 @@
 }
 
 .latest-page__card-title {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-size: clamp(1.2rem, 1.4vw, 1.45rem);
   font-weight: 400;
   color: #ffffff;

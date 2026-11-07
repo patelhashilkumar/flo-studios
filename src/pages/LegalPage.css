@@ -38,7 +38,7 @@
 }
 
 .legal-page__title {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: 0.98;
   font-weight: 400;

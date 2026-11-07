@@ -219,7 +219,7 @@
 }
 
 .page-intro__text {
-  font-family: var(--font-serif, 'Gambarino', 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
   font-size: clamp(2.6rem, 5.5vw, 4.75rem);
   font-weight: 400;
   letter-spacing: -0.015em;

@@ -71,8 +71,8 @@ test('3. WorkPage CSS implements pure white background, Instrument Serif font, a
   assert.ok(css.includes('position: sticky;'), 'Filter nav is sticky')
   assert.ok(css.includes('.filter-nav-wrapper'), 'Filter nav wrapper exists')
 
-  // Serif typography (Gambarino / Instrument Serif fallback)
-  assert.ok(css.includes('var(--font-serif') || css.includes("'Gambarino'"), 'Uses authentic serif typography')
+  // Serif typography (Libre Caslon Condensed / Instrument Serif fallback)
+  assert.ok(css.includes('var(--font-serif') || css.includes("'Libre Caslon Condensed'"), 'Uses authentic serif typography')
 
   // Asymmetric duo row flex percentages (65% / 35%)
   assert.ok(css.includes('flex: 0 0 calc(65%'), 'Asymmetric wide card has 65% width')
