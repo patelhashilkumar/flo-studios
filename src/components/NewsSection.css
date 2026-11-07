@@ -118,7 +118,7 @@
 }
 
 .news-card__title {
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: var(--font-serif, 'Linden', 'Instrument Serif', Georgia, serif);
   font-size: clamp(1.375rem, 1.8vw, 1.75rem);
   font-weight: 400;
   color: #000000;
