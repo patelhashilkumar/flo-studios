@@ -1,0 +1,17 @@
+{
+  "name": "Flo Studios",
+  "short_name": "Flo Studios",
+  "description": "Progressive Dual-Engine Media & Development Hub: Development Division (Full Build Lifecycle) and Creator Growth Systems.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

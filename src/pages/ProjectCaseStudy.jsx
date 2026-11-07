@@ -202,6 +202,31 @@ export default function ProjectCaseStudy() {
         title={`${project.title} | Case Study | Flo Studios`}
         description={project.leadQuote || project.leadText}
         canonicalUrl={`https://www.flostudio.co/work/${project.slug}`}
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Work', item: 'https://www.flostudio.co/work', url: 'https://www.flostudio.co/work' },
+          { name: project.title, item: `https://www.flostudio.co/work/${project.slug}`, url: `https://www.flostudio.co/work/${project.slug}` },
+        ]}
+        schema={[
+          {
+            '@type': 'CreativeWork',
+            '@id': `https://www.flostudio.co/work/${project.slug}#case-study`,
+            headline: `${project.title} - ${project.category} Case Study`,
+            name: project.title,
+            description: project.leadQuote || project.leadText,
+            genre: project.category,
+            creator: {
+              '@type': 'Organization',
+              name: 'Flo Studios',
+              url: 'https://www.flostudio.co/',
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Flo Studios',
+              url: 'https://www.flostudio.co/',
+            },
+          },
+        ]}
       />
 
       {/* 1. Intro Screen with Curtain Lift */}

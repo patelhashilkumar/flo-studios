@@ -284,6 +284,31 @@ export default function AbstructCaseStudy() {
         title="ABSTRUCT | Construction Brand Identity | Flo Studios"
         description="Flo Studios built a monogram-led identity for ABSTRUCT Construction in ivory, charcoal and signal red, applied from site hoardings to hard hats and digital."
         canonicalUrl="https://www.flostudio.co/work/abstruct"
+        breadcrumbs={[
+          { name: 'Home', item: 'https://www.flostudio.co/', url: 'https://www.flostudio.co/' },
+          { name: 'Work', item: 'https://www.flostudio.co/work', url: 'https://www.flostudio.co/work' },
+          { name: 'ABSTRUCT Construction', item: 'https://www.flostudio.co/work/abstruct', url: 'https://www.flostudio.co/work/abstruct' },
+        ]}
+        schema={[
+          {
+            '@type': 'CreativeWork',
+            '@id': 'https://www.flostudio.co/work/abstruct#case-study',
+            headline: 'ABSTRUCT Construction - Brand Identity Case Study',
+            name: 'ABSTRUCT Construction',
+            description: 'Flo Studios built a monogram-led identity for ABSTRUCT Construction in ivory, charcoal and signal red, applied from site hoardings to hard hats and digital.',
+            genre: 'Brand Identity',
+            creator: {
+              '@type': 'Organization',
+              name: 'Flo Studios',
+              url: 'https://www.flostudio.co/',
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Flo Studios',
+              url: 'https://www.flostudio.co/',
+            },
+          },
+        ]}
       />
 
       {/* 1a. Intro: the monogram fills the first screen, revealed after a red curtain lifts */}
