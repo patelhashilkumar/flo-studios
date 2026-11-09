@@ -1,4 +1,7 @@
 https://flostudio.co/* https://www.flostudio.co/:splat 301!
+https://flostudios.co/* https://www.flostudio.co/:splat 301!
+/lander / 301
+/landing / 301
 /.env* /404 404
 /.git* /404 404
 /*.sql /404 404

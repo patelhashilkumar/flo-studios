@@ -96,6 +96,8 @@ export default function App() {
               <Route path="/blog" element={<Navigate to="/latest" replace />} />
               <Route path="/articles" element={<Navigate to="/latest" replace />} />
               <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
+              <Route path="/lander" element={<Navigate to="/" replace />} />
+              <Route path="/landing" element={<Navigate to="/" replace />} />
 
               {/* 404 Catch-All Route */}
               <Route path="*" element={<NotFoundPage />} />
