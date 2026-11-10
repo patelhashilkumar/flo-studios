@@ -362,7 +362,6 @@
 .admin-notice-toast {
   background: #ffffff;
   border: 1px solid var(--admin-border);
-  border-left: 3px solid #16a34a;
   border-radius: var(--admin-radius-sm);
   padding: 10px 16px;
   font-family: var(--font-manrope), sans-serif;
@@ -595,14 +594,6 @@
 
 .admin-card:hover {
   border-color: rgba(17, 17, 20, 0.2);
-}
-
-.admin-card--new {
-  border-left: 3px solid #2563eb;
-}
-
-.admin-card--starred {
-  border-left: 3px solid #d97706;
 }
 
 .admin-card__top {

@@ -1081,12 +1081,7 @@ export default function AdminPage() {
             ) : (
               <div className="admin-list">
                 {filteredSubmissions.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`admin-card ${item.status === 'new' ? 'admin-card--new' : ''} ${
-                      item.starred ? 'admin-card--starred' : ''
-                    }`}
-                  >
+                  <div key={item.id} className="admin-card">
                     {/* Card Header */}
                     <div className="admin-card__top">
                       <div className="admin-card__identifiers">
