@@ -21,7 +21,8 @@ as $$
       or coalesce(((select auth.jwt()) -> 'app_metadata' ->> 'is_admin'), '') = 'true'
       or lower(coalesce(((select auth.jwt()) ->> 'email'), '')) in (
         'theflostudios0@gmail.com',
-        'admin@flostudios.com'
+        'admin@flostudios.com',
+        'hashilisbest@gmail.com'
       )
     );
 $$;
