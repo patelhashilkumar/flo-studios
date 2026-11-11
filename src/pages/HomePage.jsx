@@ -8,12 +8,46 @@ import CapabilitiesSection from '../components/CapabilitiesSection'
 import PurposeSection from '../components/PurposeSection'
 import NewsSection from '../components/NewsSection'
 
-// Lazy-load the heavy 3D canvas (Three.js / React Three Fiber) below the fold
-const WorkflowSection = lazy(() => import('../WorkflowSection'))
+// Lazy-load the heavy 3D canvas (Three.js / React Three Fiber) below the fold with idle preloading
+const loadWorkflowSection = () => import('../WorkflowSection')
+const WorkflowSection = lazy(loadWorkflowSection)
+
+function WorkflowSkeleton() {
+  return (
+    <section className="workflow-section workflow-section--loading" aria-busy="true" aria-label="Loading interactive workflow">
+      <div className="workflow-ui">
+        <div className="workflow-header">
+          <h2 className="workflow-title">The Journey</h2>
+          <p className="workflow-desc">
+            How Flo Studios brings cinematic motion and 3D from concept to global launch.
+          </p>
+        </div>
+      </div>
+      <div className="workflow-canvas-container workflow-skeleton-loader">
+        <div className="workflow-skeleton-pulse" />
+      </div>
+    </section>
+  )
+}
 
 function DeferredWorkflowSection() {
   const [shouldRender, setShouldRender] = useState(false)
   const containerRef = useRef(null)
+
+  useEffect(() => {
+    // 1. Kick off network prefetch in idle time so Three.js bundle is cached in browser
+    //    before the user scrolls down to this section
+    const prefetch = () => {
+      loadWorkflowSection()
+    }
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(prefetch, { timeout: 2500 })
+      return () => window.cancelIdleCallback(id)
+    } else {
+      const timer = setTimeout(prefetch, 1500)
+      return () => clearTimeout(timer)
+    }
+  }, [])
 
   useEffect(() => {
     const node = containerRef.current
@@ -24,6 +58,7 @@ function DeferredWorkflowSection() {
       return
     }
 
+    // 2. High 1000px rootMargin triggers mount well ahead of entering viewport
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -31,7 +66,7 @@ function DeferredWorkflowSection() {
           observer.disconnect()
         }
       },
-      { rootMargin: '350px 0px' }
+      { rootMargin: '1000px 0px' }
     )
 
     observer.observe(node)
@@ -41,11 +76,11 @@ function DeferredWorkflowSection() {
   return (
     <div ref={containerRef}>
       {shouldRender ? (
-        <Suspense fallback={<div style={{ minHeight: '380px', background: '#ffffff' }} />}>
+        <Suspense fallback={<WorkflowSkeleton />}>
           <WorkflowSection />
         </Suspense>
       ) : (
-        <div style={{ minHeight: '380px', background: '#ffffff' }} />
+        <WorkflowSkeleton />
       )}
     </div>
   )

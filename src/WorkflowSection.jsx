@@ -418,6 +418,7 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
   const bankRef = useRef();
   const shadowRef = useRef();
   const currentLookAt = useRef(new THREE.Vector3());
+  const isInitial = useRef(true);
   
   // Smooth Catmull-Rom flight corridor
   const curve = useMemo(() => {
@@ -527,7 +528,6 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       .add(normal.clone().multiplyScalar(distSide));
 
     const targetCamPos = point.clone().add(cameraOffset);
-    camera.position.lerp(targetCamPos, 0.07);
 
     // Frame the plane and tower together comfortably in view
     const targetLookAt = point.clone()
@@ -535,12 +535,21 @@ function Scene({ progressRef, activeIndex, setActiveIndex }) {
       .add(normal.clone().multiplyScalar(isMobile ? 0.25 : 0.75))
       .add(new THREE.Vector3(0, isMobile ? 0.2 : 0.5, 0));
 
-    if (currentLookAt.current.lengthSq() === 0) {
+    // Immediate framing on initial frame prevents lag/empty camera angle while WebGL compiles
+    if (isInitial.current) {
+      camera.position.copy(targetCamPos);
       currentLookAt.current.copy(targetLookAt);
+      camera.lookAt(targetLookAt);
+      isInitial.current = false;
     } else {
-      currentLookAt.current.lerp(targetLookAt, 0.08);
+      camera.position.lerp(targetCamPos, 0.07);
+      if (currentLookAt.current.lengthSq() === 0) {
+        currentLookAt.current.copy(targetLookAt);
+      } else {
+        currentLookAt.current.lerp(targetLookAt, 0.08);
+      }
+      camera.lookAt(currentLookAt.current);
     }
-    camera.lookAt(currentLookAt.current);
   });
 
   return (
@@ -640,7 +649,15 @@ export default function WorkflowSection() {
       });
     }, section);
 
-    return () => ctx.revert();
+    // Refresh ScrollTrigger so pinning start/end calculations sync with actual DOM height
+    const rafId = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      ctx.revert();
+    };
   }, []);
 
   const activeStep = WORKFLOW_STEPS[activeIndex] || WORKFLOW_STEPS[0];
@@ -713,7 +730,17 @@ export default function WorkflowSection() {
 
       {/* 3D Canvas */}
       <div className="workflow-canvas-container">
-        <Canvas camera={{ position: [7.2, 9.6, 7.5], fov: 46 }}>
+        <Canvas
+          camera={{ position: [5.7, 9.4, 6.8], fov: 46 }}
+          dpr={[1, 1.5]}
+          gl={{
+            powerPreference: 'high-performance',
+            antialias: true,
+            alpha: false,
+            stencil: false,
+            depth: true
+          }}
+        >
           <color attach="background" args={['#ffffff']} />
           <fog attach="fog" args={['#ffffff', 20, 80]} />
           <Scene 
