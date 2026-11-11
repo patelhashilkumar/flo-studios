@@ -80,7 +80,7 @@
 
 .nav-item-inner {
   display: inline-flex;
-  will-change: transform, filter, opacity;
+  will-change: transform;
 }
 
 /* ── Pill Button (Exact Instrument .button-small .button-abacus) ── */
@@ -162,7 +162,7 @@
   text-align: center;
   overflow: hidden;
   padding: 0 12px;
-  will-change: transform, filter, opacity;
+  will-change: transform;
 }
 
 .global-header .marquee p {
@@ -211,7 +211,7 @@
   justify-content: center;
   text-align: center;
   padding: 0 12px;
-  will-change: transform, filter, opacity;
+  will-change: transform;
 }
 
 .global-nav-center-logo {

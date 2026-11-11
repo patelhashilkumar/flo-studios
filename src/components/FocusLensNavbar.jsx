@@ -107,15 +107,11 @@ export default function FocusLensNavbar() {
 
   const renderNavItem = (item, groupKey) => {
     const isHovered = hoveredId === item.id
-    const isAnyHovered = hoveredId !== null
     const isActive = isItemActive(item.to)
 
-    // Depth-of-field focus animation physics
     const motionStyle = isHovered
-      ? { opacity: 1, filter: 'blur(0px)', scale: 1.02 }
-      : isAnyHovered
-      ? { opacity: 0.38, filter: 'blur(1.4px)', scale: 0.98 }
-      : { opacity: 1, filter: 'blur(0px)', scale: 1 }
+      ? { opacity: 1, filter: 'none', scale: 1.02 }
+      : { opacity: 1, filter: 'none', scale: 1 }
 
     return (
       <li key={item.id} className="nav-item">
@@ -154,13 +150,10 @@ export default function FocusLensNavbar() {
   const isDarkNav = isLatestPage
 
   const isLogoHovered = hoveredId === 'center-logo'
-  const isOtherHovered = hoveredId !== null && !isLogoHovered
 
   const centerMotion = isLogoHovered
-    ? { opacity: 1, filter: 'blur(0px)', scale: 1.01 }
-    : isOtherHovered
-    ? { opacity: 0.4, filter: 'blur(1.2px)', scale: 0.99 }
-    : { opacity: 1, filter: 'blur(0px)', scale: 1 }
+    ? { opacity: 1, filter: 'none', scale: 1.01 }
+    : { opacity: 1, filter: 'none', scale: 1 }
 
   const shouldHide = !isVisible && !mobileOpen
 
