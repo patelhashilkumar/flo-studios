@@ -124,12 +124,13 @@ function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label
       loop
       playsInline
       disablePictureInPicture
-      preload="auto"
+      preload="none"
       aria-label={label}
     >
       {videoWebm && <source src={videoWebm} type="video/webm" />}
       {videoMp4 && <source src={videoMp4} type="video/mp4" />}
       {src && !videoWebm && !videoMp4 && <source src={src} type="video/mp4" />}
+      <track kind="captions" />
     </video>
   )
 }
@@ -364,7 +365,7 @@ function LiveLightbox({
               controls
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               aria-label={card.alt}
               onClick={stop}
               className="casement-lightbox-media"
@@ -372,6 +373,7 @@ function LiveLightbox({
             >
               {card.videoWebm && <source src={card.videoWebm} type="video/webm" />}
               {card.videoMp4 && <source src={card.videoMp4} type="video/mp4" />}
+              <track kind="captions" />
             </video>
           ) : (
             <img
@@ -725,7 +727,7 @@ export default function CasementGrid({
               fit={fit}
               lit={lit === i}
               playing={playing}
-              eager={i < 4}
+              eager={i < 1}
               sizes={`${limit(Math.round(b.w * 100), 25, 100)}vw`}
               shade={shade}
               captionMode={captionMode}

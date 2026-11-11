@@ -16,7 +16,7 @@ export const CASE_STUDIES = {
     inkColor: '#F1F5F9',
     heroMedia: {
       type: 'image',
-      src: '/work/drone-sim/dashboard.png',
+      src: '/work/drone-sim/dashboard.webp',
       alt: 'Multi-Drone 3D Path Optimizer WebGL simulation dashboard and trajectory controls',
       aspectRatio: '16 / 9',
     },
@@ -34,7 +34,7 @@ export const CASE_STUDIES = {
       caption: 'Three.js spatial viewports, interactive 3D camera controls, and real-time waypoint interpolation.',
       items: [
         {
-          src: '/work/drone-sim/dashboard.png',
+          src: '/work/drone-sim/dashboard.webp',
           alt: 'Primary 3D path optimization canvas showing simulated drone waypoints',
           caption: 'Continuous 3D space obstacle field with real-time collision detection',
         },
@@ -101,7 +101,7 @@ export const CASE_STUDIES = {
     inkColor: '#F2FBF7',
     heroMedia: {
       type: 'image',
-      src: '/work/c4future/carbon-thumb.png',
+      src: '/work/c4future/carbon-thumb.webp',
       alt: 'C4Future carbon intelligence dashboard forecasting product lifecycle emissions',
       aspectRatio: '16 / 9',
     },
@@ -119,7 +119,7 @@ export const CASE_STUDIES = {
       caption: 'Decomposition trees, material substitution matrices, and emission confidence bounds.',
       items: [
         {
-          src: '/work/c4future/carbon-thumb.png',
+          src: '/work/c4future/carbon-thumb.webp',
           alt: 'C4Future intelligence overview with emission breakdowns and supply chain analytics',
           caption: 'TreeSHAP attribution isolating highest-impact component alloys',
         },
@@ -271,7 +271,7 @@ export const CASE_STUDIES = {
     inkColor: '#F8FAFC',
     heroMedia: {
       type: 'image',
-      src: '/work/relay/relay-thumb.png',
+      src: '/work/relay/relay-thumb.webp',
       alt: 'Relay team collaboration interface featuring channels, AI teammates, and live audio huddles',
       aspectRatio: '16 / 9',
     },
@@ -289,7 +289,7 @@ export const CASE_STUDIES = {
       caption: 'Real-time WebRTC audio huddles, dynamic notification tiers, and native markdown editors.',
       items: [
         {
-          src: '/work/relay/relay-thumb.png',
+          src: '/work/relay/relay-thumb.webp',
           alt: 'Relay interface showing channel hierarchy and integrated team workspace',
           caption: 'Autonomous agent participation within channel discussion threads',
         },
@@ -356,7 +356,7 @@ export const CASE_STUDIES = {
     inkColor: '#F8FAFC',
     heroMedia: {
       type: 'image',
-      src: '/work/peak-club/peak-head.png',
+      src: '/work/peak-club/peak-head.webp',
       alt: 'Peak Club Snowboarding mountain identity and technical outerwear branding',
       aspectRatio: '16 / 9',
     },
@@ -374,17 +374,17 @@ export const CASE_STUDIES = {
       caption: 'The tripartite monogram, technical shell detailing, and companion biometric tracking.',
       items: [
         {
-          src: '/work/peak-club/peak-head.png',
+          src: '/work/peak-club/peak-head.webp',
           alt: 'Peak Club identity mark and brand visual system',
           caption: 'High-contrast alpine identity designed for whiteout visibility',
         },
         {
-          src: '/work/peak-club/peak-app.png',
+          src: '/work/peak-club/peak-app.webp',
           alt: 'Peak Club companion mobile application showing trail coordinates',
           caption: 'Biometric telemetry, avalanche risk advisories, and offline trail maps',
         },
         {
-          src: '/work/peak-club/peak-mockup.png',
+          src: '/work/peak-club/peak-mockup.webp',
           alt: 'Peak Club technical apparel and physical gear applications',
           caption: 'Technical outerwear trims, waterproof heat-transfer logos, and packaging',
         },

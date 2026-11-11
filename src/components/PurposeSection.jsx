@@ -92,13 +92,15 @@ export default function PurposeSection() {
         </p>
 
         {/* Title 1: "Idea" (Instrument Serif, grey, Row 1 right on desktop) */}
-        <div className="purpose__title purpose__title1" aria-label={LINE_1}>
-          {splitChars(LINE_1)}
+        <div className="purpose__title purpose__title1" role="heading" aria-level="3">
+          <span aria-hidden="true">{splitChars(LINE_1)}</span>
+          <span className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>{LINE_1}</span>
         </div>
 
         {/* Title 2: "To" (Manrope sans-serif, grey, Row 2 left on desktop) */}
-        <div className="purpose__title purpose__title2" aria-label={LINE_2}>
-          {splitChars(LINE_2)}
+        <div className="purpose__title purpose__title2" role="heading" aria-level="3">
+          <span aria-hidden="true">{splitChars(LINE_2)}</span>
+          <span className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>{LINE_2}</span>
         </div>
 
         {/* Second editorial paragraph + CTA (Row 3 left on desktop) */}
@@ -120,8 +122,9 @@ export default function PurposeSection() {
         </div>
 
         {/* Title 3: "Outcome." (Instrument Serif Italic, grey, Row 3 right on desktop) */}
-        <div className="purpose__title purpose__title3" aria-label={LINE_3}>
-          {splitChars(LINE_3)}
+        <div className="purpose__title purpose__title3" role="heading" aria-level="3">
+          <span aria-hidden="true">{splitChars(LINE_3)}</span>
+          <span className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>{LINE_3}</span>
         </div>
       </div>
     </section>

@@ -96,20 +96,36 @@ export default function FooterWave({ dark: explicitDark }) {
 
     drawRef.current = draw
 
-    let isVisible = true
+    let isVisible = false
+
+    const loop = (now) => {
+      if (isVisible) {
+        draw(now)
+        raf = requestAnimationFrame(loop)
+      } else {
+        raf = 0
+      }
+    }
+
     const io = new IntersectionObserver(([entry]) => {
-      isVisible = entry.isIntersecting
+      const nextVisible = Boolean(entry?.isIntersecting)
+      if (nextVisible && !isVisible) {
+        isVisible = true
+        if (!still && !raf) {
+          raf = requestAnimationFrame(loop)
+        }
+      } else if (!nextVisible && isVisible) {
+        isVisible = false
+        if (raf) {
+          cancelAnimationFrame(raf)
+          raf = 0
+        }
+      }
     }, { threshold: 0.05 })
     io.observe(canvas)
 
     if (still) {
       draw(0)
-    } else {
-      const loop = (now) => {
-        if (isVisible) draw(now)
-        raf = requestAnimationFrame(loop)
-      }
-      raf = requestAnimationFrame(loop)
     }
 
     return () => {

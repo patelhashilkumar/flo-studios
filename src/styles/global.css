@@ -2,9 +2,6 @@
    INSTRUMENT WEBSITE — GLOBAL STYLES
    ========================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Libre+Caslon+Condensed:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=panchang@200,300,400,500,600,700,800&display=swap');
-
 /* Libre Caslon Condensed */
 @font-face {
   font-family: 'Libre Caslon Condensed';

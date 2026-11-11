@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import SEO from '../components/SEO'
 import Hero from '../components/Hero'
@@ -10,6 +10,46 @@ import NewsSection from '../components/NewsSection'
 
 // Lazy-load the heavy 3D canvas (Three.js / React Three Fiber) below the fold
 const WorkflowSection = lazy(() => import('../WorkflowSection'))
+
+function DeferredWorkflowSection() {
+  const [shouldRender, setShouldRender] = useState(false)
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    const node = containerRef.current
+    if (!node) return
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setShouldRender(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldRender(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '350px 0px' }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={containerRef}>
+      {shouldRender ? (
+        <Suspense fallback={<div style={{ minHeight: '380px', background: '#ffffff' }} />}>
+          <WorkflowSection />
+        </Suspense>
+      ) : (
+        <div style={{ minHeight: '380px', background: '#ffffff' }} />
+      )}
+    </div>
+  )
+}
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -29,9 +69,7 @@ export default function HomePage() {
       <WorkSection />
       <HomeServicesSpotlight />
       <CapabilitiesSection />
-      <Suspense fallback={<div style={{ minHeight: '380px', background: '#ffffff' }} />}>
-        <WorkflowSection />
-      </Suspense>
+      <DeferredWorkflowSection />
       <PurposeSection />
       <NewsSection />
     </motion.main>

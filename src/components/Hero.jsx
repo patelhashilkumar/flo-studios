@@ -41,13 +41,7 @@ export default function Hero() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [isInView, setIsInView] = useState(true)
   const [preloadStrategy] = useState(() => {
-    if (typeof navigator !== 'undefined' && 'connection' in navigator) {
-      const conn = navigator.connection
-      if (conn?.saveData || conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
-        return 'metadata'
-      }
-    }
-    return 'auto'
+    return 'metadata'
   })
   const heroRef = useRef(null)
   const logoRef = useRef(null)
@@ -197,6 +191,7 @@ export default function Hero() {
             muted={isMuted}
             playsInline
             preload={preloadStrategy}
+            aria-label="Flo Studios Showcase Reel"
             onPlaying={() => setIsVideoPlaying(true)}
             onPause={() => setIsVideoPlaying(false)}
             onLoadedData={(e) => {
@@ -210,6 +205,7 @@ export default function Hero() {
           >
             {currentReel?.webmSrc && <source src={currentReel.webmSrc} type="video/webm" />}
             {currentReel?.mp4Src && <source src={currentReel.mp4Src} type="video/mp4" />}
+            <track kind="captions" />
           </video>
 
           {/* Bottom Left Glassmorphic Project Switcher */}
