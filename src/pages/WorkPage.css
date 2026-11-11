@@ -467,7 +467,7 @@
   margin-top: 0;
 }
 
-/* ── 6. Outro Section (Bold Sans-Serif Manifesto & Pill Button) ── */
+/* ── 6. Outro Section (Centered Display Serif Manifesto & Centered Pill Button) ── */
 .text-tout {
   border-top: 1px solid var(--work-border);
   padding: clamp(5.5rem, 11vw, 10rem) clamp(16px, 3.5vw, 48px) clamp(5rem, 9vw, 8rem);
@@ -475,46 +475,66 @@
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .text-tout__wrapper {
-  max-width: 960px;
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .text-tout__text {
-  font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(2rem, 3.8vw, 3rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
+  font-size: clamp(2.35rem, 4.4vw, 4.25rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
   color: var(--work-ink);
-  margin: 0 0 2.5rem 0;
+  margin: 0 auto clamp(2rem, 3.8vw, 3rem);
+  text-align: center;
+  text-wrap: balance;
+  width: 100%;
 }
 
 .text-tout__cta {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .text-tout .button-x-large {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 15px 32px;
+  padding: 16px 36px;
   border-radius: 9999px;
   background-color: var(--work-ink);
   color: #ffffff;
   text-decoration: none;
   outline: none;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 .text-tout .button-x-large .shape {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .text-tout .button-x-large .icon {
@@ -524,8 +544,8 @@
 }
 
 .text-tout .button-x-large:hover {
-  background-color: #232326;
-  transform: translateY(-1px);
+  background-color: #222222;
+  transform: scale(1.03);
 }
 
 .text-tout .button-x-large:hover .icon {
