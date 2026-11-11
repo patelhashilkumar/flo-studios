@@ -1,0 +1,30 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Flo Studios",
+    "identifier": "did:web:flostudio.co",
+    "documentationUrl": "https://www.flostudio.co/llms.txt",
+    "logoUrl": "https://www.flostudio.co/favicon.svg"
+  },
+  "entries": [
+    {
+      "identifier": "urn:ai:flostudio.co:resource:studio-overview",
+      "displayName": "Flo Studios Agency & Capabilities Catalog",
+      "type": "text/markdown",
+      "url": "https://www.flostudio.co/llms.txt",
+      "description": "Comprehensive overview of Flo Studios services, 11-stage development lifecycle, creator growth systems, and client case studies.",
+      "representativeQueries": [
+        "What services does Flo Studios provide?",
+        "Tell me about Flo Studios development division and build lifecycle",
+        "Show case studies for Flo Studios web development and 3D motion"
+      ],
+      "tags": [
+        "web-development",
+        "product-design",
+        "3d-motion",
+        "branding",
+        "full-stack"
+      ]
+    }
+  ]
+}

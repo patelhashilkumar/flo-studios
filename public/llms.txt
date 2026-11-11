@@ -1,0 +1,28 @@
+# Flo Studios
+
+> Flo Studios is a progressive dual-engine media and development hub whose primary flagship is our Development Division (full build lifecycle from product strategy to launch with zero broken handoffs), supported secondarily by our Creator Division (content growth systems).
+
+## Overview
+
+Flo Studios partners with venture-backed founders and creators across the full digital lifecycle, delivering UI/UX design, full-stack engineering, 3D motion systems, and high-retention creator distribution.
+
+## Core Navigation
+
+- [Home](https://www.flostudio.co/): Studio introduction, flagship capabilities, and featured case studies.
+- [Work](https://www.flostudio.co/work): Complete client portfolio spanning software development, brand systems, and 3D kinetic motion.
+- [Services](https://www.flostudio.co/services): Breakdown of our 11-stage Development lifecycle and 8-stage Creator growth system.
+- [About](https://www.flostudio.co/about): Studio philosophy, cross-vertical advantage, and leadership.
+- [Latest](https://www.flostudio.co/latest): Editorial essays, industry research, and digital product perspectives.
+- [Careers](https://www.flostudio.co/careers): Open engineering, design, and creative roles.
+- [Contact](https://www.flostudio.co/contact): Discovery calls and project inquiries.
+
+## Featured Work & Case Studies
+
+- [ABSTRUCT Construction Identity](https://www.flostudio.co/work/abstruct): Monogram-led identity, visual system, and digital craft for a modern construction architecture firm.
+- [Multi-Drone 3D Optimizer](https://www.flostudio.co/work/drone-sim): Real-time autonomous UAV path planning simulation platform.
+- [Peak Club Snowboarding](https://www.flostudio.co/work/peak-club): Technical apparel identity, brand visual system, and ride telemetry application.
+- [C4Future Carbon Intelligence](https://www.flostudio.co/work/c4future): Product lifecycle emissions predictive modeling with XGBoost and TreeSHAP.
+- [Relay Collaboration Platform](https://www.flostudio.co/work/relay): AI-assisted team chat with unified channel architecture.
+- [Apple Product Motion](https://www.flostudio.co/work/apple-motion): Photorealistic CGI rendering and 3D kinetic product motion.
+- [Blitzit 2.0 Interface](https://www.flostudio.co/work/blitzit-motion): Precision micro-interaction design and fluid 60fps animations.
+- [SV Studio Showreel](https://www.flostudio.co/work/sv-showreel): Commercial brand direction, physics simulation, and showreel montage.

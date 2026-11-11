@@ -8,3 +8,6 @@ Disallow: /admin
 
 # Canonical XML Sitemap
 Sitemap: https://www.flostudio.co/sitemap.xml
+
+# Agentic Resource Discovery
+Agentmap: https://www.flostudio.co/.well-known/ard.json

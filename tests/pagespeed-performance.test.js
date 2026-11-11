@@ -80,3 +80,30 @@ test('4. Accessibility fixes: no prohibited ARIA attributes, compliant contrast,
     'Hero video should include captions track for accessibility compliance'
   )
 })
+
+test('5. Agent Discoverability: valid llms.txt and ai-catalog.json manifests exist', () => {
+  const llmsPath = path.join(repoRoot, 'public/llms.txt')
+  const catalogPath = path.join(repoRoot, 'public/ai-catalog.json')
+  const ardPath = path.join(repoRoot, 'public/.well-known/ard.json')
+  const robotsPath = path.join(repoRoot, 'public/robots.txt')
+
+  // 1. llms.txt must exist and have H1 header and markdown links
+  assert.ok(fs.existsSync(llmsPath), 'public/llms.txt must exist')
+  const llmsContent = fs.readFileSync(llmsPath, 'utf8')
+  assert.match(llmsContent, /^#\s+[^\n]+/m, 'llms.txt must start with H1 header (# Title)')
+  assert.match(llmsContent, /\[[^\]]+\]\(https?:\/\/[^\)]+\)/, 'llms.txt must contain markdown links')
+
+  // 2. ai-catalog.json must be valid JSON with specVersion and entries array
+  assert.ok(fs.existsSync(catalogPath), 'public/ai-catalog.json must exist')
+  const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'))
+  assert.equal(catalog.specVersion, '1.0', 'ai-catalog.json must specify specVersion 1.0')
+  assert.ok(Array.isArray(catalog.entries), 'ai-catalog.json must contain entries array')
+  assert.ok(catalog.entries.length > 0, 'ai-catalog.json must have at least one entry')
+
+  // 3. .well-known/ard.json must exist
+  assert.ok(fs.existsSync(ardPath), 'public/.well-known/ard.json must exist')
+
+  // 4. robots.txt must advertise Agentmap
+  const robots = fs.readFileSync(robotsPath, 'utf8')
+  assert.match(robots, /Agentmap:\s*https?:\/\//, 'robots.txt must advertise Agentmap')
+})
