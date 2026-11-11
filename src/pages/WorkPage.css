@@ -482,7 +482,7 @@
 }
 
 .text-tout__wrapper {
-  max-width: 1120px;
+  max-width: 1040px;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -494,12 +494,12 @@
 
 .text-tout__text {
   font-family: var(--font-serif, 'Libre Caslon Condensed', 'Instrument Serif', Georgia, serif);
-  font-size: clamp(2.35rem, 4.4vw, 4.25rem);
+  font-size: clamp(1.85rem, 3.2vw, 3.1rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.14;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
   color: var(--work-ink);
-  margin: 0 auto clamp(2rem, 3.8vw, 3rem);
+  margin: 0 auto clamp(1.75rem, 3vw, 2.5rem);
   text-align: center;
   text-wrap: balance;
   width: 100%;
