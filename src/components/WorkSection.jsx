@@ -54,7 +54,7 @@ const WORK_ITEMS = [
     image: '/work/drone-sim/dashboard.webp',
     metric: 'Autonomous Avionics',
     description: 'Real-time UAV path planning simulation platform powered by 3D RRT* and B-Spline trajectory smoothing.',
-    size: 'large',
+    size: 'regular',
   },
   {
     title: 'SV Studio Showreel',
@@ -66,7 +66,7 @@ const WORK_ITEMS = [
     videoMp4: MOTION_REELS.sv.mp4,
     metric: 'Direction & Animation',
     description: 'Commercial brand direction, tactile physics simulation, and studio showreel montage.',
-    size: 'regular',
+    size: 'large',
   },
   {
     title: 'Peak Club Snowboarding',
