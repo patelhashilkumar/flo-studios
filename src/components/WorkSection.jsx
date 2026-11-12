@@ -204,7 +204,7 @@ export default function WorkSection() {
             minHeight={gridMinHeight}
             gap={14}
             radius={20}
-            hoverGrow={1.3}
+            hoverGrow={1}
             reflowSpeed={0.35}
             dimOthers={0.28}
             hoverZoom={1.06}

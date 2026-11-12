@@ -80,13 +80,27 @@ function useQuery(query, fallback) {
 function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label }) {
   const ref = useRef(null)
   const playPromiseRef = useRef(null)
+  const [debouncedPlaying, setDebouncedPlaying] = useState(false)
+  const [isVideoActive, setIsVideoActive] = useState(false)
+
+  // Debounce play trigger (180ms) so casual mouse movement during scroll never spins up hardware video decoders
+  useEffect(() => {
+    if (!playing) {
+      setDebouncedPlaying(false)
+      return
+    }
+    const timer = setTimeout(() => {
+      setDebouncedPlaying(true)
+    }, 180)
+    return () => clearTimeout(timer)
+  }, [playing])
 
   useEffect(() => {
     const v = ref.current
     if (!v) return
     v.muted = true
     v.defaultMuted = true
-    if (playing) {
+    if (debouncedPlaying) {
       if (v.ended) {
         v.currentTime = 0
       }
@@ -96,6 +110,7 @@ function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label
         attempt.catch(() => {})
       }
     } else {
+      setIsVideoActive(false)
       if (playPromiseRef.current) {
         playPromiseRef.current
           .then(() => {
@@ -106,7 +121,7 @@ function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label
         v.pause()
       }
     }
-  }, [playing])
+  }, [debouncedPlaying])
 
   useEffect(() => {
     const v = ref.current
@@ -116,22 +131,34 @@ function TileVideo({ src, videoWebm, videoMp4, playing, poster, className, label
   }, [])
 
   return (
-    <video
-      ref={ref}
-      className={className}
-      poster={poster}
-      muted
-      loop
-      playsInline
-      disablePictureInPicture
-      preload="none"
-      aria-label={label}
-    >
-      {videoWebm && <source src={videoWebm} type="video/webm" />}
-      {videoMp4 && <source src={videoMp4} type="video/mp4" />}
-      {src && !videoWebm && !videoMp4 && <source src={src} type="video/mp4" />}
-      <track kind="captions" />
-    </video>
+    <div className="casement-media-wrap">
+      {poster && (
+        <img
+          className={`${className} casement-video-poster ${isVideoActive ? 'casement-video-poster--hidden' : ''}`}
+          src={poster}
+          alt={label || ''}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+      <video
+        ref={ref}
+        className={`${className} casement-video-element ${isVideoActive ? 'casement-video-element--visible' : ''}`}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        disablePictureInPicture
+        preload="none"
+        aria-label={label}
+        onPlaying={() => setIsVideoActive(true)}
+      >
+        {videoWebm && <source src={videoWebm} type="video/webm" />}
+        {videoMp4 && <source src={videoMp4} type="video/mp4" />}
+        {src && !videoWebm && !videoMp4 && <source src={src} type="video/mp4" />}
+        <track kind="captions" />
+      </video>
+    </div>
   )
 }
 
@@ -625,7 +652,28 @@ export default function CasementGrid({
   const restBoxes = useMemo(() => boxesFor(tree, count, restWeights, mirror), [tree, count, restWeights, mirror])
 
   const litRafRef = useRef(null)
+  const isScrollingRef = useRef(false)
+  const scrollTimerRef = useRef(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      isScrollingRef.current = true
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+      scrollTimerRef.current = setTimeout(() => {
+        isScrollingRef.current = false
+      }, 120)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+    }
+  }, [])
+
   const setLitThrottled = useCallback((nextIndex) => {
+    // Suppress hover updates while actively scrolling to prevent video spin-up & layout recomputations
+    if (isScrollingRef.current && nextIndex !== -1) return
     if (litRafRef.current) cancelAnimationFrame(litRafRef.current)
     litRafRef.current = requestAnimationFrame(() => {
       setLit(nextIndex)
